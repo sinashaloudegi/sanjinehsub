@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">SanjinehNativeBazar</string>
+    <string name="check_phone">بررسی شماره</string>
+    <string name="phone_hint">09*********</string>
+    <string name="account_credit">برای دریافت نمره اعتباری و عضویت در سرویس جامع اعتبار سنجی همراه با امکانات کامل شماره موبایل خود را وارد کنید (حق اشتراک روزانه 400 تومان)</string>
+    <string name="rules">بخش <a href="http://www.google.com/">قوانین و مقررات</a> استفاده از خدمات و سرویس سایت سنجینه را مطالعه کرده ام و با کلیه موارد آن موافقم.</string>
+    <string name="enter_verification">کد فعالسازی را وارد نمایید</string>
+    <string name="retry_verfication">ارسال مجدد</string>
+    <string name="timer_start_value">200</string>
+    <string name="nav_dpwnload_app">دانلود اپلیکیشن</string>
+    <string name="nav_profile">پروفایل</string>
+    <string name="nav_archive">آرشیو گزارش ها</string>
+    <string name="nav_about">درباره ما</string>
+    <string name="nav_report">گزارش خطا</string>
+    <string name="nav_rules">قوانین و مقررات</string>
+    <string name="nav_exit_app">خروج از برنامه</string>
+    <string name="nav_exit_account">خروج از حساب کاربری</string>
+    <string name="my_score">دریافت نمره اعتباری خودم</string>
+    <string name="other_score">دریافت نمره اعتباری دیگران</string>
+    <string name="ashnaee_ba_nomre_etebary">آشنایی کامل با نمره اعتباری</string>
+    <string name="advice_improvment">مشاوره و بهبود</string>
+    <string name="economy_news">اخبار اقتصادی</string>
+    <string name="bank_service">خدمات بانکی</string>
+    <string name="burse">بورس</string>
+
+
+
 </resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="padding_5">5dp</dimen>
+    <dimen name="button_text_size">15sp</dimen>
+    <dimen name="_main_activity_button_text_size">10sp</dimen>
+    <dimen name="navigation_text_size">8sp</dimen>
+    <dimen name="button_margin_button">30dip</dimen>
+    <dimen name="button_margin_right_left">15dip</dimen>
+    <dimen name="margin10">10dip</dimen>
+    <dimen name="margin20">20dip</dimen>
+    <dimen name="size8">8dip</dimen>
+    <dimen name="size2">2dip</dimen>
+    <dimen name="size1">1dip</dimen>
+    <dimen name="sizehalf">0.5dip</dimen>
+    <dimen name="size50">50dip</dimen>
+    <dimen name="size100">100dip</dimen>
+    <dimen name="size121">121dip</dimen>
+    <dimen name="toolbar_height">80dip</dimen>
+    <dimen name="negative2">-2dip</dimen>
+
+
+
+</resources>
+

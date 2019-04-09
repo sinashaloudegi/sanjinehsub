@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbar_height"
+    android:background="@drawable/ic_topbar"
+    >
+<ImageView
+    android:layout_marginTop="@dimen/size2"
+    android:layout_alignParentRight="true"
+    android:layout_width="@dimen/profile_image_small"
+    android:layout_height="@dimen/profile_image_small"
+android:id="@+id/imgNavMenu"
+    android:src="@drawable/navigatiin_menu"/>
+    <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/imgProfile"
+
+        android:src="@drawable/unknown_profile"
+        android:layout_width="@dimen/profile_image_small"
+        android:layout_height="@dimen/profile_image_small"
+        android:layout_alignParentLeft="true"
+
+
+
+        />
+</RelativeLayout>

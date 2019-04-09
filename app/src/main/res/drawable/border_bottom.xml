@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetTop="@dimen/negative2"
+    android:insetLeft="@dimen/negative2"
+    android:insetRight="@dimen/negative2">
+
+    <shape android:shape="rectangle">
+        <stroke android:width="@dimen/size2" android:color="@color/darker_gray" />
+        <solid android:color="@color/white" />
+    </shape>
+
+</inset>

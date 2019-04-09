@@ -6,6 +6,21 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!--<item name="android:fontFamily" tools:targetApi="jelly_bean">@font/font_style</item>-->
+
+        <item name="android:typeface">serif</item>
+
+        <!--    <item name="android:fontFamily">@font/iranyekanwebregular</item>
+            <item name="fontFamily">@font/iranyekanwebregular</item> &lt;!&ndash; target android sdk versions < 26 and > 14 if theme other than AppCompat &ndash;&gt;
+            -->
+
+        <item name="android:windowActionBarOverlay">true</item>
     </style>
 
 </resources>

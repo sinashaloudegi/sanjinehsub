@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!-- TODO: Update blank fragment layout -->
+
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+android:background="@color/sanjinehColor"
+    android:paddingRight="@dimen/margin10"
+    android:paddingLeft="@dimen/margin10"
+    android:paddingBottom="@dimen/button_margin_button"
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+ <ImageView
+
+     android:id="@+id/imgLogoRegister"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_marginTop="@dimen/size8"
+
+
+     android:src="@drawable/ic_logo"/>
+ <ImageView
+     android:id="@+id/imgLoginRegister"
+     android:layout_marginTop="@dimen/margin10"
+     android:layout_width="match_parent"
+     android:layout_height="@dimen/size121"
+     android:layout_below="@+id/imgLogoRegister"
+
+     android:src="@drawable/ic_loginicon"/>
+
+ <TextView
+     android:id="@+id/txtIsregister"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+android:layout_below="@+id/imgLoginRegister"
+     android:gravity="right"
+     android:layout_marginTop="@dimen/margin10"
+
+     android:text="@string/account_credit"
+     android:textColor="@color/white"/>
+ <EditText
+     android:layout_width="match_parent"
+     android:layout_centerInParent="true"
+     android:backgroundTint="@color/white"
+     android:textColor="@color/white"
+     android:id="@+id/edtPhone"
+     android:maxLength="11"
+     android:inputType="phone"
+android:hint="@string/phone_hint"
+android:textColorHint="@color/darker_gray"
+     android:gravity="center"
+     android:layout_height="wrap_content" />
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/margin10"
+    android:layout_below="@+id/edtPhone"
+    android:layout_height="wrap_content">
+
+ <TextView
+     android:id="@+id/txt_rulesregister"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+android:layout_toLeftOf="@+id/chboxRules"
+     android:autoLink="web"
+     android:linksClickable="true"
+     android:text="@string/rules"
+     android:layout_centerVertical="true"
+     android:textColor="@color/white"/>
+
+ <CheckBox
+     android:layout_alignParentRight="true"
+     android:id="@+id/chboxRules"
+
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+android:layout_centerVertical="true"
+
+     />
+
+</RelativeLayout>
+
+ <android.support.v7.widget.AppCompatButton
+
+
+     android:layout_width="match_parent"
+     android:text="@string/check_phone"
+     android:textColor="@color/dark_blue"
+     app:backgroundTint="@color/yellow_button"
+     android:layout_marginBottom="@dimen/button_margin_button"
+
+     android:textSize="@dimen/button_text_size"
+     android:layout_alignParentBottom="true"
+     android:layout_height="wrap_content"
+     />
+
+</RelativeLayout>

@@ -19,6 +19,7 @@ public class SharedPreferencesManager {
 
     public static final String APP_SETTINGS = "VISEO_APP_SETTINGS";
     private static final String MOBILE_NUMBER_VALUE = "MOBILE_NUMBER_VALUE";
+    private static final String CAFE_BAZAR_LOGIN = "CAFE_BAZAR_LOGIN _VALUE";
 
 
 
@@ -43,6 +44,16 @@ public class SharedPreferencesManager {
         editor.commit();
     }
 
+    public void setLogin(boolean newValue){
+    final SharedPreferences.Editor editor = sharedPreferences.edit();
+    editor.putBoolean(CAFE_BAZAR_LOGIN , newValue);
+    editor.commit();
 
+}
+    public boolean isLogin(){
+
+    return sharedPreferences.getBoolean(MOBILE_NUMBER_VALUE , false);
+
+}
 
 }
