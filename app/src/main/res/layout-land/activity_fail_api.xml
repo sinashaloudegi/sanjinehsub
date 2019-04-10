@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:background="@drawable/fail_api_background"
+    android:layout_alignParentTop="true"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+
+        android:id="@+id/fail_icon"
+       android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/fail_api_icon"/>
+    <TextView
+
+        android:layout_below="@id/fail_icon"
+        android:layout_width="wrap_content"
+   android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_20"
+        android:id="@+id/text_no_connection"
+        android:layout_marginTop="@dimen/margin_39"
+        android:textColor="@color/dark_grey_blue"
+        android:gravity="center_horizontal"
+        android:text="@string/no_server_connection"
+
+        />
+
+    <ProgressBar
+        android:id="@+id/prg"
+        android:layout_marginTop="@dimen/margin_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_no_connection"
+        android:visibility="invisible"
+        android:layout_centerHorizontal="true"
+        android:indeterminateDrawable="@drawable/custom_progressbar"
+        style="?android:attr/progressBarStyle"
+        />
+    <Button
+        android:layout_marginRight="@dimen/margin_home_fragmet_rear"
+        android:layout_marginLeft="@dimen/margin_home_fragmet_rear"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:id="@+id/btnRetry"
+        android:textSize="@dimen/new_visit_row_accept"
+        android:text="@string/retry_connection"
+        android:textColor="@color/white"
+        android:background="@drawable/darke_blue_shape"
+        android:layout_above="@+id/shadowView"
+        />
+
+    <View
+
+        android:layout_alignParentBottom="true"
+        android:id="@+id/shadowView"
+        android:layout_marginLeft="@dimen/margin_home_fragmet_rear"
+        android:layout_marginRight="@dimen/margin_home_fragmet_rear"
+        android:alpha="0.25"
+        android:layout_marginBottom="@dimen/margin_10"
+
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/shadow_height_size"
+        android:background="@drawable/item_allshadow_darkblue"></View>
+
+</RelativeLayout>
