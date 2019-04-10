@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,7 +22,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.config.AppController;
+import ir.iconish.sanjinehsub.data.model.NavigationItem;
 import ir.iconish.sanjinehsub.data.vm.LoginViewModel;
+import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.util.DialogHelper;
 import ir.iconish.sanjinehsub.util.ToastHelper;
@@ -42,6 +46,18 @@ ProgressBar prgLogin;
 
 
 
+    @BindView(R.id.txtAlert)
+    TextView txtAlert;
+
+
+
+
+    @BindView(R.id.checkboxRules)
+    CheckBox checkBoxRules;
+
+
+
+
 
     @Inject
     LoginViewModel loginViewModel;
@@ -57,8 +73,50 @@ attachViewModel();
 
     }
 
+
+
+    @OnClick(R.id.txtRegisterRules)
+    public void txtRegisterRulesAction() {
+
+        ActivityNavigationHelper.navigateToWebView(getString(R.string.rules_url),this,WebViewActivity.class);
+
+    }
+
+
+
+
     @OnClick(R.id.btnCheckPhone)
     public void btnCheckPhoneAction() {
+        txtAlert.setVisibility(View.INVISIBLE);
+      String mobileNumber=  edtMobileNumber.getText().toString()  ;
+
+        if (!mobileNumber.startsWith("09")){
+            txtAlert.setText(getString(R.string.enter_correct_mobile_phone));
+            txtAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+
+
+
+        if(mobileNumber.length()<11){
+            txtAlert.setText(getString(R.string.enter_correct_mobile_phone));
+            txtAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+
+
+
+        if(!checkBoxRules.isChecked()){
+            txtAlert.setText(getString(R.string.accept_rules));
+            txtAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+
+
+
+
+
+
 showWating();
 loginViewModel.callLoginViewModel(edtMobileNumber.getText().toString());
        // startActivity(new Intent(this,LoginVerificatonActivity.class));
@@ -70,6 +128,9 @@ loginViewModel.callLoginViewModel(edtMobileNumber.getText().toString());
     private void attachViewModel() {
         loginViewModel.getApiSuccessLiveDataResponse().observe(this, services -> {
 stopWating();
+
+//if 1010 go to enter pass -- if 1011 go to otp
+
                     Log.e("success","in activity");
         }
         );

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -60,5 +61,12 @@ private void initWebView(){
 
 
     webView.getSettings().setJavaScriptEnabled(true);
+
+
+
+    String url=getIntent().getStringExtra("url");
+    Log.e("url",url);
+    webView.loadUrl(url);
 }
+
 }

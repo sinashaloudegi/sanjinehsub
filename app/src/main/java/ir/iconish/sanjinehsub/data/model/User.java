@@ -1,12 +1,20 @@
 package ir.iconish.sanjinehsub.data.model;
 
 public class User {
-    private int responseStatusCode;
+    private ResponseCodeEnum responseCodeEnum;
     private String firstName;
     private String lastName;
     private String email;
     private String mobileNumber;
 private long userId;
+
+    public ResponseCodeEnum getResponseCodeEnum() {
+        return responseCodeEnum;
+    }
+
+    public void setResponseCodeEnum(ResponseCodeEnum responseCodeEnum) {
+        this.responseCodeEnum = responseCodeEnum;
+    }
 
     public long getUserId() {
         return userId;
@@ -16,13 +24,7 @@ private long userId;
         this.userId = userId;
     }
 
-    public int getResponseStatusCode() {
-        return responseStatusCode;
-    }
 
-    public void setResponseStatusCode(int responseStatusCode) {
-        this.responseStatusCode = responseStatusCode;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -55,4 +57,10 @@ private long userId;
     public void setMobileNumber(String mobileNumber) {
         this.mobileNumber = mobileNumber;
     }
+
+
+
+
+
+
 }

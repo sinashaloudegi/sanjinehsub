@@ -34,9 +34,12 @@
     <string name="no_internet">دسترسی به اینترنت میسر نمی باشد.</string>
 
     <string name="no_server_connection"> اتصال با سرور برقرار نیست</string>
-    nav_exit_app
+
     <string name="nav_exit_app">خروج از برنامه</string>
     <string name="exit_app">خروج از برنامه</string>
     <string name="exit_app_sure">آیا می خواهید از برنامه خارج شوید؟</string>
+    <string name="enter_correct_mobile_phone">شماره تلفن همراه را درست وارد کنید</string>
+    <string name="accept_rules">لطفا بخش قوانین و مقررات را تایید نماید</string>
+    <string name="rules_url">"https://www.sanjineh.ir/terms"</string>
 
 </resources>

@@ -26,6 +26,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
+import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
 import ir.iconish.sanjinehsub.data.model.User;
 import ir.iconish.sanjinehsub.util.AppConstants;
 
@@ -45,11 +46,12 @@ public class LoginApi {
 
     public User parseJson(JSONObject jsonObject){
         User user=new User();
+
       try {
             JSONObject jsonObjectRoot=jsonObject.getJSONObject("responseStatus");
           int statusCode=  jsonObjectRoot.getInt("value");
 
-            user.setResponseStatusCode(statusCode);
+          user.setResponseCodeEnum(ResponseCodeEnum.fromValue(statusCode));
             if(statusCode==1010){
 JSONObject jsonObjectUser=jsonObject.getJSONObject("accountInfo").getJSONObject("user");
                 String firstName=jsonObjectUser.getString("firstname");
@@ -63,6 +65,7 @@ user.setLastName(lastName);
 user.setEmail(email);
 user.setMobileNumber(mobileNumber);
 user.setUserId(userId);
+
 
             }
              /*   else if (statusCode==1011){

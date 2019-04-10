@@ -3,6 +3,7 @@ package ir.iconish.sanjinehsub.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,6 +36,7 @@ SplashViewModel splashViewModel;
                 if(splashViewModel.getUserId()==-1){
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));}
                 else {
+                    Log.e("splashViewModel.getUserId()",splashViewModel.getUserId()+"");
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
                 }
                 finish();
