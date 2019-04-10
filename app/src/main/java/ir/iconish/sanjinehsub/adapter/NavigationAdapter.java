@@ -8,11 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
@@ -22,7 +19,6 @@ import ir.iconish.sanjinehsub.data.model.NavigationItem;
 
 public class NavigationAdapter extends RecyclerView.Adapter<NavigationViewHolder> {
 
-@BindView(R.id.rootLayout) View container;
 
     private  List<NavigationItem> navigationItems;
 

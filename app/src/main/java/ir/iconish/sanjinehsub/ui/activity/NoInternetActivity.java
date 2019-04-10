@@ -40,7 +40,7 @@ public class NoInternetActivity extends AppCompatActivity {
     }
 
 
-          @OnClick(R.id.icnConnection)
+     @OnClick(R.id.icnConnection)
     public void checkConnection(){
 
 

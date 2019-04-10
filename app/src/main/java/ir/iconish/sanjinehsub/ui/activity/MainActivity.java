@@ -2,23 +2,17 @@ package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,10 +20,9 @@ import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.adapter.NavigationAdapter;
 import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
-import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.data.model.NavigationItem;
 
-public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener , RecyclerIemListener {
+public class MainActivity extends AppCompatActivity  implements  RecyclerIemListener {
 
     @BindView(R.id.drawerLayout)
      DrawerLayout drawerLayout;
@@ -52,19 +45,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        navigationView.setNavigationItemSelectedListener(this);
         initNavigation();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     @Override
     public void onBackPressed() {
 
@@ -74,35 +58,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             super.onBackPressed();
         }
     }
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        menuItem.setChecked(true);
-        // close drawer when item is tapped
-        drawerLayout.closeDrawers();
-Class cls=null;
-        Fragment fragment = null;
 
-        int id = menuItem.getItemId();
-
-        if (id == R.id.nav_menu1) {
-            // Handle the camera action
-            Toast.makeText(this, "men1", Toast.LENGTH_SHORT).show();
-
-        } else if (id == R.id.nav_menu2) {
-            Toast.makeText(this, "men2", Toast.LENGTH_SHORT).show();
-
-
-        } else if (id == R.id.nav_menu3) {
-            Toast.makeText(this, "men3", Toast.LENGTH_SHORT).show();
-
-        }
-      //  navigateToActivity(cls);
-        //  drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     private void navigateToActivity(Class cls){
-        startActivity(new Intent(this,cls));
+
+      startActivity(new Intent(this,cls));
     }
 
     @OnClick(R.id.imgNavMenu)
