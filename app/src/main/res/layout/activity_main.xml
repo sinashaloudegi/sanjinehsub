@@ -12,12 +12,15 @@
 
     android:layout_height="match_parent">
 
- <include android:id="@+id/toolbar" layout="@layout/main_toolbar"></include>
- <include android:id="@+id/centerMenu"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     android:layout_below="@+id/toolbar"
-     layout="@layout/center_main_menu"></include>
+  <include
+    android:id="@+id/toolbar"
+    layout="@layout/main_toolbar"></include>
+
+  <include android:id="@+id/centerMenu"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_below="@+id/toolbar"
+           layout="@layout/center_main_menu"></include>
 
 
 </RelativeLayout>
