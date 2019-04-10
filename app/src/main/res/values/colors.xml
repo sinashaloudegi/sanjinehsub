@@ -11,7 +11,7 @@
     <color name="sanjinehColor">#0347ad</color>
     <color name="white">#ffffff</color>
     <color name="darker_gray">#aaa</color>
-    <color name="light_gray">#ececec
+    <color name="light_gray">#ececec</color>
 
-    </color>
+    <color name="alert_incorrect_entry">#ff4081</color>
 </resources>

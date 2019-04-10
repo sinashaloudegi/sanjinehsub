@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="MissingDefaultResource">
+
+
+
+<ImageView
+    android:layout_width="match_parent"
+    android:scaleType="fitXY"
+    android:id="@+id/icnConnection"
+    android:layout_height="match_parent"
+    android:src="@drawable/connection_lost"/>
+
+    <TextView
+        android:id="@+id/retryOnline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:text="@string/retry_online"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/dark_blue"
+        android:textSize="@dimen/button_text_size" />
+</RelativeLayout>

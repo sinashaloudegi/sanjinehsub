@@ -16,8 +16,17 @@
     <dimen name="size100">100dip</dimen>
     <dimen name="size121">121dip</dimen>
     <dimen name="toolbar_height">80dip</dimen>
-    <dimen name="negative2">-2dip</dimen>
+    <dimen name="login_steps_text_size">12sp</dimen>
 
+    <dimen name="profile_image_small">24dip</dimen>
+
+    <dimen name="negative1">-1dip</dimen>
+
+    <dimen name="negative2">-2dip</dimen>
+    <dimen name="center_menu_icon_size">48dip</dimen>
+
+    <dimen name="small_icon_size">24dip</dimen>
+    <dimen name="margin_20">20dip</dimen>
 
 
 </resources>

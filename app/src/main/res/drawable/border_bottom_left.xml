@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetTop="@dimen/negative2"
-    android:insetRight="@dimen/negative2">
+    android:insetTop="@dimen/negative1"
+    android:insetRight="@dimen/negative1">
 
     <shape android:shape="rectangle">
-        <stroke android:width="@dimen/size2" android:color="@color/darker_gray" />
+        <stroke android:width="@dimen/sizehalf" android:color="@color/darker_gray" />
         <solid android:color="@color/white" />
     </shape>
 

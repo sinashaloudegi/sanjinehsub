@@ -3,7 +3,8 @@
 
 
 
-    <dimen name="profile_image_small">48dip</dimen>
 
+
+    <dimen name="center_menu_icon_size">96dip</dimen>
 
 </resources>

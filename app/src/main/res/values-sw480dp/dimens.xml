@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
 
-    <dimen name="profile_image_small">24dip</dimen>
+    <dimen name="center_menu_icon_size">64dip</dimen>
 
 
 </resources>

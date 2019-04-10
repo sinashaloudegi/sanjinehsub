@@ -22,7 +22,7 @@ android:background="@color/sanjinehColor"
      android:layout_marginTop="@dimen/size8"
 
 
-     android:src="@drawable/ic_logo"/>
+     app:srcCompat="@drawable/ic_logo"/>
 
 
  <TextView
@@ -32,9 +32,10 @@ android:background="@color/sanjinehColor"
 android:layout_above="@+id/edtVerificationCode"
      android:gravity="center"
      android:layout_marginBottom="@dimen/size100"
-
+android:textSize="@dimen/login_steps_text_size"
      android:text="@string/timer_start_value"
      android:textColor="@color/white"/>
+
  <EditText
      android:layout_width="match_parent"
      android:layout_centerInParent="true"
@@ -48,13 +49,21 @@ android:textColorHint="@color/darker_gray"
      android:gravity="center"
      android:layout_height="wrap_content" />
 
-
+ <ProgressBar
+     android:id="@+id/indeterminateBar"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:visibility="invisible"
+     android:layout_centerHorizontal="true"
+     android:layout_above="@+id/btnEnter"
+     android:layout_marginBottom="@dimen/size50"
+     />
 
  <android.support.v7.widget.AppCompatButton
-
+android:id="@+id/btnEnter"
 
      android:layout_width="match_parent"
-     android:text="@string/check_phone"
+     android:text="@string/enter"
      android:textColor="@color/dark_blue"
      app:backgroundTint="@color/yellow_button"
 android:layout_above="@+id/btnRetry"

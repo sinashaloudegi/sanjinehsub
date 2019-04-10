@@ -22,6 +22,18 @@
     <string name="economy_news">اخبار اقتصادی</string>
     <string name="bank_service">خدمات بانکی</string>
     <string name="burse">بورس</string>
+    <string name="password_recovery_sms">بازیابی رمز عبور از طریق پیامک</string>
+    <string name="password">کلمه عبور</string>
+    <string name="enter">ورود</string>
+    <string name="send_password">ارسال رمز عبور</string>
+    <string name="forget_password">فراموش کردن رمز عبور</string>
+    <string name="enter_password">لطفا رمز عبور را وارد کنید</string>
+    <string name="force_enter_password">لطفا رمز عبور را وارد کنید</string>
+    <string name="force_enter_phone">لطفا شماره تلفن همراه را وارد کنید</string>
+    <string name="valid_phone">تعداد ارقام تلفن همراه را درست وارد کنید</string>
+    <string name="retry_online">تلاش مجدد</string>
+    <string name="no_internet">دسترسی به اینترنت میسر نمی باشد.</string>
+
 
 
 

@@ -5,8 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ImageView;
+import android.support.v7.widget.AppCompatButton;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -14,15 +13,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 
-public class LoginVerificatonActivity extends AppCompatActivity{
+public class PasswordVerificatonActivity extends AppCompatActivity{
 
     @BindView(R.id.txtTimer)
     TextView txtTimer;
     CountDownTimer countDownTimer;
+
+    @BindView(R.id.btnEnter)
+    AppCompatButton btnEnter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_verfication);
+        setContentView(R.layout.activity_password_verfication);
         ButterKnife.bind(this);
 
         startTimer();
@@ -62,7 +64,7 @@ public class LoginVerificatonActivity extends AppCompatActivity{
     @OnClick(R.id.btnEnter)
     public void btnEnterAction() {
 
-        startActivity(new Intent(this,EnterPasswordActivity.class));
+        startActivity(new Intent(this,MainActivity.class));
         finish();
     }
 }

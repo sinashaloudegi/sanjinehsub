@@ -1,6 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="ir.iconish.sanjinehsub">
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:theme="@style/AppTheme"
@@ -45,6 +51,31 @@
 
 
  <activity android:name=".ui.activity.LoginVerificatonActivity"
+                android:configChanges="orientation|screenSize"
+                android:launchMode="standard"
+                android:isScrollContainer="true"
+                android:hardwareAccelerated="true"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan"
+
+                >
+        </activity>
+
+
+ <activity android:name=".ui.activity.EnterPasswordActivity"
+                android:configChanges="orientation|screenSize"
+                android:launchMode="standard"
+                android:isScrollContainer="true"
+                android:hardwareAccelerated="true"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan"
+
+                >
+        </activity>
+
+
+
+ <activity android:name=".ui.activity.ForgetPasswordActivity"
                 android:configChanges="orientation|screenSize"
                 android:launchMode="standard"
                 android:isScrollContainer="true"
