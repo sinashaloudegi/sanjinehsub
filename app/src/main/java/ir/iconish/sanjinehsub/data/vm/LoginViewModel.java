@@ -1,26 +1,28 @@
-package com.visit24.therapist.data.vm;
+package ir.iconish.sanjinehsub.data.vm;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import com.visit24.therapist.data.model.Credit;
-import com.visit24.therapist.data.repositpory.CreditRepository;
-import com.visit24.therapist.data.source.api.VolleyCallback;
 
-import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
-public class CreditViewModel extends ViewModel {
+import ir.iconish.sanjinehsub.data.model.User;
+import ir.iconish.sanjinehsub.data.repository.LoginRepository;
+import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 
-    private MutableLiveData<Map<String,List<Credit>> > apiSuccessLiveDataCreditsResponse;
-    private MutableLiveData<Integer > apiSuccessLiveDataBalanceResponse;
+public class LoginViewModel extends ViewModel {
+
+
+    private MutableLiveData<User> apiSuccessLiveDataResponse;
     private MutableLiveData<String> apiErrorLiveData;
     private MutableLiveData<String> apiServerErrorLiveData;
     private MutableLiveData<String> apiClientNetworkErrorLiveData;
     private MutableLiveData<String> apiTimeOutErrorLiveData;
     private MutableLiveData<String> apiAuthFailureErrorLiveData;
-    CreditRepository creditRepository;
+
+
+
+    LoginRepository loginRepository;
 
     private MutableLiveData<String> apiForbiden403ErrorLiveData;
     private MutableLiveData<String> apiValidation422ErrorLiveData;
@@ -37,16 +39,19 @@ public class CreditViewModel extends ViewModel {
         return apiValidation422ErrorLiveData;
     }
 
+    public MutableLiveData<User> getApiSuccessLiveDataResponse() {
+        return apiSuccessLiveDataResponse;
+    }
 
     @Inject
-    public CreditViewModel(CreditRepository creditRepository)
+    public LoginViewModel(LoginRepository loginRepository)
     {
 
-        this.creditRepository=creditRepository;
+        this.loginRepository=loginRepository;
 
 
-        apiSuccessLiveDataCreditsResponse = new MutableLiveData<>();
-        apiSuccessLiveDataBalanceResponse = new MutableLiveData<>();
+
+        apiSuccessLiveDataResponse = new MutableLiveData<>();
         apiErrorLiveData = new MutableLiveData<>();
         apiServerErrorLiveData = new MutableLiveData<>();
         apiClientNetworkErrorLiveData = new MutableLiveData<>();
@@ -57,13 +62,7 @@ public class CreditViewModel extends ViewModel {
         api404LiveData = new MutableLiveData<>();
     }
 
-    public MutableLiveData<Map<String, List<Credit>>> getApiSuccessLiveDataCreditsResponse() {
-        return apiSuccessLiveDataCreditsResponse;
-    }
 
-    public MutableLiveData<Integer> getApiSuccessLiveDataBalanceResponse() {
-        return apiSuccessLiveDataBalanceResponse;
-    }
 
     public MutableLiveData<String> getApiErrorLiveData() {
         return apiErrorLiveData;
@@ -85,14 +84,14 @@ public class CreditViewModel extends ViewModel {
         return apiAuthFailureErrorLiveData;
     }
 
-    public void callRemoteApi() {
+    public void callLoginViewModel(String mobileNumber) {
 
 
-      creditRepository.getRemoteCredit(new VolleyCallback() {
+      loginRepository.callLoginRepository(mobileNumber,new VolleyCallback() {
           @Override
           public void onSuccess(Object obj) {
-              apiSuccessLiveDataBalanceResponse.setValue(creditRepository.getBalance());
-              apiSuccessLiveDataCreditsResponse.setValue(creditRepository.getMapCredit());
+            apiSuccessLiveDataResponse.setValue((User) obj);
+
           }
           @Override
           public void on404(String volleyError) {
@@ -135,31 +134,5 @@ public class CreditViewModel extends ViewModel {
 
       });
     }
-    public String getName(){
-        return creditRepository.getName();
-    }
-    public int getAvailable(){
-        return creditRepository.getAvailable();
-    }
-    public String getProfileImage(){
-        return creditRepository.getProfileImage();
 
-    }
-
-
-    public String getUserId(){
-        return creditRepository.getUserId();
-
-    }
-    public void   clearLocalData(){
-        creditRepository.clearLocalData();
-    }
-
-
-    public String getRole(){
-        return creditRepository.getRole();
-    }
-    public int getNewRequestCount(){
-        return creditRepository.getNewRequestCount();
-    }
 }

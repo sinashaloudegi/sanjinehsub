@@ -1,4 +1,4 @@
-package com.visit24.therapist.data.source.api;
+package ir.iconish.sanjinehsub.data.source.api;
 
 public interface VolleyCallback<T> {
 

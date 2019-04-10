@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.farsitel.bazaar.IUpdateCheckService;
 
-public class CheckCafeBazaarUpdate  {
+public class  CheckCafeBazaarUpdate  {
 Context context;
   public CheckCafeBazaarUpdate(Context context) {
 

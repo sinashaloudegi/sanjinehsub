@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/fail_api_background"
     android:layout_alignParentTop="true"
     android:layout_height="match_parent">
@@ -23,7 +24,7 @@
         android:textSize="@dimen/font_20"
         android:id="@+id/text_no_connection"
         android:layout_marginTop="@dimen/margin_39"
-        android:textColor="@color/dark_grey_blue"
+        android:textColor="@color/dark_blue"
         android:gravity="center_horizontal"
         android:text="@string/no_server_connection"
 
@@ -37,33 +38,25 @@
         android:layout_below="@id/text_no_connection"
         android:visibility="invisible"
         android:layout_centerHorizontal="true"
-        android:indeterminateDrawable="@drawable/custom_progressbar"
         style="?android:attr/progressBarStyle"
         />
-    <Button
-        android:layout_marginRight="@dimen/margin_home_fragmet_rear"
-        android:layout_marginLeft="@dimen/margin_home_fragmet_rear"
+
+    <android.support.v7.widget.AppCompatButton
+android:layout_marginRight="@dimen/margin10"
+android:layout_marginLeft="@dimen/margin10"
+        android:id="@+id/btnRety"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
-        android:id="@+id/btnRetry"
-        android:textSize="@dimen/new_visit_row_accept"
-        android:text="@string/retry_connection"
-        android:textColor="@color/white"
-        android:background="@drawable/darke_blue_shape"
-        android:layout_above="@+id/shadowView"
+        android:text="@string/retry_online"
+        android:textColor="@color/dark_blue"
+        app:backgroundTint="@color/yellow_button"
+        android:layout_marginBottom="@dimen/button_margin_button"
+
+        android:textSize="@dimen/button_text_size"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
         />
 
-    <View
 
-        android:layout_alignParentBottom="true"
-        android:id="@+id/shadowView"
-        android:layout_marginLeft="@dimen/margin_home_fragmet_rear"
-        android:layout_marginRight="@dimen/margin_home_fragmet_rear"
-        android:alpha="0.25"
-        android:layout_marginBottom="@dimen/margin_10"
 
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/shadow_height_size"
-        android:background="@drawable/item_allshadow_darkblue"></View>
 
 </RelativeLayout>

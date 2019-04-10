@@ -1,18 +1,15 @@
-package com.visit24.therapist.screen.activity;
+package ir.iconish.sanjinehsub.ui.activity;
 
 
 import android.os.Bundle;
-
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.visit24.therapist.R;
-import com.visit24.therapist.util.ButtonHelper;
-import com.visit24.therapist.util.DialogHelper;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -21,6 +18,8 @@ import java.net.Socket;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import ir.iconish.sanjinehsub.R;
+import ir.iconish.sanjinehsub.util.ButtonHelper;
 
 
 public class FailApiActivity extends AppCompatActivity {
@@ -42,8 +41,8 @@ String failCause;
 
 
 
-  @BindView(R.id.btnRetry)
-  Button btnRetry;
+  @BindView(R.id.btnRety)
+  AppCompatButton btnRetry;
 
 
 
@@ -67,7 +66,7 @@ String failCause;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.fail_api_dialog);
+    setContentView(R.layout.activity_fail_api);
     ButterKnife.bind(this);
 
     failCause=getIntent().getStringExtra("failCause");
@@ -101,7 +100,7 @@ imageViewFail.setImageDrawable(getResources().getDrawable(R.drawable.fail_api_ic
 
 
   }
-  @OnClick(R.id.btnRetry)
+  @OnClick(R.id.btnRety)
   public void showAllConfirm(View view) {
     progressBar.setVisibility(View.VISIBLE);
     ButtonHelper.toggleButtonStatus(btnRetry,false);
@@ -185,6 +184,6 @@ private void doFailInternetAvialbaleAction(){
 
   @Override
   public void onBackPressed() {
-    DialogHelper.sureExit(this);
+    //DialogHelper.sureExit(this);
   }
 }

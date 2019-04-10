@@ -14,4 +14,11 @@
     <color name="light_gray">#ececec</color>
 
     <color name="alert_incorrect_entry">#ff4081</color>
+    <color name="black">#000000</color>
+    <color name="bluish">#246cc0</color>
+    <color name="red">#FF0000</color>
+
+    <color name="all_transparent">#00FFFFFF</color>
+
+
 </resources>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">kvideo.ir</domain>
+        <domain includeSubdomains="true">security.iconish.ir</domain>
+        <domain includeSubdomains="true">creditscore.iconish.ir</domain>
 
     </domain-config>
 </network-security-config>

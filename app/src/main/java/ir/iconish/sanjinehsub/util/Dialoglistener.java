@@ -1,4 +1,4 @@
-package com.visit24.therapist.util;
+package ir.iconish.sanjinehsub.util;
 
 public interface Dialoglistener {
     public void onDialogSubmitEvent(Object object);

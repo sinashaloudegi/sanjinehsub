@@ -2,23 +2,29 @@ package ir.iconish.sanjinehsub.ui.activity;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
-
-
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.util.ToastHelper;
 
-public class NoInternetActivity extends AppCompatActivity {
+public class WebViewActivity extends AppCompatActivity {
 
+
+    @BindView(R.id.webView)
+    WebView webView;
 
 
 
@@ -26,63 +32,33 @@ public class NoInternetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activty_no_internet);
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        setContentView(R.layout.activity_web_view);
 
-        StrictMode.setThreadPolicy(policy);
+
         ButterKnife.bind(this);
-
+initWebView();
     }
 
-    @OnClick(R.id.retryOnline)
-    public void retryOnline(){
-      retryAccessNetwork();
-    }
+private void initWebView(){
+
+    webView.setBackgroundColor(Color.TRANSPARENT);
+//        webView.setBackgroundResource(R.drawable.splash);
+   // if (isNetworkConnected()) {
+        webView.clearCache(false);
+    //}
+    webView.clearHistory();
+    webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+    webView.getSettings().setJavaScriptEnabled(true);
+    webView.getSettings().setLoadsImagesAutomatically(true);
+    webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+    webView.getSettings().setAppCacheEnabled(false);
+    webView.getSettings().setLoadWithOverviewMode(true);
+    webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+    webView.setScrollbarFadingEnabled(false);
+    webView.getSettings().setAllowFileAccess(true);
+    webView.getSettings().setSupportMultipleWindows(false);
 
 
-     @OnClick(R.id.icnConnection)
-    public void checkConnection(){
-
-
-retryAccessNetwork();
-
-
-    }
-
-
-    private void retryAccessNetwork(){
-        if (isInternetAvailable()){
-
-
-            startActivity(new Intent(this,SplashActivity.class));
-            finish();
-        }
-        else {
-            showErrorAlert("InternetNotAvailable");
-        }
-    }
-    public boolean isInternetAvailable() {
-
-
-        String host = "www.google.com";
-        int port = 80;
-        Socket socket = new Socket();
-
-        try {
-            socket.connect(new InetSocketAddress(host, port), 10000);
-            socket.close();
-            return true;
-        } catch (IOException e) {
-            try {
-                socket.close();
-            } catch (IOException es) {
-            }
-            return false;
-        }
-    }
-
-    public void showErrorAlert(String error) {
-
-        ToastHelper.showErrorMessage(NoInternetActivity.this,getString(R.string.no_internet));
-    }
+    webView.getSettings().setJavaScriptEnabled(true);
+}
 }

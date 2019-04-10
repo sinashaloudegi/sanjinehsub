@@ -21,6 +21,7 @@ import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.adapter.NavigationAdapter;
 import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
 import ir.iconish.sanjinehsub.data.model.NavigationItem;
+import ir.iconish.sanjinehsub.util.DialogHelper;
 
 public class MainActivity extends AppCompatActivity  implements  RecyclerIemListener {
 
@@ -55,7 +56,8 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
         if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END);
         } else {
-            super.onBackPressed();
+            DialogHelper.sureExit(this);
+            //super.onBackPressed();
         }
     }
 

@@ -1,4 +1,4 @@
-package com.visit24.therapist.util;
+package ir.iconish.sanjinehsub.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.visit24.therapist.R;
+import ir.iconish.sanjinehsub.R;
 
 
 public class DialogHelper {
@@ -55,89 +55,8 @@ public class DialogHelper {
     }
 
 
-    public static void turnOnGps(Activity activity) {
 
 
-        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-
-        View view = activity.getLayoutInflater().inflate(R.layout.exit_dialoug, null);
-
-        Button btnTurnOn = view.findViewById(R.id.btn_yes);
-        TextView txtTop = view.findViewById(R.id.txt_top);
-
-        TextView txtBottom = view.findViewById(R.id.txt);
-        txtBottom.setText(activity.getString(R.string.turn_on_gps));
-
-        txtTop.setText(activity.getString(R.string.activision));
-        Button btnCancel = view.findViewById(R.id.btn_cancel);
-        alert.setView(view);
-        final AlertDialog alertDialog = alert.create();
-        btnTurnOn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //  activity.finish();
-                activity.startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                alertDialog.dismiss();
-
-            }
-        });
-
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
-
-
-        alertDialog.show();
-
-
-    }
-
-
-    public static void setlocationAccuracy(Activity activity) {
-
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-
-        View view = activity.getLayoutInflater().inflate(R.layout.exit_dialoug, null);
-
-        Button btnTurnOn = view.findViewById(R.id.btn_yes);
-        TextView txtTop = view.findViewById(R.id.txt_top);
-
-        TextView txtBottom = view.findViewById(R.id.txt);
-        txtBottom.setText(activity.getString(R.string.set_accurcy));
-
-        txtTop.setText(activity.getString(R.string.set));
-        Button btnCancel = view.findViewById(R.id.btn_cancel);
-        alert.setView(view);
-        final AlertDialog alertDialog = alert.create();
-        btnTurnOn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //  activity.finish();
-                activity.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-
-                alertDialog.dismiss();
-
-            }
-        });
-
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
-
-
-        alertDialog.show();
-
-
-    }
 
 
     public static void showDialog(String dialogTitleText, String dialogBodyText, String submitButtonTitle, String cancelButtonTitle, Activity activity, Dialoglistener dialoglistener) {

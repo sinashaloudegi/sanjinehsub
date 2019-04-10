@@ -13,7 +13,6 @@
     <string name="nav_about">درباره ما</string>
     <string name="nav_report">گزارش خطا</string>
     <string name="nav_rules">قوانین و مقررات</string>
-    <string name="nav_exit_app">خروج از برنامه</string>
     <string name="nav_exit_account">خروج از حساب کاربری</string>
     <string name="my_score">دریافت نمره اعتباری خودم</string>
     <string name="other_score">دریافت نمره اعتباری دیگران</string>
@@ -34,7 +33,10 @@
     <string name="retry_online">تلاش مجدد</string>
     <string name="no_internet">دسترسی به اینترنت میسر نمی باشد.</string>
 
-
-
+    <string name="no_server_connection"> اتصال با سرور برقرار نیست</string>
+    nav_exit_app
+    <string name="nav_exit_app">خروج از برنامه</string>
+    <string name="exit_app">خروج از برنامه</string>
+    <string name="exit_app_sure">آیا می خواهید از برنامه خارج شوید؟</string>
 
 </resources>

@@ -48,7 +48,7 @@ android:textSize="@dimen/login_steps_text_size"
      android:layout_width="match_parent"
      android:layout_marginTop="@dimen/margin10"
      android:layout_height="wrap_content"
-     android:layout_below="@+id/edtPhone"
+     android:layout_below="@+id/edtMobileNumber"
      android:gravity="right"
      android:textSize="@dimen/login_steps_text_size"
 
@@ -59,9 +59,10 @@ android:textSize="@dimen/login_steps_text_size"
      android:layout_centerInParent="true"
      android:backgroundTint="@color/white"
      android:textColor="@color/white"
-     android:id="@+id/edtPhone"
+     android:id="@+id/edtMobileNumber"
      android:maxLength="11"
      android:inputType="phone"
+     android:text="09108981877"
 android:hint="@string/phone_hint"
 android:textColorHint="@color/darker_gray"
      android:gravity="center"
@@ -97,13 +98,13 @@ android:layout_centerVertical="true"
 
 </RelativeLayout>
  <ProgressBar
-     android:id="@+id/indeterminateBar"
+     android:id="@+id/prgLogin"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
      android:visibility="invisible"
      android:layout_centerHorizontal="true"
      android:layout_above="@+id/btnCheckPhone"
-     android:layout_marginBottom="@dimen/size50"
+     android:layout_marginBottom="@dimen/size30"
      />
  <android.support.v7.widget.AppCompatButton
 
