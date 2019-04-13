@@ -1,4 +1,4 @@
-package ir.iconish.sanjinehsub.util;
+package ir.iconish.sanjinehsub.ui;
 
 public interface Dialoglistener {
     public void onDialogSubmitEvent(Object object);

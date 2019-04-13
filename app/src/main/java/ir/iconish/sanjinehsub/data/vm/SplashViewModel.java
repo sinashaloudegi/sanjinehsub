@@ -35,4 +35,12 @@ public long getUserId(){
         return splashRepository.getUserId();
 }
 
+
+
+public String getUserPassword(){
+        return splashRepository.getUserPassword();
+}
+
+
+
 }

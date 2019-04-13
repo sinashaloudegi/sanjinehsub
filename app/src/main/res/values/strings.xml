@@ -50,4 +50,8 @@
     <string name="set_password">"درج رمز عبور"</string>
     <string name="save_password">"ذخیره کردن"</string>
     <string name="password_not_match">"لطفا مقادیر رمز عبور را شبیه به هم وارد کنید"</string>
+    <string name="new_version">"نسخه جدید"</string>
+    <string name="download_new_version">"دانلود نسخه جدید"</string>
+    <string name="download">"دانلود"</string>
+    <string name="ignore">"صرف نظر کردن"</string>
 </resources>

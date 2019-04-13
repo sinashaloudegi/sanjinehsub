@@ -18,6 +18,7 @@ import ir.iconish.sanjinehsub.ui.activity.CheckPasswordActivity;
 import ir.iconish.sanjinehsub.ui.activity.ForgetPassworReciverActivity;
 import ir.iconish.sanjinehsub.ui.activity.ForgetPasswordActivity;
 import ir.iconish.sanjinehsub.ui.activity.LoginActivity;
+import ir.iconish.sanjinehsub.ui.activity.MainActivity;
 import ir.iconish.sanjinehsub.ui.activity.SetPasswordActivity;
 import ir.iconish.sanjinehsub.ui.activity.SplashActivity;
 import ir.iconish.sanjinehsub.ui.activity.VerifyRegisterOtpActivity;
@@ -36,5 +37,6 @@ public interface AppComponent {
     void inject(ForgetPassworReciverActivity activity);
     void inject(SetPasswordActivity activity);
     void inject(VerifyRegisterOtpActivity activity);
+    void inject(MainActivity activity);
 
 }

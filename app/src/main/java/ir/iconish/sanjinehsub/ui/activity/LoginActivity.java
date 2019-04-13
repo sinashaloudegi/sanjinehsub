@@ -22,7 +22,7 @@ import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
 import ir.iconish.sanjinehsub.data.vm.LoginViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
-import ir.iconish.sanjinehsub.util.DialogHelper;
+import ir.iconish.sanjinehsub.ui.DialogHelper;
 
 public class LoginActivity extends AppCompatActivity{
 
