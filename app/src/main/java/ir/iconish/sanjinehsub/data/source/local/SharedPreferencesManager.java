@@ -2,6 +2,7 @@ package ir.iconish.sanjinehsub.data.source.local;
 
 
 import android.content.SharedPreferences;
+import android.widget.ProgressBar;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -16,6 +17,7 @@ public class SharedPreferencesManager {
     private static final String LAST_NAME_VALUE = "LAST_NAME_VALUE";
     private static final String RESPONSE_STATUS_CODE_VALUE = "RESPONSE_STATUS_CODE_VALUE";
     private static final String USER_ID_VALUE = "RESPONSE_STATUS_CODE_VALUE";
+    private static final String PASSWORD_VALUE = "PASSWORD_VALUE";
 
 
 
@@ -89,6 +91,18 @@ public class SharedPreferencesManager {
     public  void setUserIdValue( long newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong(USER_ID_VALUE , newValue);
+        editor.commit();
+    }
+
+
+
+  public  String getPasswordValue() {
+        return sharedPreferences.getString(PASSWORD_VALUE,null);
+    }
+
+    public  void setPasswordValue( String newValue) {
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(PASSWORD_VALUE , newValue);
         editor.commit();
     }
 

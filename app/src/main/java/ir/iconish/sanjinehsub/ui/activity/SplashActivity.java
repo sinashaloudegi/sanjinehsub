@@ -27,6 +27,18 @@ SplashViewModel splashViewModel;
 
       ((AppController) getApplication()).getAppComponent().inject(this);
 
+/*
+      if(true){
+        //  startActivity(new Intent(this,SetPasswordActivity.class));
+          startActivity(new Intent(this,VerifyRegisterOtpActivity.class));
+          finish();
+return;
+      }*/
+
+
+
+
+
 //new CheckCafeBazaarLogin(this).initService();
         new Timer().schedule(new TimerTask() {
             @Override

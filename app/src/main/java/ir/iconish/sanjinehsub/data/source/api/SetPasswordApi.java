@@ -1,6 +1,5 @@
 package ir.iconish.sanjinehsub.data.source.api;
 
-import android.net.Uri;
 import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -11,26 +10,21 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
-import ir.iconish.sanjinehsub.data.model.User;
+import ir.iconish.sanjinehsub.data.model.PasswordValidationResponse;
 import ir.iconish.sanjinehsub.util.AppConstants;
 
-public class LoginApi {
+public class SetPasswordApi {
 
 
     AppController
@@ -38,36 +32,25 @@ public class LoginApi {
 
 
     @Inject
-    public LoginApi(AppController appController) {
+    public SetPasswordApi(AppController appController) {
         this.appController=appController;
     }
 
 
 
-    public User parseJson(JSONObject jsonObject){
-        User user=new User();
+    public PasswordValidationResponse parseJson(JSONObject jsonObject){
+        PasswordValidationResponse passwordValidationResponse=new PasswordValidationResponse();
 
       try {
             JSONObject jsonObjectRoot=jsonObject.getJSONObject("responseStatus");
           int statusCode=  jsonObjectRoot.getInt("value");
-
-          user.setResponseCodeEnum(ResponseCodeEnum.fromValue(statusCode));
-            if(statusCode==1010){
-JSONObject jsonObjectUser=jsonObject.getJSONObject("accountInfo").getJSONObject("user");
-                String firstName=jsonObjectUser.getString("firstname");
-                String lastName=jsonObjectUser.getString("family");
-                String email=jsonObjectUser.getString("email");
-                String mobileNumber=jsonObjectUser.getString("mobile");
-                long userId=jsonObjectUser.getLong("userid");
-                //String token=jsonObject.getString("mobileNo");
-user.setFirstName(firstName);
-user.setLastName(lastName);
-user.setEmail(email);
-user.setMobileNumber(mobileNumber);
-user.setUserId(userId);
+                String descr=jsonObjectRoot.getString("descr");
 
 
-            }
+          passwordValidationResponse.setRespobseStatusCode(statusCode);
+          passwordValidationResponse.setDescryptions(descr);
+
+
              /*   else if (statusCode==1011){
 
             }*/
@@ -76,7 +59,7 @@ user.setUserId(userId);
             e.printStackTrace();
         }
 
-        return user;
+        return passwordValidationResponse;
     }
 
 
@@ -85,16 +68,25 @@ user.setUserId(userId);
 
 
 
-    public void callLoginApi(String mobileNumer,final VolleyCallback volleyCallback){
+    public void callSetPasswordApi(String password,String mobileNumber,final VolleyCallback volleyCallback){
 
 
-        String   url=ConstantUrl.BASE+ConstantUrl.LOGIN+mobileNumer+"/"+ AppConstants.VAS_SUBSCRIB;
-Log.e("url=",url);
+        String   url=ConstantUrl.BASE+ConstantUrl.CHECK_PASSWORD;
+Log.e("urlCheckPassword=",url);
+JSONObject jsonObject=new JSONObject();
 
-       // JsonArrayRequest
+        try {
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                url,null,
+            jsonObject.put("mobile",mobileNumber);
+            jsonObject.put("password",password);
+            jsonObject.put("lang","Fa");
+            jsonObject.put("channel",AppConstants.CHANNEL);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                url,jsonObject,
                 response -> {
 
 
@@ -102,8 +94,8 @@ Log.e("url=",url);
 
                     if (response!=null){
 
-                   User user=     parseJson(response);
-                   volleyCallback.onSuccess(user);
+                        PasswordValidationResponse passwordValidationResponse=     parseJson(response);
+                   volleyCallback.onSuccess(passwordValidationResponse);
 
                        // volleyCallback.onSuccess(visits);
                     }
@@ -168,10 +160,10 @@ Log.e("url=",url);
         )
 
         {
-           /* @Override
+            @Override
             public String getBodyContentType() {
                 return "application/json; charset=utf-8";
-            }*/
+            }
 
             @Override
             public Map<String, String> getHeaders() {
@@ -193,7 +185,7 @@ Log.e("url=",url);
                 AppConstants.CLIENT_TIMEOUT,
                 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        String tag_json_arry = "loginApi";
+        String tag_json_arry = "setPasswordApi";
         appController.addToRequestQueue(jsonObjReq, tag_json_arry);
 
 

@@ -8,12 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -22,12 +18,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.model.NavigationItem;
+import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
 import ir.iconish.sanjinehsub.data.vm.LoginViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.util.DialogHelper;
-import ir.iconish.sanjinehsub.util.ToastHelper;
 
 public class LoginActivity extends AppCompatActivity{
 
@@ -126,8 +121,19 @@ loginViewModel.callLoginViewModel(edtMobileNumber.getText().toString());
 
 
     private void attachViewModel() {
-        loginViewModel.getApiSuccessLiveDataResponse().observe(this, services -> {
+        loginViewModel.getApiSuccessLiveDataResponse().observe(this, user -> {
 stopWating();
+
+
+if(user.getResponseCodeEnum().getValue()== ResponseCodeEnum.USER_EXIST.getValue()){
+    ActivityNavigationHelper.navigateToActivity(this, CheckPasswordActivity.class,true);
+}
+
+else if (user.getResponseCodeEnum().getValue()== ResponseCodeEnum.USERISNEW.getValue()){
+    ActivityNavigationHelper.navigateToActivity(this,VerifyRegisterOtpActivity.class,true);
+
+}
+
 
 //if 1010 go to enter pass -- if 1011 go to otp
 

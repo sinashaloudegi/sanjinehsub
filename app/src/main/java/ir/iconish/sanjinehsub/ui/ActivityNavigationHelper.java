@@ -12,4 +12,27 @@ public class ActivityNavigationHelper {
         activity.startActivity(intent);
     }
 
+
+
+
+
+     public static  void navigateToActivity( Activity activity ,Class cls,boolean finishCurrentActiviry){
+
+        Intent intent=new Intent(activity,cls);
+
+        activity.startActivity(intent);
+
+        if (finishCurrentActiviry){
+            activity.finish();
+        }
+    }
+
+
+
+
+
+
+
+
+
 }

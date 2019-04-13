@@ -5,8 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -62,7 +60,7 @@ public class LoginVerificatonActivity extends AppCompatActivity{
     @OnClick(R.id.btnEnter)
     public void btnEnterAction() {
 
-        startActivity(new Intent(this,EnterPasswordActivity.class));
+        startActivity(new Intent(this, CheckPasswordActivity.class));
         finish();
     }
 }
