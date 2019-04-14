@@ -24,7 +24,7 @@ public class ButtonHelper {
         if (enable)
             button.getBackground().setColorFilter(null);
         else
-        button.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+            button.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
 
 
         button.setEnabled(enable);

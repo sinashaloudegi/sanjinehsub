@@ -1,0 +1,152 @@
+<RelativeLayout android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:paddingBottom="@dimen/margin_5"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+  <include
+    android:id="@+id/getScoreOthersToolbar"
+    layout="@layout/get_score_toolbar"></include>
+
+  <ImageView
+    android:id="@+id/imgGetScoreOthers"
+    android:layout_marginTop="@dimen/margin10"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size121"
+    android:layout_below="@+id/getScoreOthersToolbar"
+    app:srcCompat="@drawable/ic_creditscorepageicon"/>
+
+  <TextView
+    android:id="@+id/txtGetScoreOthers"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/imgGetScoreOthers"
+    android:layout_marginTop="@dimen/margin_20"
+    android:layout_marginBottom="@dimen/margin_20"
+    android:gravity="center"
+    android:text="@string/get_score"
+    android:textColor="@color/black"
+    android:textSize="@dimen/get_score_steps_text_size"
+    android:layout_marginRight="@dimen/margin_10"
+    android:layout_marginLeft="@dimen/margin_10"/>
+
+
+  <android.support.design.widget.TextInputLayout
+    android:id="@+id/input_layout_msisdn_Others"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/txtGetScoreOthers"
+    android:layout_marginTop="@dimen/margin_10"
+    android:layout_marginRight="@dimen/margin_10"
+    android:layout_marginLeft="@dimen/margin_10"
+    >
+
+    <EditText
+      android:id="@+id/edtMsisdnOthers"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:backgroundTint="@color/black"
+      android:ellipsize="start"
+      android:ems="10"
+      android:gravity="top|right"
+      android:hint="@string/msisdn_others"
+      android:inputType="number"
+      android:maxLength="10"
+      android:singleLine="true"
+      android:textColor="@color/black"
+      android:textColorHint="@color/darker_gray"
+      />
+
+
+  </android.support.design.widget.TextInputLayout>
+
+
+
+
+  <android.support.design.widget.TextInputLayout
+    android:id="@+id/input_layout_ntcode_Others"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/input_layout_msisdn_Others"
+    android:layout_marginTop="@dimen/margin_10"
+    android:layout_marginRight="@dimen/margin_10"
+    android:layout_marginLeft="@dimen/margin_10"
+    >
+
+    <EditText
+      android:id="@+id/edtNtcodeOthers"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:backgroundTint="@color/black"
+      android:ellipsize="start"
+      android:ems="10"
+      android:gravity="top|right"
+      android:hint="@string/ntcode_others"
+      android:inputType="number"
+      android:maxLength="10"
+      android:singleLine="true"
+      android:textColor="@color/black"
+      android:textColorHint="@color/darker_gray"
+      />
+
+  </android.support.design.widget.TextInputLayout>
+
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/margin_25"
+    android:layout_below="@+id/input_layout_ntcode_Others"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/margin_10"
+    android:layout_marginLeft="@dimen/margin_10">
+
+    <TextView
+      android:id="@+id/txtPaymentOthers"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_toLeftOf="@+id/checkboxPaymentOthers"
+      android:textSize="@dimen/get_score_steps_text_size"
+      android:text="@string/get_score_payment"
+      android:layout_centerVertical="true"
+      android:textColor="@color/black"/>
+
+    <CheckBox
+      android:layout_alignParentRight="true"
+      android:id="@+id/checkboxPaymentOthers"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+      />
+
+  </RelativeLayout>
+
+  <ProgressBar
+    android:id="@+id/prgGetScoreOthers"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:visibility="invisible"
+    android:layout_centerHorizontal="true"
+    android:layout_above="@id/btnGetScoreOthers"
+    android:layout_marginBottom="@dimen/margin_50"
+    />
+
+
+  <android.support.v7.widget.AppCompatButton
+
+    android:id="@+id/btnGetScoreOthers"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size75"
+    android:layout_alignParentBottom="true"
+    android:layout_marginBottom="@dimen/get_score_button_margin_button"
+    android:text="@string/enter_get_score_others"
+    android:textColor="@color/sanjinehColor"
+    android:textSize="@dimen/get_score_steps_text_size"
+    app:backgroundTint="@color/yellow_button"
+    android:layout_marginRight="@dimen/margin_5"
+    android:layout_marginLeft="@dimen/margin_5">
+
+  </android.support.v7.widget.AppCompatButton>
+
+
+</RelativeLayout>

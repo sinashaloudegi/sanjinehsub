@@ -5,6 +5,7 @@
     <dimen name="_main_activity_button_text_size">10sp</dimen>
     <dimen name="navigation_text_size">8sp</dimen>
     <dimen name="button_margin_button">30dip</dimen>
+    <dimen name="get_score_button_margin_button">10dip</dimen>
     <dimen name="button_margin_right_left">15dip</dimen>
     <dimen name="margin10">10dip</dimen>
     <dimen name="margin20">20dip</dimen>
@@ -13,12 +14,14 @@
     <dimen name="size1">1dip</dimen>
     <dimen name="sizehalf">0.5dip</dimen>
     <dimen name="size50">50dip</dimen>
+    <dimen name="size75">75dip</dimen>
     <dimen name="size100">100dip</dimen>
     <dimen name="size30">30dip</dimen>
 
     <dimen name="size121">121dip</dimen>
     <dimen name="toolbar_height">80dip</dimen>
     <dimen name="login_steps_text_size">12sp</dimen>
+    <dimen name="get_score_steps_text_size">18sp</dimen>
 
     <dimen name="profile_image_small">24dip</dimen>
 
@@ -28,10 +31,15 @@
     <dimen name="center_menu_icon_size">48dip</dimen>
 
     <dimen name="small_icon_size">24dip</dimen>
+    <dimen name="icon_back">48dip</dimen>
     <dimen name="margin_20">20dip</dimen>
+    <dimen name="margin_25">25dip</dimen>
     <dimen name="font_20">20sp</dimen>
     <dimen name="margin_39">39dip</dimen>
+    <dimen name="margin_50">50dip</dimen>
     <dimen name="margin_5">5dip</dimen>
+    <dimen name="margin_2">2dip</dimen>
+    <dimen name="margin_8">8dip</dimen>
     <dimen name="font_18">18sp</dimen>
     <dimen name="font_12">12sp</dimen>
     <dimen name="margin_10">10dip</dimen>

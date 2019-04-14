@@ -1,14 +1,21 @@
 <resources>
     <string name="app_name">SanjinehNativeBazar</string>
     <string name="check_phone">بررسی شماره</string>
+    <string name="enter_get_score">ورود</string>
+    <string name="enter_get_score_others">تایید تلفن همراه</string>
     <string name="phone_hint">09*********</string>
     <string name="account_credit">برای دریافت نمره اعتباری و عضویت در سرویس جامع اعتبار سنجی همراه با امکانات کامل شماره موبایل خود را وارد کنید (حق اشتراک روزانه 400 تومان)</string>
+    <string name="get_score">مشترک گرامی جهت مشاهده رتبه ی اعتباری لطفا کد ملی خود را وارد نمائید.\n(اطلاعات شما نزد سنجینه محفوظ خواهد ماند.)</string>
     <string name="rules">بخش <a href="http://www.google.com/">قوانین و مقررات</a> استفاده از خدمات و سرویس سایت سنجینه را مطالعه کرده ام و با کلیه موارد آن موافقم.</string>
     <string name="enter_verification">کد فعالسازی را وارد نمایید</string>
+    <string name="get_score_payment">پرداخت از طریق کیف پول کافه بازار</string>
     <string name="retry_verfication">ارسال مجدد</string>
     <string name="timer_start_value">200</string>
     <string name="nav_dpwnload_app">دانلود اپلیکیشن</string>
     <string name="nav_profile">پروفایل</string>
+    <string name="ntcode">کد ملی</string>
+    <string name="ntcode_others">کد ملی شخص مورد نظر</string>
+    <string name="msisdn_others">شماره تلفن همراه شخص مورد نظر</string>
     <string name="nav_archive">آرشیو گزارش ها</string>
     <string name="nav_about">درباره ما</string>
     <string name="nav_report">گزارش خطا</string>

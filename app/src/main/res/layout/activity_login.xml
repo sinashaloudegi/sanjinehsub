@@ -64,8 +64,8 @@ android:textSize="@dimen/login_steps_text_size"
      android:maxLength="11"
      android:inputType="phone"
      android:text="09108981877"
-android:hint="@string/phone_hint"
-android:textColorHint="@color/darker_gray"
+     android:hint="@string/phone_hint"
+     android:textColorHint="@color/darker_gray"
      android:gravity="center"
      android:layout_height="wrap_content" />
 
