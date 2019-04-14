@@ -74,7 +74,14 @@ if(InternetAccess.isInternetAvailable()){
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(broadcastReceiver);
+
+      try {
+          unregisterReceiver(broadcastReceiver);
+      }
+      catch (Exception e){
+
+      }
+
     }
     private void messageReciver(){
         IntentFilter filter = new IntentFilter();

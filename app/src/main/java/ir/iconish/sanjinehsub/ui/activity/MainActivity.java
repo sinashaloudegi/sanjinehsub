@@ -23,6 +23,7 @@ import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.adapter.NavigationAdapter;
 import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
+import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.model.NavigationItem;
 import ir.iconish.sanjinehsub.data.vm.LogoutViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        ((AppController) getApplication()).getAppComponent().inject(this);
 
         initNavigation();
     }
@@ -154,6 +156,7 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
       n8.setDrawbleId(R.drawable.unknown_profile);
         n8.setId(8);
       navigationItems.add(7,n8);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerNavigation.setLayoutManager(layoutManager);
 
@@ -170,7 +173,6 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
     public void onTap(Object obj) {
 NavigationItem navigationItem= (NavigationItem) obj;
 
-        Toast.makeText(this, "You selected "+navigationItem.getId(), Toast.LENGTH_SHORT).show();
 switch (navigationItem.getId()){
 
     case 1:
