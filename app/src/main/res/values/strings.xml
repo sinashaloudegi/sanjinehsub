@@ -10,7 +10,7 @@
     <string name="enter_verification">کد فعالسازی را وارد نمایید</string>
     <string name="get_score_payment">پرداخت از طریق کیف پول کافه بازار</string>
     <string name="retry_verfication">ارسال مجدد</string>
-    <string name="timer_start_value">200</string>
+    <string name="timer_start_value">200000</string>
     <string name="nav_dpwnload_app">دانلود اپلیکیشن</string>
     <string name="nav_profile">پروفایل</string>
     <string name="ntcode">کد ملی</string>
@@ -30,7 +30,9 @@
     <string name="burse">بورس</string>
     <string name="password_recovery_sms">بازیابی رمز عبور از طریق پیامک</string>
     <string name="password">کلمه عبور</string>
+    <string name="repeat_password">تکرار کلمه عبور</string>
     <string name="enter">ورود</string>
+    <string name="mobile_number">تلفن همراه</string>
     <string name="send_password">ارسال رمز عبور</string>
     <string name="forget_password">فراموش کردن رمز عبور</string>
     <string name="enter_password">لطفا رمز عبور را وارد کنید</string>
@@ -38,6 +40,7 @@
     <string name="force_enter_phone">لطفا شماره تلفن همراه را وارد کنید</string>
     <string name="valid_phone">تعداد ارقام تلفن همراه را درست وارد کنید</string>
     <string name="retry_online">تلاش مجدد</string>
+
     <string name="no_internet">دسترسی به اینترنت میسر نمی باشد.</string>
 
     <string name="no_server_connection"> اتصال با سرور برقرار نیست</string>
@@ -46,7 +49,16 @@
     <string name="exit_app">خروج از برنامه</string>
     <string name="exit_app_sure">آیا می خواهید از برنامه خارج شوید؟</string>
     <string name="enter_correct_mobile_phone">شماره تلفن همراه را درست وارد کنید</string>
+    <string name="enter_correct_password">رمز عبور را درست وارد کنید</string>
     <string name="accept_rules">لطفا بخش قوانین و مقررات را تایید نماید</string>
     <string name="rules_url">"https://www.sanjineh.ir/terms"</string>
-
+    <string name="activision_code">"کد فعالسازی"</string>
+    <string name="password_max_min">"رمز عبور شما باید حداکثر 12 و حداقل 4 کاراکتر باشد."</string>
+    <string name="set_password">"درج رمز عبور"</string>
+    <string name="save_password">"ذخیره کردن"</string>
+    <string name="password_not_match">"لطفا مقادیر رمز عبور را شبیه به هم وارد کنید"</string>
+    <string name="new_version">"نسخه جدید"</string>
+    <string name="download_new_version">"دانلود نسخه جدید"</string>
+    <string name="download">"دانلود"</string>
+    <string name="ignore">"صرف نظر کردن"</string>
 </resources>

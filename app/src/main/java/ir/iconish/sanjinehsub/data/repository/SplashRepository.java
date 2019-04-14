@@ -28,4 +28,9 @@ this.sharedPreferencesManager=sharedPreferencesManager;
    }
 
 
+   public String getUserPassword(){
+    return sharedPreferencesManager.getPasswordValue();
+   }
+
+
 }

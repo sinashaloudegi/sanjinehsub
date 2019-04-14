@@ -1,6 +1,7 @@
 package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,14 +15,19 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.adapter.NavigationAdapter;
 import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
+import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.model.NavigationItem;
-import ir.iconish.sanjinehsub.util.DialogHelper;
+import ir.iconish.sanjinehsub.data.vm.LogoutViewModel;
+import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
+import ir.iconish.sanjinehsub.ui.DialogHelper;
 
 public class MainActivity extends AppCompatActivity  implements  RecyclerIemListener {
 
@@ -39,12 +45,14 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
     @BindView(R.id.imgNavMenu)
     ImageView imgNavMenu;
 
-
+@Inject
+    LogoutViewModel logoutViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        ((AppController) getApplication()).getAppComponent().inject(this);
 
         initNavigation();
     }
@@ -148,6 +156,7 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
       n8.setDrawbleId(R.drawable.unknown_profile);
         n8.setId(8);
       navigationItems.add(7,n8);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerNavigation.setLayoutManager(layoutManager);
 
@@ -164,10 +173,11 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
     public void onTap(Object obj) {
 NavigationItem navigationItem= (NavigationItem) obj;
 
-        Toast.makeText(this, "You selected "+navigationItem.getId(), Toast.LENGTH_SHORT).show();
 switch (navigationItem.getId()){
 
     case 1:
+downloadLastVersion();
+
         break;
 
 
@@ -183,35 +193,50 @@ switch (navigationItem.getId()){
 
 
     case 4:
-        break;
+        ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/aboutus",MainActivity.this,WebViewActivity.class);
 
+        break;
 
 
     case 5:
+        ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/contactus",MainActivity.this,WebViewActivity.class);
+
         break;
 
 
-
     case 6:
+        https://www.sanjineh.ir/terms
+        ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/terms",MainActivity.this,WebViewActivity.class);
+
         break;
 
 
 
     case 7:
+
+        logoutViewModel.logout();
+
+        ActivityNavigationHelper.navigateToActivity(this,LoginActivity.class,true);
+
         break;
 
 
 
     case 8:
+        finish();
         break;
 
 
-
-    case 9:
-        break;
 
 
 
 }
+    }
+
+    private void downloadLastVersion(){
+        String url = "http://dl.iconish.ir/app/SanjinehAppSub1.1.2.apk";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 }

@@ -2,8 +2,10 @@ package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -11,25 +13,36 @@ import java.util.TimerTask;
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.R;
+import ir.iconish.sanjinehsub.bazaar.UpdateCheck;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.vm.SplashViewModel;
 import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
 import ir.iconish.sanjinehsub.util.Inventory;
 import ir.iconish.sanjinehsub.util.Purchase;
+import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
+import ir.iconish.sanjinehsub.ui.DialogHelper;
+import ir.iconish.sanjinehsub.ui.Dialoglistener;
+import ir.iconish.sanjinehsub.util.InternetAccess;
 
-public class SplashActivity extends AppCompatActivity{
+import static ir.iconish.sanjinehsub.util.AppConstants.PACKAGE_NAME;
+
+public class SplashActivity extends AppCompatActivity implements Dialoglistener {
 @Inject
 SplashViewModel splashViewModel;
 
     public static IabHelper mHelper;
 
 
+    BroadcastReceiver broadcastReceiver;
+    UpdateCheck updateCheck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
+        StrictMode.setThreadPolicy(policy);
       ((AppController) getApplication()).getAppComponent().inject(this);
 
         String base64EncodedPublicKey = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwCmun9HxyV8hZjIX9aZGBIcM8u+vCS5/rBHQdUbrAwJpFjJ02z8ZQhngcjiFs7qCRsCYJjhnpVZgHnLG1WmKVmk3eUJDywAMszbSC7qK6HMYaBTp8trDpdHniMX9N9ftFHX/jbRhzVApl6rsfhZUX2alHpF0JQz5cm67pcdfai2eZalcgP9jUkE1PeCEeB+4AezX3q5bg2Qoe2XsdO1K211xGV7R4oullO3JAkTYQMCAwEAAQ==";
@@ -56,18 +69,106 @@ SplashViewModel splashViewModel;
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-              //  startActivity(new Intent(SplashActivity.this, MainActivity.class));
+if(InternetAccess.isInternetAvailable()){
 
-                if(splashViewModel.getUserId()==-1){
-                startActivity(new Intent(SplashActivity.this, LoginActivity.class));}
-                else {
-                    Log.e("splashViewModel.getUserId()",splashViewModel.getUserId()+"");
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                }
-                finish();
+                messageReciver();
+
+
+             updateCheck=   new UpdateCheck(getApplicationContext());
+             updateCheck.initService();
             }
-        }, 3000);
+            else {
+    ActivityNavigationHelper.navigateToActivity(SplashActivity.this,NoInternetActivity.class,true);
+}
+            }
 
+
+        }, 2000);
+
+    }
+
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+      try {
+          updateCheck.releaseService();
+          unregisterReceiver(broadcastReceiver);
+      }
+      catch (Exception e){
+
+      }
+
+    }
+    private void messageReciver(){
+        IntentFilter filter = new IntentFilter();
+
+        filter.addAction("versionCode");
+
+
+
+
+
+
+        broadcastReceiver= new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                String action=intent.getAction();
+
+                switch (action) {
+
+
+                    case "versionCode":
+                        long cafebazarVersionCode = intent.getLongExtra("versionCode",-1);
+                        chekheckRequired(cafebazarVersionCode);
+
+                        break;
+
+                }
+
+
+            }
+        };
+        registerReceiver(broadcastReceiver, filter);
+    }
+
+    private  void chekheckRequired(long cafebazarVesionCode){
+
+        if(cafebazarVesionCode>-1){
+            DialogHelper.showDialog(getString(R.string.new_version),getString(R.string.download_new_version),getString(R.string.download),getString(R.string.ignore),this,this);
+        }
+        else {
+            navigateToApp();
+        }
+    }
+
+    private void goToCafebazarPage(){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("bazaar://details?id=" + PACKAGE_NAME));
+        intent.setPackage("com.farsitel.bazaar");
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onDialogSubmitEvent(Object object) {
+        goToCafebazarPage();
+    }
+
+    @Override
+    public void onDialogCancelEvent(Object object) {
+    navigateToApp();
+    }
+    private void navigateToApp(){
+        if(splashViewModel.getUserId()==-1){
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));}
+        else {
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        }
+        finish();
     }
 
 
