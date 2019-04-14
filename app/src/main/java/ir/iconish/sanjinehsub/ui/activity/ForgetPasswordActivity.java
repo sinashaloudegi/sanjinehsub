@@ -80,7 +80,6 @@ edtPhone.setText(forgetPasswordViewModel.getMobileNumber());
 
 //if 1010 go to enter pass -- if 1011 go to otp
 
-                    Log.e("success","in check password activity");
                 }
         );
 
