@@ -34,6 +34,7 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 @Inject
 SplashViewModel splashViewModel;
     BroadcastReceiver broadcastReceiver;
+    UpdateCheck updateCheck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,8 @@ if(InternetAccess.isInternetAvailable()){
                 messageReciver();
 
 
-                new UpdateCheck(getApplicationContext()).initService();
+             updateCheck=   new UpdateCheck(getApplicationContext());
+             updateCheck.initService();
             }
             else {
     ActivityNavigationHelper.navigateToActivity(SplashActivity.this,NoInternetActivity.class,true);
@@ -66,16 +68,12 @@ if(InternetAccess.isInternetAvailable()){
 
 
 
-
-
-
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
 
       try {
+          updateCheck.releaseService();
           unregisterReceiver(broadcastReceiver);
       }
       catch (Exception e){
@@ -115,37 +113,10 @@ if(InternetAccess.isInternetAvailable()){
         };
         registerReceiver(broadcastReceiver, filter);
     }
-    private long getVersionCode() {
-        long appVersion =-1;
-        try {
-            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-
-
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                appVersion =  pInfo.getLongVersionCode(); // avoid huge version numbers and you will be ok
-            } else {
-                //noinspection deprecation
-                appVersion = pInfo.versionCode;
-            }
-
-
-
-
-
-
-
-
-
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return appVersion;
-    }
 
     private  void chekheckRequired(long cafebazarVesionCode){
-        long appVersion=getVersionCode();
-        if(cafebazarVesionCode>appVersion){
+
+        if(cafebazarVesionCode>-1){
             DialogHelper.showDialog(getString(R.string.new_version),getString(R.string.download_new_version),getString(R.string.download),getString(R.string.ignore),this,this);
         }
         else {
@@ -174,7 +145,6 @@ if(InternetAccess.isInternetAvailable()){
         if(splashViewModel.getUserId()==-1){
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));}
         else {
-            Log.e("splashViewModel.getUserId()",splashViewModel.getUserId()+"");
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
         }
         finish();
