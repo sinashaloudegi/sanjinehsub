@@ -4,5 +4,6 @@
 
     <dimen name="center_menu_icon_size">64dip</dimen>
 
+    <dimen name="design_navigation_icon_size">24dip</dimen>
 
 </resources>

@@ -3,6 +3,7 @@ package ir.iconish.sanjinehsub.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +47,7 @@ public class GetScoreActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_get_score);
+    AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
     String base64EncodedPublicKey = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwCmun9HxyV8hZjIX9aZGBIcM8u+vCS5/rBHQdUbrAwJpFjJ02z8ZQhngcjiFs7qCRsCYJjhnpVZgHnLG1WmKVmk3eUJDywAMszbSC7qK6HMYaBTp8trDpdHniMX9N9ftFHX/jbRhzVApl6rsfhZUX2alHpF0JQz5cm67pcdfai2eZalcgP9jUkE1PeCEeB+4AezX3q5bg2Qoe2XsdO1K211xGV7R4oullO3JAkTYQMCAwEAAQ==";
     // You can find it in your Bazaar console, in the Dealers section.

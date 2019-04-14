@@ -30,8 +30,8 @@ Context context;
         .asInterface((IBinder) boundService);
       try {
         long vCode = service.getVersionCode("ir.iconish.sanjinehsub");
-        Toast.makeText(context, "Version Code:" + vCode,
-          Toast.LENGTH_LONG).show();
+    /*    Toast.makeText(context, "Version Code:" + vCode,
+          Toast.LENGTH_LONG).show();*/
 
         broadCastVersion(vCode);
       } catch (Exception e) {

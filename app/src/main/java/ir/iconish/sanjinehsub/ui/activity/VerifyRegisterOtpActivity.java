@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.View;
@@ -78,6 +79,7 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
 
@@ -88,7 +90,11 @@ attachViewModel();
 
 
     }
+    @OnClick(R.id.imgBack)
+    public void imgBackAction() {
+        ActivityNavigationHelper.navigateToActivity(this,LoginActivity.class,true);
 
+    }
     private void startTimer() {
 
         countDownTimer=    new CountDownTimer(200000, 1000) {

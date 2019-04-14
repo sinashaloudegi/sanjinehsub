@@ -7,6 +7,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
 
@@ -91,17 +93,16 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
 
     private void initNavigation(){
         List<NavigationItem> navigationItems=new ArrayList<>();
-
       NavigationItem n1=new NavigationItem();
       n1.setTitle(getString(R.string.nav_dpwnload_app));
-      n1.setDrawbleId(R.drawable.unknown_profile);
+      n1.setDrawbleId(R.drawable.ic_download_nav);
       n1.setId(1);
       navigationItems.add(0,n1);
 
 
       NavigationItem n2=new NavigationItem();
       n2.setTitle(getString(R.string.nav_profile));
-      n2.setDrawbleId(R.drawable.unknown_profile);
+      n2.setDrawbleId(R.drawable.ic_person_nav);
         n2.setId(2);
       navigationItems.add(1,n2);
 
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
 
       NavigationItem n3=new NavigationItem();
       n3.setTitle(getString(R.string.nav_archive));
-      n3.setDrawbleId(R.drawable.unknown_profile);
+      n3.setDrawbleId(R.drawable.ic_archive_nav);
         n3.setId(3);
       navigationItems.add(2,n3);
 
@@ -120,21 +121,21 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
 
       NavigationItem n4=new NavigationItem();
       n4.setTitle(getString(R.string.nav_about));
-      n4.setDrawbleId(R.drawable.unknown_profile);
+      n4.setDrawbleId(R.drawable.ic_info_nav);
         n4.setId(4);
       navigationItems.add(3,n4);
 
 
       NavigationItem n5=new NavigationItem();
       n5.setTitle(getString(R.string.nav_report));
-      n5.setDrawbleId(R.drawable.unknown_profile);
+      n5.setDrawbleId(R.drawable.ic_erro_report);
         n5.setId(5);
       navigationItems.add(4,n5);
 
 
       NavigationItem n6=new NavigationItem();
       n6.setTitle(getString(R.string.nav_rules));
-      n6.setDrawbleId(R.drawable.unknown_profile);
+      n6.setDrawbleId(R.drawable.ic_rule_nav);
         n6.setId(6);
       navigationItems.add(5,n6);
 
@@ -143,7 +144,7 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
 
       NavigationItem n7=new NavigationItem();
       n7.setTitle(getString(R.string.nav_exit_account));
-      n7.setDrawbleId(R.drawable.unknown_profile);
+      n7.setDrawbleId(R.drawable.ic_signout_nav);
         n7.setId(7);
       navigationItems.add(6,n7);
 
@@ -153,7 +154,7 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
 
       NavigationItem n8=new NavigationItem();
       n8.setTitle(getString(R.string.nav_exit_app));
-      n8.setDrawbleId(R.drawable.unknown_profile);
+      n8.setDrawbleId(R.drawable.ic_exit_app_nav);
         n8.setId(8);
       navigationItems.add(7,n8);
 

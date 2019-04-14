@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SanjinehNativeBazar</string>
+    <string name="app_name">سنجینه</string>
     <string name="check_phone">بررسی شماره</string>
     <string name="enter_get_score">ورود</string>
     <string name="enter_get_score_others">تایید تلفن همراه</string>
@@ -62,4 +62,6 @@
     <string name="download_new_version">"دانلود نسخه جدید"</string>
     <string name="download">"دانلود"</string>
     <string name="ignore">"صرف نظر کردن"</string>
+    <string name="should_grant_permission">شما میبایست همه ی مجوزها را اعطا نمایید.</string>
+
 </resources>

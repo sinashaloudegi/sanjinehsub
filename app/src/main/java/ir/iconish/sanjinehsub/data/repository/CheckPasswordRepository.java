@@ -85,5 +85,7 @@ this.sharedPreferencesManager=sharedPreferencesManager;
 
 }
 
-
+    public void clearPassword(){
+        sharedPreferencesManager.clearPassword();
+    }
 }

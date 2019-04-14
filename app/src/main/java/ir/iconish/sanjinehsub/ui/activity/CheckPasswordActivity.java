@@ -3,6 +3,7 @@ package ir.iconish.sanjinehsub.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.View;
@@ -48,14 +49,27 @@ public class CheckPasswordActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_password);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
+
 
         attachViewModel();
     }
 
+    @OnClick(R.id.imgBack)
+    public void imgBackAction() {
+        ActivityNavigationHelper.navigateToActivity(this,LoginActivity.class,true);
+
+    }
+
     @OnClick(R.id.btnEnter)
     public void navMenuAction() {
+
+
+
+
+
 
         txtAlert.setVisibility(View.INVISIBLE);
         String password=  edtPassword.getText().toString()  ;
@@ -77,7 +91,7 @@ public class CheckPasswordActivity extends AppCompatActivity{
 
     @OnClick(R.id.txtForgetPassword)
     public void txtForgetPasswordAction() {
-
+        clearPassword();
         startActivity(new Intent(this,ForgetPasswordActivity.class));
         finish();
 }
@@ -157,6 +171,10 @@ else {
 private void checkPassword(String password){
         showWating();
         checkPasswordViewModel.callCheckPasswordViewModel(password);
+}
+
+private void clearPassword(){
+    checkPasswordViewModel.clearPassword();
 }
 
 }

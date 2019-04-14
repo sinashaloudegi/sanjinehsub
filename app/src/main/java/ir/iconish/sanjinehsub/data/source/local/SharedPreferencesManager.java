@@ -111,5 +111,14 @@ public void clearAll(){
 }
 
 
+public void clearPassword(){
+
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    editor.remove(PASSWORD_VALUE);
+    editor.apply();
+
+}
+
+
 
 }

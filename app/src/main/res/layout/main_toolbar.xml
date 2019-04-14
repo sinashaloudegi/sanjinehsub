@@ -11,17 +11,8 @@
     android:layout_alignParentRight="true"
     android:layout_width="@dimen/small_icon_size"
     android:layout_height="@dimen/small_icon_size"
+    android:layout_margin="@dimen/margin_5"
 android:id="@+id/imgNavMenu"
     app:srcCompat="@drawable/navigatiin_menu"/>
-    <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/imgProfile"
 
-        app:srcCompat="@drawable/unknown_profile"
-        android:layout_width="@dimen/small_icon_size"
-        android:layout_height="@dimen/small_icon_size"
-        android:layout_alignParentLeft="true"
-
-
-
-        />
 </RelativeLayout>
