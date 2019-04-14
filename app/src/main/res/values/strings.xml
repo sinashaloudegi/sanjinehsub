@@ -36,6 +36,7 @@
     <string name="send_password">ارسال رمز عبور</string>
     <string name="forget_password">فراموش کردن رمز عبور</string>
     <string name="enter_password">لطفا رمز عبور را وارد کنید</string>
+
     <string name="force_enter_password">لطفا رمز عبور را وارد کنید</string>
     <string name="force_enter_phone">لطفا شماره تلفن همراه را وارد کنید</string>
     <string name="valid_phone">تعداد ارقام تلفن همراه را درست وارد کنید</string>

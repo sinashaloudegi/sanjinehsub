@@ -7,7 +7,6 @@ import dagger.Module;
 import dagger.Provides;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.source.api.CheckPasswordApi;
-import ir.iconish.sanjinehsub.data.source.api.LoginApi;
 
 @Module
 public class CheckPasswordActivityModule {

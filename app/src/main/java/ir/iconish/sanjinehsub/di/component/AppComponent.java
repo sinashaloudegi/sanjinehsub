@@ -11,6 +11,7 @@ import dagger.Component;
 import ir.iconish.sanjinehsub.di.module.AppModule;
 import ir.iconish.sanjinehsub.di.module.CheckPasswordActivityModule;
 import ir.iconish.sanjinehsub.di.module.ForgetPasswordActivityModule;
+import ir.iconish.sanjinehsub.di.module.GetScoreActivityModule;
 import ir.iconish.sanjinehsub.di.module.LoginActivityModule;
 import ir.iconish.sanjinehsub.di.module.NetModule;
 import ir.iconish.sanjinehsub.di.module.SetPasswordActivityModule;
@@ -27,7 +28,7 @@ import ir.iconish.sanjinehsub.ui.activity.VerifyRegisterOtpActivity;
 
 
 @Singleton
-@Component(modules = {AppModule.class, NetModule.class, LoginActivityModule.class, CheckPasswordActivityModule.class, ForgetPasswordActivityModule.class, SetPasswordActivityModule.class,
+@Component(modules = {AppModule.class, NetModule.class, LoginActivityModule.class, GetScoreActivityModule.class, CheckPasswordActivityModule.class, ForgetPasswordActivityModule.class, SetPasswordActivityModule.class,
         VerifyRegisterOtpModule.class
 })
 public interface AppComponent {

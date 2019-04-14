@@ -2,7 +2,6 @@ package ir.iconish.sanjinehsub.data.source.local;
 
 
 import android.content.SharedPreferences;
-import android.widget.ProgressBar;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
