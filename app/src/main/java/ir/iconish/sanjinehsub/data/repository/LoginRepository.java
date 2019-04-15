@@ -40,6 +40,11 @@ this.sharedPreferencesManager=sharedPreferencesManager;
                 sharedPreferencesManager.setUserIdValue(user.getUserId());
 
             }
+            else if (user.getResponseCodeEnum().getValue()== ResponseCodeEnum.USERISNEW.getValue()){
+
+                sharedPreferencesManager.setMobileNumberValue(mobileNumer);
+
+            }
 
             volleyCallback.onSuccess(o);
         }

@@ -99,7 +99,7 @@ public class SetPasswordActivity extends AppCompatActivity{
                     stopWating();
 
 
-if(passwordValidationResponse.getRespobseStatusCode()==1000){
+if(passwordValidationResponse.getRespobseStatusCode()==9999){
 
     ActivityNavigationHelper.navigateToActivity(this,MainActivity.class,true);
 }

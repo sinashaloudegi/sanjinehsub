@@ -62,12 +62,6 @@ public class ForgetPasswordApi {
         return passwordValidationResponse;
     }
 
-
-
-
-
-
-
     public void callForgetPasswordApi(String mobileNumer,final VolleyCallback volleyCallback){
 
 

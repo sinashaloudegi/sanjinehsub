@@ -60,6 +60,10 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
     }
 
 
+
+
+
+
     @Override
     public void onBackPressed() {
 
@@ -76,6 +80,66 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
 
       startActivity(new Intent(this,cls));
     }
+
+
+
+    @OnClick(R.id.rootScoreHelp)
+    public void rootScoreHelpAction() {
+
+ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/about/reporttype?id=40&child=45",this,WebViewActivity.class);
+
+    }
+
+
+
+
+    @OnClick(R.id.rootImprovement)
+    public void rrootImprovementAction() {
+
+ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/consultation/advice?id=39&child=49",this,WebViewActivity.class);
+
+    }
+
+
+
+
+    @OnClick(R.id.rootEconomicNews)
+    public void rootEconomicNewsAction() {
+
+ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/news?id=37",this,WebViewActivity.class);
+
+    }
+
+
+
+
+    @OnClick(R.id.rootBankService)
+    public void rootBankServiceAction() {
+
+ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/bankService?id=87",this,WebViewActivity.class);
+
+    }
+
+
+
+
+    @OnClick(R.id.rootBurse)
+    public void rootBurseAction() {
+
+ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/bourse?id=88",this,WebViewActivity.class);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     @OnClick(R.id.imgNavMenu)
     public void navMenuAction() {
