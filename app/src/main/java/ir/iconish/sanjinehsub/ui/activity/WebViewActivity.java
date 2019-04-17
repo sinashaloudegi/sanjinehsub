@@ -18,6 +18,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -36,8 +37,16 @@ import ir.iconish.sanjinehsub.util.ToastHelper;
 public class WebViewActivity extends AppCompatActivity {
 
 
+
+
     @BindView(R.id.webView)
     WebView webView;
+
+
+
+
+    @BindView(R.id.customViewContainer)
+    FrameLayout customViewContainer;
 
 
     @Override
@@ -52,7 +61,7 @@ public class WebViewActivity extends AppCompatActivity {
         String url = getIntent().getStringExtra("url");
 
         webView.loadUrl(url);
-        new WebViewConfiguration(this,webView,url).initWebView();
+        new WebViewConfiguration(this,customViewContainer,webView,url).initWebView();
     }
 
     @Override

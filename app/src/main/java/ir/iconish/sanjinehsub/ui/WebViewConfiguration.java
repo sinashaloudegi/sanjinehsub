@@ -8,9 +8,13 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
@@ -20,10 +24,18 @@ public class WebViewConfiguration {
     WebView webView;
     Context context;
     String url;
-    public WebViewConfiguration(Context context,WebView webView,String url) {
+    private View mCustomView;
+    private WebChromeClient.CustomViewCallback customViewCallback;
+
+
+    private FrameLayout customViewContainer;
+
+
+    public WebViewConfiguration(Context context,FrameLayout customViewContainer,WebView webView,String url) {
         this.webView=webView;
         this.url=url;
         this.context=context;
+        this.customViewContainer=customViewContainer;
     }
 
     @SuppressLint("JavascriptInterface")
@@ -90,12 +102,21 @@ public class WebViewConfiguration {
             }
         }
 
-        if (Build.VERSION.SDK_INT >= 19) {
 
+        if (Build.VERSION.SDK_INT >= 19) {
+            webView.setWebChromeClient(new MyWebChromeClient());
             webView.setWebViewClient(new MyWebClient());
         } else {
             webView.setWebViewClient(new MyWebClient());
         }
+
+
+
+
+
+
+
+
         webView.addJavascriptInterface(this, "Android");
 
         webView.loadUrl(url);
@@ -188,4 +209,74 @@ public class WebViewConfiguration {
 
         }
     }
+    public class MyWebChromeClient extends WebChromeClient {
+
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+//      if (newProgress < 100 && progress.getVisibility() == ProgressBar.GONE) {
+//        progress.setVisibility(ProgressBar.VISIBLE);
+//      }
+//
+//      progress.setProgress(newProgress);
+//      if (newProgress == 100) {
+//        progress.setVisibility(ProgressBar.GONE);
+//      }
+            // Your custom code.
+        }
+
+        private Bitmap mDefaultVideoPoster;
+        private View mVideoProgressView;
+
+        @Override
+        public void onShowCustomView(View view, int requestedOrientation, CustomViewCallback callback) {
+            onShowCustomView(view, callback);    //To change body of overridden methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public void onShowCustomView(View view, CustomViewCallback callback) {
+
+            // if a view already exists then immediately terminate the new one
+            if (mCustomView != null) {
+                callback.onCustomViewHidden();
+                return;
+            }
+            mCustomView = view;
+            webView.setVisibility(View.GONE);
+            customViewContainer.setVisibility(View.VISIBLE);
+            customViewContainer.addView(view);
+            customViewCallback = callback;
+        }
+
+        @Override
+        public View getVideoLoadingProgressView() {
+
+            if (mVideoProgressView == null) {
+                LayoutInflater inflater = LayoutInflater.from(context);
+                //mVideoProgressView = inflater.inflate(R.layout.video_progress, null);
+            }
+            return mVideoProgressView;
+        }
+
+        @Override
+        public void onHideCustomView() {
+            super.onHideCustomView();
+            if (mCustomView == null)
+                return;
+
+            webView.setVisibility(View.VISIBLE);
+            customViewContainer.setVisibility(View.GONE);
+
+            // Hide the custom view.
+            mCustomView.setVisibility(View.GONE);
+
+            // Remove the custom view from its container.
+            customViewContainer.removeView(mCustomView);
+            customViewCallback.onCustomViewHidden();
+
+            mCustomView = null;
+        }
+
+    }
+
 }

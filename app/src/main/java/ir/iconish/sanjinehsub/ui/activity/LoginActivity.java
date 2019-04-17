@@ -115,7 +115,7 @@ attachViewModel();
 
 
 showWating();
-loginViewModel.callLoginViewModel(edtMobileNumber.getText().toString());
+loginViewModel.callLoginViewModel(mobileNumber);
        // startActivity(new Intent(this,LoginVerificatonActivity.class));
         //finish();
 }
