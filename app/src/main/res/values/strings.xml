@@ -4,7 +4,7 @@
     <string name="enter_get_score">ورود</string>
     <string name="enter_get_score_others">تایید تلفن همراه</string>
     <string name="phone_hint">09*********</string>
-    <string name="account_credit">برای دریافت نمره اعتباری و عضویت در سرویس جامع اعتبار سنجی همراه با امکانات کامل شماره موبایل خود را وارد کنید (حق اشتراک روزانه 400 تومان)</string>
+    <string name="account_credit">برای دریافت نمره اعتباری و عضویت در سرویس جامع اعتبار سنجی همراه با امکانات کامل شماره موبایل خود را وارد کنید</string>
     <string name="get_score">مشترک گرامی جهت مشاهده رتبه ی اعتباری لطفا کد ملی خود را وارد نمائید.\n(اطلاعات شما نزد سنجینه محفوظ خواهد ماند.)</string>
     <string name="rules">بخش <a href="http://www.google.com/">قوانین و مقررات</a> استفاده از خدمات و سرویس سایت سنجینه را مطالعه کرده ام و با کلیه موارد آن موافقم.</string>
     <string name="enter_verification">کد فعالسازی را وارد نمایید</string>
