@@ -17,6 +17,7 @@ public class SharedPreferencesManager {
     private static final String RESPONSE_STATUS_CODE_VALUE = "RESPONSE_STATUS_CODE_VALUE";
     private static final String USER_ID_VALUE = "RESPONSE_STATUS_CODE_VALUE";
     private static final String PASSWORD_VALUE = "PASSWORD_VALUE";
+    private static final String NATIONAL_CODE = "NAIONAL_CODE";
 
 
 
@@ -56,6 +57,9 @@ public class SharedPreferencesManager {
         return sharedPreferences.getString(FIRST_NAME_VALUE , null);
     }
 
+
+
+
     public  void setFirstNameValue( String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(FIRST_NAME_VALUE , newValue);
@@ -71,6 +75,25 @@ public class SharedPreferencesManager {
         editor.putString(LAST_NAME_VALUE , newValue);
         editor.commit();
     }
+
+
+
+
+
+
+      public  void setNationalCodeValue( String newValue) {
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(NATIONAL_CODE , newValue);
+        editor.commit();
+    }
+
+    public  String getNationalCodeValue() {
+        return sharedPreferences.getString(NATIONAL_CODE , null);
+    }
+
+
+
+
 
       public  int getResponseStatusCodeValue() {
         return sharedPreferences.getInt(RESPONSE_STATUS_CODE_VALUE , -1);

@@ -24,7 +24,7 @@ this.loginApi=loginApi;
 this.sharedPreferencesManager=sharedPreferencesManager;
     }
 
-    public void callLoginRepository  (String mobileNumer , final VolleyCallback volleyCallback) {
+    public void callLoginRepository  (String mobileNumer ,String nationalCode, final VolleyCallback volleyCallback) {
         loginApi.callLoginApi(mobileNumer,new VolleyCallback() {
         @Override
         public   void onSuccess(Object o) {
@@ -36,6 +36,7 @@ this.sharedPreferencesManager=sharedPreferencesManager;
                 sharedPreferencesManager.setFirstNameValue(user.getFirstName());
                 sharedPreferencesManager.setLastNameValue(user.getLastName());
                 sharedPreferencesManager.setEmailValue(user.getEmail());
+                sharedPreferencesManager.setNationalCodeValue(nationalCode);
                 sharedPreferencesManager.setResponseStatusCodeValue(user.getResponseCodeEnum().getValue());
                 sharedPreferencesManager.setUserIdValue(user.getUserId());
 

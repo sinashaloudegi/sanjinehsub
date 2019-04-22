@@ -24,6 +24,7 @@ import ir.iconish.sanjinehsub.data.vm.LoginViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.ui.DialogHelper;
+import ir.iconish.sanjinehsub.util.Helper;
 
 public class LoginActivity extends AppCompatActivity{
 
@@ -42,8 +43,26 @@ ProgressBar prgLogin;
 
 
 
-    @BindView(R.id.txtAlert)
-    TextView txtAlert;
+    @BindView(R.id.txtAlertPhone)
+    TextView txtAlertPhone;
+
+
+
+
+
+
+    @BindView(R.id.edtNationalCode)
+    EditText edtNationalCode;
+
+
+
+
+    @BindView(R.id.txtAlertNationalCode)
+    TextView txtAlertNationalCode;
+
+
+
+
 
 
 
@@ -84,30 +103,48 @@ attachViewModel();
 
     @OnClick(R.id.btnCheckPhone)
     public void btnCheckPhoneAction() {
-        txtAlert.setVisibility(View.INVISIBLE);
+        txtAlertPhone.setVisibility(View.INVISIBLE);
+        txtAlertNationalCode.setVisibility(View.INVISIBLE);
       String mobileNumber=  edtMobileNumber.getText().toString()  ;
+      String nationalCode=  edtNationalCode.getText().toString()  ;
 
         if (!mobileNumber.startsWith("09")){
-            txtAlert.setText(getString(R.string.enter_correct_mobile_phone));
-            txtAlert.setVisibility(View.VISIBLE);
+            txtAlertPhone.setText(getString(R.string.enter_correct_mobile_phone));
+            txtAlertPhone.setVisibility(View.VISIBLE);
             return;
         }
 
 
 
         if(mobileNumber.length()<11){
-            txtAlert.setText(getString(R.string.enter_correct_mobile_phone));
-            txtAlert.setVisibility(View.VISIBLE);
+            txtAlertPhone.setText(getString(R.string.enter_correct_mobile_phone));
+            txtAlertPhone.setVisibility(View.VISIBLE);
             return;
         }
 
 
 
         if(!checkBoxRules.isChecked()){
-            txtAlert.setText(getString(R.string.accept_rules));
-            txtAlert.setVisibility(View.VISIBLE);
+            txtAlertPhone.setText(getString(R.string.accept_rules));
+            txtAlertPhone.setVisibility(View.VISIBLE);
             return;
         }
+
+
+        if(nationalCode.length()<10){
+            txtAlertNationalCode.setText(getString(R.string.enter_correct_count_national_code));
+            txtAlertNationalCode.setVisibility(View.VISIBLE);
+            return;
+        }
+
+
+             if(!Helper.validationNationalCode(nationalCode)){
+                 txtAlertNationalCode.setText(getString(R.string.enter_correct_national_code));
+                 txtAlertNationalCode.setVisibility(View.VISIBLE);
+            return;
+        }
+
+
 
 
 
@@ -115,7 +152,7 @@ attachViewModel();
 
 
 showWating();
-loginViewModel.callLoginViewModel(mobileNumber);
+loginViewModel.callLoginViewModel(mobileNumber,nationalCode);
        // startActivity(new Intent(this,LoginVerificatonActivity.class));
         //finish();
 }
