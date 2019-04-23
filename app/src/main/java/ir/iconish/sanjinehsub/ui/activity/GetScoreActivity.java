@@ -40,8 +40,10 @@ public class GetScoreActivity extends AppCompatActivity {
 
   @BindView(R.id.edtNtcode)
   EditText edtNtcode;
+
   @BindView(R.id.btnGetScore)
   AppCompatButton btnGetScore;
+
   @BindView(R.id.prgGetScore)
   ProgressBar prgGetScore;
   @BindView(R.id.imgBack)
@@ -65,7 +67,7 @@ public class GetScoreActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_get_score);
-    btnGetScore.setEnabled(false);
+
     ButterKnife.bind(this);
     ((AppController) getApplication()).getAppComponent().inject(this);
 
