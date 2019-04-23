@@ -242,7 +242,8 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
                     stopWating();
 
 
-ActivityNavigationHelper.navigateToActivity(this,SetPasswordActivity.class,true);
+//ActivityNavigationHelper.navigateToActivity(this,SetPasswordActivity.class,true);
+ActivityNavigationHelper.navigateToActivity(this,MainActivity.class,true);
 
 //if 1010 go to enter pass -- if 1011 go to otp
 

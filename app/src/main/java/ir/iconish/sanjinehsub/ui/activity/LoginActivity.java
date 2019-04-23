@@ -165,7 +165,8 @@ stopWating();
 
 
 if(user.getResponseCodeEnum().getValue()== ResponseCodeEnum.USER_EXIST.getValue()){
-    ActivityNavigationHelper.navigateToActivity(this, CheckPasswordActivity.class,true);
+    //ActivityNavigationHelper.navigateToActivity(this, CheckPasswordActivity.class,true);
+    ActivityNavigationHelper.navigateToActivity(this, MainActivity.class,true);
 }
 
 else if (user.getResponseCodeEnum().getValue()== ResponseCodeEnum.USERISNEW.getValue()){
