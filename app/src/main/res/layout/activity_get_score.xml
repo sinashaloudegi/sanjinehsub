@@ -123,6 +123,7 @@
     android:layout_alignParentBottom="true"
     android:layout_marginBottom="@dimen/get_score_button_margin_button"
     android:text="@string/enter_get_score"
+      android:enabled="false"
     android:textColor="@color/sanjinehColor"
     android:textSize="@dimen/get_score_steps_text_size"
     app:backgroundTint="@color/yellow_button"
