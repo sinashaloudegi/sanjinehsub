@@ -36,6 +36,7 @@ public class PasswordVerificatonActivity extends AppCompatActivity{
     }
 
     private void startTimer() {
+       // int timerDuration=checkPasswordViewModel.getTimerDuration();
 
         countDownTimer=    new CountDownTimer(200000, 1000) {
 

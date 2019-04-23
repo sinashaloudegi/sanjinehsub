@@ -98,8 +98,10 @@ public class ForgetPassworReciverActivity extends AppCompatActivity{
     }
 
     private void startTimer() {
-long timer=Long.parseLong(getString(R.string.timer_start_value));
-        countDownTimer=    new CountDownTimer(timer, 1000) {
+//long timer=Long.parseLong(getString(R.string.timer_start_value));
+        int timerDuration=checkPasswordViewModel.getTimerDuration();
+
+        countDownTimer=    new CountDownTimer(timerDuration, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 if(millisUntilFinished<10000){

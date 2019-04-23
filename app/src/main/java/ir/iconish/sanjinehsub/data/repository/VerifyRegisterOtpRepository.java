@@ -72,5 +72,8 @@ sharedPreferencesManager.setPasswordValue(otp);
 
 }
 
+    public int getTimerDuration(){
+        return sharedPreferencesManager.getTimerDurationValue();
+    }
 
 }

@@ -136,4 +136,7 @@ public class VerifyRegisterOtpViewModel extends ViewModel {
       });
     }
 
+    public int getTimerDuration(){
+        return confirmRegistryRepository.getTimerDuration();
+    }
 }
