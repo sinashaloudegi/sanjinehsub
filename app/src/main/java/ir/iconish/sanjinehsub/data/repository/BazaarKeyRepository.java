@@ -3,28 +3,23 @@ package ir.iconish.sanjinehsub.data.repository;
 
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.source.api.GetScoreApi;
+import ir.iconish.sanjinehsub.data.source.api.BazaarKeyApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
-import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
-import ir.iconish.sanjinehsub.util.Purchase;
 
 
-public class GetScoreRepository {
-  GetScoreApi getScoreApi;
+public class BazaarKeyRepository {
+  BazaarKeyApi bazaarKeyApi;
 
 
-  SharedPreferencesManager sharedPreferencesManager;
 
   @Inject
-  public GetScoreRepository(GetScoreApi getScoreApi, SharedPreferencesManager sharedPreferencesManager) {
+  public BazaarKeyRepository(BazaarKeyApi bazaarKeyApi) {
 
-    this.getScoreApi = getScoreApi;
-    this.sharedPreferencesManager = sharedPreferencesManager;
+    this.bazaarKeyApi = bazaarKeyApi;
   }
 
-  public void callGetScoreRepository(Purchase purchase, final VolleyCallback volleyCallback) {
-    String msisdn = sharedPreferencesManager.getMobileNumberValue();
-    getScoreApi.callGetScoreApi(msisdn, purchase, new VolleyCallback() {
+  public void callBazaarKeyRepository(final VolleyCallback volleyCallback) {
+    bazaarKeyApi.callBazaarKeyApi(new VolleyCallback() {
       @Override
       public void onSuccess(Object o) {
         volleyCallback.onSuccess(o);

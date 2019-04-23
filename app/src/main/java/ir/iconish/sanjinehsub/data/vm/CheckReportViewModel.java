@@ -5,15 +5,14 @@ import android.arch.lifecycle.ViewModel;
 
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.model.User;
-import ir.iconish.sanjinehsub.data.repository.GetScoreRepository;
+import ir.iconish.sanjinehsub.data.model.AvailableReport;
+import ir.iconish.sanjinehsub.data.repository.CheckReportRepository;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
-import ir.iconish.sanjinehsub.util.Purchase;
 
-public class GetScoreViewModel extends ViewModel {
+public class CheckReportViewModel extends ViewModel {
 
 
-    private MutableLiveData<User> apiSuccessLiveDataResponse;
+    private MutableLiveData<AvailableReport> apiSuccessLiveDataResponse;
     private MutableLiveData<String> apiErrorLiveData;
     private MutableLiveData<String> apiServerErrorLiveData;
     private MutableLiveData<String> apiClientNetworkErrorLiveData;
@@ -22,7 +21,7 @@ public class GetScoreViewModel extends ViewModel {
 
 
 
-    GetScoreRepository getScoreRepository;
+    CheckReportRepository checkReportRepository;
 
     private MutableLiveData<String> apiForbiden403ErrorLiveData;
     private MutableLiveData<String> apiValidation422ErrorLiveData;
@@ -39,15 +38,15 @@ public class GetScoreViewModel extends ViewModel {
         return apiValidation422ErrorLiveData;
     }
 
-    public MutableLiveData<User> getApiSuccessLiveDataResponse() {
+    public MutableLiveData<AvailableReport> getApiSuccessLiveDataResponse() {
         return apiSuccessLiveDataResponse;
     }
 
     @Inject
-    public GetScoreViewModel(GetScoreRepository getScoreRepository)
+    public CheckReportViewModel(CheckReportRepository checkReportRepository)
     {
 
-        this.getScoreRepository=getScoreRepository;
+        this.checkReportRepository=checkReportRepository;
 
 
 
@@ -84,13 +83,13 @@ public class GetScoreViewModel extends ViewModel {
         return apiAuthFailureErrorLiveData;
     }
 
-    public void callGetScoreViewModel(Purchase purchase) {
+    public void callCheckReportViewModel(String ntcode) {
 
 
-      getScoreRepository.callGetScoreRepository(purchase,new VolleyCallback() {
+      checkReportRepository.callCheckReportRepository(ntcode,new VolleyCallback() {
           @Override
           public void onSuccess(Object obj) {
-            apiSuccessLiveDataResponse.setValue((User) obj);
+            apiSuccessLiveDataResponse.setValue((AvailableReport) obj);
 
           }
           @Override

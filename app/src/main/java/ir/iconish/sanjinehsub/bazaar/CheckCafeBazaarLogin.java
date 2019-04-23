@@ -1,6 +1,5 @@
 package ir.iconish.sanjinehsub.bazaar;
 
-import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -10,11 +9,6 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.farsitel.bazaar.ILoginCheckService;
-
-import javax.inject.Inject;
-
-import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 
 
 public class CheckCafeBazaarLogin {
@@ -66,6 +60,9 @@ this.context=context;
         Log.i("Test","isLoggedIn" + isLoggedIn);
         Log.e("Test","isLoggedIn" + isLoggedIn);
 
+        broadCastCheckBazaarLogin(isLoggedIn);
+
+
 
       } catch (Exception e) {
         e.printStackTrace();
@@ -78,4 +75,14 @@ this.context=context;
       Log.e("Test", "onServiceDisconnected(): Disconnected");
     }
   }
+
+
+  private void broadCastCheckBazaarLogin(boolean versionCode){
+
+    Intent intent = new Intent("checkbazaarlogin");
+    intent.putExtra("checkbazaarlogin", versionCode);
+    context.sendBroadcast(intent);
+
+  }
+
 }

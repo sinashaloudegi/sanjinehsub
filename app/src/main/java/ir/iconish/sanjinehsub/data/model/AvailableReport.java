@@ -1,8 +1,8 @@
-package ir.iconish.model.creditscoreclient.dto;
+package ir.iconish.sanjinehsub.data.model;
 
 import java.io.Serializable;
 
-public class AvailableDTO implements Serializable {
+public class AvailableReport implements Serializable {
 
 	Boolean validMobile;
 	Boolean isAvailable;

@@ -85,6 +85,8 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerVertical="true"
+      android:checked="true"
+      android:enabled="false"
       />
 
   </RelativeLayout>
@@ -96,9 +98,21 @@
     android:layout_height="wrap_content"
     android:visibility="invisible"
     android:layout_centerHorizontal="true"
-    android:layout_above="@id/btnGetScore"
+    android:layout_above="@id/txtAlert"
     android:layout_marginBottom="@dimen/margin_50"
     />
+
+  <TextView
+    android:id="@+id/txtAlert"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="@dimen/margin_50"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/btnGetScore"
+    android:visibility="invisible"
+    android:gravity="center"
+    android:textSize="@dimen/login_steps_text_size"
+    android:text=""
+    android:textColor="@color/alert_incorrect_entry"/>
 
 
   <android.support.v7.widget.AppCompatButton

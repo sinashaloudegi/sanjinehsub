@@ -3,28 +3,27 @@ package ir.iconish.sanjinehsub.data.repository;
 
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.source.api.GetScoreApi;
+import ir.iconish.sanjinehsub.data.source.api.CheckReportApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
-import ir.iconish.sanjinehsub.util.Purchase;
 
 
-public class GetScoreRepository {
-  GetScoreApi getScoreApi;
+public class CheckReportRepository {
+  CheckReportApi checkReportApi;
 
 
   SharedPreferencesManager sharedPreferencesManager;
 
   @Inject
-  public GetScoreRepository(GetScoreApi getScoreApi, SharedPreferencesManager sharedPreferencesManager) {
+  public CheckReportRepository(CheckReportApi checkReportApi, SharedPreferencesManager sharedPreferencesManager) {
 
-    this.getScoreApi = getScoreApi;
+    this.checkReportApi = checkReportApi;
     this.sharedPreferencesManager = sharedPreferencesManager;
   }
 
-  public void callGetScoreRepository(Purchase purchase, final VolleyCallback volleyCallback) {
-    long userid = sharedPreferencesManager.getUserIdValue();
-    getScoreApi.callGetScoreApi(userid, purchase, new VolleyCallback() {
+  public void callCheckReportRepository(String ntcode, final VolleyCallback volleyCallback) {
+    String msisdn = sharedPreferencesManager.getMobileNumberValue();
+    checkReportApi.callCheckReportApi(ntcode, msisdn, new VolleyCallback() {
       @Override
       public void onSuccess(Object o) {
         volleyCallback.onSuccess(o);

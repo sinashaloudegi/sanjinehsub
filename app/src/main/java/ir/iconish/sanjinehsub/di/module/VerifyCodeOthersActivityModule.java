@@ -6,17 +6,17 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.source.api.SendVerifyCodeApi;
+import ir.iconish.sanjinehsub.data.source.api.ConfirmVerifyCodeApi;
 
 @Module
-public class GetScoreOthersActivityModule {
+public class VerifyCodeOthersActivityModule {
 
 
 
     @Provides
     @Singleton
-    public SendVerifyCodeApi provideGetScoreApi(AppController appController){
-        return new SendVerifyCodeApi(appController);
+    public ConfirmVerifyCodeApi provideConfirmVerifyCodeApi(AppController appController){
+        return new ConfirmVerifyCodeApi(appController);
     }
 
 //    @Provides

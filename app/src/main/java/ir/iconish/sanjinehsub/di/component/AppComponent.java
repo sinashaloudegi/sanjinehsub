@@ -20,15 +20,17 @@ import ir.iconish.sanjinehsub.ui.activity.CheckPasswordActivity;
 import ir.iconish.sanjinehsub.ui.activity.ForgetPassworReciverActivity;
 import ir.iconish.sanjinehsub.ui.activity.ForgetPasswordActivity;
 import ir.iconish.sanjinehsub.ui.activity.GetScoreActivity;
+import ir.iconish.sanjinehsub.ui.activity.GetScoreOthersActivity;
 import ir.iconish.sanjinehsub.ui.activity.LoginActivity;
 import ir.iconish.sanjinehsub.ui.activity.MainActivity;
 import ir.iconish.sanjinehsub.ui.activity.SetPasswordActivity;
 import ir.iconish.sanjinehsub.ui.activity.SplashActivity;
+import ir.iconish.sanjinehsub.ui.activity.VerifyCodeOthersActivity;
 import ir.iconish.sanjinehsub.ui.activity.VerifyRegisterOtpActivity;
 
 
 @Singleton
-@Component(modules = {AppModule.class, NetModule.class, LoginActivityModule.class, GetScoreActivityModule.class, CheckPasswordActivityModule.class, ForgetPasswordActivityModule.class, SetPasswordActivityModule.class,
+@Component(modules = {AppModule.class, NetModule.class, LoginActivityModule.class, GetScoreActivityModule.class, GetScoreActivityModule.class, CheckPasswordActivityModule.class, ForgetPasswordActivityModule.class, SetPasswordActivityModule.class,
         VerifyRegisterOtpModule.class
 })
 public interface AppComponent {
@@ -42,5 +44,7 @@ public interface AppComponent {
     void inject(SetPasswordActivity activity);
     void inject(VerifyRegisterOtpActivity activity);
     void inject(MainActivity activity);
+    void inject(GetScoreOthersActivity activity);
+    void inject(VerifyCodeOthersActivity activity);
 
 }

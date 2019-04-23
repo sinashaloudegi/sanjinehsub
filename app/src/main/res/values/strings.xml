@@ -37,9 +37,9 @@
     <string name="forget_password">فراموش کردن رمز عبور</string>
     <string name="enter_password">لطفا رمز عبور را وارد کنید</string>
 
-    <string name="force_enter_password">لطفا رمز عبور را وارد کنید</string>
-    <string name="force_enter_phone">لطفا شماره تلفن همراه را وارد کنید</string>
-    <string name="valid_phone">تعداد ارقام تلفن همراه را درست وارد کنید</string>
+    <string name="force_enter_password">لطفا رمز عبور را وارد کنید.</string>
+    <string name="force_enter_phone">لطفا شماره تلفن همراه را وارد کنید.</string>
+    <string name="valid_phone">لطفا تعداد ارقام شماره تلفن را درست وارد کنید.</string>
     <string name="retry_online">تلاش مجدد</string>
 
     <string name="no_internet">دسترسی به اینترنت میسر نمی باشد.</string>
@@ -49,7 +49,7 @@
     <string name="nav_exit_app">خروج از برنامه</string>
     <string name="exit_app">خروج از برنامه</string>
     <string name="exit_app_sure">آیا می خواهید از برنامه خارج شوید؟</string>
-    <string name="enter_correct_mobile_phone">شماره تلفن همراه را درست وارد کنید</string>
+    <string name="enter_correct_mobile_phone">لطفا شماره تلفن را درست وارد کنید.</string>
     <string name="enter_correct_password">رمز عبور را درست وارد کنید</string>
     <string name="accept_rules">لطفا بخش قوانین و مقررات را تایید نماید</string>
     <string name="rules_url">"https://www.sanjineh.ir/terms"</string>
@@ -62,4 +62,9 @@
     <string name="download_new_version">"دانلود نسخه جدید"</string>
     <string name="download">"دانلود"</string>
     <string name="ignore">"صرف نظر کردن"</string>
+
+
+
+    <string name="force_enter_phone_ntcode">"لطفا شماره تلفن و کد ملی را وارد کنید."</string>
+    <string name="force_enter_ntcode">"لطفا کد ملی را وارد کنید."</string>
 </resources>

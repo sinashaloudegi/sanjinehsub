@@ -28,14 +28,16 @@ import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.vm.BazaarKeyViewModel;
 import ir.iconish.sanjinehsub.data.vm.CheckReportViewModel;
+import ir.iconish.sanjinehsub.data.vm.ConfirmVerifyCodeViewModel;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
+import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
 import ir.iconish.sanjinehsub.util.Inventory;
 import ir.iconish.sanjinehsub.util.Purchase;
 
-public class GetScoreActivity extends AppCompatActivity {
+public class VerifyCodeOthersActivity extends AppCompatActivity {
 
   @BindView(R.id.edtNtcode)
   EditText edtNtcode;
@@ -58,6 +60,9 @@ public class GetScoreActivity extends AppCompatActivity {
   @Inject
   BazaarKeyViewModel bazaarKeyViewModel;
 
+  @Inject
+  ConfirmVerifyCodeViewModel confirmVerifyCodeViewModel;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -67,7 +72,9 @@ public class GetScoreActivity extends AppCompatActivity {
     ((AppController) getApplication()).getAppComponent().inject(this);
 
     attachViewModel();
-    bazaarKeyViewModel.callBazaarKeyViewModel();
+    Intent intent = getIntent();
+    String msisdn = intent.getStringExtra("msisdn");
+    confirmVerifyCodeViewModel.callConfirmVerifyCodeViewModel(msisdn,"code");
 
   }
 
@@ -87,11 +94,13 @@ public class GetScoreActivity extends AppCompatActivity {
 
   @OnClick(R.id.imgBack)
   public void imgBackAction() {
-
     onBackPressed();
   }
 
-
+  @Override
+  public void onBackPressed() {
+    startActivity();
+  }
 
   private void  bazaarSetup(String bazaarKey){
     String base64EncodedPublicKey = bazaarKey ;
@@ -127,6 +136,36 @@ public class GetScoreActivity extends AppCompatActivity {
 
   private void attachViewModel() {
 
+    confirmVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, reportStateEnumId -> {
+      if (reportStateEnumId == 12){}
+      }
+    );
+    confirmVerifyCodeViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+    });
+    confirmVerifyCodeViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+      goToFailApiPage("ApiError");
+    });
+    confirmVerifyCodeViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+    {
+      goToFailApiPage("ServerError");
+    });
+    confirmVerifyCodeViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+      {
+        goToFailApiPage("TimeOutError");
+      }
+    );
+    confirmVerifyCodeViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+      goToFailApiPage("ClientNetworkError");
+    });
+
+    confirmVerifyCodeViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+    });
+    confirmVerifyCodeViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+    });
+
+
+
+
     bazaarKeyViewModel.getApiSuccessLiveDataResponse().observe(this, bazaarKey -> {
       bazaarSetup(bazaarKey);
       btnGetScore.setEnabled(true);
@@ -160,7 +199,7 @@ public class GetScoreActivity extends AppCompatActivity {
 
     checkReportViewModel.getApiSuccessLiveDataResponse().observe(this, services -> {
       if (services.getAvailable()== true && services.getValidMobile()== true){
-         new CheckCafeBazaarLogin(GetScoreActivity.this).initService();
+         new CheckCafeBazaarLogin(VerifyCodeOthersActivity.this).initService();
       }
       else if (services.getAvailable() == true && services.getValidMobile() == false){
         Toast.makeText(this,"کد ملی وارد شده دارای گزارش می باشد اما شماره موبایل وارد شده با این کد ملی مطابقت ندارد.",Toast.LENGTH_SHORT).show();
@@ -308,14 +347,14 @@ public class GetScoreActivity extends AppCompatActivity {
               String randomUUIDString = uuid.toString();
               Log.i("Test", "randomUUIDString : " + randomUUIDString);
               //"bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ"
-              mHelper.launchPurchaseFlow(GetScoreActivity.this, "sanj01", 10001, mPurchaseFinishedListener, randomUUIDString);
+              mHelper.launchPurchaseFlow(VerifyCodeOthersActivity.this, "sanj01", 10001, mPurchaseFinishedListener, randomUUIDString);
 
             }
             else {
               Intent intentLogin = new Intent(Intent.ACTION_VIEW);
               intentLogin.setData(Uri.parse("bazaar://login"));
               intentLogin.setPackage("com.farsitel.bazaar");
-              GetScoreActivity.this.startActivity(intentLogin);
+              VerifyCodeOthersActivity.this.startActivity(intentLogin);
             }
 
             break;
@@ -395,5 +434,12 @@ public class GetScoreActivity extends AppCompatActivity {
     String payload = p.getDeveloperPayload();
     return true;
   }
+
+
+  private void startActivity(){
+    ActivityNavigationHelper.navigateToActivity(this,GetScoreOthersActivity.class,true);
+
+  }
+
 
 }

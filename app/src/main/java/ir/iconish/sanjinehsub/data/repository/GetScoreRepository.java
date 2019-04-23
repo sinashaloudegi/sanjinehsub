@@ -10,6 +10,7 @@ import ir.iconish.sanjinehsub.util.Purchase;
 
 
 public class GetScoreRepository {
+
   GetScoreApi getScoreApi;
 
 
@@ -23,8 +24,8 @@ public class GetScoreRepository {
   }
 
   public void callGetScoreRepository(Purchase purchase, final VolleyCallback volleyCallback) {
-    long userid = sharedPreferencesManager.getUserIdValue();
-    getScoreApi.callGetScoreApi(userid, purchase, new VolleyCallback() {
+    String msisdn = sharedPreferencesManager.getMobileNumberValue();
+    getScoreApi.callGetScoreApi(msisdn, purchase, new VolleyCallback() {
       @Override
       public void onSuccess(Object o) {
         volleyCallback.onSuccess(o);

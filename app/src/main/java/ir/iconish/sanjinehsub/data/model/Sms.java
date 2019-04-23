@@ -1,9 +1,7 @@
-package ir.iconish.model.creditscoreclient.dto;
+package ir.iconish.sanjinehsub.data.model;
 
 
-import ir.iconish.common.api.info.BaseInfo;
-
-public class SMSDTO extends BaseInfo {
+public class Sms  {
 
     private Integer reportStateId;
     private String reportStateValue;

@@ -18,37 +18,36 @@ import javax.inject.Inject;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.util.AppConstants;
 
-public class SendVerifyCodeApi {
+public class ConfirmVerifyCodeApi {
 
 
   AppController appController;
 
 
   @Inject
-  public SendVerifyCodeApi(AppController appController) {
+  public ConfirmVerifyCodeApi(AppController appController) {
     this.appController = appController;
   }
 
 
   public Integer parseJson(JSONObject jsonObject) {
-    Integer reportStateId = 0;
+    Integer reportStateEnumId = 0;
     try {
-      reportStateId = jsonObject.getInt("reportStateId");
+      reportStateEnumId = jsonObject.getInt("reportStateEnumId");
 
     } catch (JSONException e) {
       Log.e("err", e.toString());
       e.printStackTrace();
     }
 
-    return reportStateId;
+    return reportStateEnumId;
   }
 
 
-  public void callSendVerifyCodeApi(String ntcode, String ownermobile, String mobile, final VolleyCallback volleyCallback) {
+  public void callConfirmVerifyCodeApi(String msisdn, String code, final VolleyCallback volleyCallback) {
 
 
-    String url = ConstantUrl.BASE_CREDIT + ConstantUrl.SEND_VERIFYCODE + ntcode + "/" + ownermobile + "/" + mobile ;
-    //https://creditscore.iconish.ir/icredit/sendVerifyCode/{ntcode}/{ownermobile}/{mobile}
+    String url = ConstantUrl.BASE_CREDIT + ConstantUrl.Confirm_VERIFYCODE + msisdn + "/" + code  ;
     Log.e("url=", url);
 
 
@@ -58,8 +57,8 @@ public class SendVerifyCodeApi {
       response -> {
         Log.e("Server response", response.toString());
         if (response != null) {
-          Integer reportStateId = parseJson(response);
-          volleyCallback.onSuccess(reportStateId);
+          Integer reportStateEnumId = parseJson(response);
+          volleyCallback.onSuccess(reportStateEnumId);
           // volleyCallback.onSuccess(visits);
         }
 
@@ -118,7 +117,7 @@ public class SendVerifyCodeApi {
 
 
     jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(AppConstants.CLIENT_TIMEOUT, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-    String tag_json_arry = "sendVerifySmsApi";
+    String tag_json_arry = "confirmVerifySmsApi";
     appController.addToRequestQueue(jsonObjReq, tag_json_arry);
 
 

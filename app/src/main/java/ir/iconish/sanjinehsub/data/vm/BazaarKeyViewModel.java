@@ -5,14 +5,13 @@ import android.arch.lifecycle.ViewModel;
 
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.model.AvailableReport;
-import ir.iconish.sanjinehsub.data.repository.CheckReportRepository;
+import ir.iconish.sanjinehsub.data.repository.BazaarKeyRepository;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 
-public class CheckReportViewModel extends ViewModel {
+public class BazaarKeyViewModel extends ViewModel {
 
 
-    private MutableLiveData<AvailableReport> apiSuccessLiveDataResponse;
+    private MutableLiveData<String> apiSuccessLiveDataResponse;
     private MutableLiveData<String> apiErrorLiveData;
     private MutableLiveData<String> apiServerErrorLiveData;
     private MutableLiveData<String> apiClientNetworkErrorLiveData;
@@ -21,7 +20,7 @@ public class CheckReportViewModel extends ViewModel {
 
 
 
-    CheckReportRepository checkReportRepository;
+    BazaarKeyRepository bazaarKeyRepository;
 
     private MutableLiveData<String> apiForbiden403ErrorLiveData;
     private MutableLiveData<String> apiValidation422ErrorLiveData;
@@ -38,15 +37,15 @@ public class CheckReportViewModel extends ViewModel {
         return apiValidation422ErrorLiveData;
     }
 
-    public MutableLiveData<AvailableReport> getApiSuccessLiveDataResponse() {
+    public MutableLiveData<String> getApiSuccessLiveDataResponse() {
         return apiSuccessLiveDataResponse;
     }
 
     @Inject
-    public CheckReportViewModel(CheckReportRepository checkReportRepository)
+    public BazaarKeyViewModel(BazaarKeyRepository bazaarKeyRepository)
     {
 
-        this.checkReportRepository=checkReportRepository;
+        this.bazaarKeyRepository=bazaarKeyRepository;
 
 
 
@@ -83,13 +82,13 @@ public class CheckReportViewModel extends ViewModel {
         return apiAuthFailureErrorLiveData;
     }
 
-    public void callCheckReportViewModel(String ntcode) {
+    public void callBazaarKeyViewModel() {
 
 
-      checkReportRepository.callCheckReportRepository(ntcode,new VolleyCallback() {
+      bazaarKeyRepository.callBazaarKeyRepository(new VolleyCallback() {
           @Override
           public void onSuccess(Object obj) {
-            apiSuccessLiveDataResponse.setValue((AvailableReport) obj);
+            apiSuccessLiveDataResponse.setValue((String) obj);
 
           }
           @Override

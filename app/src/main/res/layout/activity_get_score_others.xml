@@ -52,7 +52,7 @@
       android:gravity="top|right"
       android:hint="@string/msisdn_others"
       android:inputType="number"
-      android:maxLength="10"
+      android:maxLength="11"
       android:singleLine="true"
       android:textColor="@color/black"
       android:textColorHint="@color/darker_gray"
@@ -117,6 +117,8 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerVertical="true"
+      android:checked="true"
+      android:enabled="false"
       />
 
   </RelativeLayout>
@@ -130,6 +132,18 @@
     android:layout_above="@id/btnGetScoreOthers"
     android:layout_marginBottom="@dimen/margin_50"
     />
+
+  <TextView
+    android:id="@+id/txtAlert"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="@dimen/margin_20"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/btnGetScoreOthers"
+    android:visibility="invisible"
+    android:gravity="center"
+    android:textSize="@dimen/login_steps_text_size"
+    android:text=""
+    android:textColor="@color/alert_incorrect_entry"/>
 
 
   <android.support.v7.widget.AppCompatButton

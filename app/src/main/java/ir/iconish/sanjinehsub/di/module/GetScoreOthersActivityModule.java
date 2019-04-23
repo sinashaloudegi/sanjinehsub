@@ -6,33 +6,31 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.source.api.BazaarKeyApi;
-import ir.iconish.sanjinehsub.data.source.api.CheckReportApi;
-import ir.iconish.sanjinehsub.data.source.api.GetScoreApi;
+import ir.iconish.sanjinehsub.data.source.api.SendVerifyCodeApi;
 
 @Module
-public class GetScoreActivityModule {
+public class GetScoreOthersActivityModule {
 
 
 
     @Provides
     @Singleton
-    public GetScoreApi provideGetScoreApi(AppController appController){
-        return new GetScoreApi(appController);
+    public SendVerifyCodeApi provideSendVerifyCodeApi(AppController appController){
+        return new SendVerifyCodeApi(appController);
     }
 
-    @Provides
-    @Singleton
-    public CheckReportApi provideCheckReportApi(AppController appController){
-        return new CheckReportApi(appController);
-    }
-
-    @Provides
-    @Singleton
-    public BazaarKeyApi provideBazaarKeyApi(AppController appController){
-        return new BazaarKeyApi(appController);
-    }
-
+//    @Provides
+//    @Singleton
+//    public CheckReportApi provideCheckReportApi(AppController appController){
+//        return new CheckReportApi(appController);
+//    }
+//
+//    @Provides
+//    @Singleton
+//    public BazaarKeyApi provideBazaarKeyApi(AppController appController){
+//        return new BazaarKeyApi(appController);
+//    }
+//
 
 
 }

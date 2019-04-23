@@ -1,6 +1,6 @@
-package ir.iconish.rest.model;
+package ir.iconish.sanjinehsub.data.model;
 
-public class RegisterPurchaseInfoResultDto {
+public class RegisterPurchaseInfoResult {
   private boolean purchaseResult;
   private Integer userBalance;
 

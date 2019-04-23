@@ -20,14 +20,14 @@ import ir.iconish.sanjinehsub.data.model.RegisterPurchaseInfoResult;
 import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.Purchase;
 
-public class GetScoreApi {
+public class GetScoreOthersApi {
 
 
   AppController appController;
 
 
   @Inject
-  public GetScoreApi(AppController appController) {
+  public GetScoreOthersApi(AppController appController) {
     this.appController = appController;
   }
 
@@ -140,7 +140,7 @@ public class GetScoreApi {
 
 
     jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(AppConstants.CLIENT_TIMEOUT, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-    String tag_json_arry = "getScoreApi";
+    String tag_json_arry = "getScoreOthersApi";
     appController.addToRequestQueue(jsonObjReq, tag_json_arry);
 
 

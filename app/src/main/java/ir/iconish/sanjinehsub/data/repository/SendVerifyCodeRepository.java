@@ -3,23 +3,28 @@ package ir.iconish.sanjinehsub.data.repository;
 
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.source.api.BazaarKeyApi;
+import ir.iconish.sanjinehsub.data.source.api.SendVerifyCodeApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
+import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 
 
-public class BazaarKeyRepository {
-  BazaarKeyApi bazaarKeyApi;
+public class SendVerifyCodeRepository {
+  SendVerifyCodeApi sendVerifyCodeApi;
+  SharedPreferencesManager sharedPreferencesManager;
+
 
 
 
   @Inject
-  public BazaarKeyRepository(BazaarKeyApi bazaarKeyApi) {
+  public SendVerifyCodeRepository(SendVerifyCodeApi sendVerifyCodeApi, SharedPreferencesManager sharedPreferencesManager) {
 
-    this.bazaarKeyApi = bazaarKeyApi;
+    this.sendVerifyCodeApi = sendVerifyCodeApi;
+    this.sharedPreferencesManager = sharedPreferencesManager;
   }
 
-  public void callBazaarKeyRepository(final VolleyCallback volleyCallback) {
-    bazaarKeyApi.callBazaarKeyApi(new VolleyCallback() {
+  public void callSendVerifyCodeRepository(String ntcode, String ownermobile, final VolleyCallback volleyCallback) {
+    String msisdn = sharedPreferencesManager.getMobileNumberValue();
+    sendVerifyCodeApi.callSendVerifyCodeApi(ntcode, ownermobile, msisdn, new VolleyCallback() {
       @Override
       public void onSuccess(Object o) {
         volleyCallback.onSuccess(o);

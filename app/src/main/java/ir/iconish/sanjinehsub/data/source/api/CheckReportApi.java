@@ -13,69 +13,43 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
-import ir.iconish.sanjinehsub.data.model.User;
+import ir.iconish.sanjinehsub.data.model.AvailableReport;
 import ir.iconish.sanjinehsub.util.AppConstants;
-import ir.iconish.sanjinehsub.util.Purchase;
 
-public class GetScoreApi {
+public class CheckReportApi {
 
 
   AppController appController;
 
 
   @Inject
-  public GetScoreApi(AppController appController) {
+  public CheckReportApi(AppController appController) {
     this.appController = appController;
   }
 
 
-  public User parseJson(JSONObject jsonObject) {
-    User user = new User();
-
+  public AvailableReport parseJson(JSONObject jsonObject) {
+    AvailableReport availableReport = new AvailableReport();
     try {
-      JSONObject jsonObjectRoot = jsonObject.getJSONObject("responseStatus");
-      int statusCode = jsonObjectRoot.getInt("value");
+      availableReport.setValidMobile(jsonObject.getBoolean("validMobile"));
+      availableReport.setAvailable(jsonObject.getBoolean("isAvailable"));
 
-      user.setResponseCodeEnum(ResponseCodeEnum.fromValue(statusCode));
-      if (statusCode == 1010) {
-        JSONObject jsonObjectUser = jsonObject.getJSONObject("accountInfo").getJSONObject("user");
-        String firstName = jsonObjectUser.getString("firstname");
-        String lastName = jsonObjectUser.getString("family");
-        String email = jsonObjectUser.getString("email");
-        String mobileNumber = jsonObjectUser.getString("mobile");
-        long userId = jsonObjectUser.getLong("userid");
-        //String token=jsonObject.getString("mobileNo");
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        user.setMobileNumber(mobileNumber);
-        user.setUserId(userId);
-
-
-      }
-             /*   else if (statusCode==1011){
-
-            }*/
     } catch (JSONException e) {
       Log.e("err", e.toString());
       e.printStackTrace();
     }
 
-    return user;
+    return availableReport;
   }
 
 
-  public void callGetScoreApi(long userId, Purchase purchase, final VolleyCallback volleyCallback) {
+  public void callCheckReportApi(String ntcode, String mobileNumber , final VolleyCallback volleyCallback) {
 
 
-    String url = ConstantUrl.BASE + ConstantUrl.LOGIN + userId + "/" + AppConstants.VAS_SUBSCRIB;
+    String url = ConstantUrl.BASE_CREDIT + ConstantUrl.CHECK_REPORT + ntcode + "/" + mobileNumber;
     Log.e("url=", url);
 
     // JsonArrayRequest
@@ -84,8 +58,8 @@ public class GetScoreApi {
       response -> {
         Log.e("Server response", response.toString());
         if (response != null) {
-          User user = parseJson(response);
-          volleyCallback.onSuccess(user);
+          AvailableReport availableReport = parseJson(response);
+          volleyCallback.onSuccess(availableReport);
           // volleyCallback.onSuccess(visits);
         }
 
@@ -130,23 +104,11 @@ public class GetScoreApi {
 
       }
 
-    ) {
-           /* @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }*/
-
-      @Override
-      public Map<String, String> getHeaders() {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("appid", AppConstants.APP_ID);
-        return params;
-      }
-    };
+    ) ;
 
 
     jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(AppConstants.CLIENT_TIMEOUT, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-    String tag_json_arry = "getScoreApi";
+    String tag_json_arry = "checkReportApi";
     appController.addToRequestQueue(jsonObjReq, tag_json_arry);
 
 

@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,11 +69,21 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
     }
 
 
+
+
     private void navigateToActivity(Class cls){
 
       startActivity(new Intent(this,cls));
     }
 
+    @OnClick(R.id.rootOtherScore)
+    public void rootOtherScoreAction() {
+      ActivityNavigationHelper.navigateToActivity(this,GetScoreOthersActivity.class,false);
+    }
+    @OnClick(R.id.rootMyScore)
+    public void rootMyScore() {
+      ActivityNavigationHelper.navigateToActivity(this,GetScoreActivity.class,false);
+    }
     @OnClick(R.id.imgNavMenu)
     public void navMenuAction() {
 

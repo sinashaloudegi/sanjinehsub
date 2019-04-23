@@ -107,67 +107,65 @@ attachViewModel();
             return;
         }
 
-
-
-
-
-
 showWating();
 loginViewModel.callLoginViewModel(edtMobileNumber.getText().toString());
-       // startActivity(new Intent(this,LoginVerificatonActivity.class));
-        //finish();
+
 }
 
 
 
     private void attachViewModel() {
-        loginViewModel.getApiSuccessLiveDataResponse().observe(this, user -> {
-stopWating();
+           loginViewModel.getApiSuccessLiveDataResponse().observe(this, user -> {
+          stopWating();
 
 
-if(user.getResponseCodeEnum().getValue()== ResponseCodeEnum.USER_EXIST.getValue()){
-    ActivityNavigationHelper.navigateToActivity(this, CheckPasswordActivity.class,true);
-}
+          if(user.getResponseCodeEnum().getValue()== ResponseCodeEnum.USER_EXIST.getValue()){
+            ActivityNavigationHelper.navigateToActivity(this, CheckPasswordActivity.class,true);
+          }
 
-else if (user.getResponseCodeEnum().getValue()== ResponseCodeEnum.USERISNEW.getValue()){
-    ActivityNavigationHelper.navigateToActivity(this,VerifyRegisterOtpActivity.class,true);
+          else if (user.getResponseCodeEnum().getValue()== ResponseCodeEnum.USERISNEW.getValue()){
+            ActivityNavigationHelper.navigateToActivity(this,VerifyRegisterOtpActivity.class,true);
 
-}
+          }
 
 
 //if 1010 go to enter pass -- if 1011 go to otp
 
-                    Log.e("success","in activity");
+          Log.e("success","in activity");
         }
-        );
+      );
 
-        loginViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {});
+      loginViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {});
 
-        loginViewModel.getApiErrorLiveData().observe(this, volleyError ->{
-            goToFailApiPage("ApiError");
+      loginViewModel.getApiErrorLiveData().observe(this, volleyError ->{
+        goToFailApiPage("ApiError");
 
-        });
-        loginViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+      });
+      loginViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
 
+      {
+        goToFailApiPage("ServerError");
+
+      });
+      loginViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
         {
-            goToFailApiPage("ServerError");
+          goToFailApiPage("TimeOutError");
+        }
 
-        });
-        loginViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-                {
-                    goToFailApiPage("TimeOutError");
-                }
-
-        );
-        loginViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ClientNetworkError");
+      );
+      loginViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+        goToFailApiPage("ClientNetworkError");
 
 
-        });
+      });
 
 
       loginViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError ->{} );
-        loginViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError ->{} );
+      loginViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError ->{} );
+
+
+
+
 
     }
 

@@ -13,14 +13,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
-import ir.iconish.sanjinehsub.data.model.User;
+import ir.iconish.sanjinehsub.data.model.RegisterPurchaseInfoResult;
 import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.Purchase;
 
@@ -36,56 +32,54 @@ public class GetScoreApi {
   }
 
 
-  public User parseJson(JSONObject jsonObject) {
-    User user = new User();
+  public RegisterPurchaseInfoResult parseJson(JSONObject jsonObject) {
+    RegisterPurchaseInfoResult registerPurchaseInfoResult = new RegisterPurchaseInfoResult();
 
     try {
-      JSONObject jsonObjectRoot = jsonObject.getJSONObject("responseStatus");
-      int statusCode = jsonObjectRoot.getInt("value");
+      registerPurchaseInfoResult.setPurchaseResult(jsonObject.getBoolean("purchaseResult"));
+      registerPurchaseInfoResult.setUserBalance(jsonObject.getInt("userBalance"));
 
-      user.setResponseCodeEnum(ResponseCodeEnum.fromValue(statusCode));
-      if (statusCode == 1010) {
-        JSONObject jsonObjectUser = jsonObject.getJSONObject("accountInfo").getJSONObject("user");
-        String firstName = jsonObjectUser.getString("firstname");
-        String lastName = jsonObjectUser.getString("family");
-        String email = jsonObjectUser.getString("email");
-        String mobileNumber = jsonObjectUser.getString("mobile");
-        long userId = jsonObjectUser.getLong("userid");
-        //String token=jsonObject.getString("mobileNo");
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        user.setMobileNumber(mobileNumber);
-        user.setUserId(userId);
-
-
-      }
-             /*   else if (statusCode==1011){
-
-            }*/
     } catch (JSONException e) {
       Log.e("err", e.toString());
       e.printStackTrace();
     }
 
-    return user;
+    return registerPurchaseInfoResult;
   }
 
 
-  public void callGetScoreApi(long userId, Purchase purchase, final VolleyCallback volleyCallback) {
+  public void callGetScoreApi(String msisdn, Purchase purchase, final VolleyCallback volleyCallback) {
 
 
-    String url = ConstantUrl.BASE + ConstantUrl.LOGIN + userId + "/" + AppConstants.VAS_SUBSCRIB;
+    String url = ConstantUrl.BASE + ConstantUrl.REGISTER_PURCHASEINFO ;
     Log.e("url=", url);
+
+    JSONObject jsonObject = new JSONObject();
+    try {
+      jsonObject.put("purchaseitemtype", purchase.getItemType());
+      jsonObject.put("purchasepackagename", purchase.getPackageName());
+      jsonObject.put("purchasesku", purchase.getSku());
+      jsonObject.put("purchasetime", purchase.getPurchaseTime());
+      jsonObject.put("purchasestate", purchase.getPurchaseState());
+      jsonObject.put("developerpayload", purchase.getDeveloperPayload());
+      jsonObject.put("purchasetoken", purchase.getToken());
+      jsonObject.put("purchaseorderid", purchase.getOrderId());
+      jsonObject.put("purchaseoriginaljson", purchase.getOriginalJson());
+      jsonObject.put("purchasesignature", purchase.getSignature());
+      jsonObject.put("msisdn",msisdn);
+
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
 
     // JsonArrayRequest
 
-    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, null,
+    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
       response -> {
         Log.e("Server response", response.toString());
         if (response != null) {
-          User user = parseJson(response);
-          volleyCallback.onSuccess(user);
+          RegisterPurchaseInfoResult registerPurchaseInfoResult = parseJson(response);
+          volleyCallback.onSuccess(registerPurchaseInfoResult);
           // volleyCallback.onSuccess(visits);
         }
 
@@ -136,12 +130,12 @@ public class GetScoreApi {
                 return "application/json; charset=utf-8";
             }*/
 
-      @Override
-      public Map<String, String> getHeaders() {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("appid", AppConstants.APP_ID);
-        return params;
-      }
+//      @Override
+//      public Map<String, String> getHeaders() {
+//        Map<String, String> params = new HashMap<String, String>();
+//        params.put("appid", AppConstants.APP_ID);
+//        return params;
+//      }
     };
 
 

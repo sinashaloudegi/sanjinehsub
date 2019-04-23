@@ -1,42 +1,6 @@
-package ir.iconish.model.iwallet.entity;
+package ir.iconish.sanjinehsub.data.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import ir.iconish.dto.iwallet.enums.ChannelEnum;
-import ir.iconish.model.iwallet.enums.YesNoEnum;
-
-@Entity
-@Table(name="iwbazaarpurchaseinfo")
-public  class BazaarPurchaseInfo extends AbstractEntity {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2553407174517962189L;
-
-	@Id
-	@SequenceGenerator(name="SEQ_IWBAZAARPURCHASEINFO_GENERATOR", sequenceName="SEQ_IWBAZAARPURCHASEINFO", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_IWBAZAARPURCHASEINFO_GENERATOR")
-	private Long purchaseid;
-
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-	private Date purchaseregdate;
-
+public  class BazaarPurchaseInfo  {
 
 	private String purchaseitemtype;
 	private String purchasepackagename;
@@ -50,21 +14,6 @@ public  class BazaarPurchaseInfo extends AbstractEntity {
 	private String purchasesignature;
 	private String msisdn;
 
-	public Long getPurchaseid() {
-		return purchaseid;
-	}
-
-	public void setPurchaseid(Long purchaseid) {
-		this.purchaseid = purchaseid;
-	}
-
-	public Date getPurchaseregdate() {
-		return purchaseregdate;
-	}
-
-	public void setPurchaseregdate(Date purchaseregdate) {
-		this.purchaseregdate = purchaseregdate;
-	}
 
 	public String getPurchaseitemtype() {
 		return purchaseitemtype;
@@ -157,8 +106,6 @@ public  class BazaarPurchaseInfo extends AbstractEntity {
 	@Override
 	public String toString() {
 		return "BazaarPurchaseInfo{" +
-			"purchaseid=" + purchaseid +
-			", purchaseregdate=" + purchaseregdate +
 			", purchaseitemtype='" + purchaseitemtype + '\'' +
 			", purchasepackagename='" + purchasepackagename + '\'' +
 			", purchasesku='" + purchasesku + '\'' +

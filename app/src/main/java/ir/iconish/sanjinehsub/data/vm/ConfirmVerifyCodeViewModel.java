@@ -5,10 +5,10 @@ import android.arch.lifecycle.ViewModel;
 
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.repository.SendVerifyCodeRepository;
+import ir.iconish.sanjinehsub.data.repository.ConfirmVerifyCodeRepository;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 
-public class SendVerifyCodeViewModel extends ViewModel {
+public class ConfirmVerifyCodeViewModel extends ViewModel {
 
 
     private MutableLiveData<Integer> apiSuccessLiveDataResponse;
@@ -20,7 +20,7 @@ public class SendVerifyCodeViewModel extends ViewModel {
 
 
 
-    SendVerifyCodeRepository sendVerifyCodeRepository;
+    ConfirmVerifyCodeRepository confirmVerifyCodeRepository;
 
     private MutableLiveData<String> apiForbiden403ErrorLiveData;
     private MutableLiveData<String> apiValidation422ErrorLiveData;
@@ -42,10 +42,10 @@ public class SendVerifyCodeViewModel extends ViewModel {
     }
 
     @Inject
-    public SendVerifyCodeViewModel(SendVerifyCodeRepository sendVerifyCodeRepository)
+    public ConfirmVerifyCodeViewModel(ConfirmVerifyCodeRepository confirmVerifyCodeRepository)
     {
 
-        this.sendVerifyCodeRepository=sendVerifyCodeRepository;
+        this.confirmVerifyCodeRepository = confirmVerifyCodeRepository;
 
 
 
@@ -82,10 +82,10 @@ public class SendVerifyCodeViewModel extends ViewModel {
         return apiAuthFailureErrorLiveData;
     }
 
-    public void callSendVerifyCodeViewModel(String ntcode, String ownermobile) {
+    public void callConfirmVerifyCodeViewModel(String msisdn, String code) {
 
 
-      sendVerifyCodeRepository.callSendVerifyCodeRepository(ntcode,ownermobile,new VolleyCallback() {
+      confirmVerifyCodeRepository.callSendVerifyCodeRepository(msisdn,code,new VolleyCallback() {
           @Override
           public void onSuccess(Object obj) {
             apiSuccessLiveDataResponse.setValue((Integer) obj);

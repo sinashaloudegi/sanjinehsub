@@ -16,70 +16,50 @@ import org.json.JSONObject;
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.model.RegisterPurchaseInfoResult;
 import ir.iconish.sanjinehsub.util.AppConstants;
-import ir.iconish.sanjinehsub.util.Purchase;
 
-public class GetScoreApi {
+public class SendVerifyCodeApi {
 
 
   AppController appController;
 
 
   @Inject
-  public GetScoreApi(AppController appController) {
+  public SendVerifyCodeApi(AppController appController) {
     this.appController = appController;
   }
 
 
-  public RegisterPurchaseInfoResult parseJson(JSONObject jsonObject) {
-    RegisterPurchaseInfoResult registerPurchaseInfoResult = new RegisterPurchaseInfoResult();
-
+  public Integer parseJson(JSONObject jsonObject) {
+    Integer reportStateId = 0;
     try {
-      registerPurchaseInfoResult.setPurchaseResult(jsonObject.getBoolean("purchaseResult"));
-      registerPurchaseInfoResult.setUserBalance(jsonObject.getInt("userBalance"));
+      reportStateId = jsonObject.getInt("reportStateId");
 
     } catch (JSONException e) {
       Log.e("err", e.toString());
       e.printStackTrace();
     }
 
-    return registerPurchaseInfoResult;
+    return reportStateId;
   }
 
 
-  public void callGetScoreApi(String msisdn, Purchase purchase, final VolleyCallback volleyCallback) {
+  public void callSendVerifyCodeApi(String ntcode, String ownermobile, String mobile, final VolleyCallback volleyCallback) {
 
 
-    String url = ConstantUrl.BASE + ConstantUrl.REGISTER_PURCHASEINFO ;
+    String url = ConstantUrl.BASE_CREDIT + ConstantUrl.SEND_VERIFYCODE + ntcode + "/" + ownermobile + "/" + mobile ;
+    //https://creditscore.iconish.ir/icredit/sendVerifyCode/{ntcode}/{ownermobile}/{mobile}
     Log.e("url=", url);
 
-    JSONObject jsonObject = new JSONObject();
-    try {
-      jsonObject.put("purchaseitemtype", purchase.getItemType());
-      jsonObject.put("purchasepackagename", purchase.getPackageName());
-      jsonObject.put("purchasesku", purchase.getSku());
-      jsonObject.put("purchasetime", purchase.getPurchaseTime());
-      jsonObject.put("purchasestate", purchase.getPurchaseState());
-      jsonObject.put("developerpayload", purchase.getDeveloperPayload());
-      jsonObject.put("purchasetoken", purchase.getToken());
-      jsonObject.put("purchaseorderid", purchase.getOrderId());
-      jsonObject.put("purchaseoriginaljson", purchase.getOriginalJson());
-      jsonObject.put("purchasesignature", purchase.getSignature());
-      jsonObject.put("msisdn",msisdn);
-
-    } catch (JSONException e) {
-      e.printStackTrace();
-    }
 
     // JsonArrayRequest
 
-    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
+    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, null,
       response -> {
         Log.e("Server response", response.toString());
         if (response != null) {
-          RegisterPurchaseInfoResult registerPurchaseInfoResult = parseJson(response);
-          volleyCallback.onSuccess(registerPurchaseInfoResult);
+          Integer reportStateId = parseJson(response);
+          volleyCallback.onSuccess(reportStateId);
           // volleyCallback.onSuccess(visits);
         }
 
@@ -101,8 +81,6 @@ public class GetScoreApi {
           return;
         }
 
-
-        int statusCode = error.networkResponse.statusCode;
 
         // String message=new String(error.networkResponse.data);
              /*   String errorMessage=ApiErrorHelper.parseError(message);
@@ -140,7 +118,7 @@ public class GetScoreApi {
 
 
     jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(AppConstants.CLIENT_TIMEOUT, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-    String tag_json_arry = "getScoreApi";
+    String tag_json_arry = "sendVerifySmsApi";
     appController.addToRequestQueue(jsonObjReq, tag_json_arry);
 
 

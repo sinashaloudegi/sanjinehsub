@@ -3,28 +3,27 @@ package ir.iconish.sanjinehsub.data.repository;
 
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.source.api.SendVerifyCodeApi;
+import ir.iconish.sanjinehsub.data.source.api.ConfirmVerifyCodeApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 
 
-public class SendVerifyCodeRepository {
-  SendVerifyCodeApi sendVerifyCodeApi;
+public class ConfirmVerifyCodeRepository {
+  ConfirmVerifyCodeApi confirmVerifyCodeApi;
   SharedPreferencesManager sharedPreferencesManager;
 
 
 
 
   @Inject
-  public SendVerifyCodeRepository(SendVerifyCodeApi sendVerifyCodeApi, SharedPreferencesManager sharedPreferencesManager) {
+  public ConfirmVerifyCodeRepository(ConfirmVerifyCodeApi confirmVerifyCodeApi, SharedPreferencesManager sharedPreferencesManager) {
 
-    this.sendVerifyCodeApi = sendVerifyCodeApi;
+    this.confirmVerifyCodeApi = confirmVerifyCodeApi;
     this.sharedPreferencesManager = sharedPreferencesManager;
   }
 
-  public void callSendVerifyCodeRepository(String ntcode, String ownermobile, final VolleyCallback volleyCallback) {
-    String msisdn = sharedPreferencesManager.getMobileNumberValue();
-    sendVerifyCodeApi.callSendVerifyCodeApi(ntcode, ownermobile, msisdn, new VolleyCallback() {
+  public void callSendVerifyCodeRepository(String msisdn, String code, final VolleyCallback volleyCallback) {
+    confirmVerifyCodeApi.callConfirmVerifyCodeApi(msisdn, "code", new VolleyCallback() {
       @Override
       public void onSuccess(Object o) {
         volleyCallback.onSuccess(o);

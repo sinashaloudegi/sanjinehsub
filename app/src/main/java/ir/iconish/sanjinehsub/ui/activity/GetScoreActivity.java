@@ -1,6 +1,11 @@
 package ir.iconish.sanjinehsub.ui.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -9,6 +14,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -16,7 +25,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
+import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
+import ir.iconish.sanjinehsub.data.vm.BazaarKeyViewModel;
+import ir.iconish.sanjinehsub.data.vm.CheckReportViewModel;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.util.IabHelper;
@@ -34,20 +46,59 @@ public class GetScoreActivity extends AppCompatActivity {
   ProgressBar prgGetScore;
   @BindView(R.id.imgBack)
   ImageView imgBack;
+  @BindView(R.id.txtAlert)
+  TextView txtAlert;
 
   public static IabHelper mHelper;
+  BroadcastReceiver broadcastReceiver;
 
 
 
   @Inject
   GetScoreViewModel getScoreViewModel;
+  @Inject
+  CheckReportViewModel checkReportViewModel;
+  @Inject
+  BazaarKeyViewModel bazaarKeyViewModel;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_get_score);
+    btnGetScore.setEnabled(false);
+    ButterKnife.bind(this);
+    ((AppController) getApplication()).getAppComponent().inject(this);
 
-    String base64EncodedPublicKey = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwCmun9HxyV8hZjIX9aZGBIcM8u+vCS5/rBHQdUbrAwJpFjJ02z8ZQhngcjiFs7qCRsCYJjhnpVZgHnLG1WmKVmk3eUJDywAMszbSC7qK6HMYaBTp8trDpdHniMX9N9ftFHX/jbRhzVApl6rsfhZUX2alHpF0JQz5cm67pcdfai2eZalcgP9jUkE1PeCEeB+4AezX3q5bg2Qoe2XsdO1K211xGV7R4oullO3JAkTYQMCAwEAAQ==";
+    attachViewModel();
+    bazaarKeyViewModel.callBazaarKeyViewModel();
+
+  }
+
+
+  @OnClick(R.id.btnGetScore)
+  public void btnGetScoreAction() {
+    if (!(edtNtcode.getText().toString().trim().length() > 0 )) {
+      txtAlert.setText(getString(R.string.force_enter_ntcode));
+      txtAlert.setVisibility(View.VISIBLE);
+      return;
+    }
+
+    String ntcode = edtNtcode.getText().toString();
+    showWating();
+    checkReportViewModel.callCheckReportViewModel(ntcode.trim());
+
+  }
+
+  @OnClick(R.id.imgBack)
+  public void imgBackAction() {
+
+    onBackPressed();
+  }
+
+
+
+  private void  bazaarSetup(String bazaarKey){
+    String base64EncodedPublicKey = bazaarKey ;
     // You can find it in your Bazaar console, in the Dealers section.
     // It is recommended to add more security than just pasting it in your source code;
     mHelper = new IabHelper(this, base64EncodedPublicKey);
@@ -60,70 +111,117 @@ public class GetScoreActivity extends AppCompatActivity {
         if (!result.isSuccess()) {
           // Oh noes, there was a problem.
           Log.i("Test", "Problem setting up In-app Billing: " + result);
+
         }
         // Hooray, IAB is fully set up!
         mHelper.queryInventoryAsync(mGotInventoryListener);
       }
     });
-    ButterKnife.bind(this);
-    ((AppController) getApplication()).getAppComponent().inject(this);
-
-    attachViewModel();
-
+//      mHelper.startSetup(result -> {
+//        Log.i("Test", "Setup finished.");
+//
+//        if (!result.isSuccess()) {
+//          // Oh noes, there was a problem.
+//          Log.i("Test", "Problem setting up In-app Billing: " + result);
+//        }
+//        // Hooray, IAB is fully set up!
+//        mHelper.queryInventoryAsync(mGotInventoryListener);
+//      });
   }
 
+  private void attachViewModel() {
 
-  @OnClick(R.id.btnGetScore)
-  public void btnGetScoreAction() {
+    bazaarKeyViewModel.getApiSuccessLiveDataResponse().observe(this, bazaarKey -> {
+      bazaarSetup(bazaarKey);
+      btnGetScore.setEnabled(true);
+      }
+    );
+    bazaarKeyViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+    });
+    bazaarKeyViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+      goToFailApiPage("ApiError");
+    });
+    bazaarKeyViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+    {
+      goToFailApiPage("ServerError");
+    });
+    bazaarKeyViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+      {
+        goToFailApiPage("TimeOutError");
+      }
+    );
+    bazaarKeyViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+      goToFailApiPage("ClientNetworkError");
+    });
+
+    bazaarKeyViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+    });
+    bazaarKeyViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+    });
 
 
-    showWating();
-    Purchase purchase = null ;
-    getScoreViewModel.callGetScoreViewModel(purchase);
-    // startActivity(new Intent(this,LoginVerificatonActivity.class));
-    //finish();
-  }
-
-  @OnClick(R.id.imgBack)
-  public void imgBackAction() {
-     onBackPressed();
-  }
 
 
-
-    private void attachViewModel() {
-    getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, services -> {
-        stopWating();
-        //if 1010 go to enter pass -- if 1011 go to otp
+    checkReportViewModel.getApiSuccessLiveDataResponse().observe(this, services -> {
+      if (services.getAvailable()== true && services.getValidMobile()== true){
+         new CheckCafeBazaarLogin(GetScoreActivity.this).initService();
+      }
+      else if (services.getAvailable() == true && services.getValidMobile() == false){
+        Toast.makeText(this,"کد ملی وارد شده دارای گزارش می باشد اما شماره موبایل وارد شده با این کد ملی مطابقت ندارد.",Toast.LENGTH_SHORT).show();
+      }
+      else {
+        Toast.makeText(this, "کد ملی وارد شده دارای گزارش نمی باشد.", Toast.LENGTH_SHORT).show();
+      }
         Log.e("success", "in activity");
       }
     );
-
-    getScoreViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+    checkReportViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
     });
-
-    getScoreViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+    checkReportViewModel.getApiErrorLiveData().observe(this, volleyError -> {
       goToFailApiPage("ApiError");
-
     });
-    getScoreViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
-
+    checkReportViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
     {
       goToFailApiPage("ServerError");
+    });
+    checkReportViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+      {
+        goToFailApiPage("TimeOutError");
+      }
+    );
+    checkReportViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+      goToFailApiPage("ClientNetworkError");
+    });
 
+    checkReportViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+    });
+    checkReportViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+    });
+
+
+    getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, services -> {
+        stopWating();
+        //go webview
+        Log.e("success", "in activity");
+      }
+    );
+    getScoreViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+    });
+    getScoreViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+      goToFailApiPage("ApiError");
+    });
+    getScoreViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+    {
+      goToFailApiPage("ServerError");
     });
     getScoreViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
       {
         goToFailApiPage("TimeOutError");
       }
-
     );
     getScoreViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
       goToFailApiPage("ClientNetworkError");
-
-
     });
-
 
     getScoreViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
     });
@@ -143,11 +241,6 @@ public class GetScoreActivity extends AppCompatActivity {
   }
 
 
-//  @Override
-//  public void onBackPressed() {
-//  }
-
-
   private void showWating() {
     prgGetScore.setVisibility(View.VISIBLE);
     ButtonHelper.toggleAppCompatButtonStatus(btnGetScore, false);
@@ -156,15 +249,6 @@ public class GetScoreActivity extends AppCompatActivity {
   private void stopWating() {
     prgGetScore.setVisibility(View.INVISIBLE);
     ButtonHelper.toggleAppCompatButtonStatus(btnGetScore, true);
-  }
-
-
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-    Log.i("Test", "Destroying helper.");
-    if (mHelper != null) mHelper.dispose();
-    mHelper = null;
   }
 
 
@@ -204,31 +288,116 @@ public class GetScoreActivity extends AppCompatActivity {
     }
   };
 
+
+
+  private void messageReciver(){
+    IntentFilter filter = new IntentFilter();
+
+    filter.addAction("versionCode");
+
+    broadcastReceiver= new BroadcastReceiver() {
+      @Override
+      public void onReceive(Context context, Intent intent) {
+
+        String action=intent.getAction();
+
+        switch (action) {
+
+
+          case "checkbazaarlogin":
+            boolean cafeBazarLogin = intent.getBooleanExtra("checkbazaarlogin",false);
+            if (cafeBazarLogin){
+
+              UUID uuid = UUID.randomUUID();
+              String randomUUIDString = uuid.toString();
+              Log.i("Test", "randomUUIDString : " + randomUUIDString);
+              //"bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ"
+              mHelper.launchPurchaseFlow(GetScoreActivity.this, "sanj01", 10001, mPurchaseFinishedListener, randomUUIDString);
+
+            }
+            else {
+              Intent intentLogin = new Intent(Intent.ACTION_VIEW);
+              intentLogin.setData(Uri.parse("bazaar://login"));
+              intentLogin.setPackage("com.farsitel.bazaar");
+              GetScoreActivity.this.startActivity(intentLogin);
+            }
+
+            break;
+
+        }
+
+
+      }
+    };
+    registerReceiver(broadcastReceiver, filter);
+  }
+
+
+
+  @Override
+  public void onDestroy() {
+    if (this != null)
+      this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+    super.onDestroy();
+
+    new CheckCafeBazaarLogin(this).releaseService();
+
+    // very important:
+    Log.i("Test", "Destroying helper.");
+    if (mHelper != null) {
+      mHelper.dispose();
+      mHelper = null;
+    }
+  }
+
+
+  IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+    public void onIabPurchaseFinished(IabResult result, Purchase purchase)
+    {
+      Log.i("Test", "Purchase finished: " + result + ", purchase: " + purchase);
+
+
+      if (mHelper == null) {
+        return;
+      }
+
+      if (result.isFailure()) {
+        return;
+      }
+      if (!verifyDeveloperPayload(purchase)) {
+        Log.i("Test","Error purchasing. Authenticity verification failed.");
+        return;
+      }
+      Log.i("Test", "Purchase successful.");
+              getScoreViewModel.callGetScoreViewModel(purchase);
+
+      if (purchase.getSku().equals("sanj01")) {
+        Log.i("Test", "Purchase is gas. Starting sanj01 consumption.");
+        mHelper.consumeAsync(purchase, mConsumeFinishedListener);
+      }
+    }
+  };
+
+
   IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
     public void onConsumeFinished(Purchase purchase, IabResult result) {
       Log.i("Test", "Consumption finished. Purchase: " + purchase + ", result: " + result);
-      // if we were disposed of in the meantime, quit.
+
       if (mHelper == null) return;
-      // We know this is the "gas" sku because it's the only one we consume,
-      // so we don't check which sku was consumed. If you have more than one
-      // sku, you probably should check...
       if (result.isSuccess()) {
-        // successfully consumed, so we apply the effects of the item in our
-        // game world's logic, which in our case means filling the gas tank a bit
         Log.i("Test", "Consumption successful. Provisioning.");
       }
       else {
         Log.i("Test", "Error while consuming: " + result);
       }
-      //updateUi();
       Log.i("Test",  "End consumption flow.");
     }
   };
+
 
   boolean verifyDeveloperPayload(Purchase p) {
     String payload = p.getDeveloperPayload();
     return true;
   }
-
 
 }
