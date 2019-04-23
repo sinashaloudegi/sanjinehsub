@@ -3,6 +3,7 @@ package ir.iconish.sanjinehsub.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.View;
@@ -54,6 +55,7 @@ public class SetPasswordActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_password);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
 
@@ -97,7 +99,7 @@ public class SetPasswordActivity extends AppCompatActivity{
                     stopWating();
 
 
-if(passwordValidationResponse.getRespobseStatusCode()==1000){
+if(passwordValidationResponse.getRespobseStatusCode()==9999){
 
     ActivityNavigationHelper.navigateToActivity(this,MainActivity.class,true);
 }

@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">SanjinehNativeBazar</string>
+    <string name="app_name">سنجینه</string>
     <string name="check_phone">بررسی شماره</string>
     <string name="enter_get_score">ورود</string>
     <string name="enter_get_score_others">تایید تلفن همراه</string>
-    <string name="phone_hint">09*********</string>
-    <string name="account_credit">برای دریافت نمره اعتباری و عضویت در سرویس جامع اعتبار سنجی همراه با امکانات کامل شماره موبایل خود را وارد کنید (حق اشتراک روزانه 400 تومان)</string>
+    <string name="phone_hint"> تلفن همراه *********09 </string>
+    <string name="account_credit">برای دریافت نمره اعتباری و عضویت در سرویس جامع اعتبار سنجی همراه با امکانات کامل شماره موبایل و کد ملی خود را وارد کنید</string>
     <string name="get_score">مشترک گرامی جهت مشاهده رتبه ی اعتباری لطفا کد ملی خود را وارد نمائید.\n(اطلاعات شما نزد سنجینه محفوظ خواهد ماند.)</string>
     <string name="rules">بخش <a href="http://www.google.com/">قوانین و مقررات</a> استفاده از خدمات و سرویس سایت سنجینه را مطالعه کرده ام و با کلیه موارد آن موافقم.</string>
     <string name="enter_verification">کد فعالسازی را وارد نمایید</string>
@@ -49,6 +49,8 @@
     <string name="nav_exit_app">خروج از برنامه</string>
     <string name="exit_app">خروج از برنامه</string>
     <string name="exit_app_sure">آیا می خواهید از برنامه خارج شوید؟</string>
+    <string name="enter_correct_national_code">کد ملی را درست وارد کنید</string>
+    <string name="enter_correct_count_national_code">تعداد ارقام کد ملی صحیح نمی باشد</string>
     <string name="enter_correct_mobile_phone">لطفا شماره تلفن را درست وارد کنید.</string>
     <string name="enter_correct_password">رمز عبور را درست وارد کنید</string>
     <string name="accept_rules">لطفا بخش قوانین و مقررات را تایید نماید</string>
@@ -67,4 +69,7 @@
 
     <string name="force_enter_phone_ntcode">"لطفا شماره تلفن و کد ملی را وارد کنید."</string>
     <string name="force_enter_ntcode">"لطفا کد ملی را وارد کنید."</string>
+    <string name="national_code">"کد ملی"</string>
+    <string name="should_grant_permission">شما میبایست همه ی مجوزها را اعطا نمایید.</string>
+
 </resources>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <dimen name="center_menu_icon_size">64dip</dimen>
 
-
+    <dimen name="design_navigation_icon_size">24dip</dimen>
 
 
 

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="padding_5">5dp</dimen>
+    <dimen name="padding_3">3dp</dimen>
     <dimen name="button_text_size">15sp</dimen>
     <dimen name="_main_activity_button_text_size">10sp</dimen>
-    <dimen name="navigation_text_size">8sp</dimen>
-    <dimen name="button_margin_button">30dip</dimen>
+    <dimen name="navigation_text_size">10sp</dimen>
+    <dimen name="button_margin_button">15dip</dimen>
     <dimen name="get_score_button_margin_button">10dip</dimen>
     <dimen name="button_margin_right_left">15dip</dimen>
     <dimen name="margin10">10dip</dimen>
+    <dimen name="margin15">15dip</dimen>
+    <dimen name="margin5">5dip</dimen>
     <dimen name="margin20">20dip</dimen>
     <dimen name="size8">8dip</dimen>
     <dimen name="size2">2dip</dimen>
@@ -19,8 +22,9 @@
     <dimen name="size30">30dip</dimen>
 
     <dimen name="size121">121dip</dimen>
+    <dimen name="size80">80dip</dimen>
     <dimen name="toolbar_height">80dip</dimen>
-    <dimen name="login_steps_text_size">12sp</dimen>
+    <dimen name="login_steps_text_size">13sp</dimen>
     <dimen name="get_score_steps_text_size">18sp</dimen>
 
     <dimen name="profile_image_small">24dip</dimen>
@@ -44,6 +48,7 @@
     <dimen name="font_12">12sp</dimen>
     <dimen name="margin_10">10dip</dimen>
     <dimen name="margin_15">15dip</dimen>
+    <dimen name="design_navigation_icon_size">32dip</dimen>
 
 
 </resources>

@@ -39,6 +39,7 @@ public class SetPasswordApi {
 
 
     public PasswordValidationResponse parseJson(JSONObject jsonObject){
+        Log.e("jsonSetPassword",jsonObject.toString());
         PasswordValidationResponse passwordValidationResponse=new PasswordValidationResponse();
 
       try {
@@ -71,7 +72,7 @@ public class SetPasswordApi {
     public void callSetPasswordApi(String password,String mobileNumber,final VolleyCallback volleyCallback){
 
 
-        String   url=ConstantUrl.BASE+ConstantUrl.CHECK_PASSWORD;
+        String   url=ConstantUrl.BASE+ConstantUrl.CHANGHE_PASSWORD;
 Log.e("urlCheckPassword=",url);
 JSONObject jsonObject=new JSONObject();
 
@@ -79,7 +80,7 @@ JSONObject jsonObject=new JSONObject();
 
             jsonObject.put("mobile",mobileNumber);
             jsonObject.put("password",password);
-            jsonObject.put("lang","Fa");
+            jsonObject.put("oldPassword","1234");
             jsonObject.put("channel",AppConstants.CHANNEL);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -90,7 +91,7 @@ JSONObject jsonObject=new JSONObject();
                 response -> {
 
 
-                    Log.e("Server response",response.toString());
+                    Log.e("Server response setPassword",response.toString());
 
                     if (response!=null){
 

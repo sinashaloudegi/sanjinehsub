@@ -16,4 +16,3 @@ public static String BASE_CREDIT="http://creditscore.iconish.ir/";
 
 
 }
-

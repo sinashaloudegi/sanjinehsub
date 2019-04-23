@@ -26,7 +26,7 @@ this.sharedPreferencesManager=sharedPreferencesManager;
         verifyRegisterOtpApi.callVerifyRegisterOtpApi(otp,sharedPreferencesManager.getMobileNumberValue(),new VolleyCallback() {
         @Override
         public   void onSuccess(Object o) {
-
+sharedPreferencesManager.setPasswordValue(otp);
             volleyCallback.onSuccess(o);
         }
         @Override

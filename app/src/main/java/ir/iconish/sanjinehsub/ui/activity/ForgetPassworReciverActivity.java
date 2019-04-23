@@ -1,16 +1,29 @@
 package ir.iconish.sanjinehsub.ui.activity;
 
+import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatButton;
+import android.telephony.SmsMessage;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,6 +36,8 @@ import ir.iconish.sanjinehsub.data.vm.CheckPasswordViewModel;
 import ir.iconish.sanjinehsub.data.vm.ForgetPasswordViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
+import ir.iconish.sanjinehsub.util.PermissionHelper;
+import ir.iconish.sanjinehsub.util.ToastHelper;
 
 public class ForgetPassworReciverActivity extends AppCompatActivity{
 
@@ -57,7 +72,7 @@ public class ForgetPassworReciverActivity extends AppCompatActivity{
     @Inject
     CheckPasswordViewModel checkPasswordViewModel;
 
-
+    private BroadcastReceiver broadcastReceiver;
 
     CountDownTimer countDownTimer;
 
@@ -68,10 +83,12 @@ public class ForgetPassworReciverActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_reciver);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
 
         attachViewModel();
+        reciveSmsListener();
         startTimer();
 
 
@@ -124,7 +141,94 @@ btnRetry.setVisibility(View.VISIBLE);
         checkPassword(password);
     }
 
-     @OnClick(R.id.btnRetry)
+
+    private void reciveSmsListener(){
+
+
+        MultiplePermissionsListener multiplePermissionsListener=new MultiplePermissionsListener() {
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport report) {
+                if ( report.areAllPermissionsGranted()){
+
+
+                    IntentFilter intentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
+                    broadcastReceiver = new BroadcastReceiver() {
+                        @Override
+                        public void onReceive(Context context, Intent intent) {
+
+                            Bundle data = intent.getExtras();
+                            Object[] pdus = (Object[]) data.get("pdus");
+
+                            for (int i = 0; i < pdus.length; i++) {
+                                SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) pdus[i]);
+                                String sender = smsMessage.getDisplayOriginatingAddress();
+
+                                String messageBody = smsMessage.getMessageBody();
+
+                                receiveCodeAction(messageBody);
+                            }
+                        }
+                    };
+
+                    registerReceiver(broadcastReceiver, intentFilter);
+
+
+
+
+                }
+                else {
+                    ToastHelper.showWarningMessage(ForgetPassworReciverActivity.this,getString(R.string.should_grant_permission));
+                }
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                token.continuePermissionRequest();
+
+            }
+
+
+        };
+        String[] permissions={Manifest.permission.RECEIVE_SMS};
+        PermissionHelper.permissions(this, multiplePermissionsListener, permissions);
+
+    }
+
+
+    private void receiveCodeAction(String code) {
+        try {
+            code = code.replaceAll("[^0-9]", "");
+            edtPassword.setText(code);
+
+
+        }
+        catch (Exception e){
+        }
+
+    }
+
+
+    @OnClick(R.id.imgBack)
+    public void imgBackAction() {
+        ActivityNavigationHelper.navigateToActivity(this,ForgetPasswordActivity.class,true);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        try {
+            unregisterReceiver(broadcastReceiver);
+
+        }
+        catch (Exception e){}
+    }
+
+
+
+
+    @OnClick(R.id.btnRetry)
     public void btnRetryAction() {
 ActivityNavigationHelper.navigateToActivity(this,ForgetPasswordActivity.class,true);
     }

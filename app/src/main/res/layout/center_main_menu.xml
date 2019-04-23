@@ -19,33 +19,33 @@
             android:layout_height="wrap_content">
 
 
-          <RelativeLayout
-            android:id="@+id/rootOtherScore"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/border_bottom"
-            android:padding="@dimen/size8"
 
-            >
+            <RelativeLayout
+                android:id="@+id/rootOtherScore"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/border_bottom"
+                android:padding="@dimen/size8"
 
-            <ImageView
-              android:id="@+id/iconOtherScore"
-              android:layout_width="@dimen/center_menu_icon_size"
-              android:layout_height="@dimen/center_menu_icon_size"
-              android:layout_centerHorizontal="true"
-              app:srcCompat="@drawable/ic_othercreditscore"/>
+                >
 
-            <TextView
-              android:id="@+id/txtOtherScore"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_below="@+id/iconOtherScore"
-              android:gravity="center"
-              android:text="@string/other_score"
-              android:textColor="@color/dark_blue"
-              android:textSize="@dimen/_main_activity_button_text_size"
-              />
+                <ImageView
+                    android:id="@+id/iconOtherScore"
+                    android:layout_width="@dimen/center_menu_icon_size"
+                    android:layout_height="@dimen/center_menu_icon_size"
+                    android:layout_centerHorizontal="true"
+                    app:srcCompat="@drawable/ic_othercreditscore" />
+                <TextView
+                    android:layout_below="@+id/iconOtherScore"
+                    android:id="@+id/txtOtherScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/dark_blue"
+                    android:text="@string/other_score"
+                    android:textSize="@dimen/_main_activity_button_text_size"
+                    />
 
           </RelativeLayout>
 
@@ -57,27 +57,26 @@
             android:background="@drawable/border_bottom_left"
             android:padding="@dimen/size8"
 
-            >
+                >
 
-            <ImageView
-              android:id="@+id/fgd"
-              android:layout_width="@dimen/center_menu_icon_size"
-              android:layout_height="@dimen/center_menu_icon_size"
-              android:layout_centerHorizontal="true"
-              app:srcCompat="@drawable/ic_mycreditscore"/>
+                <ImageView
+                    android:id="@+id/fgd"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="@dimen/center_menu_icon_size"
+                    android:layout_height="@dimen/center_menu_icon_size"
+                    app:srcCompat="@drawable/ic_mycreditscore"/>
+                <TextView
+                    android:layout_below="@+id/fgd"
+                    android:id="@+id/fdg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/dark_blue"
+                    android:text="@string/my_score"
+                    android:textSize="@dimen/_main_activity_button_text_size"
+                    />
 
-            <TextView
-              android:id="@+id/fdg"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_below="@+id/fgd"
-              android:gravity="center"
-              android:text="@string/my_score"
-              android:textColor="@color/dark_blue"
-              android:textSize="@dimen/_main_activity_button_text_size"
-              />
-
-          </RelativeLayout>
+            </RelativeLayout>
 
 
         </LinearLayout>

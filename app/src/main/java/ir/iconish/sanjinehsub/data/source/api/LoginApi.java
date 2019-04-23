@@ -45,6 +45,7 @@ public class LoginApi {
 
 
     public User parseJson(JSONObject jsonObject){
+        Log.e("jsonLogin",jsonObject.toString());
         User user=new User();
 
       try {
@@ -89,7 +90,7 @@ user.setUserId(userId);
 
 
         String   url=ConstantUrl.BASE+ConstantUrl.LOGIN+mobileNumer+"/"+ AppConstants.VAS_SUBSCRIB;
-Log.e("url=",url);
+Log.e("urlRegister=",url);
 
        // JsonArrayRequest
 

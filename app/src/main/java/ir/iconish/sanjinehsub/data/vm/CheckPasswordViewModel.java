@@ -137,5 +137,7 @@ public class CheckPasswordViewModel extends ViewModel {
 
       });
     }
-
+    public void clearPassword(){
+        checkPasswordRepository.clearPassword();
+    }
 }

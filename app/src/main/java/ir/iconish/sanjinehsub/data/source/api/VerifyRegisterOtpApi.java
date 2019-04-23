@@ -69,7 +69,7 @@ public class VerifyRegisterOtpApi {
 
 
     public void callVerifyRegisterOtpApi(String otp,String mobileNumber,final VolleyCallback volleyCallback){
-
+Log.e("phone",mobileNumber);
 
         String   url=ConstantUrl.BASE+ConstantUrl.CONFIRM_REGISTER;
 
@@ -79,8 +79,6 @@ JSONObject jsonObject=new JSONObject();
 
             jsonObject.put("msisdn",mobileNumber);
             jsonObject.put("otp",otp);
-
-            jsonObject.put("lang","Fa");
             jsonObject.put("channel",AppConstants.CHANNEL);
         } catch (JSONException e) {
             e.printStackTrace();

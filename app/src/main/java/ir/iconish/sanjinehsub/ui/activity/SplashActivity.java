@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,7 +38,9 @@ SplashViewModel splashViewModel;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         StrictMode.setThreadPolicy(policy);
       ((AppController) getApplication()).getAppComponent().inject(this);
@@ -146,7 +149,7 @@ SplashViewModel splashViewModel;
     navigateToApp();
     }
     private void navigateToApp(){
-        if(splashViewModel.getUserId()==-1){
+        if(null==splashViewModel.getUserPassword()){
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));}
         else {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));

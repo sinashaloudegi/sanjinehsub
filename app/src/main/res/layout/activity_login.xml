@@ -25,9 +25,8 @@ android:background="@color/sanjinehColor"
      app:srcCompat="@drawable/ic_logo"/>
  <ImageView
      android:id="@+id/imgLoginRegister"
-     android:layout_marginTop="@dimen/margin10"
      android:layout_width="match_parent"
-     android:layout_height="@dimen/size121"
+     android:layout_height="@dimen/size80"
      android:layout_below="@+id/imgLogoRegister"
 
      app:srcCompat="@drawable/ic_loginicon"/>
@@ -38,15 +37,21 @@ android:background="@color/sanjinehColor"
      android:layout_height="wrap_content"
 android:layout_below="@+id/imgLoginRegister"
      android:gravity="right"
-     android:layout_marginTop="@dimen/margin10"
+     android:layout_marginBottom="@dimen/margin10"
 android:textSize="@dimen/login_steps_text_size"
      android:text="@string/account_credit"
      android:textColor="@color/white"/>
 
- <TextView
-     android:id="@+id/txtAlert"
+
+ <RelativeLayout
      android:layout_width="match_parent"
-     android:layout_marginTop="@dimen/margin10"
+     android:layout_centerInParent="true"
+     android:id="@+id/centerLayout"
+     android:layout_height="wrap_content">
+ <TextView
+     android:id="@+id/txtAlertPhone"
+     android:layout_width="match_parent"
+     android:layout_marginTop="@dimen/margin5"
      android:layout_height="wrap_content"
      android:layout_below="@+id/edtMobileNumber"
      android:visibility="invisible"
@@ -57,22 +62,52 @@ android:textSize="@dimen/login_steps_text_size"
      android:textColor="@color/alert_incorrect_entry"/>
  <EditText
      android:layout_width="match_parent"
-     android:layout_centerInParent="true"
      android:backgroundTint="@color/white"
      android:textColor="@color/white"
      android:id="@+id/edtMobileNumber"
      android:maxLength="11"
      android:inputType="phone"
-     android:text="09108981877"
      android:hint="@string/phone_hint"
      android:textColorHint="@color/darker_gray"
      android:gravity="center"
      android:layout_height="wrap_content" />
 
+  <TextView
+     android:id="@+id/txtAlertNationalCode"
+     android:layout_width="match_parent"
+     android:layout_marginTop="@dimen/margin10"
+     android:layout_height="wrap_content"
+     android:layout_below="@+id/edtNationalCode"
+     android:visibility="invisible"
+     android:gravity="right"
+     android:textSize="@dimen/login_steps_text_size"
+
+     android:text="@string/force_enter_password"
+     android:textColor="@color/alert_incorrect_entry"/>
+ <EditText
+     android:layout_width="match_parent"
+     android:layout_marginTop="@dimen/margin10"
+     android:backgroundTint="@color/white"
+     android:textColor="@color/white"
+     android:id="@+id/edtNationalCode"
+     android:maxLength="10"
+     android:inputType="phone"
+     android:hint="@string/national_code"
+     android:textColorHint="@color/darker_gray"
+     android:layout_below="@+id/txtAlertPhone"
+     android:gravity="center"
+     android:layout_height="wrap_content" />
+
+
+
+
+
+ </RelativeLayout>
+
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_marginTop="@dimen/margin10"
-    android:layout_below="@+id/txtAlert"
+    android:layout_below="@+id/centerLayout"
     android:layout_height="wrap_content">
 
  <TextView
@@ -105,7 +140,7 @@ android:layout_centerVertical="true"
      android:visibility="invisible"
      android:layout_centerHorizontal="true"
      android:layout_above="@+id/btnCheckPhone"
-     android:layout_marginBottom="@dimen/size30"
+     android:layout_marginBottom="@dimen/margin15"
      />
  <android.support.v7.widget.AppCompatButton
 

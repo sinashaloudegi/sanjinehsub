@@ -18,7 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 public class CustomCachingGlideModule extends AppGlideModule {
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
-        int diskCacheSizeBytes = 1024 * 1024 * 150; // 100 MB
+        int diskCacheSizeBytes = 1024 * 1024 * 150; // 150 MB
 
         builder.setDefaultRequestOptions(
                 new RequestOptions()
