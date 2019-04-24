@@ -16,7 +16,7 @@ android:background="@color/sanjinehColor"
 
  <ImageView
 
-     android:id="@+id/imgLogoRegister"
+     android:id="@+id/imgLogoVerifyOthers"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
      android:layout_marginTop="@dimen/size8"
@@ -41,7 +41,7 @@ android:textSize="@dimen/login_steps_text_size"
      android:layout_centerInParent="true"
      android:backgroundTint="@color/white"
      android:textColor="@color/white"
-     android:id="@+id/edtVerificationCode"
+     android:id="@+id/edtVerifyCodeOthers"
      android:maxLength="4"
      android:inputType="phone"
 android:hint="@string/enter_verification"
@@ -60,7 +60,7 @@ android:textColorHint="@color/darker_gray"
      />
 
  <android.support.v7.widget.AppCompatButton
-android:id="@+id/btnEnter"
+android:id="@+id/btnEnterVerifyCodeOthers"
 
      android:layout_width="match_parent"
      android:text="@string/enter"

@@ -1,5 +1,6 @@
 package ir.iconish.sanjinehsub.ui.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,8 @@ public class GetScoreOthersActivity extends AppCompatActivity {
 
   @BindView(R.id.txtAlert)
   TextView txtAlert;
+
+  BroadcastReceiver broadcastReceiver;
 
 
   @Inject
@@ -102,17 +105,11 @@ public class GetScoreOthersActivity extends AppCompatActivity {
 
     sendVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, reportStateId -> {
       stopWating();
-
-      if (reportStateId == 12){
         ActivityNavigationHelper.navigateToActivity(this,VerifyCodeOthersActivity.class,true);
         Intent intent=new Intent(this,VerifyCodeOthersActivity.class);
         intent.putExtra("msisdn", edtMsisdnOthers.getText().toString());
         this.startActivity(intent);
         this.finish();
-      }
-      else {
-
-      }
       }
     );
     sendVerifyCodeViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {

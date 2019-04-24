@@ -44,28 +44,6 @@ android:background="@color/sanjinehColor"
  </RelativeLayout>
 
 
- <TextView
-     android:id="@+id/txtTimer"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-android:layout_above="@+id/edtVerificationCode"
-     android:gravity="center"
-     android:layout_marginBottom="@dimen/size100"
-android:textSize="@dimen/login_steps_text_size"
-     android:text="@string/timer_start_value"
-     android:textColor="@color/white"/>
- <TextView
-     android:id="@+id/txtAlert"
-     android:layout_width="match_parent"
-     android:layout_marginTop="@dimen/margin10"
-     android:layout_height="wrap_content"
-     android:layout_below="@+id/edtVerificationCode"
-     android:gravity="right"
-     android:textSize="@dimen/login_steps_text_size"
-     android:visibility="invisible"
-
-     android:text="@string/force_enter_password"
-     android:textColor="@color/alert_incorrect_entry"/>
  <EditText
      android:layout_width="match_parent"
      android:layout_centerInParent="true"
@@ -85,7 +63,7 @@ android:textColorHint="@color/darker_gray"
      android:layout_height="wrap_content"
      android:visibility="invisible"
      android:layout_centerHorizontal="true"
-     android:layout_above="@+id/btnEnter"
+     android:layout_above="@+id/btnEnterVerifyCodeOthers"
      android:layout_marginBottom="@dimen/size50"
      />
 
@@ -96,23 +74,12 @@ android:id="@+id/btnEnterVerifyCodeOthers"
      android:text="@string/enter"
      android:textColor="@color/dark_blue"
      app:backgroundTint="@color/yellow_button"
-android:layout_above="@+id/btnRetry"
-     android:textSize="@dimen/button_text_size"
+android:layout_alignParentBottom="true"
+android:layout_marginTop="@dimen/margin20"
+android:layout_marginBottom="@dimen/margin_50"
+android:textSize="@dimen/button_text_size"
      android:layout_height="wrap_content"
      />
 
- <android.support.v7.widget.AppCompatButton
-
-android:id="@+id/btnRetry"
-     android:layout_width="match_parent"
-     android:text="@string/retry_verfication"
-     android:textColor="@color/dark_blue"
-     app:backgroundTint="@color/light_gray"
-     android:layout_marginBottom="@dimen/button_margin_button"
-android:visibility="invisible"
-     android:textSize="@dimen/button_text_size"
-     android:layout_alignParentBottom="true"
-     android:layout_height="wrap_content"
-     />
 
 </RelativeLayout>

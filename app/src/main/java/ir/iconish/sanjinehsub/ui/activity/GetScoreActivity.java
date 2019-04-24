@@ -11,11 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.UUID;
 
@@ -27,8 +25,6 @@ import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.vm.BazaarKeyViewModel;
-import ir.iconish.sanjinehsub.data.vm.CheckReportViewModel;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.util.IabHelper;
@@ -37,9 +33,6 @@ import ir.iconish.sanjinehsub.util.Inventory;
 import ir.iconish.sanjinehsub.util.Purchase;
 
 public class GetScoreActivity extends AppCompatActivity {
-
-  @BindView(R.id.edtNtcode)
-  EditText edtNtcode;
 
   @BindView(R.id.btnGetScore)
   AppCompatButton btnGetScore;
@@ -58,10 +51,7 @@ public class GetScoreActivity extends AppCompatActivity {
 
   @Inject
   GetScoreViewModel getScoreViewModel;
-  @Inject
-  CheckReportViewModel checkReportViewModel;
-  @Inject
-  BazaarKeyViewModel bazaarKeyViewModel;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -70,30 +60,21 @@ public class GetScoreActivity extends AppCompatActivity {
 
     ButterKnife.bind(this);
     ((AppController) getApplication()).getAppComponent().inject(this);
-
+    bazaarSetup("");
     attachViewModel();
-    bazaarKeyViewModel.callBazaarKeyViewModel();
 
   }
 
 
   @OnClick(R.id.btnGetScore)
   public void btnGetScoreAction() {
-    if (!(edtNtcode.getText().toString().trim().length() > 0 )) {
-      txtAlert.setText(getString(R.string.force_enter_ntcode));
-      txtAlert.setVisibility(View.VISIBLE);
-      return;
-    }
-
-    String ntcode = edtNtcode.getText().toString();
-    showWating();
-    checkReportViewModel.callCheckReportViewModel(ntcode.trim());
+    messageReciver();
+    new CheckCafeBazaarLogin(this).initService();
 
   }
 
   @OnClick(R.id.imgBack)
   public void imgBackAction() {
-
     onBackPressed();
   }
 
@@ -132,73 +113,6 @@ public class GetScoreActivity extends AppCompatActivity {
   }
 
   private void attachViewModel() {
-
-    bazaarKeyViewModel.getApiSuccessLiveDataResponse().observe(this, bazaarKey -> {
-      bazaarSetup(bazaarKey);
-      btnGetScore.setEnabled(true);
-      }
-    );
-    bazaarKeyViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
-    });
-    bazaarKeyViewModel.getApiErrorLiveData().observe(this, volleyError -> {
-      goToFailApiPage("ApiError");
-    });
-    bazaarKeyViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
-    {
-      goToFailApiPage("ServerError");
-    });
-    bazaarKeyViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-      {
-        goToFailApiPage("TimeOutError");
-      }
-    );
-    bazaarKeyViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
-      goToFailApiPage("ClientNetworkError");
-    });
-
-    bazaarKeyViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
-    });
-    bazaarKeyViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
-    });
-
-
-
-
-    checkReportViewModel.getApiSuccessLiveDataResponse().observe(this, services -> {
-      if (services.getAvailable()== true && services.getValidMobile()== true){
-         new CheckCafeBazaarLogin(GetScoreActivity.this).initService();
-      }
-      else if (services.getAvailable() == true && services.getValidMobile() == false){
-        Toast.makeText(this,"کد ملی وارد شده دارای گزارش می باشد اما شماره موبایل وارد شده با این کد ملی مطابقت ندارد.",Toast.LENGTH_SHORT).show();
-      }
-      else {
-        Toast.makeText(this, "کد ملی وارد شده دارای گزارش نمی باشد.", Toast.LENGTH_SHORT).show();
-      }
-        Log.e("success", "in activity");
-      }
-    );
-    checkReportViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
-    });
-    checkReportViewModel.getApiErrorLiveData().observe(this, volleyError -> {
-      goToFailApiPage("ApiError");
-    });
-    checkReportViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
-    {
-      goToFailApiPage("ServerError");
-    });
-    checkReportViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-      {
-        goToFailApiPage("TimeOutError");
-      }
-    );
-    checkReportViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
-      goToFailApiPage("ClientNetworkError");
-    });
-
-    checkReportViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
-    });
-    checkReportViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
-    });
 
 
     getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, services -> {

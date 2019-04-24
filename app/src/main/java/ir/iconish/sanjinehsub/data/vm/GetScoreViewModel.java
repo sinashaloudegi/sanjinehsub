@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModel;
 
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.model.RegisterPurchaseInfoResult;
+import ir.iconish.sanjinehsub.data.model.RegisterPurchaseInfoResultDto;
 import ir.iconish.sanjinehsub.data.repository.GetScoreRepository;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 import ir.iconish.sanjinehsub.util.Purchase;
@@ -13,7 +13,7 @@ import ir.iconish.sanjinehsub.util.Purchase;
 public class GetScoreViewModel extends ViewModel {
 
 
-    private MutableLiveData<RegisterPurchaseInfoResult> apiSuccessLiveDataResponse;
+    private MutableLiveData<RegisterPurchaseInfoResultDto> apiSuccessLiveDataResponse;
     private MutableLiveData<String> apiErrorLiveData;
     private MutableLiveData<String> apiServerErrorLiveData;
     private MutableLiveData<String> apiClientNetworkErrorLiveData;
@@ -39,7 +39,7 @@ public class GetScoreViewModel extends ViewModel {
         return apiValidation422ErrorLiveData;
     }
 
-    public MutableLiveData<RegisterPurchaseInfoResult> getApiSuccessLiveDataResponse() {
+    public MutableLiveData<RegisterPurchaseInfoResultDto> getApiSuccessLiveDataResponse() {
         return apiSuccessLiveDataResponse;
     }
 
@@ -90,7 +90,7 @@ public class GetScoreViewModel extends ViewModel {
       getScoreRepository.callGetScoreRepository(purchase,new VolleyCallback() {
           @Override
           public void onSuccess(Object obj) {
-            apiSuccessLiveDataResponse.setValue((RegisterPurchaseInfoResult) obj);
+            apiSuccessLiveDataResponse.setValue((RegisterPurchaseInfoResultDto) obj);
 
           }
           @Override

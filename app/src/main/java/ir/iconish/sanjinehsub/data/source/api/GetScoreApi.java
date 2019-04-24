@@ -16,7 +16,7 @@ import org.json.JSONObject;
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.model.RegisterPurchaseInfoResult;
+import ir.iconish.sanjinehsub.data.model.RegisterPurchaseInfoResultDto;
 import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.Purchase;
 
@@ -32,12 +32,18 @@ public class GetScoreApi {
   }
 
 
-  public RegisterPurchaseInfoResult parseJson(JSONObject jsonObject) {
-    RegisterPurchaseInfoResult registerPurchaseInfoResult = new RegisterPurchaseInfoResult();
+  public RegisterPurchaseInfoResultDto parseJson(JSONObject jsonObject) {
+    RegisterPurchaseInfoResultDto registerPurchaseInfoResult = new RegisterPurchaseInfoResultDto();
+    RegisterPurchaseInfoResultDto.MarketResultDto marketResultDto = new RegisterPurchaseInfoResultDto.MarketResultDto();
+
 
     try {
-      registerPurchaseInfoResult.setPurchaseResult(jsonObject.getBoolean("purchaseResult"));
-      registerPurchaseInfoResult.setUserBalance(jsonObject.getInt("userBalance"));
+      registerPurchaseInfoResult.setReqToken(jsonObject.getString("reqToken"));
+      JSONObject marketResultDtoJsonObject = jsonObject.getJSONObject("marketResultDto");
+      marketResultDto.setMarketResultEnumId(marketResultDtoJsonObject.getInt("marketResultEnumId"));
+      marketResultDto.setMarketResultEnumName(marketResultDtoJsonObject.getString("marketResultEnumName"));
+      registerPurchaseInfoResult.setMarketResultDto(marketResultDto);
+
 
     } catch (JSONException e) {
       Log.e("err", e.toString());
@@ -78,9 +84,8 @@ public class GetScoreApi {
       response -> {
         Log.e("Server response", response.toString());
         if (response != null) {
-          RegisterPurchaseInfoResult registerPurchaseInfoResult = parseJson(response);
-          volleyCallback.onSuccess(registerPurchaseInfoResult);
-          // volleyCallback.onSuccess(visits);
+          RegisterPurchaseInfoResultDto registerPurchaseInfoResultDto = parseJson(response);
+          volleyCallback.onSuccess(registerPurchaseInfoResultDto);
         }
 
 

@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.List;
@@ -156,10 +155,11 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
             }
 
             @Override
-            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+            public void onPermissionRationaleShouldBeShown(List<com.karumi.dexter.listener.PermissionRequest> permissions, PermissionToken token) {
                 token.continuePermissionRequest();
 
             }
+
 
 
         };
