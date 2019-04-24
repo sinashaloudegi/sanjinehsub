@@ -184,7 +184,8 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
 
     }
     private void startTimer() {
-        long timerDuration=Long.parseLong(getString(R.string.timer_start_value));
+       // long timerDuration=Long.parseLong(getString(R.string.timer_start_value));
+        int timerDuration=confirmRegisterViewModel.getTimerDuration();
 
         countDownTimer=    new CountDownTimer(timerDuration, 1000) {
 

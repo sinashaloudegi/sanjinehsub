@@ -18,6 +18,8 @@ public class SharedPreferencesManager {
     private static final String USER_ID_VALUE = "RESPONSE_STATUS_CODE_VALUE";
     private static final String PASSWORD_VALUE = "PASSWORD_VALUE";
     private static final String NATIONAL_CODE = "NAIONAL_CODE";
+    private static final String MARKET_KEY = "MARKET_KEY";
+    private static final String TIMER_DURATION = "TIMER_DURATION";
 
 
 
@@ -53,7 +55,42 @@ public class SharedPreferencesManager {
     }
 
 
-    public  String getFirsNameValue() {
+    public  String getMarketKeyValue() {
+        return sharedPreferences.getString(MARKET_KEY , null);
+    }
+
+
+
+
+    public  void setMarketKeyValue( String newValue) {
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(MARKET_KEY , newValue);
+        editor.commit();
+    }
+
+
+
+
+    public  int getTimerDurationValue() {
+        return sharedPreferences.getInt(TIMER_DURATION , 200000);
+    }
+
+
+
+
+    public  void setTimerDurationValue( int newValue) {
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(TIMER_DURATION , newValue);
+        editor.commit();
+    }
+
+
+
+
+
+
+
+      public  String getFirsNameValue() {
         return sharedPreferences.getString(FIRST_NAME_VALUE , null);
     }
 
@@ -65,6 +102,12 @@ public class SharedPreferencesManager {
         editor.putString(FIRST_NAME_VALUE , newValue);
         editor.commit();
     }
+
+
+
+
+
+
 
     public  String getLastNameValue() {
         return sharedPreferences.getString(LAST_NAME_VALUE , null);

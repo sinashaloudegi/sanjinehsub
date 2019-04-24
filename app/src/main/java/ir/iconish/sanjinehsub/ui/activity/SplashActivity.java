@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,7 +19,9 @@ import javax.inject.Inject;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.bazaar.UpdateCheck;
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.vm.SplashViewModel;
+import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
+import ir.iconish.sanjinehsub.data.vm.AppConfigViewModel;
+
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.ui.DialogHelper;
 import ir.iconish.sanjinehsub.ui.Dialoglistener;
@@ -28,7 +31,7 @@ import static ir.iconish.sanjinehsub.util.AppConstants.PACKAGE_NAME;
 
 public class SplashActivity extends AppCompatActivity implements Dialoglistener {
 @Inject
-SplashViewModel splashViewModel;
+AppConfigViewModel appConfigViewModel;
 
 
 
@@ -44,8 +47,9 @@ SplashViewModel splashViewModel;
 
         StrictMode.setThreadPolicy(policy);
       ((AppController) getApplication()).getAppComponent().inject(this);
-
-        startTimer();
+attachViewModel();
+appConfigViewModel.callAppConfigViewModel(0);
+      //  startTimer();
 
 //new CheckCafeBazaarLogin(this).initService();
 
@@ -71,7 +75,7 @@ SplashViewModel splashViewModel;
         }
 
 
-    }, 2000);
+    }, 1000);
     }
 
 
@@ -127,6 +131,7 @@ SplashViewModel splashViewModel;
             DialogHelper.showDialog(getString(R.string.new_version),getString(R.string.download_new_version),getString(R.string.download),getString(R.string.ignore),this,this);
         }
         else {
+
             navigateToApp();
         }
     }
@@ -145,18 +150,74 @@ SplashViewModel splashViewModel;
     }
 
     @Override
-    public void onDialogCancelEvent(Object object) {
+    public void onDialogCancelEvent(Object object)
+    {
+
     navigateToApp();
     }
+
+
     private void navigateToApp(){
-        if(null==splashViewModel.getUserPassword()){
-            startActivity(new Intent(SplashActivity.this, LoginActivity.class));}
+        if(null==appConfigViewModel.getUserPassword()){
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+
+        }
         else {
+           // appConfigViewModel.callAppConfigViewModel(0);
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
+
         }
         finish();
     }
 
 
+    private void attachViewModel() {
+        appConfigViewModel.getApiSuccessLiveDataResponse().observe(this, appConfig -> {
+                    startTimer();
+/*                   startActivity(new Intent(SplashActivity.this, MainActivity.class));
+finish();*/
 
+//if 1010 go to enter pass -- if 1011 go to otp
+
+                    Log.e("success","in activity");
+                }
+        );
+
+        appConfigViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {});
+
+        appConfigViewModel.getApiErrorLiveData().observe(this, volleyError ->{
+            goToFailApiPage("ApiError");
+
+        });
+        appConfigViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+
+        {
+            goToFailApiPage("ServerError");
+
+        });
+        appConfigViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+                {
+                    goToFailApiPage("TimeOutError");
+                }
+
+        );
+        appConfigViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+            goToFailApiPage("ClientNetworkError");
+
+
+        });
+
+
+        appConfigViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError ->{} );
+        appConfigViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError ->{} );
+
+    }
+    private void goToFailApiPage(String failCause){
+
+        Intent intent=new Intent(this,FailApiActivity.class);
+        intent.putExtra("failCause",failCause);
+        startActivity(intent);
+        finish();
+
+    }
 }

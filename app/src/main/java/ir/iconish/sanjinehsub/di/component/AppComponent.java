@@ -8,6 +8,7 @@ package ir.iconish.sanjinehsub.di.component;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import ir.iconish.sanjinehsub.di.module.AppConfigModule;
 import ir.iconish.sanjinehsub.di.module.AppModule;
 import ir.iconish.sanjinehsub.di.module.CheckPasswordActivityModule;
 import ir.iconish.sanjinehsub.di.module.ForgetPasswordActivityModule;
@@ -31,7 +32,7 @@ import ir.iconish.sanjinehsub.ui.activity.VerifyRegisterOtpActivity;
 
 @Singleton
 @Component(modules = {AppModule.class, NetModule.class, LoginActivityModule.class, GetScoreActivityModule.class, GetScoreActivityModule.class, CheckPasswordActivityModule.class, ForgetPasswordActivityModule.class, SetPasswordActivityModule.class,
-        VerifyRegisterOtpModule.class
+        VerifyRegisterOtpModule.class, AppConfigModule.class
 })
 public interface AppComponent {
 
@@ -46,5 +47,6 @@ public interface AppComponent {
     void inject(MainActivity activity);
     void inject(GetScoreOthersActivity activity);
     void inject(VerifyCodeOthersActivity activity);
+
 
 }

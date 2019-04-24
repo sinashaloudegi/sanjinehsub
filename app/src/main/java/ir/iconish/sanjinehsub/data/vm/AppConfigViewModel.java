@@ -5,16 +5,15 @@ import android.arch.lifecycle.ViewModel;
 
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.model.PasswordValidationResponse;
-import ir.iconish.sanjinehsub.data.model.User;
-import ir.iconish.sanjinehsub.data.repository.CheckPasswordRepository;
-import ir.iconish.sanjinehsub.data.repository.LoginRepository;
+import ir.iconish.sanjinehsub.data.model.AppConfig;
+import ir.iconish.sanjinehsub.data.repository.AppConfigRepository;
+import ir.iconish.sanjinehsub.data.repository.BazaarKeyRepository;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 
-public class CheckPasswordViewModel extends ViewModel {
+public class AppConfigViewModel extends ViewModel {
 
 
-    private MutableLiveData<PasswordValidationResponse> apiSuccessLiveDataResponse;
+    private MutableLiveData<AppConfig> apiSuccessLiveDataResponse;
     private MutableLiveData<String> apiErrorLiveData;
     private MutableLiveData<String> apiServerErrorLiveData;
     private MutableLiveData<String> apiClientNetworkErrorLiveData;
@@ -23,7 +22,7 @@ public class CheckPasswordViewModel extends ViewModel {
 
 
 
-    CheckPasswordRepository checkPasswordRepository;
+    AppConfigRepository appConfigRepository;
 
     private MutableLiveData<String> apiForbiden403ErrorLiveData;
     private MutableLiveData<String> apiValidation422ErrorLiveData;
@@ -40,15 +39,15 @@ public class CheckPasswordViewModel extends ViewModel {
         return apiValidation422ErrorLiveData;
     }
 
-    public MutableLiveData<PasswordValidationResponse> getApiSuccessLiveDataResponse() {
+    public MutableLiveData<AppConfig> getApiSuccessLiveDataResponse() {
         return apiSuccessLiveDataResponse;
     }
 
     @Inject
-    public CheckPasswordViewModel(CheckPasswordRepository checkPasswordRepository)
+    public AppConfigViewModel(AppConfigRepository appConfigRepository)
     {
 
-        this.checkPasswordRepository=checkPasswordRepository;
+        this.appConfigRepository=appConfigRepository;
 
 
 
@@ -85,15 +84,13 @@ public class CheckPasswordViewModel extends ViewModel {
         return apiAuthFailureErrorLiveData;
     }
 
-    public void callCheckPasswordViewModel(String password) {
+    public void callAppConfigViewModel(int appId) {
 
 
-      checkPasswordRepository.callCheckPasswordRepository(password,new VolleyCallback() {
+      appConfigRepository.callAppConfigRepository(appId,new VolleyCallback() {
           @Override
           public void onSuccess(Object obj) {
-
-              PasswordValidationResponse passwordValidationResponse= (PasswordValidationResponse) obj;
-            apiSuccessLiveDataResponse.setValue(passwordValidationResponse);
+            apiSuccessLiveDataResponse.setValue((AppConfig) obj);
 
           }
           @Override
@@ -137,10 +134,7 @@ public class CheckPasswordViewModel extends ViewModel {
 
       });
     }
-    public void clearPassword(){
-        checkPasswordRepository.clearPassword();
-    }
-    public int getTimerDuration(){
-        return checkPasswordRepository.getTimerDuration();
+    public String getUserPassword(){
+        return appConfigRepository.getUserPassword();
     }
 }

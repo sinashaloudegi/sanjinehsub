@@ -88,4 +88,8 @@ this.sharedPreferencesManager=sharedPreferencesManager;
     public void clearPassword(){
         sharedPreferencesManager.clearPassword();
     }
+
+    public int getTimerDuration(){
+        return sharedPreferencesManager.getTimerDurationValue();
+    }
 }
