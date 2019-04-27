@@ -48,10 +48,7 @@ AppConfigViewModel appConfigViewModel;
         StrictMode.setThreadPolicy(policy);
       ((AppController) getApplication()).getAppComponent().inject(this);
 attachViewModel();
-
-        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-
-//appConfigViewModel.callAppConfigViewModel(0);
+appConfigViewModel.callAppConfigViewModel(0);
       //  startTimer();
 
 //new CheckCafeBazaarLogin(this).initService();
