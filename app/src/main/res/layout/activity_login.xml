@@ -16,7 +16,7 @@ android:background="@color/sanjinehColor"
 
  <ImageView
 
-     android:id="@+id/imgLogoVerifyOthers"
+     android:id="@+id/imgLogo"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
      android:layout_marginTop="@dimen/size8"
@@ -27,7 +27,7 @@ android:background="@color/sanjinehColor"
      android:id="@+id/imgLoginRegister"
      android:layout_width="match_parent"
      android:layout_height="@dimen/size80"
-     android:layout_below="@+id/imgLogoRegister"
+     android:layout_below="@+id/imgLogo"
 
      app:srcCompat="@drawable/ic_loginicon"/>
 
