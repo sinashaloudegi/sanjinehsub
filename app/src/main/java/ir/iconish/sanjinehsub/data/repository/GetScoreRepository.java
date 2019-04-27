@@ -1,6 +1,8 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.source.api.GetScoreApi;
@@ -25,9 +27,15 @@ public class GetScoreRepository {
 
   public void callGetScoreRepository(Purchase purchase, String othersmsisdn,String ntcode, final VolleyCallback volleyCallback) {
       String msisdn = sharedPreferencesManager.getMobileNumberValue();
-      String bazaarKey = sharedPreferencesManager.getMarketKeyValue();
+    Log.i("Test", "my msisdn : " + msisdn);
       if (othersmsisdn == null){
         ntcode = sharedPreferencesManager.getNationalCodeValue();
+        Log.i("Test", "my ntcode : " + msisdn);
+      }
+      else {
+        Log.i("Test", "othersmsisdn : " + othersmsisdn);
+        Log.i("Test", "others ntcode : " + ntcode);
+
       }
     getScoreApi.callGetScoreApi(msisdn, ntcode, othersmsisdn, purchase, new VolleyCallback() {
       @Override

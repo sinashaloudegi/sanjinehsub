@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
+import ir.iconish.sanjinehsub.data.model.VerifyCodeOthersResponse;
 import ir.iconish.sanjinehsub.util.AppConstants;
 
 public class SendVerifyCodeApi {
@@ -30,17 +31,18 @@ public class SendVerifyCodeApi {
   }
 
 
-  public Integer parseJson(JSONObject jsonObject) {
-    Integer reportStateId = 0;
+  public VerifyCodeOthersResponse parseJson(JSONObject jsonObject) {
+    VerifyCodeOthersResponse verifyCodeOthersResponse = new VerifyCodeOthersResponse();
     try {
-      reportStateId = jsonObject.getInt("reportStateId");
+      verifyCodeOthersResponse.setStatusCode(jsonObject.getInt("reportStateId"));
+      verifyCodeOthersResponse.setDescription(jsonObject.getString("reportStateValue"));
 
     } catch (JSONException e) {
       Log.e("err", e.toString());
       e.printStackTrace();
     }
 
-    return reportStateId;
+    return verifyCodeOthersResponse;
   }
 
 
@@ -58,8 +60,8 @@ public class SendVerifyCodeApi {
       response -> {
         Log.e("Server response", response.toString());
         if (response != null) {
-          Integer reportStateId = parseJson(response);
-          volleyCallback.onSuccess(reportStateId);
+          VerifyCodeOthersResponse verifyCodeOthersResponse = parseJson(response);
+          volleyCallback.onSuccess(verifyCodeOthersResponse);
           // volleyCallback.onSuccess(visits);
         }
 

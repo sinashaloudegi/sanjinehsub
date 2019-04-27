@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,7 +20,6 @@ import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.vm.SendVerifyCodeViewModel;
-import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 
 public class GetScoreOthersActivity extends AppCompatActivity {
@@ -57,6 +57,7 @@ public class GetScoreOthersActivity extends AppCompatActivity {
 
   @OnClick(R.id.btnGetScoreOthers)
   public void btnGetScoreOthersAction() {
+    txtAlert.setVisibility(View.INVISIBLE);
 
     if(!(edtMsisdnOthers.getText().toString().trim().length() > 0) && !(edtNtcodeOthers.getText().toString().trim().length() > 0)){
       txtAlert.setText(getString(R.string.force_enter_phone_ntcode));
@@ -103,13 +104,19 @@ public class GetScoreOthersActivity extends AppCompatActivity {
 
   private void attachViewModel() {
 
-    sendVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, reportStateId -> {
+    sendVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, verifyCodeOthersResponse -> {
       stopWating();
-        ActivityNavigationHelper.navigateToActivity(this,VerifyCodeOthersActivity.class,true);
-        Intent intent=new Intent(this,VerifyCodeOthersActivity.class);
+      if (verifyCodeOthersResponse.getStatusCode() == 12) {
+        Log.i("Test", "sent otp to others");
+        Intent intent = new Intent(this, VerifyCodeOthersActivity.class);
         intent.putExtra("msisdn", edtMsisdnOthers.getText().toString());
-        this.startActivity(intent);
-        this.finish();
+        intent.putExtra("ntcode", edtNtcodeOthers.getText().toString());
+        startActivity(intent);
+        finish();
+      }else {
+        txtAlert.setText(verifyCodeOthersResponse.getDescription());
+        txtAlert.setVisibility(View.VISIBLE);
+      }
       }
     );
     sendVerifyCodeViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {

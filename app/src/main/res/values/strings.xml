@@ -71,5 +71,6 @@
     <string name="force_enter_ntcode">"لطفا کد ملی را وارد کنید."</string>
     <string name="national_code">"کد ملی"</string>
     <string name="should_grant_permission">شما میبایست همه ی مجوزها را اعطا نمایید.</string>
+  <string name="retry_others_otp">لطفا مجددا تلاش کنید.</string>
 
 </resources>

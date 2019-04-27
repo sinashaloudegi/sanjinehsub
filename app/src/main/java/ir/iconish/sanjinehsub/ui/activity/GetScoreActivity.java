@@ -52,6 +52,7 @@ public class GetScoreActivity extends AppCompatActivity {
 
   @Inject
   GetScoreViewModel getScoreViewModel;
+
   CheckCafeBazaarLogin checkCafeBazaarLogin;
   private boolean alreadyBazaarInited = false;
 
@@ -310,6 +311,7 @@ public class GetScoreActivity extends AppCompatActivity {
         return;
       }
       Log.i("Test", "Purchase successful.");
+              showWating();
               getScoreViewModel.callGetScoreViewModel(purchase,null,null);
 
       if (purchase.getSku().equals("sanj01")) {

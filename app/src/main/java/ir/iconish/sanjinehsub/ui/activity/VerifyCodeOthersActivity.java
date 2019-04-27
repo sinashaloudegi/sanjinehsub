@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.UUID;
 
@@ -59,6 +60,12 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
   @Inject
   GetScoreViewModel getScoreViewModel;
 
+  CheckCafeBazaarLogin checkCafeBazaarLogin;
+  private boolean alreadyBazaarInited = false;
+
+  String msisdn = null;
+  String ntcode = null;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -66,17 +73,20 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
     setContentView(R.layout.activity_verfiy_code_others);
     ButterKnife.bind(this);
     ((AppController) getApplication()).getAppComponent().inject(this);
-
-    bazaarSetup("");
+    Intent intent = getIntent();
+    msisdn = intent.getStringExtra("msisdn");
+    ntcode = intent.getStringExtra("ntcode");
+    checkCafeBazaarLogin = new CheckCafeBazaarLogin(VerifyCodeOthersActivity.this);
+    messageReciver();
+    bazaarSetup(getScoreViewModel.getMarketKey());
     attachViewModel();
 
   }
 
 
-  @OnClick(R.id.btnGetScore)
+  @OnClick(R.id.btnEnterVerifyCodeOthers)
   public void btnGetScoreAction() {
-    Intent intent = getIntent();
-    String msisdn = intent.getStringExtra("msisdn");
+    showWating();
     confirmVerifyCodeViewModel.callConfirmVerifyCodeViewModel(msisdn,edtVerifyCodeOthers.getText().toString());
 
   }
@@ -92,42 +102,56 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
   }
 
   private void  bazaarSetup(String bazaarKey){
+    Log.i("bazaarKey : " , bazaarKey);
     String base64EncodedPublicKey = bazaarKey ;
     // You can find it in your Bazaar console, in the Dealers section.
     // It is recommended to add more security than just pasting it in your source code;
     mHelper = new IabHelper(this, base64EncodedPublicKey);
 
     Log.i("Test", "Starting setup.");
-    mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-      public void onIabSetupFinished(IabResult result) {
-        Log.i("Test", "Setup finished.");
-
-        if (!result.isSuccess()) {
-          // Oh noes, there was a problem.
-          Log.i("Test", "Problem setting up In-app Billing: " + result);
-
-        }
-        // Hooray, IAB is fully set up!
-        mHelper.queryInventoryAsync(mGotInventoryListener);
-      }
-    });
-//      mHelper.startSetup(result -> {
+//    mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+//      public void onIabSetupFinished(IabResult result) {
 //        Log.i("Test", "Setup finished.");
 //
 //        if (!result.isSuccess()) {
 //          // Oh noes, there was a problem.
 //          Log.i("Test", "Problem setting up In-app Billing: " + result);
+//
 //        }
 //        // Hooray, IAB is fully set up!
 //        mHelper.queryInventoryAsync(mGotInventoryListener);
-//      });
+//      }
+//    });
+      mHelper.startSetup(result -> {
+        Log.i("Test", "Setup finished.");
+
+        if (!result.isSuccess()) {
+          // Oh noes, there was a problem.
+          Log.i("Test", "Problem setting up In-app Billing: " + result);
+        }
+        // Hooray, IAB is fully set up!
+        mHelper.queryInventoryAsync(mGotInventoryListener);
+      });
   }
 
   private void attachViewModel() {
 
     confirmVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, reportStateEnumId -> {
       if (reportStateEnumId == 12){
+        if (!alreadyBazaarInited) {
+          checkCafeBazaarLogin.initService();
+        }
+        else {
+          UUID uuid = UUID.randomUUID();
+          String randomUUIDString = uuid.toString();
+          Log.i("Test", "randomUUIDString : " + randomUUIDString);
+          //"bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ"
+          mHelper.launchPurchaseFlow(VerifyCodeOthersActivity.this, "sanj01", 10001, mPurchaseFinishedListener, randomUUIDString);
 
+        }
+      }
+      else {
+        Toast.makeText(VerifyCodeOthersActivity.this, R.string.retry_others_otp, Toast.LENGTH_LONG).show();
       }
       }
     );
@@ -157,9 +181,10 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
 
 
 
-    getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, services -> {
+    getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, registerPurchaseInfoResultDto -> {
+        Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
         stopWating();
-        //go webview
+        getScoreAtion(registerPurchaseInfoResultDto.getReqToken(), registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId());
         Log.e("success", "in activity");
       }
     );
@@ -235,11 +260,13 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
         return;
       }
 
-      Purchase gasPurchase = inventory.getPurchase("sanj01");
-      if (gasPurchase != null && verifyDeveloperPayload(gasPurchase)) {
-        Log.i("Test", "We have sanj01. Consuming it.");
-        mHelper.consumeAsync(inventory.getPurchase("sanj01"), mConsumeFinishedListener);
-        return;
+      if (inventory != null){
+        Purchase gasPurchase = inventory.getPurchase("sanj01");
+        if (gasPurchase != null && verifyDeveloperPayload(gasPurchase)) {
+          Log.i("Test", "We have sanj01. Consuming it.");
+          mHelper.consumeAsync(inventory.getPurchase("sanj01"), mConsumeFinishedListener);
+          return;
+        }
       }
 
       Log.i("Test", "Initial inventory query finished; enabling main UI.");
@@ -251,7 +278,7 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
   private void messageReciver(){
     IntentFilter filter = new IntentFilter();
 
-    filter.addAction("versionCode");
+    filter.addAction("checkbazaarlogin");
 
     broadcastReceiver= new BroadcastReceiver() {
       @Override
@@ -265,7 +292,7 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
           case "checkbazaarlogin":
             boolean cafeBazarLogin = intent.getBooleanExtra("checkbazaarlogin",false);
             if (cafeBazarLogin){
-
+              alreadyBazaarInited = true;
               UUID uuid = UUID.randomUUID();
               String randomUUIDString = uuid.toString();
               Log.i("Test", "randomUUIDString : " + randomUUIDString);
@@ -274,6 +301,7 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
 
             }
             else {
+              alreadyBazaarInited = false;
               Intent intentLogin = new Intent(Intent.ACTION_VIEW);
               intentLogin.setData(Uri.parse("bazaar://login"));
               intentLogin.setPackage("com.farsitel.bazaar");
@@ -298,7 +326,7 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
       this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
     super.onDestroy();
 
-    new CheckCafeBazaarLogin(this).releaseService();
+    checkCafeBazaarLogin.releaseService();
 
     // very important:
     Log.i("Test", "Destroying helper.");
@@ -327,7 +355,7 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
         return;
       }
       Log.i("Test", "Purchase successful.");
-//              getScoreViewModel.callGetScoreViewModel(purchase);
+      getScoreViewModel.callGetScoreViewModel(purchase,msisdn,ntcode);
 
       if (purchase.getSku().equals("sanj01")) {
         Log.i("Test", "Purchase is gas. Starting sanj01 consumption.");
@@ -363,6 +391,13 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
     ActivityNavigationHelper.navigateToActivity(this,GetScoreOthersActivity.class,true);
 
   }
+
+  private void getScoreAtion(String reqToken, int statusCode){
+    String url = "https://www.sanjineh.ir/report/" + reqToken;
+    ActivityNavigationHelper.navigateToWebView(url, VerifyCodeOthersActivity.this, WebViewActivity.class);
+    finish();
+  }
+
 
 
 }

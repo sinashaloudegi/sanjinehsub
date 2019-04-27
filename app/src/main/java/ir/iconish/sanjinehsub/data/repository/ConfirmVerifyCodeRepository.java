@@ -23,7 +23,7 @@ public class ConfirmVerifyCodeRepository {
   }
 
   public void callSendVerifyCodeRepository(String msisdn, String code, final VolleyCallback volleyCallback) {
-    confirmVerifyCodeApi.callConfirmVerifyCodeApi(msisdn, "code", new VolleyCallback() {
+    confirmVerifyCodeApi.callConfirmVerifyCodeApi(msisdn, code, new VolleyCallback() {
       @Override
       public void onSuccess(Object o) {
         volleyCallback.onSuccess(o);

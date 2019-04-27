@@ -5,13 +5,14 @@ import android.arch.lifecycle.ViewModel;
 
 import javax.inject.Inject;
 
+import ir.iconish.sanjinehsub.data.model.VerifyCodeOthersResponse;
 import ir.iconish.sanjinehsub.data.repository.SendVerifyCodeRepository;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 
 public class SendVerifyCodeViewModel extends ViewModel {
 
 
-    private MutableLiveData<Integer> apiSuccessLiveDataResponse;
+    private MutableLiveData<VerifyCodeOthersResponse> apiSuccessLiveDataResponse;
     private MutableLiveData<String> apiErrorLiveData;
     private MutableLiveData<String> apiServerErrorLiveData;
     private MutableLiveData<String> apiClientNetworkErrorLiveData;
@@ -37,7 +38,7 @@ public class SendVerifyCodeViewModel extends ViewModel {
         return apiValidation422ErrorLiveData;
     }
 
-    public MutableLiveData<Integer> getApiSuccessLiveDataResponse() {
+    public MutableLiveData<VerifyCodeOthersResponse> getApiSuccessLiveDataResponse() {
         return apiSuccessLiveDataResponse;
     }
 
@@ -49,7 +50,7 @@ public class SendVerifyCodeViewModel extends ViewModel {
 
 
 
-        apiSuccessLiveDataResponse = new MutableLiveData<>();
+        apiSuccessLiveDataResponse = new MutableLiveData<VerifyCodeOthersResponse>();
         apiErrorLiveData = new MutableLiveData<>();
         apiServerErrorLiveData = new MutableLiveData<>();
         apiClientNetworkErrorLiveData = new MutableLiveData<>();
@@ -88,7 +89,7 @@ public class SendVerifyCodeViewModel extends ViewModel {
       sendVerifyCodeRepository.callSendVerifyCodeRepository(ntcode,ownermobile,new VolleyCallback() {
           @Override
           public void onSuccess(Object obj) {
-            apiSuccessLiveDataResponse.setValue((Integer) obj);
+            apiSuccessLiveDataResponse.setValue((VerifyCodeOthersResponse) obj);
 
           }
           @Override
