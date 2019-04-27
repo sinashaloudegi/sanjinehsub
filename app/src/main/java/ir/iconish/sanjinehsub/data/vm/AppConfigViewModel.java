@@ -7,7 +7,6 @@ import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.model.AppConfig;
 import ir.iconish.sanjinehsub.data.repository.AppConfigRepository;
-import ir.iconish.sanjinehsub.data.repository.BazaarKeyRepository;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 
 public class AppConfigViewModel extends ViewModel {

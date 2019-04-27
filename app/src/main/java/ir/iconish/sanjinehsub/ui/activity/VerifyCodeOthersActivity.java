@@ -327,7 +327,7 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
         return;
       }
       Log.i("Test", "Purchase successful.");
-              getScoreViewModel.callGetScoreViewModel(purchase);
+//              getScoreViewModel.callGetScoreViewModel(purchase);
 
       if (purchase.getSku().equals("sanj01")) {
         Log.i("Test", "Purchase is gas. Starting sanj01 consumption.");

@@ -7,7 +7,6 @@ import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.model.AppConfig;
 import ir.iconish.sanjinehsub.data.source.api.AppConfigApi;
-import ir.iconish.sanjinehsub.data.source.api.BazaarKeyApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 
