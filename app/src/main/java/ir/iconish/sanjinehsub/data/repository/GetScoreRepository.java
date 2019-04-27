@@ -23,9 +23,13 @@ public class GetScoreRepository {
     this.sharedPreferencesManager = sharedPreferencesManager;
   }
 
-  public void callGetScoreRepository(Purchase purchase, final VolleyCallback volleyCallback) {
-    String msisdn = sharedPreferencesManager.getMobileNumberValue();
-    getScoreApi.callGetScoreApi(msisdn, purchase, new VolleyCallback() {
+  public void callGetScoreRepository(Purchase purchase, String othersmsisdn,String ntcode, final VolleyCallback volleyCallback) {
+      String msisdn = sharedPreferencesManager.getMobileNumberValue();
+      String bazaarKey = sharedPreferencesManager.getMarketKeyValue();
+      if (othersmsisdn == null){
+        ntcode = sharedPreferencesManager.getNationalCodeValue();
+      }
+    getScoreApi.callGetScoreApi(msisdn, ntcode, othersmsisdn, purchase, new VolleyCallback() {
       @Override
       public void onSuccess(Object o) {
         volleyCallback.onSuccess(o);
@@ -75,5 +79,9 @@ public class GetScoreRepository {
 
   }
 
+
+  public String getMarketKey(){
+    return sharedPreferencesManager.getMarketKeyValue();
+  }
 
 }

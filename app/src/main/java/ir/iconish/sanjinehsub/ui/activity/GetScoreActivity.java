@@ -26,6 +26,7 @@ import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
+import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
@@ -51,6 +52,8 @@ public class GetScoreActivity extends AppCompatActivity {
 
   @Inject
   GetScoreViewModel getScoreViewModel;
+  CheckCafeBazaarLogin checkCafeBazaarLogin;
+  private boolean alreadyBazaarInited = false;
 
 
   @Override
@@ -60,7 +63,9 @@ public class GetScoreActivity extends AppCompatActivity {
 
     ButterKnife.bind(this);
     ((AppController) getApplication()).getAppComponent().inject(this);
-    bazaarSetup("");
+    checkCafeBazaarLogin = new CheckCafeBazaarLogin(GetScoreActivity.this);
+    messageReciver();
+    bazaarSetup(getScoreViewModel.getMarketKey());
     attachViewModel();
 
   }
@@ -68,8 +73,17 @@ public class GetScoreActivity extends AppCompatActivity {
 
   @OnClick(R.id.btnGetScore)
   public void btnGetScoreAction() {
-    messageReciver();
-    new CheckCafeBazaarLogin(this).initService();
+    if (!alreadyBazaarInited) {
+      checkCafeBazaarLogin.initService();
+    }
+    else {
+      UUID uuid = UUID.randomUUID();
+      String randomUUIDString = uuid.toString();
+      Log.i("Test", "randomUUIDString : " + randomUUIDString);
+      //"bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ"
+      mHelper.launchPurchaseFlow(GetScoreActivity.this, "sanj01", 10001, mPurchaseFinishedListener, randomUUIDString);
+
+    }
 
   }
 
@@ -78,47 +92,55 @@ public class GetScoreActivity extends AppCompatActivity {
     onBackPressed();
   }
 
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+  }
+
+
 
 
   private void  bazaarSetup(String bazaarKey){
+    Log.i("bazaarKey : " , bazaarKey);
     String base64EncodedPublicKey = bazaarKey ;
     // You can find it in your Bazaar console, in the Dealers section.
     // It is recommended to add more security than just pasting it in your source code;
-    mHelper = new IabHelper(this, base64EncodedPublicKey);
+    mHelper = new IabHelper(GetScoreActivity.this, base64EncodedPublicKey);
 
     Log.i("Test", "Starting setup.");
-    mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-      public void onIabSetupFinished(IabResult result) {
-        Log.i("Test", "Setup finished.");
-
-        if (!result.isSuccess()) {
-          // Oh noes, there was a problem.
-          Log.i("Test", "Problem setting up In-app Billing: " + result);
-
-        }
-        // Hooray, IAB is fully set up!
-        mHelper.queryInventoryAsync(mGotInventoryListener);
-      }
-    });
-//      mHelper.startSetup(result -> {
+//    mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+//      public void onIabSetupFinished(IabResult result) {
 //        Log.i("Test", "Setup finished.");
 //
 //        if (!result.isSuccess()) {
 //          // Oh noes, there was a problem.
 //          Log.i("Test", "Problem setting up In-app Billing: " + result);
+//
 //        }
 //        // Hooray, IAB is fully set up!
 //        mHelper.queryInventoryAsync(mGotInventoryListener);
-//      });
+//      }
+//    });
+      mHelper.startSetup(result -> {
+        Log.i("Test", "Setup finished.");
+
+        if (!result.isSuccess()) {
+          // Oh noes, there was a problem.
+          Log.i("Test", "Problem setting up In-app Billing: " + result);
+        }
+        // Hooray, IAB is fully set up!
+        mHelper.queryInventoryAsync(mGotInventoryListener);
+      });
   }
 
   private void attachViewModel() {
 
 
-    getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, services -> {
+    getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, registerPurchaseInfoResultDto -> {
+      Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
         stopWating();
-        //go webview
-        Log.e("success", "in activity");
+        getScoreAtion(registerPurchaseInfoResultDto.getReqToken(), registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId());
+  Log.e("success", "in activity");
       }
     );
     getScoreViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
@@ -189,15 +211,17 @@ public class GetScoreActivity extends AppCompatActivity {
       if (mHelper == null) return;
 
       if (result.isFailure()) {
-        Log.i("Test", "Failed to query inventory: " + result);
-        return;
+        Log.i("Test", "Failed to query invenreturn;tory: " + result);
+
       }
 
+      if (inventory != null){
       Purchase gasPurchase = inventory.getPurchase("sanj01");
       if (gasPurchase != null && verifyDeveloperPayload(gasPurchase)) {
         Log.i("Test", "We have sanj01. Consuming it.");
         mHelper.consumeAsync(inventory.getPurchase("sanj01"), mConsumeFinishedListener);
         return;
+      }
       }
 
       Log.i("Test", "Initial inventory query finished; enabling main UI.");
@@ -209,7 +233,7 @@ public class GetScoreActivity extends AppCompatActivity {
   private void messageReciver(){
     IntentFilter filter = new IntentFilter();
 
-    filter.addAction("versionCode");
+    filter.addAction("checkbazaarlogin");
 
     broadcastReceiver= new BroadcastReceiver() {
       @Override
@@ -223,7 +247,7 @@ public class GetScoreActivity extends AppCompatActivity {
           case "checkbazaarlogin":
             boolean cafeBazarLogin = intent.getBooleanExtra("checkbazaarlogin",false);
             if (cafeBazarLogin){
-
+              alreadyBazaarInited = true;
               UUID uuid = UUID.randomUUID();
               String randomUUIDString = uuid.toString();
               Log.i("Test", "randomUUIDString : " + randomUUIDString);
@@ -232,6 +256,7 @@ public class GetScoreActivity extends AppCompatActivity {
 
             }
             else {
+              alreadyBazaarInited = false;
               Intent intentLogin = new Intent(Intent.ACTION_VIEW);
               intentLogin.setData(Uri.parse("bazaar://login"));
               intentLogin.setPackage("com.farsitel.bazaar");
@@ -252,11 +277,11 @@ public class GetScoreActivity extends AppCompatActivity {
 
   @Override
   public void onDestroy() {
-    if (this != null)
-      this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+    if (GetScoreActivity.this != null)
+      GetScoreActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
     super.onDestroy();
 
-    new CheckCafeBazaarLogin(this).releaseService();
+    checkCafeBazaarLogin.releaseService();
 
     // very important:
     Log.i("Test", "Destroying helper.");
@@ -285,7 +310,7 @@ public class GetScoreActivity extends AppCompatActivity {
         return;
       }
       Log.i("Test", "Purchase successful.");
-              getScoreViewModel.callGetScoreViewModel(purchase);
+              getScoreViewModel.callGetScoreViewModel(purchase,null,null);
 
       if (purchase.getSku().equals("sanj01")) {
         Log.i("Test", "Purchase is gas. Starting sanj01 consumption.");
@@ -314,6 +339,12 @@ public class GetScoreActivity extends AppCompatActivity {
   boolean verifyDeveloperPayload(Purchase p) {
     String payload = p.getDeveloperPayload();
     return true;
+  }
+
+  private void getScoreAtion(String reqToken, int statusCode){
+    String url = "https://www.sanjineh.ir/report/" + reqToken;
+    ActivityNavigationHelper.navigateToWebView(url, GetScoreActivity.this, WebViewActivity.class);
+    finish();
   }
 
 }

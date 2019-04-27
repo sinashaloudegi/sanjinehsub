@@ -84,10 +84,10 @@ public class GetScoreViewModel extends ViewModel {
         return apiAuthFailureErrorLiveData;
     }
 
-    public void callGetScoreViewModel(Purchase purchase) {
+    public void callGetScoreViewModel(Purchase purchase, String othersmsisdn,String ntcode) {
 
 
-      getScoreRepository.callGetScoreRepository(purchase,new VolleyCallback() {
+      getScoreRepository.callGetScoreRepository(purchase,othersmsisdn,ntcode,new VolleyCallback() {
           @Override
           public void onSuccess(Object obj) {
             apiSuccessLiveDataResponse.setValue((RegisterPurchaseInfoResultDto) obj);
@@ -133,6 +133,10 @@ public class GetScoreViewModel extends ViewModel {
           }
 
       });
+    }
+
+    public String getMarketKey(){
+        return getScoreRepository.getMarketKey();
     }
 
 

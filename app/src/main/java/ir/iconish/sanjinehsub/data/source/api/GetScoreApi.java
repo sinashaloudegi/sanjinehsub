@@ -1,5 +1,6 @@
 package ir.iconish.sanjinehsub.data.source.api;
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -54,11 +55,18 @@ public class GetScoreApi {
   }
 
 
-  public void callGetScoreApi(String msisdn, Purchase purchase, final VolleyCallback volleyCallback) {
+  public void callGetScoreApi(String msisdn,String ntcode,String othersmsisdn, Purchase purchase, final VolleyCallback volleyCallback) {
 
 
-    String url = ConstantUrl.BASE + ConstantUrl.REGISTER_PURCHASEINFO ;
+
+    String url = ConstantUrl.BASE_MARKET + ConstantUrl.REGISTER_PURCHASEINFO ;
     Log.e("url=", url);
+    Uri.Builder builder = Uri.parse( url).buildUpon();
+    builder.appendQueryParameter("ntcode", ntcode);
+    if (othersmsisdn != null) {
+      builder.appendQueryParameter("othersmsisdn", othersmsisdn);
+    }
+    String finalUrl=builder.build().toString();
 
     JSONObject jsonObject = new JSONObject();
     try {
@@ -80,7 +88,7 @@ public class GetScoreApi {
 
     // JsonArrayRequest
 
-    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
+    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, finalUrl, jsonObject,
       response -> {
         Log.e("Server response", response.toString());
         if (response != null) {
