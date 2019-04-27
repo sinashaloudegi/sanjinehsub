@@ -2,6 +2,7 @@ package ir.iconish.sanjinehsub.data.repository;
 
 
 
+import android.util.Log;
 import android.widget.CheckBox;
 
 import javax.inject.Inject;
@@ -34,9 +35,9 @@ this.sharedPreferencesManager=sharedPreferencesManager;
         public   void onSuccess(Object o) {
 
             PasswordValidationResponse passwordValidationResponse= (PasswordValidationResponse) o;
-
-           if( passwordValidationResponse.getRespobseStatusCode()==1000){
+            if(passwordValidationResponse.getRespobseStatusCode()==1012||passwordValidationResponse.getRespobseStatusCode()==1013||passwordValidationResponse.getRespobseStatusCode()==1000) {
                sharedPreferencesManager.setPasswordValue(password);
+               sharedPreferencesManager.setTokenValue(passwordValidationResponse.getToken());
 
            }
 

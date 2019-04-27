@@ -80,6 +80,7 @@ JSONObject jsonObject=new JSONObject();
             jsonObject.put("msisdn",mobileNumber);
             jsonObject.put("otp",otp);
             jsonObject.put("channel",AppConstants.CHANNEL);
+            jsonObject.put("vasSub",AppConstants.VAS_SUBSCRIB);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -88,7 +89,7 @@ JSONObject jsonObject=new JSONObject();
                 url,jsonObject,
                 response -> {
 
-
+Log.e("res server otp",response.toString());
 
 
                     if (response!=null){

@@ -20,6 +20,7 @@ public class SharedPreferencesManager {
     private static final String NATIONAL_CODE = "NAIONAL_CODE";
     private static final String MARKET_KEY = "MARKET_KEY";
     private static final String TIMER_DURATION = "TIMER_DURATION";
+    private static final String TOKEN = "TOKEN";
 
 
 
@@ -83,6 +84,29 @@ public class SharedPreferencesManager {
         editor.putInt(TIMER_DURATION , newValue);
         editor.commit();
     }
+
+
+
+
+
+    public  String getTokenValue() {
+        return sharedPreferences.getString(TOKEN , null);
+    }
+
+
+
+
+    public  void setTokenValue( String newValue) {
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(TOKEN , newValue);
+        editor.commit();
+    }
+
+
+
+
+
+
 
 
 

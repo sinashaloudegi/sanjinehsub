@@ -89,13 +89,24 @@ user.setUserId(userId);
     public void callLoginApi(String mobileNumer,final VolleyCallback volleyCallback){
 
 
-        String   url=ConstantUrl.BASE+ConstantUrl.LOGIN+mobileNumer+"/"+ AppConstants.VAS_SUBSCRIB;
+        //String   url=ConstantUrl.BASE+ConstantUrl.LOGIN+mobileNumer+"/"+ AppConstants.VAS_SUBSCRIB;
+        String   url=ConstantUrl.BASE+ConstantUrl.LOGIN;
 Log.e("urlRegister=",url);
+
+JSONObject jsonObject=new JSONObject();
+        try {
+            jsonObject.put("appid",AppConstants.APP_ID);
+            jsonObject.put("mobile",mobileNumer);
+            jsonObject.put("vasSubscribeId",AppConstants.VAS_SUBSCRIB);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
        // JsonArrayRequest
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                url,null,
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                url,jsonObject,
                 response -> {
 
 
@@ -178,7 +189,7 @@ Log.e("urlRegister=",url);
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("appid", AppConstants.APP_ID);
+               // params.put("appid", AppConstants.APP_ID);
 
 
                 return params;

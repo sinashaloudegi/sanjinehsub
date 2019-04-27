@@ -11,7 +11,6 @@
 
   <ImageView
     android:id="@+id/imgGetScoreOthers"
-    android:layout_marginTop="@dimen/margin10"
     android:layout_width="match_parent"
     android:layout_height="@dimen/size121"
     android:layout_below="@+id/getScoreOthersToolbar"
@@ -22,12 +21,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@+id/imgGetScoreOthers"
-    android:layout_marginTop="@dimen/margin_20"
-    android:layout_marginBottom="@dimen/margin_20"
+
     android:gravity="center"
     android:text="@string/get_score"
     android:textColor="@color/black"
-    android:textSize="@dimen/get_score_steps_text_size"
+    android:textSize="@dimen/login_steps_text_size"
     android:layout_marginRight="@dimen/margin_10"
     android:layout_marginLeft="@dimen/margin_10"/>
 
@@ -53,6 +51,7 @@
       android:hint="@string/msisdn_others"
       android:inputType="number"
       android:maxLength="11"
+        android:textSize="@dimen/login_steps_text_size"
       android:singleLine="true"
       android:textColor="@color/black"
       android:textColorHint="@color/darker_gray"
@@ -84,7 +83,9 @@
       android:gravity="top|right"
       android:hint="@string/ntcode_others"
       android:inputType="number"
-      android:maxLength="10"
+        android:textSize="@dimen/login_steps_text_size"
+
+        android:maxLength="10"
       android:singleLine="true"
       android:textColor="@color/black"
       android:textColorHint="@color/darker_gray"
@@ -106,7 +107,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_toLeftOf="@+id/checkboxPaymentOthers"
-      android:textSize="@dimen/get_score_steps_text_size"
+      android:textSize="@dimen/login_steps_text_size"
       android:text="@string/get_score_payment"
       android:layout_centerVertical="true"
       android:textColor="@color/black"/>
@@ -130,7 +131,7 @@
     android:visibility="invisible"
     android:layout_centerHorizontal="true"
     android:layout_above="@id/btnGetScoreOthers"
-    android:layout_marginBottom="@dimen/margin_50"
+    android:layout_marginBottom="@dimen/margin_39"
     />
 
   <TextView
@@ -140,7 +141,10 @@
     android:layout_height="wrap_content"
     android:layout_above="@+id/btnGetScoreOthers"
     android:visibility="invisible"
-    android:gravity="center"
+      android:layout_marginRight="@dimen/margin_10"
+      android:layout_marginLeft="@dimen/margin_10"
+
+    android:gravity="right"
     android:textSize="@dimen/login_steps_text_size"
     android:text=""
     android:textColor="@color/alert_incorrect_entry"/>
@@ -150,7 +154,7 @@
 
     android:id="@+id/btnGetScoreOthers"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/size75"
+    android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_marginBottom="@dimen/get_score_button_margin_button"
     android:text="@string/enter_get_score_others"

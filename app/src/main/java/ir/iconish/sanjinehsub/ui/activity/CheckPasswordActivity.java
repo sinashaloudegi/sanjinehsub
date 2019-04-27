@@ -104,15 +104,32 @@ public class CheckPasswordActivity extends AppCompatActivity{
                     stopWating();
 
 
-if(passwordValidationResponse.getRespobseStatusCode()==1000){
 
-    ActivityNavigationHelper.navigateToActivity(this,MainActivity.class,true);
-}
-else {
+            if(passwordValidationResponse.getRespobseStatusCode()==1012||passwordValidationResponse.getRespobseStatusCode()==1013||passwordValidationResponse.getRespobseStatusCode()==1000) {
 
-    txtAlert.setText(passwordValidationResponse.getDescryptions());
-    txtAlert.setVisibility(View.VISIBLE);
-}
+//ActivityNavigationHelper.navigateToActivity(this,SetPasswordActivity.class,true);
+                ActivityNavigationHelper.navigateToActivity(this, MainActivity.class, true);
+            }
+
+            else {
+                txtAlert.setText(passwordValidationResponse.getDescryptions());
+                txtAlert.setVisibility(View.VISIBLE);
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //if 1010 go to enter pass -- if 1011 go to otp
 

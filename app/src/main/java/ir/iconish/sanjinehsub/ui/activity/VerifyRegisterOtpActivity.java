@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.config.AppController;
+import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
 import ir.iconish.sanjinehsub.data.vm.VerifyRegisterOtpViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
@@ -56,7 +57,7 @@ public class VerifyRegisterOtpActivity extends AppCompatActivity{
 
 
 
-    @BindView(R.id.edtVerificationCode)
+    @BindView(R.id.edtVerifyCode)
     EditText edtVerificationCode;
 
 
@@ -243,12 +244,32 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
                     stopWating();
 
 
+
+                    if(passwordValidationResponse.getRespobseStatusCode()==1012||passwordValidationResponse.getRespobseStatusCode()==1013||passwordValidationResponse.getRespobseStatusCode()==1000) {
+
 //ActivityNavigationHelper.navigateToActivity(this,SetPasswordActivity.class,true);
-ActivityNavigationHelper.navigateToActivity(this,MainActivity.class,true);
+                        ActivityNavigationHelper.navigateToActivity(this, MainActivity.class, true);
+                    }
 
-//if 1010 go to enter pass -- if 1011 go to otp
+                    else {
+                        txtAlert.setText(getString(ResponseCodeEnum.fromValue(passwordValidationResponse.getRespobseStatusCode()).getValue()));
+                        txtAlert.setVisibility(View.VISIBLE);
+                    }
 
-                    Log.e("success","in check password activity");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 }
         );
 

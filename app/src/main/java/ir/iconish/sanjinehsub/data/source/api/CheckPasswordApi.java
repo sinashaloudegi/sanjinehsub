@@ -44,6 +44,8 @@ public class CheckPasswordApi {
         PasswordValidationResponse passwordValidationResponse=new PasswordValidationResponse();
 
       try {
+          String token=jsonObject.getString("token");
+
             JSONObject jsonObjectRoot=jsonObject.getJSONObject("responseStatus");
           int statusCode=  jsonObjectRoot.getInt("value");
                 String descr=jsonObjectRoot.getString("descr");
@@ -52,7 +54,7 @@ public class CheckPasswordApi {
           passwordValidationResponse.setRespobseStatusCode(statusCode);
           passwordValidationResponse.setDescryptions(descr);
 
-
+passwordValidationResponse.setToken(token);
              /*   else if (statusCode==1011){
 
             }*/
