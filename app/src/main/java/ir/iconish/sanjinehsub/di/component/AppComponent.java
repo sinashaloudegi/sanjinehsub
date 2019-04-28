@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import ir.iconish.sanjinehsub.di.module.AppConfigModule;
 import ir.iconish.sanjinehsub.di.module.AppModule;
+import ir.iconish.sanjinehsub.di.module.ArchiveModule;
 import ir.iconish.sanjinehsub.di.module.CheckPasswordActivityModule;
 import ir.iconish.sanjinehsub.di.module.ForgetPasswordActivityModule;
 import ir.iconish.sanjinehsub.di.module.GetScoreActivityModule;
@@ -17,6 +18,7 @@ import ir.iconish.sanjinehsub.di.module.LoginActivityModule;
 import ir.iconish.sanjinehsub.di.module.NetModule;
 import ir.iconish.sanjinehsub.di.module.SetPasswordActivityModule;
 import ir.iconish.sanjinehsub.di.module.VerifyRegisterOtpModule;
+import ir.iconish.sanjinehsub.ui.activity.ArchiveActivity;
 import ir.iconish.sanjinehsub.ui.activity.CheckPasswordActivity;
 import ir.iconish.sanjinehsub.ui.activity.ForgetPassworReciverActivity;
 import ir.iconish.sanjinehsub.ui.activity.ForgetPasswordActivity;
@@ -32,7 +34,7 @@ import ir.iconish.sanjinehsub.ui.activity.VerifyRegisterOtpActivity;
 
 @Singleton
 @Component(modules = {AppModule.class, NetModule.class, LoginActivityModule.class, GetScoreActivityModule.class, GetScoreActivityModule.class, CheckPasswordActivityModule.class, ForgetPasswordActivityModule.class, SetPasswordActivityModule.class,
-        VerifyRegisterOtpModule.class, AppConfigModule.class
+        VerifyRegisterOtpModule.class, AppConfigModule.class, ArchiveModule.class
 })
 public interface AppComponent {
 
@@ -47,6 +49,7 @@ public interface AppComponent {
     void inject(MainActivity activity);
     void inject(GetScoreOthersActivity activity);
     void inject(VerifyCodeOthersActivity activity);
+    void inject(ArchiveActivity activity);
 
 
 }

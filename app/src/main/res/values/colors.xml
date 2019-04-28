@@ -19,6 +19,7 @@
     <color name="red">#FF0000</color>
 
     <color name="all_transparent">#00FFFFFF</color>
-
+    <color name="acceptedd_border_color">#e5eced</color>
+    <color name="acceptedd_shadow_color">#FFD5DDDF</color>
 
 </resources>

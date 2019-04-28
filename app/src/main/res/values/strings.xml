@@ -72,5 +72,6 @@
     <string name="national_code">"کد ملی"</string>
     <string name="should_grant_permission">شما میبایست همه ی مجوزها را اعطا نمایید.</string>
   <string name="retry_others_otp">لطفا مجددا تلاش کنید.</string>
+  <string name="download_report">دانلود گزارش</string>
 
 </resources>

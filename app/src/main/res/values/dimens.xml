@@ -20,7 +20,7 @@
     <dimen name="size75">75dip</dimen>
     <dimen name="size100">100dip</dimen>
     <dimen name="size30">30dip</dimen>
-
+    <dimen name="border_button_radious_visit">4dip</dimen>
     <dimen name="size121">121dip</dimen>
     <dimen name="size80">80dip</dimen>
     <dimen name="toolbar_height">80dip</dimen>

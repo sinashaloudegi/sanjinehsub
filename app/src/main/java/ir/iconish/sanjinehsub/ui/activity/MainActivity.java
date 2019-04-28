@@ -256,6 +256,8 @@ downloadLastVersion();
 
 
     case 3:
+        ActivityNavigationHelper.navigateToActivity(MainActivity.this,ArchiveActivity.class,false);
+
         break;
 
 
@@ -307,4 +309,5 @@ downloadLastVersion();
         i.setData(Uri.parse(url));
         startActivity(i);
     }
+
 }
