@@ -2,8 +2,12 @@ package ir.iconish.sanjinehsub.data.repository;
 
 
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
+import ir.iconish.sanjinehsub.data.model.PasswordValidationResponse;
+import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
 import ir.iconish.sanjinehsub.data.source.api.VerifyRegisterOtpApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
@@ -26,7 +30,15 @@ this.sharedPreferencesManager=sharedPreferencesManager;
         verifyRegisterOtpApi.callVerifyRegisterOtpApi(otp,sharedPreferencesManager.getMobileNumberValue(),new VolleyCallback() {
         @Override
         public   void onSuccess(Object o) {
+
+            PasswordValidationResponse passwordValidationResponse= (PasswordValidationResponse) o;
+
+            if(passwordValidationResponse.getRespobseStatusCode()==ResponseCodeEnum.VERIFY_SUCCESS_AND_NEW.getValue()){
+            String token= passwordValidationResponse.getToken();
+
 sharedPreferencesManager.setPasswordValue(otp);
+sharedPreferencesManager.setTokenValue(token);
+}
             volleyCallback.onSuccess(o);
         }
         @Override

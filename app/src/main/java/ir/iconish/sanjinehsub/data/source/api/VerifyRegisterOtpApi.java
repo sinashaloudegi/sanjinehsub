@@ -22,6 +22,7 @@ import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.model.PasswordValidationResponse;
+import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
 import ir.iconish.sanjinehsub.util.AppConstants;
 
 public class VerifyRegisterOtpApi {
@@ -40,15 +41,18 @@ public class VerifyRegisterOtpApi {
 
     public PasswordValidationResponse parseJson(JSONObject jsonObject){
         PasswordValidationResponse passwordValidationResponse=new PasswordValidationResponse();
-
+Log.e("verif",jsonObject.toString());
       try {
             JSONObject jsonObjectRoot=jsonObject.getJSONObject("responseStatus");
           int statusCode=  jsonObjectRoot.getInt("value");
                 String descr=jsonObjectRoot.getString("descr");
-
-
+                if(statusCode== ResponseCodeEnum.VERIFY_SUCCESS_AND_NEW.getValue()) {
+                    String token = jsonObject.getString("token");
+                    passwordValidationResponse.setToken(token);
+                }
           passwordValidationResponse.setRespobseStatusCode(statusCode);
           passwordValidationResponse.setDescryptions(descr);
+
 
 
              /*   else if (statusCode==1011){

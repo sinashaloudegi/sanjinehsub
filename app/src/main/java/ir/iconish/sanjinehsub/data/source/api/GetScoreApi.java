@@ -14,6 +14,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
@@ -55,17 +58,20 @@ public class GetScoreApi {
   }
 
 
-  public void callGetScoreApi(String msisdn,String ntcode,String othersmsisdn, Purchase purchase, final VolleyCallback volleyCallback) {
+  public void callGetScoreApi(String mobilephone,String ntcode,int persontypeid, int personalitytypeId,int paymenttypeid,int channelId,String token,Purchase purchase, final VolleyCallback volleyCallback) {
 
-
+   // http://192.168.110.54:8085/cafebazaar/registerpurchaseinfo?ntcode=0011049693&mobilephone=09124065593&persontypeid=1&personalitytypeId=1&paymenttypeid=5&channelId=1
 
     String url = ConstantUrl.BASE_MARKET + ConstantUrl.REGISTER_PURCHASEINFO ;
     Log.e("url=", url);
     Uri.Builder builder = Uri.parse( url).buildUpon();
     builder.appendQueryParameter("ntcode", ntcode);
-    if (othersmsisdn != null) {
-      builder.appendQueryParameter("othersmsisdn", othersmsisdn);
-    }
+    builder.appendQueryParameter("mobilephone", mobilephone);
+    builder.appendQueryParameter("persontypeid", String.valueOf(persontypeid));
+    builder.appendQueryParameter("personalitytypeId", String.valueOf(personalitytypeId));
+    builder.appendQueryParameter("paymenttypeid", String.valueOf(paymenttypeid));
+    builder.appendQueryParameter("channelId",  String.valueOf(channelId));
+
     String finalUrl=builder.build().toString();
 
     JSONObject jsonObject = new JSONObject();
@@ -80,11 +86,13 @@ public class GetScoreApi {
       jsonObject.put("purchaseorderid", purchase.getOrderId());
       jsonObject.put("purchaseoriginaljson", purchase.getOriginalJson());
       jsonObject.put("purchasesignature", purchase.getSignature());
-      jsonObject.put("msisdn",msisdn);
+      jsonObject.put("msisdn",mobilephone);
 
+      Log.e("buy",jsonObject.toString());
     } catch (JSONException e) {
       e.printStackTrace();
     }
+
 
     // JsonArrayRequest
 
@@ -138,17 +146,17 @@ public class GetScoreApi {
       }
 
     ) {
-           /* @Override
+            @Override
             public String getBodyContentType() {
                 return "application/json; charset=utf-8";
-            }*/
+            }
 
-//      @Override
-//      public Map<String, String> getHeaders() {
-//        Map<String, String> params = new HashMap<String, String>();
-//        params.put("appid", AppConstants.APP_ID);
-//        return params;
-//      }
+     @Override
+     public Map<String, String> getHeaders() {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("Authorization", token);
+       return params;
+      }
     };
 
 

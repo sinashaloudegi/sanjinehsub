@@ -28,6 +28,7 @@ import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.data.vm.SendVerifyCodeViewModel;
+import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
@@ -330,7 +331,8 @@ if(broadcastReceiver!=null)
       showWating();
       // sendVerifyCodeViewModel.callSendVerifyCodeViewModel(ntcode, ownermobile)
 
-      getScoreViewModel.callGetScoreViewModel(purchase,edtMsisdnOthers.getText().toString(),edtNtcodeOthers.getText().toString());
+      //getScoreViewModel.callGetScoreViewModel(purchase,edtMsisdnOthers.getText().toString(),edtNtcodeOthers.getText().toString());
+      getScoreViewModel.callGetScoreViewModel(edtMsisdnOthers.getText().toString(),edtNtcodeOthers.getText().toString(),2,1, AppConstants.PAYMENT_TYPE,AppConstants.CHANNEL_ID,purchase);
 
     }
   };

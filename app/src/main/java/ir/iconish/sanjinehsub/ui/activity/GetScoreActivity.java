@@ -25,8 +25,10 @@ import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
+import ir.iconish.sanjinehsub.data.model.AppConfig;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
+import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
@@ -312,7 +314,12 @@ public class GetScoreActivity extends AppCompatActivity {
       }
       Log.i("Test", "Purchase successful.");
               showWating();
-              getScoreViewModel.callGetScoreViewModel(purchase,null,null);
+
+
+      //String mobilephone,String ntcode,String persontypeid, String personalitytypeId,String paymenttypeid,int channelId,
+
+
+              getScoreViewModel.callGetScoreViewModel(null,null,1,1, AppConstants.PAYMENT_TYPE,AppConstants.CHANNEL_ID,purchase);
 
       if (purchase.getSku().equals("sanj01")) {
         Log.i("Test", "Purchase is gas. Starting sanj01 consumption.");

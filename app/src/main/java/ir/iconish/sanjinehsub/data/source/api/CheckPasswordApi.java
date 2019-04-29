@@ -45,7 +45,7 @@ public class CheckPasswordApi {
 Log.e("shabab",jsonObject.toString());
       try {
           String token=jsonObject.getString("token");
-
+Log.e("tokens",token);
             JSONObject jsonObjectRoot=jsonObject.getJSONObject("responseStatus");
           int statusCode=  jsonObjectRoot.getInt("value");
                 String descr=jsonObjectRoot.getString("descr");

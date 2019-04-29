@@ -245,14 +245,14 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
 
 
 
-                    if(passwordValidationResponse.getRespobseStatusCode()==1012||passwordValidationResponse.getRespobseStatusCode()==1013||passwordValidationResponse.getRespobseStatusCode()==1000) {
+                    if(passwordValidationResponse.getRespobseStatusCode()==ResponseCodeEnum.VERIFY_SUCCESS_AND_NEW.getValue()) {
 
 //ActivityNavigationHelper.navigateToActivity(this,SetPasswordActivity.class,true);
                         ActivityNavigationHelper.navigateToActivity(this, MainActivity.class, true);
                     }
 
                     else {
-                        txtAlert.setText(getString(ResponseCodeEnum.fromValue(passwordValidationResponse.getRespobseStatusCode()).getValue()));
+                        txtAlert.setText((ResponseCodeEnum.fromValue(passwordValidationResponse.getRespobseStatusCode()).getDescr()));
                         txtAlert.setVisibility(View.VISIBLE);
                     }
 
