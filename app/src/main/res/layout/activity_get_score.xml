@@ -11,7 +11,6 @@
 
   <ImageView
     android:id="@+id/imgGetScore"
-    android:layout_marginTop="@dimen/margin10"
     android:layout_width="match_parent"
     android:layout_height="@dimen/size121"
     android:layout_below="@+id/getScoreToolbar"
@@ -96,16 +95,16 @@
     android:id="@+id/prgGetScore"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:visibility="invisible"
+    android:visibility="visible"
     android:layout_centerHorizontal="true"
-    android:layout_above="@id/txtAlert"
+    android:layout_above="@id/btnGetScore"
     android:layout_marginBottom="@dimen/margin_50"
     />
 
   <TextView
     android:id="@+id/txtAlert"
     android:layout_width="match_parent"
-    android:layout_marginBottom="@dimen/margin_50"
+    android:layout_marginBottom="@dimen/margin_39"
     android:layout_height="wrap_content"
     android:layout_above="@+id/btnGetScore"
     android:visibility="invisible"
@@ -119,11 +118,12 @@
 
     android:id="@+id/btnGetScore"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/size75"
+    android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:layout_marginBottom="@dimen/margin_39"
+      android:layout_marginBottom="@dimen/button_margin_button"
     android:text="@string/enter_get_score"
       android:enabled="true"
+      android:visibility="invisible"
     android:textColor="@color/sanjinehColor"
     android:textSize="@dimen/get_score_steps_text_size"
     app:backgroundTint="@color/yellow_button"

@@ -58,22 +58,26 @@ public class GetScoreApi {
   }
 
 
-  public void callGetScoreApi(String mobilephone,String ntcode,int persontypeid, int personalitytypeId,int paymenttypeid,int channelId,String token,Purchase purchase, final VolleyCallback volleyCallback) {
+  public void callGetScoreApi(String mobilephone,String ntcode,int persontypeid, int personalitytypeId,int paymenttypeid,int channelId,String token,int verifyCode, String ownerMobile ,Purchase purchase ,final VolleyCallback volleyCallback) {
 
    // http://192.168.110.54:8085/cafebazaar/registerpurchaseinfo?ntcode=0011049693&mobilephone=09124065593&persontypeid=1&personalitytypeId=1&paymenttypeid=5&channelId=1
 
     String url = ConstantUrl.BASE_MARKET + ConstantUrl.REGISTER_PURCHASEINFO ;
     Log.e("url=", url);
+    Log.e("token=", token);
     Uri.Builder builder = Uri.parse( url).buildUpon();
     builder.appendQueryParameter("ntcode", ntcode);
     builder.appendQueryParameter("mobilephone", mobilephone);
+    builder.appendQueryParameter("ownermobile", ownerMobile);
     builder.appendQueryParameter("persontypeid", String.valueOf(persontypeid));
     builder.appendQueryParameter("personalitytypeId", String.valueOf(personalitytypeId));
     builder.appendQueryParameter("paymenttypeid", String.valueOf(paymenttypeid));
     builder.appendQueryParameter("channelId",  String.valueOf(channelId));
+    builder.appendQueryParameter("verifycode",  String.valueOf(verifyCode));
+
 
     String finalUrl=builder.build().toString();
-
+Log.e("final url=",finalUrl);
     JSONObject jsonObject = new JSONObject();
     try {
       jsonObject.put("purchaseitemtype", purchase.getItemType());

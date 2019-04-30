@@ -73,5 +73,6 @@
     <string name="should_grant_permission">شما میبایست همه ی مجوزها را اعطا نمایید.</string>
   <string name="retry_others_otp">لطفا مجددا تلاش کنید.</string>
   <string name="download_report">دانلود گزارش</string>
+  <string name="bazar_setup_fail">عدم برقراری ارتباط با کافه بازار.لطفا از این صفحه خارج شده و دوباره تلاش کنید</string>
 
 </resources>

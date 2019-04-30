@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
 
     @BindView(R.id.imgNavMenu)
     ImageView imgNavMenu;
-
+String token=null;
 @Inject
     LogoutViewModel logoutViewModel;
     @Override
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity  implements  RecyclerIemList
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
-
+token=getIntent().getStringExtra("token");
         initNavigation();
     }
 
@@ -251,6 +251,9 @@ downloadLastVersion();
 
 
     case 2:
+     //   https://www.sanjineh.ir/profile/%D8%B3%DB%8C%D8%AF%D9%85%D8%AD%D9%85%D8%AF%20%20%D8%B3%DB%8C%D8%AF%D9%85%D8%AD%D9%85%D8%AF%DB%8C
+        ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/profile/"+token,this,WebViewActivity.class);
+
         break;
 
 

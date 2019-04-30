@@ -26,6 +26,7 @@ import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.model.AppConfig;
+import ir.iconish.sanjinehsub.data.model.CreditResponseEnum;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.AppConstants;
@@ -34,6 +35,7 @@ import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
 import ir.iconish.sanjinehsub.util.Inventory;
 import ir.iconish.sanjinehsub.util.Purchase;
+import ir.iconish.sanjinehsub.util.ToastHelper;
 
 public class GetScoreActivity extends AppCompatActivity {
 
@@ -111,25 +113,20 @@ public class GetScoreActivity extends AppCompatActivity {
     mHelper = new IabHelper(GetScoreActivity.this, base64EncodedPublicKey);
 
     Log.i("Test", "Starting setup.");
-//    mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-//      public void onIabSetupFinished(IabResult result) {
-//        Log.i("Test", "Setup finished.");
-//
-//        if (!result.isSuccess()) {
-//          // Oh noes, there was a problem.
-//          Log.i("Test", "Problem setting up In-app Billing: " + result);
-//
-//        }
-//        // Hooray, IAB is fully set up!
-//        mHelper.queryInventoryAsync(mGotInventoryListener);
-//      }
-//    });
+
       mHelper.startSetup(result -> {
         Log.i("Test", "Setup finished.");
 
         if (!result.isSuccess()) {
+          ToastHelper.showErrorMessage(this,getString(R.string.bazar_setup_fail));
+          txtAlert.setText(getString(R.string.bazar_setup_fail));
+          txtAlert.setVisibility(View.VISIBLE);
           // Oh noes, there was a problem.
           Log.i("Test", "Problem setting up In-app Billing: " + result);
+        }
+        else {
+          btnGetScore.setVisibility(View.VISIBLE);
+          prgGetScore.setVisibility(View.INVISIBLE);
         }
         // Hooray, IAB is fully set up!
         mHelper.queryInventoryAsync(mGotInventoryListener);
@@ -142,8 +139,14 @@ public class GetScoreActivity extends AppCompatActivity {
     getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, registerPurchaseInfoResultDto -> {
       Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
         stopWating();
-        getScoreAtion(registerPurchaseInfoResultDto.getReqToken(), registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId());
-  Log.e("success", "in activity");
+        if(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()== CreditResponseEnum.SUCCESS.getId()){
+        getScoreAtion(registerPurchaseInfoResultDto.getReqToken(), registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId());}
+        else {
+          String error=CreditResponseEnum.fromValue(new Long(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId())).getValue();
+          ToastHelper.showErrorMessage(GetScoreActivity.this,error);
+          txtAlert.setText(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()+":"+error);
+          txtAlert.setVisibility(View.VISIBLE);
+        }
       }
     );
     getScoreViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
@@ -284,7 +287,16 @@ public class GetScoreActivity extends AppCompatActivity {
       GetScoreActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
     super.onDestroy();
 
-    checkCafeBazaarLogin.releaseService();
+
+    if(broadcastReceiver!=null)
+      unregisterReceiver(broadcastReceiver);
+try {
+  checkCafeBazaarLogin.releaseService();
+}
+catch (Exception e){
+
+}
+
 
     // very important:
     Log.i("Test", "Destroying helper.");
@@ -319,7 +331,7 @@ public class GetScoreActivity extends AppCompatActivity {
       //String mobilephone,String ntcode,String persontypeid, String personalitytypeId,String paymenttypeid,int channelId,
 
 
-              getScoreViewModel.callGetScoreViewModel(null,null,1,1, AppConstants.PAYMENT_TYPE,AppConstants.CHANNEL_ID,purchase);
+              getScoreViewModel.callGetScoreViewModel(null,null,1,1, AppConstants.PAYMENT_TYPE,AppConstants.CHANNEL_ID,-1,purchase);
 
       if (purchase.getSku().equals("sanj01")) {
         Log.i("Test", "Purchase is gas. Starting sanj01 consumption.");

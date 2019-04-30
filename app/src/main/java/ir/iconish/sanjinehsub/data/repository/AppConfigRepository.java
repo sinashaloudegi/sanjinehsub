@@ -29,7 +29,7 @@ public class AppConfigRepository {
       public void onSuccess(Object o) {
 
         AppConfig appConfig= (AppConfig) o;
-
+Log.e("marketKey=",appConfig.getMarketKey());
         sharedPreferencesManager.setMarketKeyValue(appConfig.getMarketKey());
         sharedPreferencesManager.setTimerDurationValue(appConfig.getTimerDuration());
 

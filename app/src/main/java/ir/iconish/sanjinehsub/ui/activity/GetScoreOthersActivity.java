@@ -26,14 +26,17 @@ import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
+import ir.iconish.sanjinehsub.data.model.CreditResponseEnum;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.data.vm.SendVerifyCodeViewModel;
+import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
 import ir.iconish.sanjinehsub.util.Inventory;
 import ir.iconish.sanjinehsub.util.Purchase;
+import ir.iconish.sanjinehsub.util.ToastHelper;
 
 public class GetScoreOthersActivity extends AppCompatActivity {
 
@@ -61,11 +64,11 @@ public class GetScoreOthersActivity extends AppCompatActivity {
 
 
 
+  Purchase purchase;
 
 
 
-
-  CheckCafeBazaarLogin CheckCafeBazaarLogin;
+  CheckCafeBazaarLogin checkCafeBazaarLogin;
   public static IabHelper mHelper;
   @Inject
   SendVerifyCodeViewModel sendVerifyCodeViewModel;
@@ -79,13 +82,13 @@ public class GetScoreOthersActivity extends AppCompatActivity {
     setContentView(R.layout.activity_get_score_others);
     ButterKnife.bind(this);
     ((AppController) getApplication()).getAppComponent().inject(this);
-    CheckCafeBazaarLogin = new CheckCafeBazaarLogin(this);
+    checkCafeBazaarLogin = new CheckCafeBazaarLogin(this);
     messageReciver();
     bazaarSetup(getScoreViewModel.getMarketKey());
     attachViewModel();
   }
   private void  bazaarSetup(String bazaarKey){
-    Log.i("bazaarKey : " , bazaarKey);
+
 
 
     mHelper = new IabHelper(this, bazaarKey);
@@ -96,8 +99,15 @@ public class GetScoreOthersActivity extends AppCompatActivity {
       Log.i("Test", "Setup finished.");
 
       if (!result.isSuccess()) {
+        ToastHelper.showErrorMessage(this,getString(R.string.bazar_setup_fail));
+        txtAlert.setText(getString(R.string.bazar_setup_fail));
+        txtAlert.setVisibility(View.VISIBLE);
         // Oh noes, there was a problem.
         Log.i("Test", "Problem setting up In-app Billing: " + result);
+      }
+      else {
+        btnGetScoreOthers.setVisibility(View.VISIBLE);
+        prgGetScoreOthers.setVisibility(View.INVISIBLE);
       }
       // Hooray, IAB is fully set up!
       mHelper.queryInventoryAsync(mGotInventoryListener);
@@ -156,7 +166,7 @@ public class GetScoreOthersActivity extends AppCompatActivity {
       //showWating();
      // sendVerifyCodeViewModel.callSendVerifyCodeViewModel(ntcode, ownermobile);
     if (!alreadyBazaarInited) {
-      CheckCafeBazaarLogin.initService();
+      checkCafeBazaarLogin.initService();
     }
     else {
       UUID uuid = UUID.randomUUID();
@@ -176,7 +186,12 @@ public class GetScoreOthersActivity extends AppCompatActivity {
 if(broadcastReceiver!=null)
   unregisterReceiver(broadcastReceiver);
 
-    CheckCafeBazaarLogin.releaseService();
+    try {
+      checkCafeBazaarLogin.releaseService();
+    }
+    catch (Exception e){
+
+    }
 
     // very important:
     Log.i("Test", "Destroying helper.");
@@ -200,8 +215,9 @@ if(broadcastReceiver!=null)
       if (verifyCodeOthersResponse.getStatusCode() == 12) {
         Log.i("Test", "sent otp to others");
         Intent intent = new Intent(this, VerifyCodeOthersActivity.class);
-        intent.putExtra("msisdn", edtMsisdnOthers.getText().toString());
-        intent.putExtra("ntcode", edtNtcodeOthers.getText().toString());
+        intent.putExtra("otherMobile", edtMsisdnOthers.getText().toString());
+        intent.putExtra("otherNtCode", edtNtcodeOthers.getText().toString());
+        intent.putExtra("purchase", purchase);
         startActivity(intent);
         finish();
       }else {
@@ -232,6 +248,59 @@ if(broadcastReceiver!=null)
     });
     sendVerifyCodeViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
     });
+
+
+
+
+
+
+
+/*
+
+
+
+    getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, registerPurchaseInfoResultDto -> {
+              stopWating();
+              if(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()== CreditResponseEnum.SUCCESS.getId()){
+                getScoreAtion(registerPurchaseInfoResultDto.getReqToken(), registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId());}
+              else {
+                String error=CreditResponseEnum.fromValue(new Long(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId())).getValue();
+                ToastHelper.showErrorMessage(GetScoreOthersActivity.this,error);
+                txtAlert.setText(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()+":"+error);
+
+                txtAlert.setVisibility(View.VISIBLE);
+              }
+            }
+    );
+    getScoreViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+    });
+    getScoreViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+      goToFailApiPage("ApiError");
+    });
+    getScoreViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+    {
+      goToFailApiPage("ServerError");
+    });
+    getScoreViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+            {
+              goToFailApiPage("TimeOutError");
+            }
+    );
+    getScoreViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+      goToFailApiPage("ClientNetworkError");
+    });
+
+    getScoreViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+    });
+    getScoreViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+    });
+
+*/
+
+
+
+
+
 
 
   }
@@ -307,6 +376,7 @@ if(broadcastReceiver!=null)
   IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
     public void onIabPurchaseFinished(IabResult result, Purchase purchase)
     {
+      GetScoreOthersActivity.this.purchase=purchase;
       Log.e("Test", "Purchase finished: " + result + ", purchase: " + purchase);
 
 
@@ -329,10 +399,10 @@ if(broadcastReceiver!=null)
         mHelper.consumeAsync(purchase, mConsumeFinishedListener);
       }
       showWating();
-      // sendVerifyCodeViewModel.callSendVerifyCodeViewModel(ntcode, ownermobile)
+       sendVerifyCodeViewModel.callSendVerifyCodeViewModel(edtNtcodeOthers.getText().toString(),edtMsisdnOthers.getText().toString());
 
       //getScoreViewModel.callGetScoreViewModel(purchase,edtMsisdnOthers.getText().toString(),edtNtcodeOthers.getText().toString());
-      getScoreViewModel.callGetScoreViewModel(edtMsisdnOthers.getText().toString(),edtNtcodeOthers.getText().toString(),2,1, AppConstants.PAYMENT_TYPE,AppConstants.CHANNEL_ID,purchase);
+      //getScoreViewModel.callGetScoreViewModel(edtMsisdnOthers.getText().toString(),edtNtcodeOthers.getText().toString(),2,1, AppConstants.PAYMENT_TYPE,AppConstants.CHANNEL_ID,purchase);
 
     }
   };
@@ -389,5 +459,9 @@ if(broadcastReceiver!=null)
       Log.e("Test",  "End consumption flow.");
     }
   };
-
+  private void getScoreAtion(String reqToken, int statusCode){
+    String url = "https://www.sanjineh.ir/report/" + reqToken;
+    ActivityNavigationHelper.navigateToWebView(url, GetScoreOthersActivity.this, WebViewActivity.class);
+    finish();
+  }
 }

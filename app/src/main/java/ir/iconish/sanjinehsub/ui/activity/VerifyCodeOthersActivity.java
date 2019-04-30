@@ -26,6 +26,7 @@ import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
+import ir.iconish.sanjinehsub.data.model.CreditResponseEnum;
 import ir.iconish.sanjinehsub.data.vm.ConfirmVerifyCodeViewModel;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
@@ -35,6 +36,7 @@ import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
 import ir.iconish.sanjinehsub.util.Inventory;
 import ir.iconish.sanjinehsub.util.Purchase;
+import ir.iconish.sanjinehsub.util.ToastHelper;
 
 public class VerifyCodeOthersActivity extends AppCompatActivity {
 
@@ -66,6 +68,7 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
 
   String msisdn = null;
   String ntcode = null;
+  Purchase purchase = null;
 
 
   @Override
@@ -75,11 +78,11 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
     ButterKnife.bind(this);
     ((AppController) getApplication()).getAppComponent().inject(this);
     Intent intent = getIntent();
-    msisdn = intent.getStringExtra("msisdn");
-    ntcode = intent.getStringExtra("ntcode");
+    msisdn = intent.getStringExtra("otherMobile");
+    ntcode = intent.getStringExtra("otherNtCode");
+    purchase= (Purchase) intent.getSerializableExtra("purchase");
     checkCafeBazaarLogin = new CheckCafeBazaarLogin(VerifyCodeOthersActivity.this);
-    messageReciver();
-    bazaarSetup(getScoreViewModel.getMarketKey());
+    //messageReciver();
     attachViewModel();
 
   }
@@ -87,9 +90,15 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
 
   @OnClick(R.id.btnEnterVerifyCodeOthers)
   public void btnGetScoreAction() {
-    showWating();
-    confirmVerifyCodeViewModel.callConfirmVerifyCodeViewModel(msisdn,edtVerifyCodeOthers.getText().toString());
 
+    if(edtVerifyCodeOthers.length()==4) {
+      showWating();
+
+      int verifyCode=Integer.parseInt(edtVerifyCodeOthers.getText().toString());
+      getScoreViewModel.callGetScoreViewModel(msisdn, ntcode, 2, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID,verifyCode, purchase);
+
+      //confirmVerifyCodeViewModel.callConfirmVerifyCodeViewModel(msisdn,edtVerifyCodeOthers.getText().toString());
+    }
   }
 
   @OnClick(R.id.imgBack)
@@ -102,42 +111,58 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
     startActivity();
   }
 
-  private void  bazaarSetup(String bazaarKey){
-    Log.i("bazaarKey : " , bazaarKey);
-    String base64EncodedPublicKey = bazaarKey ;
-    // You can find it in your Bazaar console, in the Dealers section.
-    // It is recommended to add more security than just pasting it in your source code;
-    mHelper = new IabHelper(this, base64EncodedPublicKey);
-
-    Log.i("Test", "Starting setup.");
-//    mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-//      public void onIabSetupFinished(IabResult result) {
-//        Log.i("Test", "Setup finished.");
-//
-//        if (!result.isSuccess()) {
-//          // Oh noes, there was a problem.
-//          Log.i("Test", "Problem setting up In-app Billing: " + result);
-//
-//        }
-//        // Hooray, IAB is fully set up!
-//        mHelper.queryInventoryAsync(mGotInventoryListener);
-//      }
-//    });
-      mHelper.startSetup(result -> {
-        Log.i("Test", "Setup finished.");
-
-        if (!result.isSuccess()) {
-          // Oh noes, there was a problem.
-          Log.i("Test", "Problem setting up In-app Billing: " + result);
-        }
-        // Hooray, IAB is fully set up!
-        mHelper.queryInventoryAsync(mGotInventoryListener);
-      });
-  }
 
   private void attachViewModel() {
 
-    confirmVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, reportStateEnumId -> {
+
+
+
+
+    getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, registerPurchaseInfoResultDto -> {
+              Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
+              stopWating();
+              if(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()== CreditResponseEnum.SUCCESS.getId()||registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()== CreditResponseEnum.SUCCESS.getId()){
+                getScoreAtion(registerPurchaseInfoResultDto.getReqToken(), registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId());}
+              else {
+                String error=CreditResponseEnum.fromValue(new Long(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId())).getValue();
+                ToastHelper.showErrorMessage(VerifyCodeOthersActivity.this,error);
+              //  txtAlert.setText(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()+":"+error);
+               // txtAlert.setVisibility(View.VISIBLE);
+              }
+            }
+    );
+    getScoreViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+    });
+    getScoreViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+      goToFailApiPage("ApiError");
+    });
+    getScoreViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+    {
+      goToFailApiPage("ServerError");
+    });
+    getScoreViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+            {
+              goToFailApiPage("TimeOutError");
+            }
+    );
+    getScoreViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+      goToFailApiPage("ClientNetworkError");
+    });
+
+    getScoreViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+    });
+    getScoreViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+    });
+
+
+
+
+
+
+
+
+
+   /* confirmVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, reportStateEnumId -> {
       if (reportStateEnumId == 12){
         if (!alreadyBazaarInited) {
           checkCafeBazaarLogin.initService();
@@ -211,7 +236,7 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
     });
     getScoreViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
     });
-
+*/
   }
 
 
@@ -236,88 +261,8 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
   }
 
 
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    Log.i("Test", "onActivityResult(" + requestCode + "," + resultCode + "," + data);
-    if (mHelper == null) return;
-
-    // Pass on the activity result to the helper for handling
-    if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
-      super.onActivityResult(requestCode, resultCode, data);
-    } else {
-      Log.i("Test", "onActivityResult handled by IABUtil.");
-    }
-  }
 
 
-  public IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
-    public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-      Log.i("Test", "Query inventory finished.");
-      if (mHelper == null) return;
-
-      if (result.isFailure()) {
-        Log.i("Test", "Failed to query inventory: " + result);
-        return;
-      }
-
-      if (inventory != null){
-        Purchase gasPurchase = inventory.getPurchase("sanj01");
-        if (gasPurchase != null && verifyDeveloperPayload(gasPurchase)) {
-          Log.i("Test", "We have sanj01. Consuming it.");
-          mHelper.consumeAsync(inventory.getPurchase("sanj01"), mConsumeFinishedListener);
-          return;
-        }
-      }
-
-      Log.i("Test", "Initial inventory query finished; enabling main UI.");
-    }
-  };
-
-
-
-  private void messageReciver(){
-    IntentFilter filter = new IntentFilter();
-
-    filter.addAction("checkbazaarlogin");
-
-    broadcastReceiver= new BroadcastReceiver() {
-      @Override
-      public void onReceive(Context context, Intent intent) {
-
-        String action=intent.getAction();
-
-        switch (action) {
-
-
-          case "checkbazaarlogin":
-            boolean cafeBazarLogin = intent.getBooleanExtra("checkbazaarlogin",false);
-            if (cafeBazarLogin){
-              alreadyBazaarInited = true;
-              UUID uuid = UUID.randomUUID();
-              String randomUUIDString = uuid.toString();
-              Log.i("Test", "randomUUIDString : " + randomUUIDString);
-              //"bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ"
-              mHelper.launchPurchaseFlow(VerifyCodeOthersActivity.this, "sanj01", 10001, mPurchaseFinishedListener, randomUUIDString);
-
-            }
-            else {
-              alreadyBazaarInited = false;
-              Intent intentLogin = new Intent(Intent.ACTION_VIEW);
-              intentLogin.setData(Uri.parse("bazaar://login"));
-              intentLogin.setPackage("com.farsitel.bazaar");
-              VerifyCodeOthersActivity.this.startActivity(intentLogin);
-            }
-
-            break;
-
-        }
-
-
-      }
-    };
-    registerReceiver(broadcastReceiver, filter);
-  }
 
 
 
@@ -327,59 +272,11 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
       this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
     super.onDestroy();
 
-    checkCafeBazaarLogin.releaseService();
 
-    // very important:
-    Log.i("Test", "Destroying helper.");
-    if (mHelper != null) {
-      mHelper.dispose();
-      mHelper = null;
-    }
+
+
   }
 
-
-  IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-    public void onIabPurchaseFinished(IabResult result, Purchase purchase)
-    {
-      Log.i("Test", "Purchase finished: " + result + ", purchase: " + purchase);
-
-
-      if (mHelper == null) {
-        return;
-      }
-
-      if (result.isFailure()) {
-        return;
-      }
-      if (!verifyDeveloperPayload(purchase)) {
-        Log.i("Test","Error purchasing. Authenticity verification failed.");
-        return;
-      }
-      Log.i("Test", "Purchase successful.");
-    getScoreViewModel.callGetScoreViewModel(msisdn,ntcode,2,1, AppConstants.PAYMENT_TYPE,AppConstants.CHANNEL_ID,purchase);
-
-      if (purchase.getSku().equals("sanj01")) {
-        Log.i("Test", "Purchase is gas. Starting sanj01 consumption.");
-        mHelper.consumeAsync(purchase, mConsumeFinishedListener);
-      }
-    }
-  };
-
-
-  IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
-    public void onConsumeFinished(Purchase purchase, IabResult result) {
-      Log.i("Test", "Consumption finished. Purchase: " + purchase + ", result: " + result);
-
-      if (mHelper == null) return;
-      if (result.isSuccess()) {
-        Log.i("Test", "Consumption successful. Provisioning.");
-      }
-      else {
-        Log.i("Test", "Error while consuming: " + result);
-      }
-      Log.i("Test",  "End consumption flow.");
-    }
-  };
 
 
   boolean verifyDeveloperPayload(Purchase p) {

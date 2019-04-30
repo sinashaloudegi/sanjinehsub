@@ -100,8 +100,11 @@ public class SetPasswordActivity extends AppCompatActivity{
 
 
 if(passwordValidationResponse.getRespobseStatusCode()==9999){
+String token=passwordValidationResponse.getToken();
 
-    ActivityNavigationHelper.navigateToActivity(this,MainActivity.class,true);
+
+   // ActivityNavigationHelper.navigateToActivity(this,MainActivity.class,true);
+    ActivityNavigationHelper.navigateToActivityWithData(this,MainActivity.class,true,"token",token);
 }
 else {
 

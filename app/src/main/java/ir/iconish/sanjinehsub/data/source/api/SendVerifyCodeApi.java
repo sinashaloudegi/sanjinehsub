@@ -13,6 +13,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
@@ -46,19 +49,31 @@ public class SendVerifyCodeApi {
   }
 
 
-  public void callSendVerifyCodeApi(String ntcode, String ownermobile, String mobile, final VolleyCallback volleyCallback) {
-
-
-    String url = ConstantUrl.BASE_CREDIT + ConstantUrl.SEND_VERIFYCODE + ntcode + "/" + ownermobile + "/" + mobile ;
+  public void callSendVerifyCodeApi(String token,String ntcode, String ownermobile, String mobile, final VolleyCallback volleyCallback) {
+Log.e("token is othrt=",token);
+///icredit/v1/sendVerifyCode
+    String url = ConstantUrl.BASE_CREDIT+ ConstantUrl.SEND_VERIFYCODE ;
     //https://creditscore.iconish.ir/icredit/sendVerifyCode/{ntcode}/{ownermobile}/{mobile}
     Log.e("url=", url);
 
 
+    JSONObject body = new JSONObject();
+    try {
+      body.put("ntcode", ntcode);
+      body.put("ownermobile", ownermobile);
+      body.put("mobile", mobile);
+
+    }
+    catch (Exception e){
+
+    }
+Log.e("body",body.toString());
+
     // JsonArrayRequest
 
-    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, null,
+    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, url, body,
       response -> {
-        Log.e("Server response", response.toString());
+        Log.e("Server response notify score", response.toString());
         if (response != null) {
           VerifyCodeOthersResponse verifyCodeOthersResponse = parseJson(response);
           volleyCallback.onSuccess(verifyCodeOthersResponse);
@@ -105,17 +120,17 @@ public class SendVerifyCodeApi {
       }
 
     ) {
-           /* @Override
+            @Override
             public String getBodyContentType() {
                 return "application/json; charset=utf-8";
-            }*/
+            }
 
-//      @Override
-//      public Map<String, String> getHeaders() {
-//        Map<String, String> params = new HashMap<String, String>();
-//        params.put("appid", AppConstants.APP_ID);
-//        return params;
-//      }
+    @Override
+    public Map<String, String> getHeaders() {
+        Map<String, String> params = new HashMap<String, String>();
+       params.put("Authorization", token);
+        return params;
+      }
     };
 
 

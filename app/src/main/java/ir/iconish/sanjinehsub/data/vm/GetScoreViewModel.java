@@ -84,10 +84,10 @@ public class GetScoreViewModel extends ViewModel {
         return apiAuthFailureErrorLiveData;
     }
 
-    public void callGetScoreViewModel(String mobileNumber,String ntCode ,int persontypeid, int personalitytypeId,int paymenttypeid,int channelId,Purchase purchase) {
+    public void callGetScoreViewModel(String mobileNumber,String ntCode ,int persontypeid, int personalitytypeId,int paymenttypeid,int channelId,int verifycode,Purchase purchase) {
 
 
-      getScoreRepository.callGetScoreRepository( mobileNumber,ntCode ,persontypeid,  personalitytypeId, paymenttypeid, channelId,purchase,new VolleyCallback() {
+      getScoreRepository.callGetScoreRepository( mobileNumber,ntCode ,persontypeid,  personalitytypeId, paymenttypeid, channelId,verifycode,purchase,new VolleyCallback() {
           @Override
           public void onSuccess(Object obj) {
             apiSuccessLiveDataResponse.setValue((RegisterPurchaseInfoResultDto) obj);

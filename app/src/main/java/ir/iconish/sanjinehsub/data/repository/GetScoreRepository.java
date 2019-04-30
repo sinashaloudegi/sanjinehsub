@@ -25,15 +25,16 @@ public class GetScoreRepository {
     this.sharedPreferencesManager = sharedPreferencesManager;
   }
 
-  public void callGetScoreRepository(String mobileNumber,String ntCode ,int persontypeid, int personalitytypeId,int paymenttypeid,int channelId,Purchase purchase, final VolleyCallback volleyCallback) {
+  public void callGetScoreRepository(String ownerMobile,String ntCode ,int persontypeid, int personalitytypeId,int paymenttypeid,int channelId,int verifycode,Purchase purchase, final VolleyCallback volleyCallback) {
 
-    if(mobileNumber==null){
-      mobileNumber = sharedPreferencesManager.getMobileNumberValue();
+
+    String  mobileNumber = sharedPreferencesManager.getMobileNumberValue();
+    if(persontypeid==1){
       ntCode = sharedPreferencesManager.getNationalCodeValue();}
 
     String token=sharedPreferencesManager.getTokenValue();
 
-    getScoreApi.callGetScoreApi( mobileNumber, ntCode, persontypeid,  personalitytypeId, paymenttypeid, channelId,token ,purchase, new VolleyCallback() {
+    getScoreApi.callGetScoreApi( mobileNumber, ntCode, persontypeid,  personalitytypeId, paymenttypeid, channelId,token,verifycode,ownerMobile ,purchase, new VolleyCallback() {
       @Override
       public void onSuccess(Object o) {
         volleyCallback.onSuccess(o);
