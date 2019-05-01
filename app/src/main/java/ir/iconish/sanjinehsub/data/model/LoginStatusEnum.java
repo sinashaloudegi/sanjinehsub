@@ -1,6 +1,6 @@
 package ir.iconish.sanjinehsub.data.model;
 
-public  enum ResponseCodeEnum {
+public enum LoginStatusEnum {
     UnknownError(0, " خطا"),
     INTERNAL_ERROR(10, "بروز خطا"),
     BAD_REQUEST(20, "ورودی های خود را کنترل کنید"),
@@ -24,7 +24,7 @@ public  enum ResponseCodeEnum {
     private int value;
     private String name;
 
-    private ResponseCodeEnum(int value, String name) {
+    private LoginStatusEnum(int value, String name) {
         this.value = value;
         this.name = name;
     }
@@ -33,7 +33,7 @@ public  enum ResponseCodeEnum {
         return this.value;
     }
 
-    public static ResponseCodeEnum fromValue(int val) {
+    public static LoginStatusEnum fromValue(int val) {
         switch(val) {
             case 0:
                 return UnknownError;
@@ -85,4 +85,5 @@ public  enum ResponseCodeEnum {
     public String getName() {
         return fromValue(this.value).toString();
     }
+
 }

@@ -20,41 +20,31 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.model.RegisterPurchaseInfoResultDto;
+import ir.iconish.sanjinehsub.data.model.CreditScorePreProcess;
+
 import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.Purchase;
 
-public class GetScoreApi {
-
+public class CreditScorePreProcessApi {
+private int retry=0;
 
   AppController appController;
 
 
   @Inject
-  public GetScoreApi(AppController appController) {
+  public CreditScorePreProcessApi(AppController appController) {
     this.appController = appController;
   }
 
 
-  public RegisterPurchaseInfoResultDto parseJson(JSONObject jsonObject) {
-    RegisterPurchaseInfoResultDto registerPurchaseInfoResult = new RegisterPurchaseInfoResultDto();
-    RegisterPurchaseInfoResultDto.MarketResultDto marketResultDto = new RegisterPurchaseInfoResultDto.MarketResultDto();
+  public CreditScorePreProcess parseJson(JSONObject jsonObject) {
 
 
-    try {
-      registerPurchaseInfoResult.setReqToken(jsonObject.getString("reqToken"));
-      JSONObject marketResultDtoJsonObject = jsonObject.getJSONObject("marketResultDto");
-      marketResultDto.setMarketResultEnumId(marketResultDtoJsonObject.getInt("marketResultEnumId"));
-      marketResultDto.setMarketResultEnumName(marketResultDtoJsonObject.getString("marketResultEnumName"));
-      registerPurchaseInfoResult.setMarketResultDto(marketResultDto);
 
 
-    } catch (JSONException e) {
-      Log.e("err", e.toString());
-      e.printStackTrace();
-    }
 
-    return registerPurchaseInfoResult;
+      return new CreditScorePreProcess();
+
   }
 
 
@@ -104,8 +94,8 @@ Log.e("final url=",finalUrl);
       response -> {
         Log.e("Server response", response.toString());
         if (response != null) {
-          RegisterPurchaseInfoResultDto registerPurchaseInfoResultDto = parseJson(response);
-          volleyCallback.onSuccess(registerPurchaseInfoResultDto);
+          CreditScorePreProcess getCreditScorePrepareProcess = parseJson(response);
+          volleyCallback.onSuccess(getCreditScorePrepareProcess);
         }
 
 
@@ -122,6 +112,13 @@ Log.e("final url=",finalUrl);
 
 
         if ((error instanceof ServerError)) {
+
+
+            if(retry<=3){
+                Log.e("rety:",retry+"");
+                callGetScoreApi(mobilephone, ntcode, persontypeid, personalitytypeId, paymenttypeid, channelId, token, verifyCode, ownerMobile, purchase, volleyCallback);
+                return;
+            }
           volleyCallback.onServerError();
           return;
         }
@@ -164,7 +161,7 @@ Log.e("final url=",finalUrl);
     };
 
 
-    jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(AppConstants.CLIENT_TIMEOUT, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+    jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(AppConstants.CLIENT_TIMEOUT_CREDIT, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
     String tag_json_arry = "getScoreApi";
     appController.addToRequestQueue(jsonObjReq, tag_json_arry);
 

@@ -31,6 +31,7 @@ import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
+import ir.iconish.sanjinehsub.util.CreditStatusManager;
 import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
 import ir.iconish.sanjinehsub.util.Inventory;
@@ -136,17 +137,11 @@ public class GetScoreActivity extends AppCompatActivity {
   private void attachViewModel() {
 
 
-    getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, registerPurchaseInfoResultDto -> {
-      Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
+    getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, creditScorePreProcess -> {
+     // Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
         stopWating();
-        if(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()== CreditResponseEnum.SUCCESS.getId()){
-        getScoreAtion(registerPurchaseInfoResultDto.getReqToken(), registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId());}
-        else {
-          String error=CreditResponseEnum.fromValue(new Long(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId())).getValue();
-          ToastHelper.showErrorMessage(GetScoreActivity.this,error);
-          txtAlert.setText(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()+":"+error);
-          txtAlert.setVisibility(View.VISIBLE);
-        }
+
+new CreditStatusManager(this).handleReportStatus(creditScorePreProcess,txtAlert);
       }
     );
     getScoreViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
@@ -362,7 +357,7 @@ catch (Exception e){
     return true;
   }
 
-  private void getScoreAtion(String reqToken, int statusCode){
+  private void getScoreAtion(String reqToken){
     String url = "https://www.sanjineh.ir/report/" + reqToken;
     ActivityNavigationHelper.navigateToWebView(url, GetScoreActivity.this, WebViewActivity.class);
     finish();

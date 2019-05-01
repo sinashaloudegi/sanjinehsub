@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
+import ir.iconish.sanjinehsub.data.model.LoginStatusEnum;
 import ir.iconish.sanjinehsub.data.vm.LoginViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
@@ -164,12 +164,12 @@ loginViewModel.callLoginViewModel(mobileNumber,nationalCode);
 stopWating();
 
 
-if(user.getResponseCodeEnum().getValue()== ResponseCodeEnum.USER_EXIST.getValue()){
+if(user.getResponseCodeEnum().getValue()== LoginStatusEnum.USER_EXIST.getValue()){
     ActivityNavigationHelper.navigateToActivity(this, CheckPasswordActivity.class,true);
     //ActivityNavigationHelper.navigateToActivity(this, MainActivity.class,true);
 }
 
-else if (user.getResponseCodeEnum().getValue()== ResponseCodeEnum.USERISNEW.getValue()){
+else if (user.getResponseCodeEnum().getValue()== LoginStatusEnum.USERISNEW.getValue()){
     ActivityNavigationHelper.navigateToActivity(this,VerifyRegisterOtpActivity.class,true);
 
 }

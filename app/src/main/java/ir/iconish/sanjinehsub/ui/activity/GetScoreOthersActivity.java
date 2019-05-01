@@ -212,11 +212,12 @@ if(broadcastReceiver!=null)
 
     sendVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, verifyCodeOthersResponse -> {
       stopWating();
-      if (verifyCodeOthersResponse.getStatusCode() == 12) {
+      if (verifyCodeOthersResponse.getStatusCode() == 12||verifyCodeOthersResponse.getStatusCode() == 21||verifyCodeOthersResponse.getStatusCode() == 22||verifyCodeOthersResponse.getStatusCode() == 24 ) {
         Log.i("Test", "sent otp to others");
         Intent intent = new Intent(this, VerifyCodeOthersActivity.class);
         intent.putExtra("otherMobile", edtMsisdnOthers.getText().toString());
         intent.putExtra("otherNtCode", edtNtcodeOthers.getText().toString());
+        intent.putExtra("reportStatus", verifyCodeOthersResponse.getStatusCode());
         intent.putExtra("purchase", purchase);
         startActivity(intent);
         finish();

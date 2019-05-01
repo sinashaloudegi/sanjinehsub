@@ -21,5 +21,7 @@
     <color name="all_transparent">#00FFFFFF</color>
     <color name="acceptedd_border_color">#e5eced</color>
     <color name="acceptedd_shadow_color">#FFD5DDDF</color>
+    <color name="dark_grey_blue">#34495e</color>
+
 
 </resources>

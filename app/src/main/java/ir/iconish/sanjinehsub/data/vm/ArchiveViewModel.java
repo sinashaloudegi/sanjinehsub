@@ -8,7 +8,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.model.Archive;
-import ir.iconish.sanjinehsub.data.model.RegisterPurchaseInfoResultDto;
 import ir.iconish.sanjinehsub.data.repository.ArchiveRepository;
 import ir.iconish.sanjinehsub.data.repository.GetScoreRepository;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;

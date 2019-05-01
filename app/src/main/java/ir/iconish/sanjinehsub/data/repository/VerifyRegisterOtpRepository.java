@@ -2,12 +2,10 @@ package ir.iconish.sanjinehsub.data.repository;
 
 
 
-import android.util.Log;
-
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.model.PasswordValidationResponse;
-import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
+import ir.iconish.sanjinehsub.data.model.LoginStatusEnum;
 import ir.iconish.sanjinehsub.data.source.api.VerifyRegisterOtpApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
@@ -33,7 +31,7 @@ this.sharedPreferencesManager=sharedPreferencesManager;
 
             PasswordValidationResponse passwordValidationResponse= (PasswordValidationResponse) o;
 
-            if(passwordValidationResponse.getRespobseStatusCode()==ResponseCodeEnum.VERIFY_SUCCESS_AND_NEW.getValue()){
+            if(passwordValidationResponse.getRespobseStatusCode()== LoginStatusEnum.VERIFY_SUCCESS_AND_NEW.getValue()){
             String token= passwordValidationResponse.getToken();
 
 sharedPreferencesManager.setPasswordValue(otp);

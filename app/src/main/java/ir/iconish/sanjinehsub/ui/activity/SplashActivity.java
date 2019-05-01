@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
+import com.google.firebase.FirebaseApp;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,7 +21,6 @@ import javax.inject.Inject;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.bazaar.UpdateCheck;
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
 import ir.iconish.sanjinehsub.data.vm.AppConfigViewModel;
 
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
@@ -41,6 +42,7 @@ AppConfigViewModel appConfigViewModel;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        FirebaseApp.initializeApp(this);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -48,6 +50,7 @@ AppConfigViewModel appConfigViewModel;
         StrictMode.setThreadPolicy(policy);
       ((AppController) getApplication()).getAppComponent().inject(this);
 attachViewModel();
+
 
 //startActivity(new Intent(this,MainActivity.class));
 appConfigViewModel.callAppConfigViewModel(0);

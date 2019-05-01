@@ -7,7 +7,7 @@ import dagger.Module;
 import dagger.Provides;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.source.api.CheckReportApi;
-import ir.iconish.sanjinehsub.data.source.api.GetScoreApi;
+import ir.iconish.sanjinehsub.data.source.api.CreditScorePreProcessApi;
 
 @Module
 public class GetScoreActivityModule {
@@ -16,8 +16,8 @@ public class GetScoreActivityModule {
 
     @Provides
     @Singleton
-    public GetScoreApi provideGetScoreApi(AppController appController){
-        return new GetScoreApi(appController);
+    public CreditScorePreProcessApi provideGetScoreApi(AppController appController){
+        return new CreditScorePreProcessApi(appController);
     }
 
     @Provides

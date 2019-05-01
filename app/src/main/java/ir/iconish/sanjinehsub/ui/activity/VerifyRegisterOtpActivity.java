@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatButton;
 import android.telephony.SmsMessage;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -31,7 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
+import ir.iconish.sanjinehsub.data.model.LoginStatusEnum;
 import ir.iconish.sanjinehsub.data.vm.VerifyRegisterOtpViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
@@ -245,14 +244,14 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
 
 
 
-                    if(passwordValidationResponse.getRespobseStatusCode()==ResponseCodeEnum.VERIFY_SUCCESS_AND_NEW.getValue()) {
+                    if(passwordValidationResponse.getRespobseStatusCode()== LoginStatusEnum.VERIFY_SUCCESS_AND_NEW.getValue()) {
 
 //ActivityNavigationHelper.navigateToActivity(this,SetPasswordActivity.class,true);
                         ActivityNavigationHelper.navigateToActivity(this, MainActivity.class, true);
                     }
 
                     else {
-                        txtAlert.setText((ResponseCodeEnum.fromValue(passwordValidationResponse.getRespobseStatusCode()).getDescr()));
+                        txtAlert.setText((LoginStatusEnum.fromValue(passwordValidationResponse.getRespobseStatusCode()).getDescr()));
                         txtAlert.setVisibility(View.VISIBLE);
                     }
 

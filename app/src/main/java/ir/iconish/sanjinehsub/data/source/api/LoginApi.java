@@ -1,32 +1,25 @@
 package ir.iconish.sanjinehsub.data.source.api;
 
-import android.net.Uri;
 import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
+import ir.iconish.sanjinehsub.data.model.LoginStatusEnum;
 import ir.iconish.sanjinehsub.data.model.User;
 import ir.iconish.sanjinehsub.util.AppConstants;
 
@@ -52,7 +45,7 @@ public class LoginApi {
             JSONObject jsonObjectRoot=jsonObject.getJSONObject("responseStatus");
           int statusCode=  jsonObjectRoot.getInt("value");
 
-          user.setResponseCodeEnum(ResponseCodeEnum.fromValue(statusCode));
+          user.setResponseCodeEnum(LoginStatusEnum.fromValue(statusCode));
             if(statusCode==1010){
 JSONObject jsonObjectUser=jsonObject.getJSONObject("accountInfo").getJSONObject("user");
                 String firstName=jsonObjectUser.getString("firstname");

@@ -1,11 +1,9 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
-import android.util.Log;
-
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.source.api.GetScoreApi;
+import ir.iconish.sanjinehsub.data.source.api.CreditScorePreProcessApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 import ir.iconish.sanjinehsub.util.Purchase;
@@ -13,13 +11,13 @@ import ir.iconish.sanjinehsub.util.Purchase;
 
 public class GetScoreRepository {
 
-  GetScoreApi getScoreApi;
+  CreditScorePreProcessApi getScoreApi;
 
 
   SharedPreferencesManager sharedPreferencesManager;
 
   @Inject
-  public GetScoreRepository(GetScoreApi getScoreApi, SharedPreferencesManager sharedPreferencesManager) {
+  public GetScoreRepository(CreditScorePreProcessApi getScoreApi, SharedPreferencesManager sharedPreferencesManager) {
 
     this.getScoreApi = getScoreApi;
     this.sharedPreferencesManager = sharedPreferencesManager;

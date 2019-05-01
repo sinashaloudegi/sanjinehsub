@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.UUID;
@@ -26,12 +27,13 @@ import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.model.CreditResponseEnum;
+
 import ir.iconish.sanjinehsub.data.vm.ConfirmVerifyCodeViewModel;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
+import ir.iconish.sanjinehsub.util.CreditStatusManager;
 import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
 import ir.iconish.sanjinehsub.util.Inventory;
@@ -40,9 +42,18 @@ import ir.iconish.sanjinehsub.util.ToastHelper;
 
 public class VerifyCodeOthersActivity extends AppCompatActivity {
 
-
   @BindView(R.id.btnEnterVerifyCodeOthers)
   AppCompatButton btnEnterVerifyCodeOthers;
+
+
+
+  @BindView(R.id.txtAlert)
+  TextView txtAlert;
+
+
+
+
+
   @BindView(R.id.edtVerifyCodeOthers)
   EditText edtVerifyCodeOthers;
   @BindView(R.id.prgVerifyCodeOthers)
@@ -65,7 +76,7 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
 
   CheckCafeBazaarLogin checkCafeBazaarLogin;
   private boolean alreadyBazaarInited = false;
-
+int reportStatus;
   String msisdn = null;
   String ntcode = null;
   Purchase purchase = null;
@@ -79,6 +90,7 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
     ((AppController) getApplication()).getAppComponent().inject(this);
     Intent intent = getIntent();
     msisdn = intent.getStringExtra("otherMobile");
+    reportStatus = intent.getIntExtra("reportStatus",0);
     ntcode = intent.getStringExtra("otherNtCode");
     purchase= (Purchase) intent.getSerializableExtra("purchase");
     checkCafeBazaarLogin = new CheckCafeBazaarLogin(VerifyCodeOthersActivity.this);
@@ -118,17 +130,22 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
 
 
 
-    getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, registerPurchaseInfoResultDto -> {
-              Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
+    getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, creditScorePreProcess -> {
+             // Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
+
+
               stopWating();
-              if(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()== CreditResponseEnum.SUCCESS.getId()||registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()== CreditResponseEnum.SUCCESS.getId()){
-                getScoreAtion(registerPurchaseInfoResultDto.getReqToken(), registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId());}
+
+      new CreditStatusManager(this).handleReportStatus(creditScorePreProcess,txtAlert);
+
+           /*   if(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()== ReportStateEnum.SEND_VERIFY_CODE.getId() ||registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()== CreditResponseEnum.SUCCESS.getId()){
+                getScoreAtion(registerPurchaseInfoResultDto.getReqToken());}
               else {
                 String error=CreditResponseEnum.fromValue(new Long(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId())).getValue();
                 ToastHelper.showErrorMessage(VerifyCodeOthersActivity.this,error);
               //  txtAlert.setText(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()+":"+error);
                // txtAlert.setVisibility(View.VISIBLE);
-              }
+              }*/
             }
     );
     getScoreViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
@@ -290,8 +307,12 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
 
   }
 
-  private void getScoreAtion(String reqToken, int statusCode){
-    String url = "https://www.sanjineh.ir/report/" + reqToken;
+  private void getScoreAtion(String reqToken){
+    String url="https://www.sanjineh.ir/report/" + reqToken;
+    if(reportStatus==22){
+     // url=
+    }
+
     ActivityNavigationHelper.navigateToWebView(url, VerifyCodeOthersActivity.this, WebViewActivity.class);
     finish();
   }

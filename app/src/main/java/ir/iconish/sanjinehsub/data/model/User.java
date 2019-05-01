@@ -1,18 +1,18 @@
 package ir.iconish.sanjinehsub.data.model;
 
 public class User {
-    private ResponseCodeEnum responseCodeEnum;
+    private LoginStatusEnum responseCodeEnum;
     private String firstName;
     private String lastName;
     private String email;
     private String mobileNumber;
 private long userId;
 
-    public ResponseCodeEnum getResponseCodeEnum() {
+    public LoginStatusEnum getResponseCodeEnum() {
         return responseCodeEnum;
     }
 
-    public void setResponseCodeEnum(ResponseCodeEnum responseCodeEnum) {
+    public void setResponseCodeEnum(LoginStatusEnum responseCodeEnum) {
         this.responseCodeEnum = responseCodeEnum;
     }
 

@@ -6,10 +6,8 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
@@ -22,7 +20,7 @@ import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.model.PasswordValidationResponse;
-import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
+import ir.iconish.sanjinehsub.data.model.LoginStatusEnum;
 import ir.iconish.sanjinehsub.util.AppConstants;
 
 public class VerifyRegisterOtpApi {
@@ -46,7 +44,7 @@ Log.e("verif",jsonObject.toString());
             JSONObject jsonObjectRoot=jsonObject.getJSONObject("responseStatus");
           int statusCode=  jsonObjectRoot.getInt("value");
                 String descr=jsonObjectRoot.getString("descr");
-                if(statusCode== ResponseCodeEnum.VERIFY_SUCCESS_AND_NEW.getValue()) {
+                if(statusCode== LoginStatusEnum.VERIFY_SUCCESS_AND_NEW.getValue()) {
                     String token = jsonObject.getString("token");
                     passwordValidationResponse.setToken(token);
                 }

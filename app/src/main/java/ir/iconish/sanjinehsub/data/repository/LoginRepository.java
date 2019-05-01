@@ -4,7 +4,7 @@ package ir.iconish.sanjinehsub.data.repository;
 
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.model.ResponseCodeEnum;
+import ir.iconish.sanjinehsub.data.model.LoginStatusEnum;
 import ir.iconish.sanjinehsub.data.model.User;
 import ir.iconish.sanjinehsub.data.source.api.LoginApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
@@ -31,7 +31,7 @@ this.sharedPreferencesManager=sharedPreferencesManager;
 
             User user= (User) o;
 
-            if(user.getResponseCodeEnum().getValue()== ResponseCodeEnum.USER_EXIST.getValue()){
+            if(user.getResponseCodeEnum().getValue()== LoginStatusEnum.USER_EXIST.getValue()){
                 sharedPreferencesManager.setMobileNumberValue(user.getMobileNumber());
                 sharedPreferencesManager.setFirstNameValue(user.getFirstName());
                 sharedPreferencesManager.setLastNameValue(user.getLastName());
@@ -41,7 +41,7 @@ this.sharedPreferencesManager=sharedPreferencesManager;
                 sharedPreferencesManager.setUserIdValue(user.getUserId());
 
             }
-            else if (user.getResponseCodeEnum().getValue()== ResponseCodeEnum.USERISNEW.getValue()){
+            else if (user.getResponseCodeEnum().getValue()== LoginStatusEnum.USERISNEW.getValue()){
 
                 sharedPreferencesManager.setMobileNumberValue(mobileNumer);
 

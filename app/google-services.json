@@ -25,59 +25,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1033113418202:android:7dc8d3ee363b0f53",
-        "android_client_info": {
-          "package_name": "ir.sanjineh.app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1033113418202-4i0fl1kgdc552g1q49vr7db93c2tgpdt.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ir.sanjineh.app",
-            "certificate_hash": "37da8d9081d03b5a58edb4d597353f83d6ddf7c6"
-          }
-        },
-        {
-          "client_id": "1033113418202-pd4ts9ng12g7q1037ru33orudn4otsep.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB1XSM8uAxyRevIfqJTFH2YN1XISAZPJTE"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "1033113418202-pd4ts9ng12g7q1037ru33orudn4otsep.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
