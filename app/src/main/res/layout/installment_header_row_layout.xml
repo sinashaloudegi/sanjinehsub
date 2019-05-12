@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/header_section_color"
+        android:textColor="@color/white"
+android:padding="@dimen/margin10"
+        android:textSize="@dimen/font_12"
+        android:text="@string/public_contract_info"/>
+    <RelativeLayout
+        android:padding="@dimen/margin5"
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+
+            android:textSize="@dimen/font_12"
+            android:text="@string/negative_contract_status"
+
+        />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtNegativeContractStatus"/>
+
+
+
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/light_row_color"
+        android:padding="@dimen/margin5"
+
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+
+            android:textSize="@dimen/font_12"
+            android:text="@string/bank_contract_status"
+
+        />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtBankContractType"/>
+
+
+
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:padding="@dimen/margin5"
+
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+
+            android:textSize="@dimen/font_12"
+            android:text="@string/goal_of_credit"
+
+        />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtGoalOfCredit"/>
+
+
+
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/light_row_color"
+        android:padding="@dimen/margin5"
+
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+
+            android:textSize="@dimen/font_12"
+            android:text="@string/contract_start"
+
+        />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtContractStart"/>
+
+
+
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:padding="@dimen/margin5"
+
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+
+            android:textSize="@dimen/font_12"
+            android:text="@string/contract_end"
+
+        />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtContractEnd"/>
+
+
+
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/light_row_color"
+        android:padding="@dimen/margin5"
+
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+
+            android:textSize="@dimen/font_12"
+            android:text="@string/status_date"
+
+        />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtStatusDate"/>
+
+
+
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:padding="@dimen/margin5"
+
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+
+            android:textSize="@dimen/font_12"
+            android:text="@string/payment_currency"
+
+        />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtPaymentCurrency"/>
+
+
+
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/light_row_color"
+        android:padding="@dimen/margin5"
+
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+
+            android:textSize="@dimen/font_12"
+            android:text="@string/person_role"
+
+        />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtPersonRole"/>
+
+
+
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:padding="@dimen/margin5"
+
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+
+            android:textSize="@dimen/font_12"
+            android:text="@string/creditor_name"
+
+        />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtCreditorName"/>
+
+
+
+
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/header_section_color"
+        android:textColor="@color/white"
+        android:padding="@dimen/margin10"
+        android:textSize="@dimen/font_12"
+        android:text="@string/payment_callander"/>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/recyclerConract"
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+
+
+
+
+
+</LinearLayout>
