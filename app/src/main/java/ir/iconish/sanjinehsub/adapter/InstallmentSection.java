@@ -1,78 +1,71 @@
-package com.visit24.therapist.adapter;
+package ir.iconish.sanjinehsub.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.Serializable;
+import java.util.List;
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
-import com.visit24.therapist.R;
-import com.visit24.therapist.adapter.listener.VisitItemListener;
-import com.visit24.therapist.adapter.viewholder.ConfirmVisitViewHolder;
-import com.visit24.therapist.adapter.viewholder.HeaderViewHolder;
-import com.visit24.therapist.data.model.Address;
-import com.visit24.therapist.data.model.Profile;
-import com.visit24.therapist.data.model.Visit;
-import com.visit24.therapist.util.DateHelper;
+import ir.iconish.sanjinehsub.R;
+import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
+import ir.iconish.sanjinehsub.adapter.viewholder.DetailInstallmentViewHolder;
+import ir.iconish.sanjinehsub.adapter.viewholder.InstallmentHeaderViewHolder;
+import ir.iconish.sanjinehsub.data.model.DetailInstallment;
+import ir.iconish.sanjinehsub.data.model.FullInstallment;
+import ir.iconish.sanjinehsub.util.DateHepler;
 
-import java.util.List;
+public class InstallmentSection extends StatelessSection {
 
-public class VisitSection extends StatelessSection {
-String header;
 
-List<Visit> visits;
+List<DetailInstallment> detailInstallments;
 
-    public List<Visit> getVisits() {
-        return visits;
-    }
-
-    public void setVisits(List<Visit> visits) {
-        this.visits = visits;
-    }
-
-    VisitItemListener visitItemListener;
-    public VisitSection(String header, List<Visit> visitList, VisitItemListener visitItemListener) {
+    int headerPosition;
+    FullInstallment fullInstallment;
+    RecyclerIemListener recyclerIemListener;
+    public InstallmentSection(FullInstallment fullInstallment,int headerPosition, List<DetailInstallment> detailInstallments, RecyclerIemListener recyclerIemListener) {
         super(SectionParameters.builder()
-                .itemResourceId(R.layout.accepted_visit_row)
-                .headerResourceId(R.layout.header)
+                .itemResourceId(R.layout.installment_item_row_layout)
+                .headerResourceId(R.layout.installment_header_row_layout)
                 .build()
 
 
         );
-        this.visits=visitList;
-        this.header=header;
-        this.visitItemListener=visitItemListener;
+        this.fullInstallment=fullInstallment;
+        this.detailInstallments=detailInstallments;
+        this.recyclerIemListener=recyclerIemListener;
+        this.headerPosition=headerPosition;
     }
 
     @Override
     public int getContentItemsTotal() {
-        return visits.size();
+        return detailInstallments.size();
     }
 
     @Override
     public RecyclerView.ViewHolder getItemViewHolder(View view) {
-        return new ConfirmVisitViewHolder(view);
+        return new DetailInstallmentViewHolder(view);
 
     }
 
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final ConfirmVisitViewHolder viewHolder = (ConfirmVisitViewHolder) holder;
+        final DetailInstallmentViewHolder viewHolder = (DetailInstallmentViewHolder) holder;
 
-        final Visit visit = visits.get(position);
-        Profile profile=visit.getProfile();
-        Address address=visit.getAddress();
-        viewHolder.txtUserName.setText(profile.getName()+'\n'+profile.getFamily());
-        viewHolder.textAddress.setText(address.getBody());
+        final DetailInstallment detailInstallment = detailInstallments.get(position);
 
-        String[] date=   DateHelper.getDate(visit.getDate());
-        viewHolder.textDate.setText(date[0]);
-        viewHolder.textHour.setText(date[1]);
+        viewHolder.txtDate.setText(detailInstallment.getReportsHistoricalCalendarYear()+"/"+detailInstallment.getReportsHistoricalCalendarYear());
+        viewHolder.txtMablaghSaresidPardakhtNashode.setText(String.valueOf(detailInstallment.getTypesAmount()));
+
+
 
         viewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                visitItemListener.onTap(visit);
+                recyclerIemListener.onTap(detailInstallment);
             }
         });
 
@@ -96,15 +89,69 @@ List<Visit> visits;
 
     @Override
     public RecyclerView.ViewHolder getHeaderViewHolder(View view) {
-        return new HeaderViewHolder(view);
+        return new InstallmentHeaderViewHolder(view);
     }
 
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
-        HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
+        InstallmentHeaderViewHolder headerHolder = (InstallmentHeaderViewHolder) holder;
 
-        headerHolder.textTitle.setText(header);
-        headerHolder.txtCount.setText(headerHolder.view.getContext().getText(R.string.count)+"("+visits.size()+")");
+        headerHolder.txtNegativeContractStatus.setText(fullInstallment.getNegativeContractStatus());
+
+
+
+        headerHolder. txtBankContractType.setText(fullInstallment.getLookupsTypeOfFinancingInstalments());
+
+
+
+
+        headerHolder.txtGoalOfCredit.setText(fullInstallment.getPurposeOfTheCredit());
+
+        String startDate=DateHepler.convertTimeStampToPersianDate(fullInstallment.getTypesContractDatesStart());
+
+
+
+        headerHolder. txtContractStart.setText(startDate);
+
+
+        String endDate=DateHepler.convertTimeStampToPersianDate(fullInstallment.getTypesContractDatesExpectedEnd());
+
+
+        headerHolder.txtContractEnd.setText(endDate);
+
+
+
+
+        String statusDate=DateHepler.convertTimeStampToPersianDate(fullInstallment.getReportsLastUpdate());
+
+        headerHolder.txtStatusDate.setText(statusDate);
+
+
+
+
+        headerHolder. txtPaymentCurrency.setText(fullInstallment.getLookupsCurrencyCodes());
+
+
+
+
+
+
+
+        headerHolder.txtPersonRole.setText(fullInstallment.getRoleOfConnectedSubject());
+
+
+
+
+
+
+        headerHolder. txtCreditorName.setText(fullInstallment.getReportsContractDataCreditor());
+        String title= headerHolder. txtHeaderTitle.getText().toString()+" "+headerPosition;
+        headerHolder. txtHeaderTitle.setText(title);
+
+
+
+
+
     }
 
 

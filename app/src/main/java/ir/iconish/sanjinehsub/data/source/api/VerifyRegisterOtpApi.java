@@ -39,7 +39,6 @@ public class VerifyRegisterOtpApi {
 
     public PasswordValidationResponse parseJson(JSONObject jsonObject){
         PasswordValidationResponse passwordValidationResponse=new PasswordValidationResponse();
-Log.e("verif",jsonObject.toString());
       try {
             JSONObject jsonObjectRoot=jsonObject.getJSONObject("responseStatus");
           int statusCode=  jsonObjectRoot.getInt("value");
@@ -57,7 +56,6 @@ Log.e("verif",jsonObject.toString());
 
             }*/
         } catch (JSONException e) {
-            Log.e("err",e.toString());
             e.printStackTrace();
         }
 
@@ -71,7 +69,6 @@ Log.e("verif",jsonObject.toString());
 
 
     public void callVerifyRegisterOtpApi(String otp,String mobileNumber,final VolleyCallback volleyCallback){
-Log.e("phone",mobileNumber);
 
         String   url=ConstantUrl.BASE+ConstantUrl.CONFIRM_REGISTER;
 
@@ -91,7 +88,6 @@ JSONObject jsonObject=new JSONObject();
                 url,jsonObject,
                 response -> {
 
-Log.e("res server otp",response.toString());
 
 
                     if (response!=null){
@@ -107,7 +103,6 @@ Log.e("res server otp",response.toString());
 
 
                 }, error -> {
-                    Log.e("api error=",error.toString());
                     if ((error instanceof NetworkError) || (error instanceof NoConnectionError) ) {
 
                         volleyCallback.onClientNetworkError();
@@ -137,25 +132,7 @@ Log.e("res server otp",response.toString());
 
 
 
-                    int statusCode=error.networkResponse.statusCode;
 
-                   // String message=new String(error.networkResponse.data);
-                 /*   String errorMessage=ApiErrorHelper.parseError(message);
-                    if (statusCode==401){
-                        volleyCallback.onAuthFailureError401(errorMessage);
-                        return;
-                    }
-                    if (statusCode==403){
-                        volleyCallback.onForbiden403(errorMessage);
-                        return;
-                    }
-                    if (statusCode==422){
-                        volleyCallback.onValidationError422(errorMessage);
-                        return;
-                    }
-
-
-                    volleyCallback.onFail(errorMessage);*/
 
                 }
 

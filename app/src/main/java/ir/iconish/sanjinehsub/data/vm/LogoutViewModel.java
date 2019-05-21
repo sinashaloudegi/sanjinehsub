@@ -1,7 +1,6 @@
 package ir.iconish.sanjinehsub.data.vm;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel;
 
 import javax.inject.Inject;
 
@@ -32,6 +31,9 @@ public class LogoutViewModel extends ViewModel {
 
     public void logout(){
         logoutRepository.logout();
+    }
+    public String getToken() {
+        return logoutRepository.getToken();
     }
 
 }

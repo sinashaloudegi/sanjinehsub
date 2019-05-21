@@ -22,4 +22,8 @@ public class LogoutRepository {
     public void logout() {
 sharedPreferencesManager.clearAll();
     }
+     public String getToken() {
+return sharedPreferencesManager.getTokenValue();
+    }
+
 }

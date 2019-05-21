@@ -23,18 +23,15 @@ public class AppConfigRepository {
     this.sharedPreferencesManager=sharedPreferencesManager;
   }
 
-  public void callAppConfigRepository(int appId,final VolleyCallback volleyCallback) {
-    appConfigApi.callConfigApi(appId,new VolleyCallback() {
+  public void callAppConfigRepository(final VolleyCallback volleyCallback) {
+    appConfigApi.callConfigApi(new VolleyCallback() {
       @Override
       public void onSuccess(Object o) {
 
         AppConfig appConfig= (AppConfig) o;
-Log.e("marketKey=",appConfig.getMarketKey());
         sharedPreferencesManager.setMarketKeyValue(appConfig.getMarketKey());
         sharedPreferencesManager.setTimerDurationValue(appConfig.getTimerDuration());
 
-        Log.e("timer,",sharedPreferencesManager.getTimerDurationValue()+"");
-        Log.e("market,",sharedPreferencesManager.getMarketKeyValue()+"");
         volleyCallback.onSuccess(o);
       }
 

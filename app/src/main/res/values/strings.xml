@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">سنجینه</string>
     <string name="check_phone">بررسی شماره</string>
-    <string name="enter_get_score">ورود</string>
+    <string name="enter_get_score">دریافت رتبه اعتباری</string>
     <string name="enter_get_score_others">تایید تلفن همراه</string>
     <string name="phone_hint"> تلفن همراه *********09 </string>
     <string name="account_credit">برای دریافت نمره اعتباری و عضویت در سرویس جامع اعتبار سنجی همراه با امکانات کامل شماره موبایل و کد ملی خود را وارد کنید</string>
-    <string name="get_score">مشترک گرامی جهت مشاهده رتبه ی اعتباری لطفا کد ملی خود را وارد نمائید.\n(اطلاعات شما نزد سنجینه محفوظ خواهد ماند.)</string>
+    <string name="get_score">مشترک گرامی جهت مشاهده رتبه ی اعتباری لطفا دکمه دریافت رتبه را بزنید.\n(اطلاعات شما نزد سنجینه محفوظ خواهد ماند.)</string>
     <string name="rules">بخش <a href="http://www.google.com/">قوانین و مقررات</a> استفاده از خدمات و سرویس سایت سنجینه را مطالعه کرده ام و با کلیه موارد آن موافقم.</string>
     <string name="enter_verification">کد فعالسازی را وارد نمایید</string>
     <string name="get_score_payment">پرداخت از طریق کیف پول کافه بازار</string>
@@ -54,8 +54,10 @@
     <string name="enter_correct_mobile_phone">لطفا شماره تلفن را درست وارد کنید.</string>
     <string name="enter_correct_password">رمز عبور را درست وارد کنید</string>
     <string name="accept_rules">لطفا بخش قوانین و مقررات را تایید نماید</string>
+    <string name="accept_nt_code_mobile">لطفا بخش تطابق کدملی با شماره تلفن را تایید نماید</string>
     <string name="rules_url">"https://www.sanjineh.ir/terms"</string>
     <string name="activision_code">"کد فعالسازی"</string>
+    <string name="submit_code">"کد تاییدیه"</string>
     <string name="password_max_min">"رمز عبور شما باید حداکثر 12 و حداقل 4 کاراکتر باشد."</string>
     <string name="set_password">"درج رمز عبور"</string>
     <string name="save_password">"ذخیره کردن"</string>
@@ -77,5 +79,73 @@
   <string name="error">خطا</string>
   <string name="submit">تایید</string>
   <string name="contact_support">جهت بررسی وضعیت با پشتیبانی تماس بگیرید</string>
+  <string name="txt_credit_score_caption">رتبه اعتباری:</string>
+  <string name="txt_credit_score_mark_caption">نمره اعتباری:</string>
+  <string name="txt_score_renge">بازه امتیاز:</string>
+  <string name="txt_score_cause">دلیل رتبه:</string>
+  <string name="individual_info">اطلاعات هویتی</string>
+  <string name="name">نام</string>
+  <string name="family">نام خانوادگی</string>
+  <string name="father_name">نام پدر</string>
+  <string name="gender">جنسیت</string>
+  <string name="barrower_section">طبقه وام گیرنده</string>
+  <string name="birth_city">محل تولد</string>
+  <string name="birth_date">تاریخ تولد</string>
+  <string name="address">آدرس دائمی</string>
+  <string name="creditor">اعتبار دهنده</string>
 
+  <string name="person_negative_state">وضعیت منفی شخصی</string>
+  <string name="alert_date">تاریخ اعلام وضعیت</string>
+    <string name="creditor_type">نوع اعتبار دهنده</string>
+    <string name="this_month">ماه اخیر</string>
+    <string name="this_year">سال اخیر</string>
+    <string name="short_contracts">اطلاعات خلاصه مرتبط با قراردادها</string>
+    <string name="statistics_alert">آمار استعلام</string>
+    <string name="currnt_user_info">اطلاعات فعلی شخص</string>
+    <string name="contract_info">اطلاعات مرتبط با قراردادها</string>
+    <string name="negative_history">سابقه وضعیت منفی شخصی</string>
+    <string name="total_negative_history">جمع کل</string>
+    <string name="jam_qarardad_jariani">جمع قراردادهای در جریان</string>
+    <string name="jam_qaradad_khateme_yafte">جمع قراردادهای خاتمه یافته</string>
+    <string name="jam_mablagh_sarresid_nashode">جمع مبلغ سررسید نشده</string>
+    <string name="jam_mablagh_sarresid_shode_pardakht_nashode">جمع مبلغ سررسید شده پرداخت نشده</string>
+    <string name="currency">ارز</string>
+    <string name="contract_type">نوع قرارداد</string>
+    <string name="cerditor">اعتباردهنده</string>
+    <string name="current_contract">قراردادهای در جریان</string>
+    <string name="terminate_contract">قراردادهای خاتمه یافته</string>
+    <string name="mablagh_sarresid_nashode">مبلغ سررسید نشده</string>
+    <string name="mablagh_sarresid_shode_pardakht_nashode">مبلغ سررسید شده پرداخت نشده</string>
+    <string name="installment_report">گزارش ریز قراردادهای اقساطی</string>
+    <string name="public_contract_info">اطلاعات عمومی قرارداد</string>
+    <string name="payment_callander">تقویم بازپرداخت ها</string>
+
+
+
+    <string name="negative_contract_status">وضعیت منفی قرارداد</string>
+    <string name="bank_contract_status">نوع قرارداد با بانک</string>
+    <string name="goal_of_credit">هدف از دریافت تسهیلات</string>
+    <string name="contract_start">تاریخ شروع</string>
+    <string name="contract_end">تاریخ اتمام پیش بینی شده</string>
+    <string name="status_date">تاریخ اعلام وضعیت</string>
+    <string name="payment_currency">واحد پول</string>
+    <string name="person_role">نقش شخص</string>
+    <string name="creditor_name">اعتباردهنده</string>
+    <string name="date">تاریخ</string>
+    <string name="date_payment">تقویم بازپرداخت ها</string>
+    <string name="mablagh_saresid_pardakht_nashode">مبلغ بدهی سررسید شده پرداخت نشده</string>
+    <string name="terminate_contract_detail">جزییات مربوط به قراردادهای خاتمه یافته</string>
+    <string name="vasiqeh">وثیقه</string>
+    <string name="vasiqeh_type">نوع وثیقه</string>
+    <string name="vasiqeh_value">ارزش وثیقه</string>
+    <string name="contract_details">جزییات قرارداد</string>
+    <string name="mablagh_aqsat">مبلغ اقساط</string>
+    <string name="aqsat_number">تعداد اقساط</string>
+    <string name="qest_type">نوع قسط</string>
+    <string name="payment_duration">دوره پرداخت</string>
+    <string name="payment_type">نوع پرداخت</string>
+    <string name="total_amount">مبلغ کل قرارداد (اصل و فرع)</string>
+    <string name="txt_other_otp_title">لطفا کد ارسال شده به شماره تلفن مالک گزارش را وارد نمایید</string>
+    <string name="confirm_phone_nt_code">تایید میکنم شماره موبایل در شبکه تلفن همراه به نام خودم ثبت شده است و با کد ملی وارد شده تطابق دارد</string>
+    <string name="confirm_phone_nt_code_other">تایید میکنم شماره موبایل و کد ملی وارد شده در شبکه تلفن همراه با هم تطابق دارد</string>
 </resources>

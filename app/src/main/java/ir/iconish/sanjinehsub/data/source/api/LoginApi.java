@@ -38,7 +38,6 @@ public class LoginApi {
 
 
     public User parseJson(JSONObject jsonObject){
-        Log.e("jsonLogin",jsonObject.toString());
         User user=new User();
 
       try {
@@ -53,7 +52,6 @@ JSONObject jsonObjectUser=jsonObject.getJSONObject("accountInfo").getJSONObject(
                 String email=jsonObjectUser.getString("email");
                 String mobileNumber=jsonObjectUser.getString("mobile");
                 long userId=jsonObjectUser.getLong("userid");
-                //String token=jsonObject.getString("mobileNo");
 user.setFirstName(firstName);
 user.setLastName(lastName);
 user.setEmail(email);
@@ -62,11 +60,9 @@ user.setUserId(userId);
 
 
             }
-             /*   else if (statusCode==1011){
 
-            }*/
         } catch (JSONException e) {
-            Log.e("err",e.toString());
+            //Log.e("err",e.toString());
             e.printStackTrace();
         }
 
@@ -82,9 +78,7 @@ user.setUserId(userId);
     public void callLoginApi(String mobileNumer,final VolleyCallback volleyCallback){
 
 
-        //String   url=ConstantUrl.BASE+ConstantUrl.LOGIN+mobileNumer+"/"+ AppConstants.VAS_SUBSCRIB;
         String   url=ConstantUrl.BASE+ConstantUrl.LOGIN;
-Log.e("urlRegister=",url);
 
 JSONObject jsonObject=new JSONObject();
         try {
@@ -96,21 +90,19 @@ JSONObject jsonObject=new JSONObject();
         }
 
 
-       // JsonArrayRequest
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 url,jsonObject,
                 response -> {
 
 
-                    Log.e("Server response",response.toString());
+                    //Log.e("Server response",response.toString());
 
                     if (response!=null){
 
                    User user=     parseJson(response);
                    volleyCallback.onSuccess(user);
 
-                       // volleyCallback.onSuccess(visits);
                     }
 
 
@@ -118,7 +110,6 @@ JSONObject jsonObject=new JSONObject();
 
 
                 }, error -> {
-                    Log.e("api error=",error.toString());
                     if ((error instanceof NetworkError) || (error instanceof NoConnectionError) ) {
 
                         volleyCallback.onClientNetworkError();
@@ -148,42 +139,18 @@ JSONObject jsonObject=new JSONObject();
 
 
 
-                    int statusCode=error.networkResponse.statusCode;
 
-                   // String message=new String(error.networkResponse.data);
-                 /*   String errorMessage=ApiErrorHelper.parseError(message);
-                    if (statusCode==401){
-                        volleyCallback.onAuthFailureError401(errorMessage);
-                        return;
-                    }
-                    if (statusCode==403){
-                        volleyCallback.onForbiden403(errorMessage);
-                        return;
-                    }
-                    if (statusCode==422){
-                        volleyCallback.onValidationError422(errorMessage);
-                        return;
-                    }
-
-
-                    volleyCallback.onFail(errorMessage);*/
 
                 }
 
         )
 
         {
-           /* @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }*/
+
 
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
-
-               // params.put("appid", AppConstants.APP_ID);
-
 
                 return params;
             }

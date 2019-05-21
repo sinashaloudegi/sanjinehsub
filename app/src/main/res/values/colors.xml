@@ -2,17 +2,17 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303f9f</color>
-    <color name="colorAccent">#ff4081</color>
+    <color name="colorAccent">#fdcb1e</color>
 
 
     <color name="yellow_button">#fdcb1e</color>
     <color name="dark_blue">#0347ad</color>
 
     <color name="sanjinehColor">#0347AD</color>
-    <color name="white">#ffffff</color>
+
     <color name="darker_gray">#aaa</color>
     <color name="light_gray">#ececec</color>
-
+    <color name="white">#ffffff</color>
     <color name="alert_incorrect_entry">#ff4081</color>
     <color name="black">#000000</color>
     <color name="bluish">#246cc0</color>
@@ -22,6 +22,18 @@
     <color name="acceptedd_border_color">#e5eced</color>
     <color name="acceptedd_shadow_color">#FFD5DDDF</color>
     <color name="dark_grey_blue">#34495e</color>
-
+    <color name="dark_yellow">#FDC800</color>
+    <color name="orange">#FF7006</color>
+    <color name="light_green">#CEFFCF</color>
+    <color name="dark_green">#01FD9C</color>
+    <color name="score_risk_color">#9ba0a4</color>
+    <color name="credit_core_layout_color">#bec3c9</color>
+    <color name="credit_core_mark_layout_color">#9ba0a4</color>
+    <color name="credit_core_renge_layout_color">#7d8286</color>
+    <color name="credit_cause_layout_color">#f5f5f5</color>
+    <color name="credit_cause_value_color">#757376</color>
+    <color name="header_section_color">#636368</color>
+    <color name="dark_row_color">#fafafa</color>
+    <color name="light_row_color">#ffffff</color>
 
 </resources>

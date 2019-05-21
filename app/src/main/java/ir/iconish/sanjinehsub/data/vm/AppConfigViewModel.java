@@ -1,7 +1,8 @@
 package ir.iconish.sanjinehsub.data.vm;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import javax.inject.Inject;
 
@@ -83,10 +84,10 @@ public class AppConfigViewModel extends ViewModel {
         return apiAuthFailureErrorLiveData;
     }
 
-    public void callAppConfigViewModel(int appId) {
+    public void callAppConfigViewModel() {
 
 
-      appConfigRepository.callAppConfigRepository(appId,new VolleyCallback() {
+      appConfigRepository.callAppConfigRepository(new VolleyCallback() {
           @Override
           public void onSuccess(Object obj) {
             apiSuccessLiveDataResponse.setValue((AppConfig) obj);

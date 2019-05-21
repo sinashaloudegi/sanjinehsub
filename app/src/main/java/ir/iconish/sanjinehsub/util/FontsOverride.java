@@ -7,11 +7,11 @@ package ir.iconish.sanjinehsub.util;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.content.res.ResourcesCompat;
 
 
+import androidx.core.content.res.ResourcesCompat;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.lang.reflect.Field;
 

@@ -3,51 +3,60 @@
  */
 package ir.iconish.sanjinehsub.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
+import ir.iconish.sanjinehsub.adapter.viewholder.DetailContractViewHolder;
 import ir.iconish.sanjinehsub.adapter.viewholder.SummaryContractViewHolder;
+import ir.iconish.sanjinehsub.data.model.DetailContract;
 import ir.iconish.sanjinehsub.data.model.SummaryContract;
+import ir.iconish.sanjinehsub.util.TextFormatter;
 
 
-public class SummaryContractAdapter extends RecyclerView.Adapter<SummaryContractViewHolder> {
+public class DetailContractAdapter extends RecyclerView.Adapter<DetailContractViewHolder> {
 
-    private  List<SummaryContract> contracts;
+    private  List<DetailContract> detailContracts;
 
     RecyclerIemListener recyclerIemListener ;
 
-    public SummaryContractAdapter(List<SummaryContract> contracts, RecyclerIemListener recyclerIemListener) {
-        this.contracts = contracts;
+    public DetailContractAdapter(List<DetailContract> detailContracts, RecyclerIemListener recyclerIemListener) {
+        this.detailContracts = detailContracts;
 
         this.recyclerIemListener = recyclerIemListener;
 
     }
     @Override
-    public SummaryContractViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DetailContractViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.summary_contract_row, parent, false);
+                .inflate(R.layout.detail_contract_row, parent, false);
         ButterKnife.bind(this, itemView);
 
 
-        return new SummaryContractViewHolder(itemView);
+        return new DetailContractViewHolder(itemView);
 
     }
 
     @Override
-    public void onBindViewHolder(final SummaryContractViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(final DetailContractViewHolder viewHolder, final int i) {
 
 
-        final SummaryContract contract = contracts.get(i);
-        viewHolder.txtAlertDate.setText(String.valueOf(contract.getReportsLastUpdate()));
-        viewHolder.txtCreditor.setText(contract.getReportsCreditor());
-        viewHolder.txtPersonNegativeState.setText(contract.getNegativeSubjectStatus());
+        final DetailContract contract = detailContracts.get(i);
+        viewHolder.txtContractType.setText(contract.getContractType());
+        viewHolder.txtCreditor.setText(contract.getCreditorName());
+        viewHolder.txtCurrency.setText(contract.getCurrency());
+        viewHolder.txtMablaghSarresidNashode.setText(TextFormatter.applyThousandSeparators(contract.getOutstandingAmount()));
+        viewHolder.txtMablaghSarresidShodePardakhtNashode.setText(TextFormatter.applyThousandSeparators(contract.getOverdueAmount()));
+        viewHolder.txtTerminate.setText(String.valueOf(contract.getTotalTerminateContract()));
+        viewHolder.txtCurrentContract.setText(String.valueOf(contract.getTotalOpenConract()));
+
 
 
 
@@ -66,7 +75,7 @@ recyclerIemListener.onTap(contract);
 
     @Override
     public int getItemCount() {
-        return (null != contracts ? contracts.size() : 0);
+        return (null != detailContracts ? detailContracts.size() : 0);
 
     }
     @Override public long getItemId(int position) { return position; }

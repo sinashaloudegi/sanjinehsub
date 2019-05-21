@@ -36,7 +36,6 @@ public class ConfirmVerifyCodeApi {
       reportStateEnumId = jsonObject.getInt("reportStateEnumId");
 
     } catch (JSONException e) {
-      Log.e("err", e.toString());
       e.printStackTrace();
     }
 
@@ -48,23 +47,20 @@ public class ConfirmVerifyCodeApi {
 
 
     String url = ConstantUrl.BASE_CREDIT + ConstantUrl.Confirm_VERIFYCODE + msisdn + "/" + code  ;
-    Log.e("url=", url);
 
 
-    // JsonArrayRequest
+
 
     JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, null,
       response -> {
-        Log.e("Server response", response.toString());
+
         if (response != null) {
           Integer reportStateEnumId = parseJson(response);
           volleyCallback.onSuccess(reportStateEnumId);
-          // volleyCallback.onSuccess(visits);
         }
 
 
       }, error -> {
-        Log.e("api error=", error.toString());
         if ((error instanceof NetworkError) || (error instanceof NoConnectionError)) {
           volleyCallback.onClientNetworkError();
           return;
@@ -81,38 +77,11 @@ public class ConfirmVerifyCodeApi {
         }
 
 
-        // String message=new String(error.networkResponse.data);
-             /*   String errorMessage=ApiErrorHelper.parseError(message);
-                if (statusCode==401){
-                    volleyCallback.onAuthFailureError401(errorMessage);
-                    return;
-                }
-                if (statusCode==403){
-                    volleyCallback.onForbiden403(errorMessage);
-                    return;
-                }
-                if (statusCode==422){
-                    volleyCallback.onValidationError422(errorMessage);
-                    return;
-                }
 
-
-                volleyCallback.onFail(errorMessage);*/
 
       }
 
     ) {
-           /* @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }*/
-
-//      @Override
-//      public Map<String, String> getHeaders() {
-//        Map<String, String> params = new HashMap<String, String>();
-//        params.put("appid", AppConstants.APP_ID);
-//        return params;
-//      }
     };
 
 

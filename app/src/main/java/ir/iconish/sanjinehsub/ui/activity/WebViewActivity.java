@@ -2,15 +2,18 @@ package ir.iconish.sanjinehsub.ui.activity;
 
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.ui.WebViewConfiguration;
+import ir.iconish.sanjinehsub.util.ToastHelper;
 
 public class WebViewActivity extends AppCompatActivity {
 
@@ -37,15 +40,13 @@ public class WebViewActivity extends AppCompatActivity {
 
 
         String url = getIntent().getStringExtra("url");
-        Log.i("Test web url : " , url);
-
         webView.loadUrl(url);
+      ToastHelper.showInfoMessage(this,url);
         new WebViewConfiguration(this,customViewContainer,webView,url).initWebView();
     }
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         if(webView.canGoBack()){
 
             webView.goBack();

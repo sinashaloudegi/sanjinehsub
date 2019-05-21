@@ -3,6 +3,8 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">security.iconish.ir</domain>
         <domain includeSubdomains="true">creditscore.iconish.ir</domain>
+        <domain includeSubdomains="true">192.168.110.55</domain>
+        <domain includeSubdomains="true">market.iconish.ir</domain>
 
     </domain-config>
 </network-security-config>

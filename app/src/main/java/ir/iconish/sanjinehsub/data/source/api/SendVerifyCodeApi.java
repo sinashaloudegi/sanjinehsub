@@ -39,9 +39,9 @@ public class SendVerifyCodeApi {
     try {
       verifyCodeOthersResponse.setStatusCode(jsonObject.getInt("reportStateId"));
       verifyCodeOthersResponse.setDescription(jsonObject.getString("reportStateValue"));
+      verifyCodeOthersResponse.setNoReportReqToken(jsonObject.getString("noreportReqToken"));
 
     } catch (JSONException e) {
-      Log.e("err", e.toString());
       e.printStackTrace();
     }
 
@@ -50,8 +50,6 @@ public class SendVerifyCodeApi {
 
 
   public void callSendVerifyCodeApi(String token,String ntcode, String ownermobile, String mobile, final VolleyCallback volleyCallback) {
-Log.e("token is othrt=",token);
-///icredit/v1/sendVerifyCode
     String url = ConstantUrl.BASE_CREDIT+ ConstantUrl.SEND_VERIFYCODE ;
     //https://creditscore.iconish.ir/icredit/sendVerifyCode/{ntcode}/{ownermobile}/{mobile}
     Log.e("url=", url);
@@ -67,13 +65,11 @@ Log.e("token is othrt=",token);
     catch (Exception e){
 
     }
-Log.e("body",body.toString());
 
     // JsonArrayRequest
 
     JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, url, body,
       response -> {
-        Log.e("Server response notify score", response.toString());
         if (response != null) {
           VerifyCodeOthersResponse verifyCodeOthersResponse = parseJson(response);
           volleyCallback.onSuccess(verifyCodeOthersResponse);
@@ -82,7 +78,6 @@ Log.e("body",body.toString());
 
 
       }, error -> {
-        Log.e("api error=", error.toString());
         if ((error instanceof NetworkError) || (error instanceof NoConnectionError)) {
           volleyCallback.onClientNetworkError();
           return;
@@ -99,23 +94,6 @@ Log.e("body",body.toString());
         }
 
 
-        // String message=new String(error.networkResponse.data);
-             /*   String errorMessage=ApiErrorHelper.parseError(message);
-                if (statusCode==401){
-                    volleyCallback.onAuthFailureError401(errorMessage);
-                    return;
-                }
-                if (statusCode==403){
-                    volleyCallback.onForbiden403(errorMessage);
-                    return;
-                }
-                if (statusCode==422){
-                    volleyCallback.onValidationError422(errorMessage);
-                    return;
-                }
-
-
-                volleyCallback.onFail(errorMessage);*/
 
       }
 

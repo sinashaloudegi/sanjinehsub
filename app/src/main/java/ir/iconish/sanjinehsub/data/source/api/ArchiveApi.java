@@ -58,7 +58,7 @@ for (int i=0;i<jsonLength;i++){
         archive.setReportToken(token);
         archiveList.add(i,archive);
     } catch (JSONException e) {
-        Log.e("error",e.toString());
+        //Log.e("error",e.toString());
         e.printStackTrace();
     }
 }
@@ -76,8 +76,6 @@ for (int i=0;i<jsonLength;i++){
 
 
         String   url=ConstantUrl.BASE_CREDIT+ConstantUrl.ARCHIVE+mobileNumber;
-Log.e("urlCheckPassword=",url);
-Log.e("token=",token);
 
 
 
@@ -86,14 +84,12 @@ Log.e("token=",token);
                 response -> {
 
 
-                    Log.e("Server response setPassword",response.toString());
 
                     if (response!=null){
 
                         List<Archive> archiveList=     parseJson(response);
                    volleyCallback.onSuccess(archiveList);
 
-                       // volleyCallback.onSuccess(visits);
                     }
 
 
@@ -101,7 +97,6 @@ Log.e("token=",token);
 
 
                 }, error -> {
-                    Log.e("api error=",error.toString());
                     if ((error instanceof NetworkError) || (error instanceof NoConnectionError) ) {
 
                         volleyCallback.onClientNetworkError();
@@ -131,25 +126,6 @@ Log.e("token=",token);
 
 
 
-                    int statusCode=error.networkResponse.statusCode;
-
-                   // String message=new String(error.networkResponse.data);
-                 /*   String errorMessage=ApiErrorHelper.parseError(message);
-                    if (statusCode==401){
-                        volleyCallback.onAuthFailureError401(errorMessage);
-                        return;
-                    }
-                    if (statusCode==403){
-                        volleyCallback.onForbiden403(errorMessage);
-                        return;
-                    }
-                    if (statusCode==422){
-                        volleyCallback.onValidationError422(errorMessage);
-                        return;
-                    }
-
-
-                    volleyCallback.onFail(errorMessage);*/
 
                 }
 
@@ -164,7 +140,7 @@ Log.e("token=",token);
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
-                Log.e("tokenH=",token);
+               // Log.e("tokenH=",token);
                 params.put("appid", AppConstants.APP_ID);
                 params.put("Authorization", token);
 

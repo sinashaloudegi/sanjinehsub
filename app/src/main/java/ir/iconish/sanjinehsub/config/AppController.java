@@ -2,9 +2,11 @@ package ir.iconish.sanjinehsub.config;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
+
 import android.text.TextUtils;
+
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,7 +20,7 @@ import ir.iconish.sanjinehsub.di.module.NetModule;
 import ir.iconish.sanjinehsub.util.FontsOverride;
 
 
-public class AppController extends MultiDexApplication  {
+public class AppController extends MultiDexApplication {
 
 
 

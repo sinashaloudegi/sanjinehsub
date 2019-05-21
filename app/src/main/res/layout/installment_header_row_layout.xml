@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:id="@+id/rootLayout"
     android:layout_height="wrap_content">
 
     <TextView
@@ -11,6 +12,7 @@
         android:background="@color/header_section_color"
         android:textColor="@color/white"
 android:padding="@dimen/margin10"
+        android:id="@+id/txtHeaderTitle"
         android:textSize="@dimen/font_12"
         android:text="@string/public_contract_info"/>
     <RelativeLayout
@@ -26,7 +28,7 @@ android:padding="@dimen/margin10"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
-
+            android:id="@+id/txtNegativeContractStatusCaption"
             android:textSize="@dimen/font_12"
             android:text="@string/negative_contract_status"
 
@@ -37,7 +39,8 @@ android:padding="@dimen/margin10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/txtNegativeContractStatusCaption"
+            android:layout_marginRight="@dimen/margin5"
             android:textSize="@dimen/font_12"
             android:id="@+id/txtNegativeContractStatus"/>
 
@@ -64,7 +67,7 @@ android:padding="@dimen/margin10"
 
             android:textSize="@dimen/font_12"
             android:text="@string/bank_contract_status"
-
+            android:id="@+id/txtBankContractTypeCaption"
         />
 
 
@@ -72,7 +75,14 @@ android:padding="@dimen/margin10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+
+
+            android:layout_toLeftOf="@+id/txtBankContractTypeCaption"
+            android:layout_marginRight="@dimen/margin5"
+
+
+
+
             android:textSize="@dimen/font_12"
             android:id="@+id/txtBankContractType"/>
 
@@ -96,7 +106,7 @@ android:padding="@dimen/margin10"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
-
+            android:id="@+id/txtGoalOfCreditCaption"
             android:textSize="@dimen/font_12"
             android:text="@string/goal_of_credit"
 
@@ -109,6 +119,9 @@ android:padding="@dimen/margin10"
             android:textColor="@color/credit_cause_value_color"
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/font_12"
+            android:layout_toLeftOf="@+id/txtGoalOfCreditCaption"
+            android:layout_marginRight="@dimen/margin5"
+
             android:id="@+id/txtGoalOfCredit"/>
 
 
@@ -131,7 +144,7 @@ android:padding="@dimen/margin10"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
-
+            android:id="@+id/txtContractStartCaption"
             android:textSize="@dimen/font_12"
             android:text="@string/contract_start"
 
@@ -144,6 +157,8 @@ android:padding="@dimen/margin10"
             android:textColor="@color/credit_cause_value_color"
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/font_12"
+            android:layout_toLeftOf="@+id/txtContractStartCaption"
+            android:layout_marginRight="@dimen/margin5"
             android:id="@+id/txtContractStart"/>
 
 
@@ -166,7 +181,7 @@ android:padding="@dimen/margin10"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
-
+            android:id="@+id/txtContractEndCaption"
             android:textSize="@dimen/font_12"
             android:text="@string/contract_end"
 
@@ -179,6 +194,10 @@ android:padding="@dimen/margin10"
             android:textColor="@color/credit_cause_value_color"
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/font_12"
+
+            android:layout_toLeftOf="@+id/txtContractEndCaption"
+            android:layout_marginRight="@dimen/margin5"
+
             android:id="@+id/txtContractEnd"/>
 
 
@@ -201,7 +220,7 @@ android:padding="@dimen/margin10"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
-
+            android:id="@+id/txtStatusDateCaption"
             android:textSize="@dimen/font_12"
             android:text="@string/status_date"
 
@@ -212,7 +231,8 @@ android:padding="@dimen/margin10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/txtStatusDateCaption"
+            android:layout_marginRight="@dimen/margin5"
             android:textSize="@dimen/font_12"
             android:id="@+id/txtStatusDate"/>
 
@@ -236,7 +256,7 @@ android:padding="@dimen/margin10"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
-
+            android:id="@+id/txtPaymentCurrencyCaption"
             android:textSize="@dimen/font_12"
             android:text="@string/payment_currency"
 
@@ -247,7 +267,9 @@ android:padding="@dimen/margin10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/txtPaymentCurrencyCaption"
+            android:layout_marginRight="@dimen/margin5"
+
             android:textSize="@dimen/font_12"
             android:id="@+id/txtPaymentCurrency"/>
 
@@ -271,10 +293,9 @@ android:padding="@dimen/margin10"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
-
+            android:id="@+id/txtPersonRoleCaption"
             android:textSize="@dimen/font_12"
             android:text="@string/person_role"
-
         />
 
 
@@ -282,7 +303,10 @@ android:padding="@dimen/margin10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/txtPersonRoleCaption"
+            android:layout_marginRight="@dimen/margin5"
+
+
             android:textSize="@dimen/font_12"
             android:id="@+id/txtPersonRole"/>
 
@@ -309,7 +333,7 @@ android:padding="@dimen/margin10"
 
             android:textSize="@dimen/font_12"
             android:text="@string/creditor_name"
-
+            android:id="@+id/txtCreditorNameCaption"
         />
 
 
@@ -317,7 +341,10 @@ android:padding="@dimen/margin10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+
+            android:layout_toLeftOf="@+id/txtCreditorNameCaption"
+            android:layout_marginRight="@dimen/margin5"
+
             android:textSize="@dimen/font_12"
             android:id="@+id/txtCreditorName"/>
 
@@ -334,16 +361,9 @@ android:padding="@dimen/margin10"
         android:background="@color/header_section_color"
         android:textColor="@color/white"
         android:padding="@dimen/margin10"
+        android:id="@+id/txtDetailTitle"
         android:textSize="@dimen/font_12"
-        android:text="@string/payment_callander"/>
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:id="@+id/recyclerConract"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
-
-
-
+        android:text="@string/date_payment"/>
 
 
 

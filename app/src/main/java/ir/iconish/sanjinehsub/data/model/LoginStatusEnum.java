@@ -18,7 +18,7 @@ public enum LoginStatusEnum {
     USERISNEW(1011, "کاربر جدید  "),
     VERIFY_SUCCESS_AND_EXIST(1012, "VERIFY_SUCCESS_AND_EXIST    "),
     VERIFY_SUCCESS_AND_NEW(1013, "VERIFY_SUCCESS_AND_NEW    "),
-    VERIFY_FAIL(1014, "  VERIFY_FAIL  "),
+    VERIFY_FAIL(1014, "عدم تایید کد"),
     Success(9999, "درخواست موفقیت آمیز");
 
     private int value;

@@ -2,16 +2,17 @@ package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
-import android.widget.TextView;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 
-public class EnterPasswordActivity extends AppCompatActivity{
+public class EnterPasswordActivity extends AppCompatActivity {
 
     @BindView(R.id.btnEnter)
     AppCompatButton btnEnter;

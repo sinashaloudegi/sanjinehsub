@@ -38,7 +38,7 @@ public class CheckReportApi {
       availableReport.setAvailable(jsonObject.getBoolean("isAvailable"));
 
     } catch (JSONException e) {
-      Log.e("err", e.toString());
+     // Log.e("err", e.toString());
       e.printStackTrace();
     }
 
@@ -50,13 +50,13 @@ public class CheckReportApi {
 
 
     String url = ConstantUrl.BASE_CREDIT + ConstantUrl.CHECK_REPORT + ntcode + "/" + mobileNumber;
-    Log.e("url=", url);
+   // Log.e("url=", url);
 
     // JsonArrayRequest
 
     JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, null,
       response -> {
-        Log.e("Server response", response.toString());
+        //Log.e("Server response", response.toString());
         if (response != null) {
           AvailableReport availableReport = parseJson(response);
           volleyCallback.onSuccess(availableReport);
@@ -65,7 +65,6 @@ public class CheckReportApi {
 
 
       }, error -> {
-        Log.e("api error=", error.toString());
         if ((error instanceof NetworkError) || (error instanceof NoConnectionError)) {
           volleyCallback.onClientNetworkError();
           return;
@@ -82,25 +81,6 @@ public class CheckReportApi {
         }
 
 
-        int statusCode = error.networkResponse.statusCode;
-
-        // String message=new String(error.networkResponse.data);
-             /*   String errorMessage=ApiErrorHelper.parseError(message);
-                if (statusCode==401){
-                    volleyCallback.onAuthFailureError401(errorMessage);
-                    return;
-                }
-                if (statusCode==403){
-                    volleyCallback.onForbiden403(errorMessage);
-                    return;
-                }
-                if (statusCode==422){
-                    volleyCallback.onValidationError422(errorMessage);
-                    return;
-                }
-
-
-                volleyCallback.onFail(errorMessage);*/
 
       }
 

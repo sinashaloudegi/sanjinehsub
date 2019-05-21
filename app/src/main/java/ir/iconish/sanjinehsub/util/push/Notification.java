@@ -8,9 +8,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
+
+import androidx.core.app.NotificationCompat;
 
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.util.AppConstants;
@@ -22,17 +23,12 @@ public class Notification {
 
 
 
-
     public static void sendFirebaseNotification(String title, String message,Context context) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         //If on Oreo then notification required a notification channel.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_MIN;
-
-
-
-
             NotificationChannel channel = new NotificationChannel(AppConstants.CHANNEL_ID_NOTIFICATON, AppConstants.CHANNEL_NAME, importance);
             //NotificationChannel mChannel = new NotificationChannel("1", "one", importance);
             channel.setDescription(AppConstants.CHANNEL_DESCRIPTION);

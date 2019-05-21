@@ -59,8 +59,7 @@ public class WebViewConfiguration {
         settings.setJavaScriptEnabled(true);
 
         settings.setDomStorageEnabled(true);
-        settings.setAppCacheEnabled(true);
-        settings.setLoadsImagesAutomatically(true);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
@@ -89,16 +88,16 @@ public class WebViewConfiguration {
                 Method m6 = WebSettings.class.getMethod("setAppCacheEnabled", new Class[]{Boolean.TYPE});
                 m6.invoke(settings, Boolean.TRUE);
 
-                Log.e("TAG", "Enabled HTML5-Features");
+               // Log.e("TAG", "Enabled HTML5-Features");
             }
             catch (NoSuchMethodException e) {
-                Log.e("TAG", "Reflection fail", e);
+               // Log.e("TAG", "Reflection fail", e);
             }
             catch (InvocationTargetException e) {
-                Log.e("TAG", "Reflection fail", e);
+               // Log.e("TAG", "Reflection fail", e);
             }
             catch (IllegalAccessException e) {
-                Log.e("TAG", "Reflection fail", e);
+                //Log.e("TAG", "Reflection fail", e);
             }
         }
 

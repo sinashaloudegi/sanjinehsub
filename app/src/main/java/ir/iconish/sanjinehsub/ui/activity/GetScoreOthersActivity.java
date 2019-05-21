@@ -1,5 +1,6 @@
 package ir.iconish.sanjinehsub.ui.activity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,14 +8,17 @@ import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
+
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import java.util.UUID;
 
@@ -27,11 +31,13 @@ import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.model.CreditResponseEnum;
+import ir.iconish.sanjinehsub.data.model.ReportStateEnum;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.data.vm.SendVerifyCodeViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
+import ir.iconish.sanjinehsub.util.Helper;
 import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
 import ir.iconish.sanjinehsub.util.Inventory;
@@ -61,6 +67,8 @@ public class GetScoreOthersActivity extends AppCompatActivity {
   GetScoreViewModel getScoreViewModel;
 
 
+  @BindView(R.id.checkboxRules)
+  CheckBox checkboxRules;
 
 
 
@@ -84,6 +92,7 @@ public class GetScoreOthersActivity extends AppCompatActivity {
     ((AppController) getApplication()).getAppComponent().inject(this);
     checkCafeBazaarLogin = new CheckCafeBazaarLogin(this);
     messageReciver();
+    showWating();
     bazaarSetup(getScoreViewModel.getMarketKey());
     attachViewModel();
   }
@@ -133,33 +142,54 @@ public class GetScoreOthersActivity extends AppCompatActivity {
   public void btnGetScoreOthersAction() {
     txtAlert.setVisibility(View.INVISIBLE);
 
-    if(!(edtMsisdnOthers.getText().toString().trim().length() > 0) && !(edtNtcodeOthers.getText().toString().trim().length() > 0)){
+
+
+
+
+
+
+
+String msisdn=edtMsisdnOthers.getText().toString().trim();
+String ntCode=edtNtcodeOthers.getText().toString().trim();
+    if(!(msisdn.length() > 0) && !(ntCode.length() > 0)){
       txtAlert.setText(getString(R.string.force_enter_phone_ntcode));
       txtAlert.setVisibility(View.VISIBLE);
       return;
     }
-    if ((edtMsisdnOthers.getText().toString().trim().length() > 0) && !(edtNtcodeOthers.getText().toString().trim().length() > 0)) {
+    if ((msisdn.length() > 0) && !(ntCode.length() > 0)) {
       txtAlert.setText(getString(R.string.force_enter_phone));
       txtAlert.setVisibility(View.VISIBLE);
       return;
     }
-     if ((edtNtcodeOthers.getText().toString().trim().length() > 0) && !(edtMsisdnOthers.getText().toString().trim().length() > 0)) {
-       txtAlert.setText(getString(R.string.force_enter_ntcode));
-       txtAlert.setVisibility(View.VISIBLE);
-      return;
-    }
-    if ((edtMsisdnOthers.getText().toString().trim().length() > 0) && !edtMsisdnOthers.getText().toString().startsWith("09")) {
+
+    if ((msisdn.trim().length() > 0) && !msisdn.startsWith("09")) {
       txtAlert.setText(getString(R.string.enter_correct_mobile_phone));
       txtAlert.setVisibility(View.VISIBLE);
       return;
 
     }
-    if ((edtMsisdnOthers.getText().toString().trim().length() > 0) && edtMsisdnOthers.getText().toString().trim().length() != 11) {
+    if ((msisdn.length() > 0) && msisdn.length() != 11) {
       txtAlert.setText(getString(R.string.valid_phone));
       txtAlert.setVisibility(View.VISIBLE);
       return;
     }
 
+
+
+    if(!Helper.validationNationalCode(ntCode)){
+      txtAlert.setText(getString(R.string.enter_correct_national_code));
+      txtAlert.setVisibility(View.VISIBLE);
+      return;
+    }
+
+    if(!checkboxRules.isChecked()){
+
+
+      txtAlert.setText(getString(R.string.accept_nt_code_mobile));
+      txtAlert.setVisibility(View.VISIBLE);
+      return;
+
+    }
      // String ntcode = edtNtcodeOthers.getText().toString();
      // String ownermobile = edtMsisdnOthers.getText().toString();
 
@@ -173,7 +203,7 @@ public class GetScoreOthersActivity extends AppCompatActivity {
       String randomUUIDString = uuid.toString();
       Log.i("Test", "randomUUIDString : " + randomUUIDString);
       //"bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ"
-      mHelper.launchPurchaseFlow(GetScoreOthersActivity.this, "sanj01", 10001, mPurchaseFinishedListener, randomUUIDString);
+      mHelper.launchPurchaseFlow(GetScoreOthersActivity.this, AppConstants.BAZAAR_SKU, 10001, mPurchaseFinishedListener, randomUUIDString);
 
     }
     }
@@ -212,7 +242,9 @@ if(broadcastReceiver!=null)
 
     sendVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, verifyCodeOthersResponse -> {
       stopWating();
-      if (verifyCodeOthersResponse.getStatusCode() == 12||verifyCodeOthersResponse.getStatusCode() == 21||verifyCodeOthersResponse.getStatusCode() == 22||verifyCodeOthersResponse.getStatusCode() == 24 ) {
+
+      //verifyCodeOthersResponse.getStatusCode() == 22
+      if (verifyCodeOthersResponse.getStatusCode() == ReportStateEnum.SEND_VERIFY_CODE.getId() ||verifyCodeOthersResponse.getStatusCode() == ReportStateEnum.USER_HAVE_COMPLETE_REPORT.getId()||verifyCodeOthersResponse.getStatusCode() == ReportStateEnum.USER_HAVE_COMPLETE_XXX_REPORT.getId()||verifyCodeOthersResponse.getStatusCode()==ReportStateEnum.USER_HAVE_SIMPLE_XXX_REPORT.getId())  {
         Log.i("Test", "sent otp to others");
         Intent intent = new Intent(this, VerifyCodeOthersActivity.class);
         intent.putExtra("otherMobile", edtMsisdnOthers.getText().toString());
@@ -221,7 +253,12 @@ if(broadcastReceiver!=null)
         intent.putExtra("purchase", purchase);
         startActivity(intent);
         finish();
-      }else {
+      }else if (verifyCodeOthersResponse.getStatusCode() ==  ReportStateEnum.USER_NOT_HAVE_REPORT.getId()) {
+        getScoreAtion(verifyCodeOthersResponse.getNoReportReqToken(),this);
+                finish();
+
+      }
+        else {
         txtAlert.setText(verifyCodeOthersResponse.getDescription());
         txtAlert.setVisibility(View.VISIBLE);
       }
@@ -350,7 +387,7 @@ if(broadcastReceiver!=null)
               String randomUUIDString = uuid.toString();
               Log.i("Test", "randomUUIDString : " + randomUUIDString);
               //"bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ"
-              mHelper.launchPurchaseFlow(GetScoreOthersActivity.this, "sanj01", 10001, mPurchaseFinishedListener, randomUUIDString);
+              mHelper.launchPurchaseFlow(GetScoreOthersActivity.this, AppConstants.BAZAAR_SKU, 10001, mPurchaseFinishedListener, randomUUIDString);
 
             }
             else {
@@ -378,7 +415,6 @@ if(broadcastReceiver!=null)
     public void onIabPurchaseFinished(IabResult result, Purchase purchase)
     {
       GetScoreOthersActivity.this.purchase=purchase;
-      Log.e("Test", "Purchase finished: " + result + ", purchase: " + purchase);
 
 
       if (mHelper == null) {
@@ -389,14 +425,12 @@ if(broadcastReceiver!=null)
         return;
       }
       if (!verifyDeveloperPayload(purchase)) {
-        Log.e("Test","Error purchasing. Authenticity verification failed.");
         return;
       }
-      Log.e("Test", "Purchase successful.");
 
 
-      if (purchase.getSku().equals("sanj01")) {
-        Log.e("Test", "Purchase is gas. Starting sanj01 consumption.");
+      if (purchase.getSku().equals(AppConstants.BAZAAR_SKU)) {
+        //Log.e("Test", "Purchase is gas. Starting sanj02 consumption.");
         mHelper.consumeAsync(purchase, mConsumeFinishedListener);
       }
       showWating();
@@ -422,19 +456,17 @@ if(broadcastReceiver!=null)
 
   public IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
     public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-      Log.e("Test", "Query inventory finished.");
       if (mHelper == null) return;
-
+      stopWating();
       if (result.isFailure()) {
         Log.e("Test", "Failed to query inventory: " + result);
         return;
       }
 
       if (inventory != null){
-        Purchase gasPurchase = inventory.getPurchase("sanj01");
+        Purchase gasPurchase = inventory.getPurchase(AppConstants.BAZAAR_SKU);
         if (gasPurchase != null && verifyDeveloperPayload(gasPurchase)) {
-          Log.e("Test", "We have sanj01. Consuming it.");
-          mHelper.consumeAsync(inventory.getPurchase("sanj01"), mConsumeFinishedListener);
+          mHelper.consumeAsync(inventory.getPurchase(AppConstants.BAZAAR_SKU), mConsumeFinishedListener);
           return;
         }
       }
@@ -448,21 +480,19 @@ if(broadcastReceiver!=null)
 
   IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
     public void onConsumeFinished(Purchase purchase, IabResult result) {
-      Log.e("Test", "Consumption finished. Purchase: " + purchase + ", result: " + result);
 
       if (mHelper == null) return;
       if (result.isSuccess()) {
         Log.e("Test", "Consumption successful. Provisioning.");
       }
       else {
-        Log.e("Test", "Error while consuming: " + result);
       }
       Log.e("Test",  "End consumption flow.");
     }
   };
-  private void getScoreAtion(String reqToken, int statusCode){
+  private  void getScoreAtion(String reqToken, Activity activity){
     String url = "https://www.sanjineh.ir/report/" + reqToken;
-    ActivityNavigationHelper.navigateToWebView(url, GetScoreOthersActivity.this, WebViewActivity.class);
-    finish();
+    ActivityNavigationHelper.navigateToWebView(url, activity, WebViewActivity.class);
+    activity.finish();
   }
 }

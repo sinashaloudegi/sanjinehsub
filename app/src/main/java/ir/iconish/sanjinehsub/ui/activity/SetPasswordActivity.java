@@ -2,14 +2,16 @@ package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.AppCompatButton;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatButton;
 
 import javax.inject.Inject;
 
@@ -23,7 +25,7 @@ import ir.iconish.sanjinehsub.data.vm.SetPasswordViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 
-public class SetPasswordActivity extends AppCompatActivity{
+public class SetPasswordActivity extends AppCompatActivity {
 
     @BindView(R.id.btnSendPassword)
     AppCompatButton btnSavePassword;
@@ -114,7 +116,7 @@ else {
 
 //if 1010 go to enter pass -- if 1011 go to otp
 
-                    Log.e("success","in check password activity");
+                   // Log.e("success","in check password activity");
                 }
         );
 

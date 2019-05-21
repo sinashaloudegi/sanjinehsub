@@ -31,7 +31,7 @@ android:padding="@dimen/margin10"
 
             android:textSize="@dimen/font_12"
             android:text="@string/negative_contract_status"
-
+            android:id="@+id/txtNegativeContractStatusCaption"
         />
 
 
@@ -41,6 +41,9 @@ android:padding="@dimen/margin10"
             android:textColor="@color/credit_cause_value_color"
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/font_12"
+
+            android:layout_toLeftOf="@+id/txtNegativeContractStatusCaption"
+            android:layout_marginRight="@dimen/margin5"
             android:id="@+id/txtNegativeContractStatus"/>
 
 
@@ -66,7 +69,7 @@ android:padding="@dimen/margin10"
 
             android:textSize="@dimen/font_12"
             android:text="@string/bank_contract_status"
-
+            android:id="@+id/txtBankContractTypeCaption"
         />
 
 
@@ -74,7 +77,11 @@ android:padding="@dimen/margin10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+
+            android:layout_toLeftOf="@+id/txtBankContractTypeCaption"
+            android:layout_marginRight="@dimen/margin5"
+
+
             android:textSize="@dimen/font_12"
             android:id="@+id/txtBankContractType"/>
 
@@ -101,7 +108,7 @@ android:padding="@dimen/margin10"
 
             android:textSize="@dimen/font_12"
             android:text="@string/goal_of_credit"
-
+            android:id="@+id/txtGoalOfCreditCaption"
         />
 
 
@@ -109,7 +116,13 @@ android:padding="@dimen/margin10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+
+
+
+            android:layout_toLeftOf="@+id/txtGoalOfCreditCaption"
+            android:layout_marginRight="@dimen/margin5"
+
+
             android:textSize="@dimen/font_12"
             android:id="@+id/txtGoalOfCredit"/>
 
@@ -136,7 +149,7 @@ android:padding="@dimen/margin10"
 
             android:textSize="@dimen/font_12"
             android:text="@string/contract_start"
-
+            android:id="@+id/txtContractStartCaption"
         />
 
 
@@ -144,7 +157,9 @@ android:padding="@dimen/margin10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+
+            android:layout_toLeftOf="@+id/txtContractStartCaption"
+            android:layout_marginRight="@dimen/margin5"
             android:textSize="@dimen/font_12"
             android:id="@+id/txtContractStart"/>
 
@@ -171,7 +186,7 @@ android:padding="@dimen/margin10"
 
             android:textSize="@dimen/font_12"
             android:text="@string/contract_end"
-
+            android:id="@+id/txtContractEndCaption"
         />
 
 
@@ -180,6 +195,11 @@ android:padding="@dimen/margin10"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
             android:layout_centerHorizontal="true"
+
+            android:layout_toLeftOf="@+id/txtContractEndCaption"
+            android:layout_marginRight="@dimen/margin5"
+
+
             android:textSize="@dimen/font_12"
             android:id="@+id/txtContractEnd"/>
 
@@ -206,7 +226,7 @@ android:padding="@dimen/margin10"
 
             android:textSize="@dimen/font_12"
             android:text="@string/status_date"
-
+            android:id="@+id/txtStatusDateCaption"
         />
 
 
@@ -216,6 +236,10 @@ android:padding="@dimen/margin10"
             android:textColor="@color/credit_cause_value_color"
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/font_12"
+
+            android:layout_toLeftOf="@+id/txtStatusDateCaption"
+            android:layout_marginRight="@dimen/margin5"
+
             android:id="@+id/txtStatusDate"/>
 
 
@@ -238,7 +262,7 @@ android:padding="@dimen/margin10"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
-
+            android:id="@+id/txtPaymentCurrencyCaption"
             android:textSize="@dimen/font_12"
             android:text="@string/payment_currency"
 
@@ -249,7 +273,11 @@ android:padding="@dimen/margin10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+
+            android:layout_toLeftOf="@+id/txtPaymentCurrencyCaption"
+            android:layout_marginRight="@dimen/margin5"
+
+
             android:textSize="@dimen/font_12"
             android:id="@+id/txtPaymentCurrency"/>
 
@@ -273,7 +301,7 @@ android:padding="@dimen/margin10"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
-
+            android:id="@+id/txtPersonRoleCaption"
             android:textSize="@dimen/font_12"
             android:text="@string/person_role"
 
@@ -286,6 +314,9 @@ android:padding="@dimen/margin10"
             android:textColor="@color/credit_cause_value_color"
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/font_12"
+            android:layout_toLeftOf="@+id/txtPersonRoleCaption"
+            android:layout_marginRight="@dimen/margin5"
+
             android:id="@+id/txtPersonRole"/>
 
 
@@ -311,7 +342,7 @@ android:padding="@dimen/margin10"
 
             android:textSize="@dimen/font_12"
             android:text="@string/creditor_name"
-
+            android:id="@+id/txtCreditorNameCaption"
         />
 
 
@@ -321,6 +352,8 @@ android:padding="@dimen/margin10"
             android:textColor="@color/credit_cause_value_color"
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/font_12"
+            android:layout_toLeftOf="@+id/txtCreditorNameCaption"
+            android:layout_marginRight="@dimen/margin5"
             android:id="@+id/txtCreditorName"/>
 
 
@@ -338,7 +371,341 @@ android:padding="@dimen/margin10"
         android:padding="@dimen/margin10"
         android:id="@+id/txtDetailTitle"
         android:textSize="@dimen/font_12"
-        android:text="@string/date_payment"/>
+        android:text="@string/vasiqeh"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:padding="@dimen/margin5"
+
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+
+            android:textSize="@dimen/font_12"
+            android:text="@string/vasiqeh_type"
+            android:id="@+id/txtVasiqehTypeCaption"
+
+
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_toLeftOf="@+id/txtVasiqehTypeCaption"
+            android:layout_marginRight="@dimen/margin5"
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtVasiqehType"/>
+
+
+
+
+
+
+    </RelativeLayout>
+
+ <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:padding="@dimen/margin5"
+
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+
+            android:textSize="@dimen/font_12"
+            android:text="@string/vasiqeh_value"
+            android:id="@+id/txtVasiqehValueCaption"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_toLeftOf="@+id/txtVasiqehValueCaption"
+            android:layout_marginRight="@dimen/margin5"
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtVasiqehValue"/>
+
+
+
+
+
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/header_section_color"
+        android:textColor="@color/white"
+        android:padding="@dimen/margin10"
+        android:textSize="@dimen/font_12"
+        android:text="@string/contract_details"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:padding="@dimen/margin5"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/font_12"
+            android:text="@string/mablagh_sarresid_shode_pardakht_nashode"
+            android:id="@+id/txtMablaghSarresidShodePardakhtNashodeCaption"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/txtMablaghSarresidShodePardakhtNashodeCaption"
+            android:layout_marginRight="@dimen/margin5"
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtMablaghSarresidShodePardakhtNashode"/>
+
+    </RelativeLayout><RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:padding="@dimen/margin5"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/font_12"
+            android:text="@string/mablagh_sarresid_nashode"
+            android:id="@+id/txtMablaghSarresidNashodehCaption"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/font_12"
+            android:layout_toLeftOf="@+id/txtMablaghSarresidNashodehCaption"
+            android:layout_marginRight="@dimen/margin5"
+            android:id="@+id/txtMablaghSarresidNashodeh"/>
+
+    </RelativeLayout>
+
+ <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:padding="@dimen/margin5"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/font_12"
+            android:text="@string/total_amount"
+            android:id="@+id/txtTotalAmountCaption"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+
+            android:layout_toLeftOf="@+id/txtTotalAmountCaption"
+            android:layout_marginRight="@dimen/margin5"
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtTotalAmount"/>
+
+    </RelativeLayout>
+
+
+ <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:padding="@dimen/margin5"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/font_12"
+            android:text="@string/mablagh_aqsat"
+            android:id="@+id/txtMablaghAqsatCaption"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+
+
+            android:layout_toLeftOf="@+id/txtMablaghAqsatCaption"
+            android:layout_marginRight="@dimen/margin5"
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtMablaghAqsat"/>
+
+
+
+
+    </RelativeLayout>
+
+
+
+ <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:padding="@dimen/margin5"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/font_12"
+            android:text="@string/aqsat_number"
+            android:id="@+id/txtAqsatNumberCaption"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+
+
+            android:layout_toLeftOf="@+id/txtAqsatNumberCaption"
+            android:layout_marginRight="@dimen/margin5"
+
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtAqsatNumber"/>
+
+
+
+
+    </RelativeLayout>
+
+
+
+ <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:padding="@dimen/margin5"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/font_12"
+            android:text="@string/payment_duration"
+            android:id="@+id/txtPaymentDurationCaption"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+
+
+
+            android:layout_toLeftOf="@+id/txtPaymentDurationCaption"
+            android:layout_marginRight="@dimen/margin5"
+
+
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtPaymentDuration"/>
+
+
+
+
+    </RelativeLayout>
+
+
+
+ <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:padding="@dimen/margin5"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/font_12"
+            android:text="@string/payment_type"
+            android:id="@+id/txtPaymentTypeCaption"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/font_12"
+
+            android:layout_toLeftOf="@+id/txtPaymentTypeCaption"
+            android:layout_marginRight="@dimen/margin5"
+
+
+            android:id="@+id/txtPaymentType"/>
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+ <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/dark_row_color"
+        android:padding="@dimen/margin5"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/font_12"
+            android:text="@string/qest_type"
+
+            android:id="@+id/txtQestTypeCaption"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/credit_cause_value_color"
+            android:layout_toLeftOf="@+id/txtQestTypeCaption"
+            android:layout_marginRight="@dimen/margin5"
+
+            android:textSize="@dimen/font_12"
+            android:id="@+id/txtQestType"/>
+
+
+
+
+    </RelativeLayout>
 
 
 

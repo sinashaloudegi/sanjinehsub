@@ -1,4 +1,4 @@
-package ir.iconish.model.creditscoreclient.dto;
+package ir.iconish.sanjinehsub.data.model;
 
 public enum ReportStateEnum {
     START(1, "ثبت درخواست"),

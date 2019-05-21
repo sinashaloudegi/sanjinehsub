@@ -1,6 +1,8 @@
 package ir.iconish.sanjinehsub.util;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,6 +13,7 @@ import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.ui.DialogHelper;
 import ir.iconish.sanjinehsub.ui.Dialoglistener;
 import ir.iconish.sanjinehsub.ui.activity.GetScoreActivity;
+import ir.iconish.sanjinehsub.ui.activity.ReportActivity;
 import ir.iconish.sanjinehsub.ui.activity.WebViewActivity;
 
 public class CreditStatusManager implements Dialoglistener {
@@ -26,7 +29,9 @@ public class CreditStatusManager implements Dialoglistener {
 
      //   if(status==200) {
             if (creditScorePreProcess.getReportStateId() == CreditResponseEnum.SUCCESS.getId()||creditScorePreProcess.getReportStateId()==CreditResponseEnum.NO_REPORT.getId()) {
+
                 getScoreAtion(creditScorePreProcess.getReqToken(),activity);
+              // goToNativeReportActivity(creditScorePreProcess.getReqToken());
             }
 
             else {
@@ -62,6 +67,15 @@ showErrorCase(activity.getString(R.string.error)+" "+status,activity.getString(R
         DialogHelper.showDialog(dialogTitle,dialogBody,activity.getString(R.string.submit),null,activity,this);
         textView.setText(dialogBody);
         textView.setVisibility(View.VISIBLE);
+    }
+
+    private void goToNativeReportActivity(String reqToken){
+        Intent intent=new Intent(activity, ReportActivity.class);
+        intent.putExtra("reqToken",reqToken);
+        activity.startActivity(intent);
+        activity.finish();
+
+
     }
 
 }

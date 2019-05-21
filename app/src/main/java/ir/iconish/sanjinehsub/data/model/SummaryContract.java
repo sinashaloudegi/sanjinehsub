@@ -1,6 +1,6 @@
 package ir.iconish.sanjinehsub.data.model;
 
-public class Contract {
+public class SummaryContract {
 
     private long reportsLastUpdate;
     private String negativeSubjectStatus;

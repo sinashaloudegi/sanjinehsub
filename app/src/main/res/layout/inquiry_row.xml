@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:orientation="vertical"
+    android:id="@+id/rootLayout"
     android:layout_height="wrap_content">
 
 
@@ -18,9 +19,9 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
-
+            android:id="@+id/txtCreditorTypeCaption"
             android:textSize="@dimen/font_12"
-            android:text="@string/creditor"
+            android:text="@string/creditor_type"
 
         />
 
@@ -29,9 +30,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/txtCreditorTypeCaption"
+            android:layout_marginRight="@dimen/margin5"
             android:textSize="@dimen/font_12"
-            android:id="@+id/txtCreditor"/>
+            android:id="@+id/txtCreditorType"/>
 
 
 
@@ -53,9 +55,9 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
-
+            android:id="@+id/txtThisMonthCaption"
             android:textSize="@dimen/font_12"
-            android:text="@string/person_negative_state"
+            android:text="@string/this_month"
 
         />
 
@@ -64,9 +66,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/txtThisMonthCaption"
+            android:layout_marginRight="@dimen/margin5"
             android:textSize="@dimen/font_12"
-            android:id="@+id/txtPersonNegativeState"/>
+            android:id="@+id/txtThisMonth"/>
 
 
 
@@ -88,9 +91,9 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
-
+            android:id="@+id/txtThisYearCaption"
             android:textSize="@dimen/font_12"
-            android:text="@string/alert_date"
+            android:text="@string/this_year"
 
         />
 
@@ -99,9 +102,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/txtThisYearCaption"
+            android:layout_marginRight="@dimen/margin5"
             android:textSize="@dimen/font_12"
-            android:id="@+id/txtAlertDate"/>
+            android:id="@+id/txtThisYear"/>
 
 
 

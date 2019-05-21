@@ -6,9 +6,7 @@
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-android:background="@color/sanjinehColor"
-    android:paddingRight="@dimen/margin10"
-    android:paddingLeft="@dimen/margin10"
+android:background="@color/white"
     android:paddingBottom="@dimen/button_margin_button"
 
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -16,6 +14,8 @@ android:background="@color/sanjinehColor"
 
  <RelativeLayout
      android:layout_width="match_parent"
+     android:background="@color/sanjinehColor"
+     android:id="@+id/toolbarTop"
      android:layout_height="wrap_content">
   <ImageView
 
@@ -42,17 +42,31 @@ android:background="@color/sanjinehColor"
 
 
  </RelativeLayout>
+ <TextView
+     android:id="@+id/txtIsregister"
+     android:layout_width="match_parent"
+     android:layout_marginTop="@dimen/margin_25"
+     android:layout_height="wrap_content"
+     android:layout_below="@+id/toolbarTop"
+     android:gravity="right"
+     android:layout_marginBottom="@dimen/margin10"
+     android:textSize="@dimen/login_steps_text_size"
+     android:text="@string/txt_other_otp_title"
+     android:textColor="@color/black"/>
 
 
  <EditText
      android:layout_width="match_parent"
      android:layout_centerInParent="true"
-     android:backgroundTint="@color/white"
-     android:textColor="@color/white"
+     android:backgroundTint="@color/black"
+     android:layout_marginRight="@dimen/margin10"
+     android:layout_marginLeft="@dimen/margin10"
+     android:textColor="@color/black"
      android:id="@+id/edtVerifyCodeOthers"
      android:maxLength="4"
+
      android:inputType="phone"
-android:hint="@string/activision_code"
+android:hint="@string/submit_code"
 android:textColorHint="@color/darker_gray"
      android:gravity="center"
      android:layout_height="wrap_content" />
@@ -80,7 +94,8 @@ android:textColorHint="@color/darker_gray"
 
  <android.support.v7.widget.AppCompatButton
 android:id="@+id/btnEnterVerifyCodeOthers"
-
+android:layout_marginRight="@dimen/margin10"
+android:layout_marginLeft="@dimen/margin10"
      android:layout_width="match_parent"
      android:text="@string/enter"
      android:textColor="@color/dark_blue"

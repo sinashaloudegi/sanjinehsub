@@ -20,7 +20,7 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
-
+            android:id="@+id/txtCreditorCaption"
             android:textSize="@dimen/font_12"
             android:text="@string/creditor"
 
@@ -31,7 +31,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+
+            android:layout_toLeftOf="@+id/txtCreditorCaption"
+            android:layout_marginRight="@dimen/margin5"
+
             android:textSize="@dimen/font_12"
             android:id="@+id/txtCreditor"/>
 
@@ -55,7 +58,7 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_alignParentRight="true"
-
+            android:id="@+id/txtPersonNegativeStateCaption"
             android:textSize="@dimen/font_12"
             android:text="@string/person_negative_state"
 
@@ -66,7 +69,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+
+            android:layout_toLeftOf="@+id/txtPersonNegativeStateCaption"
+            android:layout_marginRight="@dimen/margin5"
             android:textSize="@dimen/font_12"
             android:id="@+id/txtPersonNegativeState"/>
 
@@ -93,7 +98,7 @@
 
             android:textSize="@dimen/font_12"
             android:text="@string/alert_date"
-
+            android:id="@+id/txtAlertDateCaption"
         />
 
 
@@ -103,6 +108,10 @@
             android:textColor="@color/credit_cause_value_color"
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/font_12"
+
+            android:layout_toLeftOf="@+id/txtAlertDateCaption"
+            android:layout_marginRight="@dimen/margin5"
+
             android:id="@+id/txtAlertDate"/>
 
 

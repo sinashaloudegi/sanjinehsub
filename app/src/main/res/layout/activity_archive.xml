@@ -9,7 +9,8 @@
     android:id="@+id/toolbar"
     layout="@layout/get_score_toolbar"></include>
 
-  <android.support.v4.widget.SwipeRefreshLayout
+
+  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
       android:paddingRight="@dimen/margin5"
       android:paddingLeft="@dimen/margin5"
       android:layout_below="@+id/toolbar"
@@ -17,13 +18,13 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:id="@+id/recyclerArchive"
         android:layout_height="wrap_content">
 
-    </android.support.v7.widget.RecyclerView>
-  </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.recyclerview.widget.RecyclerView>
+  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </RelativeLayout>

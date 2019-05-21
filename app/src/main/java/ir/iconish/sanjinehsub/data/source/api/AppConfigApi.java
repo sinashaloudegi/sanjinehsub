@@ -51,7 +51,6 @@ public class AppConfigApi {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//marketEnumId -marketKey-timerDuration
         return appConfig;
     }
 
@@ -61,26 +60,24 @@ public class AppConfigApi {
 
 
 
-    public void callConfigApi(int appId,final VolleyCallback volleyCallback){
+    public void callConfigApi(final VolleyCallback volleyCallback){
 
 
-        String   url=ConstantUrl.BASE_MARKET+ConstantUrl.APP_CONFIG+appId;
-Log.e("callConfigApi=",url);
+        String   url=ConstantUrl.BASE_MARKET+ConstantUrl.APP_CONFIG;
 
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 url,null,
                 response -> {
 
 
-                    Log.e("Server response",response.toString());
 
                     if (response!=null){
 
                         AppConfig appConfig=     parseJson(response);
                    volleyCallback.onSuccess(appConfig);
 
-                       // volleyCallback.onSuccess(visits);
                     }
 
 
@@ -88,7 +85,6 @@ Log.e("callConfigApi=",url);
 
 
                 }, error -> {
-                    Log.e("api error=",error.toString());
                     if ((error instanceof NetworkError) || (error instanceof NoConnectionError) ) {
 
                         volleyCallback.onClientNetworkError();
@@ -116,27 +112,6 @@ Log.e("callConfigApi=",url);
                         return;
                     }
 
-
-
-                    int statusCode=error.networkResponse.statusCode;
-
-                   // String message=new String(error.networkResponse.data);
-                 /*   String errorMessage=ApiErrorHelper.parseError(message);
-                    if (statusCode==401){
-                        volleyCallback.onAuthFailureError401(errorMessage);
-                        return;
-                    }
-                    if (statusCode==403){
-                        volleyCallback.onForbiden403(errorMessage);
-                        return;
-                    }
-                    if (statusCode==422){
-                        volleyCallback.onValidationError422(errorMessage);
-                        return;
-                    }
-
-
-                    volleyCallback.onFail(errorMessage);*/
 
                 }
 

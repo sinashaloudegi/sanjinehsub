@@ -7,14 +7,16 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 import java.util.Timer;
@@ -102,7 +104,7 @@ attachViewModel();
                 R.color.colorPrimary,
                 R.color.colorAccent
         );
-        LinearLayoutManager   mLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
 
 
@@ -111,7 +113,6 @@ attachViewModel();
 
 swipeRefreshLayout.setRefreshing(true);
         archiveViewModel.callArchiveViewModel();
-      //  startTimer();
 
 
 
@@ -150,7 +151,7 @@ private void setDataOnRecycler(List<Archive> archiveList){
 setDataOnRecycler(archives);
 
             swipeRefreshLayout.setRefreshing(false);
-            Log.e("list",archives.toString());
+           // Log.e("list",archives.toString());
                 }
         );
 

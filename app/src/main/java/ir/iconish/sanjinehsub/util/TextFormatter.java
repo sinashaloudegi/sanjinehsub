@@ -1,4 +1,4 @@
-package com.visit24.therapist.util;
+package ir.iconish.sanjinehsub.util;
 
 public class TextFormatter {
     public static   String applyThousandSeparators(int money) {

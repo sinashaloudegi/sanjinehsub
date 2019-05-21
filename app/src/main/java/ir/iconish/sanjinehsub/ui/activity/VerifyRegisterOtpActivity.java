@@ -8,14 +8,14 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.AppCompatButton;
-import android.telephony.SmsMessage;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -37,7 +37,7 @@ import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.util.PermissionHelper;
 import ir.iconish.sanjinehsub.util.ToastHelper;
 
-public class VerifyRegisterOtpActivity extends AppCompatActivity{
+public class VerifyRegisterOtpActivity extends AppCompatActivity {
 
     @BindView(R.id.txtTimer)
     TextView txtTimer;
@@ -82,7 +82,6 @@ public class VerifyRegisterOtpActivity extends AppCompatActivity{
 
 
 
-    BroadcastReceiver broadcastReceiver;
 
 
 @Inject
@@ -95,7 +94,7 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
-        reciveSmsListener();
+
         attachViewModel();
         startTimer();
 
@@ -108,65 +107,9 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
     protected void onDestroy() {
         super.onDestroy();
 
-        try {
-            unregisterReceiver(broadcastReceiver);
-
-        }
-        catch (Exception e){}
-    }
-
-    private void reciveSmsListener(){
-
-
-        MultiplePermissionsListener multiplePermissionsListener=new MultiplePermissionsListener() {
-            @Override
-            public void onPermissionsChecked(MultiplePermissionsReport report) {
-                if ( report.areAllPermissionsGranted()){
-
-
-                    IntentFilter intentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
-                    broadcastReceiver = new BroadcastReceiver() {
-                        @Override
-                        public void onReceive(Context context, Intent intent) {
-
-                            Bundle data = intent.getExtras();
-                            Object[] pdus = (Object[]) data.get("pdus");
-
-                            for (int i = 0; i < pdus.length; i++) {
-                                SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) pdus[i]);
-                                String sender = smsMessage.getDisplayOriginatingAddress();
-
-                                String messageBody = smsMessage.getMessageBody();
-
-                                receiveCodeAction(messageBody);
-                            }
-                        }
-                    };
-
-                    registerReceiver(broadcastReceiver, intentFilter);
-
-
-
-
-                }
-                else {
-                    ToastHelper.showWarningMessage(VerifyRegisterOtpActivity.this,getString(R.string.should_grant_permission));
-                }
-            }
-
-            @Override
-            public void onPermissionRationaleShouldBeShown(List<com.karumi.dexter.listener.PermissionRequest> permissions, PermissionToken token) {
-                token.continuePermissionRequest();
-
-            }
-
-
-
-        };
-        String[] permissions={Manifest.permission.RECEIVE_SMS};
-        PermissionHelper.permissions(this, multiplePermissionsListener, permissions);
 
     }
+
     private void receiveCodeAction(String code) {
         try {
             code = code.replaceAll("[^0-9]", "");

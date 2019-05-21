@@ -59,7 +59,7 @@ android:textColorHint="@color/darker_gray"
      android:layout_marginBottom="@dimen/size50"
      />
 
- <android.support.v7.widget.AppCompatButton
+ <androidx.appcompat.widget.AppCompatButton
 android:id="@+id/btnEnter"
 
      android:layout_width="match_parent"

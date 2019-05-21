@@ -2,15 +2,16 @@ package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.AppCompatButton;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatButton;
 
 import javax.inject.Inject;
 
@@ -26,7 +27,7 @@ import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.ui.DialogHelper;
 import ir.iconish.sanjinehsub.util.Helper;
 
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.btnCheckPhone)
     AppCompatButton btnCheckPhone;
@@ -175,9 +176,7 @@ else if (user.getResponseCodeEnum().getValue()== LoginStatusEnum.USERISNEW.getVa
 }
 
 
-//if 1010 go to enter pass -- if 1011 go to otp
 
-                    Log.e("success","in activity");
         }
         );
 

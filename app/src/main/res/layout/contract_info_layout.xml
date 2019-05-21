@@ -3,8 +3,22 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:visibility="visible"
+    android:id="@+id/rootLayoutContract"
     android:layout_height="wrap_content">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/header_section_color"
+        android:textColor="@color/white"
+        android:padding="@dimen/margin10"
+        android:textSize="@dimen/font_12"
+        android:text="@string/negative_history"/>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/recyclerConractDetail"
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,7 +26,7 @@
         android:textColor="@color/white"
 android:padding="@dimen/margin10"
         android:textSize="@dimen/font_12"
-        android:text="@string/individual_info"/>
+        android:text="@string/total_negative_history"/>
     <RelativeLayout
         android:padding="@dimen/margin5"
         android:layout_width="match_parent"
@@ -28,8 +42,8 @@ android:padding="@dimen/margin10"
             android:layout_alignParentRight="true"
 
             android:textSize="@dimen/font_12"
-            android:text="@string/national_code"
-
+            android:text="@string/jam_qarardad_jariani"
+            android:id="@+id/txtJamQarardadJarianiCaption"
         />
 
 
@@ -37,9 +51,10 @@ android:padding="@dimen/margin10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/txtJamQarardadJarianiCaption"
+            android:layout_marginRight="@dimen/margin5"
             android:textSize="@dimen/font_12"
-            android:id="@+id/txtNationalCode"/>
+            android:id="@+id/txtJamQarardadJariani"/>
 
 
 
@@ -63,18 +78,19 @@ android:padding="@dimen/margin10"
             android:layout_alignParentRight="true"
 
             android:textSize="@dimen/font_12"
-            android:text="@string/name"
-
+            android:text="@string/jam_qaradad_khateme_yafte"
+            android:id="@+id/txtJamQaradadKhatemeYafteCaption"
         />
 
 
         <TextView
+            android:id="@+id/txtJamQaradadKhatemeYafte"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/txtJamQaradadKhatemeYafteCaption"
+            android:layout_marginRight="@dimen/margin5"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
-            android:textSize="@dimen/font_12"
-            android:id="@+id/txtName"/>
+            android:textSize="@dimen/font_12" />
 
 
 
@@ -98,8 +114,8 @@ android:padding="@dimen/margin10"
             android:layout_alignParentRight="true"
 
             android:textSize="@dimen/font_12"
-            android:text="@string/family"
-
+            android:text="@string/jam_mablagh_sarresid_nashode"
+            android:id="@+id/txtJamMablaghSarresidNashodeCaption"
         />
 
 
@@ -107,9 +123,10 @@ android:padding="@dimen/margin10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/txtJamMablaghSarresidNashodeCaption"
+            android:layout_marginRight="@dimen/margin5"
             android:textSize="@dimen/font_12"
-            android:id="@+id/txtFamily"/>
+            android:id="@+id/txtJamMablaghSarresidNashode"/>
 
 
 
@@ -133,8 +150,8 @@ android:padding="@dimen/margin10"
             android:layout_alignParentRight="true"
 
             android:textSize="@dimen/font_12"
-            android:text="@string/father_name"
-
+            android:text="@string/jam_mablagh_sarresid_shode_pardakht_nashode"
+            android:id="@+id/txtJamMablaghSarresidShodePardakhtNashodeCaption"
         />
 
 
@@ -142,9 +159,13 @@ android:padding="@dimen/margin10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
+
+            android:layout_toLeftOf="@+id/txtJamMablaghSarresidShodePardakhtNashodeCaption"
+            android:layout_marginRight="@dimen/margin5"
             android:textSize="@dimen/font_12"
-            android:id="@+id/txtFatheName"/>
+
+
+            android:id="@+id/txtJamMablaghSarresidShodePardakhtNashode"/>
 
 
 
@@ -168,8 +189,8 @@ android:padding="@dimen/margin10"
             android:layout_alignParentRight="true"
 
             android:textSize="@dimen/font_12"
-            android:text="@string/gender"
-
+            android:text="@string/currency"
+            android:id="@+id/txtCurrencyCaption"
         />
 
 
@@ -179,147 +200,10 @@ android:padding="@dimen/margin10"
             android:textColor="@color/credit_cause_value_color"
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/font_12"
-            android:id="@+id/txtGender"/>
+            android:layout_toLeftOf="@+id/txtCurrencyCaption"
+            android:layout_marginRight="@dimen/margin5"
 
-
-
-
-
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@color/light_row_color"
-        android:padding="@dimen/margin5"
-
-        android:layout_height="wrap_content">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
-
-            android:textSize="@dimen/font_12"
-            android:text="@string/barrower_section"
-
-        />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
-            android:textSize="@dimen/font_12"
-            android:id="@+id/txtBarrowerSection"/>
-
-
-
-
-
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@color/dark_row_color"
-        android:padding="@dimen/margin5"
-
-        android:layout_height="wrap_content">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
-
-            android:textSize="@dimen/font_12"
-            android:text="@string/birth_city"
-
-        />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
-            android:textSize="@dimen/font_12"
-            android:id="@+id/txtBirthCity"/>
-
-
-
-
-
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@color/light_row_color"
-        android:padding="@dimen/margin5"
-
-        android:layout_height="wrap_content">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
-
-            android:textSize="@dimen/font_12"
-            android:text="@string/birth_date"
-
-        />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
-            android:textSize="@dimen/font_12"
-            android:id="@+id/txtBirthDate"/>
-
-
-
-
-
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@color/dark_row_color"
-        android:padding="@dimen/margin5"
-
-        android:layout_height="wrap_content">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
-
-            android:textSize="@dimen/font_12"
-            android:text="@string/address"
-
-        />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/credit_cause_value_color"
-            android:layout_centerHorizontal="true"
-            android:textSize="@dimen/font_12"
-            android:id="@+id/txtAddress"/>
+            android:id="@+id/txtCurrency"/>
 
 
 
@@ -328,35 +212,9 @@ android:padding="@dimen/margin10"
 
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/header_section_color"
-        android:textColor="@color/white"
-        android:padding="@dimen/margin10"
-        android:textSize="@dimen/font_12"
-        android:text="@string/short_contracts"/>
-<android.support.v7.widget.RecyclerView
-    android:layout_width="wrap_content"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:id="@+id/recyclerConract"
-    android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/header_section_color"
-        android:textColor="@color/white"
-        android:padding="@dimen/margin10"
-        android:textSize="@dimen/font_12"
-        android:text="@string/statistics_alert"/>
 
-<android.support.v7.widget.RecyclerView
-    android:layout_width="wrap_content"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:id="@+id/recyclerInquiry"
-    android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
 
 

@@ -1,4 +1,4 @@
-package com.shabab.maps.guage;
+package ir.iconish.sanjinehsub.ui.guage;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,12 +6,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 /**
  * Created by danon on 08.05.2014.
  */
-public class CircledTextView extends android.support.v7.widget.AppCompatTextView {
+public class CircledTextView extends AppCompatTextView {
 
     private int circleColor = Color.LTGRAY;
     private float density = 1;

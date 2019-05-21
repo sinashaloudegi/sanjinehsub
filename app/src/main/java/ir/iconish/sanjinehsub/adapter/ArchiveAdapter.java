@@ -3,10 +3,11 @@
  */
 package ir.iconish.sanjinehsub.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -22,7 +23,6 @@ import ir.iconish.sanjinehsub.util.AnimationHelper;
 
 
 public class ArchiveAdapter extends RecyclerView.Adapter<ArchiveViewHolder> {
-
 
     private  List<Archive> archiveList;
 
@@ -56,23 +56,17 @@ public class ArchiveAdapter extends RecyclerView.Adapter<ArchiveViewHolder> {
 
 
 
-viewHolder.imgDownload.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        AnimationHelper.fadInFadeout(v);
+viewHolder.imgDownload.setOnClickListener(v -> {
+    AnimationHelper.fadInFadeout(v);
 archiveRecyclerListener.onDownloadTap(archive);
 
-    }
 });
 
 
 
-viewHolder.imgVisit.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        AnimationHelper.fadInFadeout(v);
-        archiveRecyclerListener.onVisitTap(archive);
-    }
+viewHolder.imgVisit.setOnClickListener(v -> {
+    AnimationHelper.fadInFadeout(v);
+    archiveRecyclerListener.onVisitTap(archive);
 });
 
 

@@ -1,36 +1,33 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
-import android.util.Log;
-
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.model.AppConfig;
 import ir.iconish.sanjinehsub.data.source.api.AppConfigApi;
+import ir.iconish.sanjinehsub.data.source.api.ReportApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 
 
-public class AppConfigRepository {
-  AppConfigApi appConfigApi;
+public class ReportRepository {
+  ReportApi reportApi;
 
   SharedPreferencesManager sharedPreferencesManager;
 
   @Inject
-  public AppConfigRepository(AppConfigApi appConfigApi, SharedPreferencesManager sharedPreferencesManager) {
+  public ReportRepository(ReportApi reportApi, SharedPreferencesManager sharedPreferencesManager) {
 
-    this.appConfigApi = appConfigApi;
+    this.reportApi = reportApi;
     this.sharedPreferencesManager=sharedPreferencesManager;
   }
 
-  public void callAppConfigRepository(final VolleyCallback volleyCallback) {
-    appConfigApi.callConfigApi(new VolleyCallback() {
+  public void callReportRepository(String reqToken,final VolleyCallback volleyCallback) {
+    reportApi.callReportsApi(reqToken,new VolleyCallback() {
       @Override
       public void onSuccess(Object o) {
 
-        AppConfig appConfig= (AppConfig) o;
-        sharedPreferencesManager.setMarketKeyValue(appConfig.getMarketKey());
-        sharedPreferencesManager.setTimerDurationValue(appConfig.getTimerDuration());
+
 
         volleyCallback.onSuccess(o);
       }

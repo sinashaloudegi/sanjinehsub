@@ -3,55 +3,53 @@
  */
 package ir.iconish.sanjinehsub.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 import ir.iconish.sanjinehsub.R;
-import ir.iconish.sanjinehsub.adapter.listener.ArchiveRecyclerListener;
 import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
-import ir.iconish.sanjinehsub.adapter.viewholder.ArchiveViewHolder;
-import ir.iconish.sanjinehsub.adapter.viewholder.ContractViewHolder;
-import ir.iconish.sanjinehsub.data.model.Archive;
-import ir.iconish.sanjinehsub.data.model.Contract;
-import ir.iconish.sanjinehsub.util.AnimationHelper;
+import ir.iconish.sanjinehsub.adapter.viewholder.InquiryViewHolder;
+import ir.iconish.sanjinehsub.data.model.Inquiry;
 
 
-public class ContractAdapter extends RecyclerView.Adapter<ContractViewHolder> {
+public class InquiryAdapter extends RecyclerView.Adapter<InquiryViewHolder> {
 
-    private  List<Contract> contracts;
+    private  List<Inquiry> inquiryList;
 
     RecyclerIemListener recyclerIemListener ;
 
-    public ContractAdapter(List<Contract> contracts, RecyclerIemListener recyclerIemListener) {
-        this.contracts = contracts;
+    public InquiryAdapter(List<Inquiry> inquiryList, RecyclerIemListener recyclerIemListener) {
+        this.inquiryList = inquiryList;
 
         this.recyclerIemListener = recyclerIemListener;
 
     }
     @Override
-    public ContractViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public InquiryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.contract_row, parent, false);
+                .inflate(R.layout.inquiry_row, parent, false);
         ButterKnife.bind(this, itemView);
 
 
-        return new ContractViewHolder(itemView);
+        return new InquiryViewHolder(itemView);
 
     }
 
     @Override
-    public void onBindViewHolder(final ContractViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(final InquiryViewHolder viewHolder, final int i) {
 
 
-        final Contract contract = contracts.get(i);
-        viewHolder.txtAlertDate.setText(String.valueOf(contract.getReportsLastUpdate()));
-        viewHolder.txtCreditor.setText(contract.getReportsCreditor());
-        viewHolder.txtPersonNegativeState.setText(contract.getNegativeSubjectStatus());
+        final Inquiry inquiry = inquiryList.get(i);
+        viewHolder.txtCreditorType.setText(inquiry.getLookupsSubscriberType());
+        viewHolder.txtThisMonth.setText(String.valueOf(inquiry.getLast1Month()));
+        viewHolder.txtThisYear.setText(String.valueOf(inquiry.getLast1Year()));
+
 
 
 
@@ -59,7 +57,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractViewHolder> {
 
 viewHolder.view.setOnClickListener(v -> {
 
-recyclerIemListener.onTap(contract);
+recyclerIemListener.onTap(inquiry);
 });
 
 
@@ -70,7 +68,7 @@ recyclerIemListener.onTap(contract);
 
     @Override
     public int getItemCount() {
-        return (null != contracts ? contracts.size() : 0);
+        return (null != inquiryList ? inquiryList.size() : 0);
 
     }
     @Override public long getItemId(int position) { return position; }

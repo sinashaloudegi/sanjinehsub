@@ -7,11 +7,17 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
+
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -26,12 +32,15 @@ import ir.iconish.sanjinehsub.data.vm.AppConfigViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.ui.DialogHelper;
 import ir.iconish.sanjinehsub.ui.Dialoglistener;
+import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.InternetAccess;
 
 import static ir.iconish.sanjinehsub.util.AppConstants.PACKAGE_NAME;
 
 public class SplashActivity extends AppCompatActivity implements Dialoglistener {
-@Inject
+
+
+    @Inject
 AppConfigViewModel appConfigViewModel;
 
 
@@ -42,7 +51,23 @@ AppConfigViewModel appConfigViewModel;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        FirebaseApp.initializeApp(this);
+
+        initFirebase();
+
+
+/*
+
+
+      String reqToken=  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxOTExMDUwODA2NDEzMjI1IiwiaWNvbkNyZWRpdCI6IjE5MTEwNTA4MDY0MTMyMjUiLCJpYXQiOjE1NTc1NDU4MDF9.DEFEycDW90S9J5ZobgPGAnVZ-NR_A3FYoO7obsLziNw";
+        goToNativeReportActivity(reqToken);
+*/
+
+
+
+
+
+
+
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -52,15 +77,21 @@ AppConfigViewModel appConfigViewModel;
 attachViewModel();
 
 
-//startActivity(new Intent(this,MainActivity.class));
-appConfigViewModel.callAppConfigViewModel(0);
-      //  startTimer();
+appConfigViewModel.callAppConfigViewModel();
 
-//new CheckCafeBazaarLogin(this).initService();
+
 
 
     }
 
+    private void goToNativeReportActivity(String reqToken){
+        Intent intent=new Intent(this, ReportActivity.class);
+        intent.putExtra("reqToken",reqToken);
+        startActivity(intent);
+       finish();
+
+
+    }
 
     private void startTimer(){
         new Timer().schedule(new TimerTask() {
@@ -184,7 +215,6 @@ finish();*/
 
 //if 1010 go to enter pass -- if 1011 go to otp
 
-                    Log.e("success","in activity");
                 }
         );
 
@@ -223,6 +253,24 @@ finish();*/
         intent.putExtra("failCause",failCause);
         startActivity(intent);
         finish();
+
+    }
+
+    private void initFirebase(){
+
+
+        FirebaseApp.initializeApp(this);
+
+        FirebaseMessaging.getInstance().subscribeToTopic(AppConstants.TOPIC)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+
+                    }
+                });
+
+
 
     }
 }

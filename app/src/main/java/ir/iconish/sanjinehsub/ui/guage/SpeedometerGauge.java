@@ -1,4 +1,4 @@
-package com.shabab.maps.guage;
+package ir.iconish.sanjinehsub.ui.guage;
 
 
 import android.animation.TypeEvaluator;
@@ -16,10 +16,11 @@ import android.util.AttributeSet;
 import android.view.View;
 
 
-import com.shabab.maps.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ir.iconish.sanjinehsub.R;
 
 /**
  * Speedometer with needle.

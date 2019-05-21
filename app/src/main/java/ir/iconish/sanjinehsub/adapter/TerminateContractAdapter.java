@@ -3,69 +3,111 @@
  */
 package ir.iconish.sanjinehsub.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
 import ir.iconish.sanjinehsub.adapter.viewholder.DetailContractViewHolder;
-import ir.iconish.sanjinehsub.adapter.viewholder.SummaryContractViewHolder;
+import ir.iconish.sanjinehsub.adapter.viewholder.TerminateContractViewHolder;
 import ir.iconish.sanjinehsub.data.model.DetailContract;
-import ir.iconish.sanjinehsub.data.model.SummaryContract;
+import ir.iconish.sanjinehsub.data.model.TerminateContract;
+import ir.iconish.sanjinehsub.util.DateHepler;
+import ir.iconish.sanjinehsub.util.TextFormatter;
 
 
-public class DetailContractAdapter extends RecyclerView.Adapter<DetailContractViewHolder> {
+public class TerminateContractAdapter extends RecyclerView.Adapter<TerminateContractViewHolder> {
 
-    private  List<DetailContract> detailContracts;
+    private  List<TerminateContract> terminateContracts;
 
     RecyclerIemListener recyclerIemListener ;
 
-    public DetailContractAdapter(List<DetailContract> detailContracts, RecyclerIemListener recyclerIemListener) {
-        this.detailContracts = detailContracts;
+    public TerminateContractAdapter(List<TerminateContract> terminateContracts, RecyclerIemListener recyclerIemListener) {
+        this.terminateContracts = terminateContracts;
 
         this.recyclerIemListener = recyclerIemListener;
 
     }
     @Override
-    public DetailContractViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TerminateContractViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.detail_contract_row, parent, false);
+                .inflate(R.layout.terminate_contract_row_layout, parent, false);
         ButterKnife.bind(this, itemView);
 
 
-        return new DetailContractViewHolder(itemView);
+        return new TerminateContractViewHolder(itemView);
 
     }
 
     @Override
-    public void onBindViewHolder(final DetailContractViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(final TerminateContractViewHolder viewHolder, final int i) {
 
 
-        final DetailContract contract = detailContracts.get(i);
-        viewHolder.txtContractType.setText(contract.getContractType());
-        viewHolder.txtCreditor.setText(contract.getCreditorName());
-        viewHolder.txtCurrency.setText(contract.getCurrency());
-        viewHolder.txtMablaghSarresidNashode.setText(String.valueOf(contract.getOutstandingAmount()));
-        viewHolder.txtMablaghSarresidShodePardakhtNashode.setText(String.valueOf(contract.getOverdueAmount()));
-        viewHolder.txtTerminate.setText(String.valueOf(contract.getTotalTerminateContract()));
-        viewHolder.txtCurrentContract.setText(String.valueOf(contract.getTotalOpenConract()));
+        final TerminateContract terminateContract = terminateContracts.get(i);
+
+
+        viewHolder. txtNegativeContractStatus.setText(terminateContract.getNegativeContractStatus());
+
+        viewHolder.  txtBankContractType.setText(terminateContract.getTypeOfFinancingInstalments());
+
+        viewHolder. txtGoalOfCredit.setText(terminateContract.getPurposeOfTheCredit());
+
+
+        String startDate= DateHepler.convertTimeStampToPersianDate(terminateContract.getTypesContractDatesStart());
+
+        viewHolder. txtContractStart.setText(startDate);
+
+        String endDate=DateHepler.convertTimeStampToPersianDate(terminateContract.getTypesContractDatesExpectedEnd());
+
+
+        viewHolder. txtContractEnd.setText(endDate);
+
+
+        String statusDate=DateHepler.convertTimeStampToPersianDate(terminateContract.getTypesContractDatesExpectedEnd());
+
+        viewHolder.txtStatusDate.setText(statusDate);
 
 
 
 
 
+        viewHolder.txtPaymentCurrency.setText(terminateContract.getCurrency());
 
-viewHolder.view.setOnClickListener(v -> {
+        viewHolder.txtPersonRole.setText(terminateContract.getRoleOfConnectedSubject());
 
-recyclerIemListener.onTap(contract);
+        viewHolder. txtCreditorName.setText(terminateContract.getReportsContractDataCreditor());
+
+        viewHolder. txtVasiqehType.setText(terminateContract.getCollateralType());
+        viewHolder. txtVasiqehValue.setText(TextFormatter.applyThousandSeparators(Integer.parseInt(terminateContract.getCollateralAmount())));
+
+        viewHolder. txtMablaghSarresidShodePardakhtNashode.setText(TextFormatter.applyThousandSeparators(terminateContract.getRelationsAmountsOutstanding()));
+        viewHolder. txtMablaghSarresidNashodeh.setText(TextFormatter.applyThousandSeparators(terminateContract.getRelationsAmountsOverdue()));
+
+
+        viewHolder. txtTotalAmount.setText(String.valueOf(terminateContract.getRelationsAmountsTotalCredit()));
+
+        viewHolder. txtMablaghAqsat.setText(TextFormatter.applyThousandSeparators(terminateContract.getRelationsAmountsStandardPeriodicalInstalment()));
+
+        viewHolder. txtAqsatNumber.setText(String.valueOf(terminateContract.getContractNumberOfInstalments()));
+
+        viewHolder. txtPaymentDuration.setText(terminateContract.getPeriodicityOfPayments());
+
+        viewHolder. txtPaymentType.setText(terminateContract.getMethodOfPayment());
+
+        viewHolder. txtQestType.setText(terminateContract.getTypeOfInstalments());
+
+        viewHolder.view.setOnClickListener(v -> {
+
+recyclerIemListener.onTap(terminateContract);
 });
-
-
 
 
 
@@ -73,7 +115,7 @@ recyclerIemListener.onTap(contract);
 
     @Override
     public int getItemCount() {
-        return (null != detailContracts ? detailContracts.size() : 0);
+        return (null != terminateContracts ? terminateContracts.size() : 0);
 
     }
     @Override public long getItemId(int position) { return position; }

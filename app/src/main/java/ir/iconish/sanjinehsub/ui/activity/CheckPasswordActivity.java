@@ -2,13 +2,15 @@ package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.AppCompatButton;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatButton;
 
 import javax.inject.Inject;
 
@@ -21,7 +23,7 @@ import ir.iconish.sanjinehsub.data.vm.CheckPasswordViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 
-public class CheckPasswordActivity extends AppCompatActivity{
+public class CheckPasswordActivity extends AppCompatActivity {
 
     @BindView(R.id.btnEnter)
     AppCompatButton btnEnter;
@@ -79,9 +81,6 @@ public class CheckPasswordActivity extends AppCompatActivity{
             return;
         }
 
-
-        /*startActivity(new Intent(this,MainActivity.class));
-        finish();*/
         checkPassword(password);
 
 }
@@ -106,7 +105,6 @@ public class CheckPasswordActivity extends AppCompatActivity{
 
             if(passwordValidationResponse.getRespobseStatusCode()==1012||passwordValidationResponse.getRespobseStatusCode()==1013||passwordValidationResponse.getRespobseStatusCode()==1000) {
 
-//ActivityNavigationHelper.navigateToActivity(this,SetPasswordActivity.class,true);
                 ActivityNavigationHelper.navigateToActivity(this, MainActivity.class, true);
             }
 
@@ -132,7 +130,7 @@ public class CheckPasswordActivity extends AppCompatActivity{
 
 //if 1010 go to enter pass -- if 1011 go to otp
 
-                    Log.e("success","in check password activity");
+
                 }
         );
 

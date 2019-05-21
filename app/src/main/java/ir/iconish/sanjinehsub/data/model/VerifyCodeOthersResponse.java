@@ -4,6 +4,15 @@ public class VerifyCodeOthersResponse {
 
   private int statusCode;
   private String description;
+  private String noReportReqToken;
+
+  public String getNoReportReqToken() {
+    return noReportReqToken;
+  }
+
+  public void setNoReportReqToken(String noReportReqToken) {
+    this.noReportReqToken = noReportReqToken;
+  }
 
   public int getStatusCode() {
     return statusCode;
@@ -24,8 +33,9 @@ public class VerifyCodeOthersResponse {
   @Override
   public String toString() {
     return "VerifyCodeOthersResponse{" +
-      "statusCode=" + statusCode +
-      ", description='" + description + '\'' +
-      '}';
+            "statusCode=" + statusCode +
+            ", description='" + description + '\'' +
+            ", noReportReqToken='" + noReportReqToken + '\'' +
+            '}';
   }
 }

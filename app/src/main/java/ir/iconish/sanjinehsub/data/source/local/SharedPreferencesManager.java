@@ -197,7 +197,15 @@ public class SharedPreferencesManager {
 
 
 public void clearAll(){
+
+        String marketKey=getMarketKeyValue();
+        int  timmerDuration=getTimerDurationValue();
         sharedPreferences.edit().clear().commit();
+        setTimerDurationValue(timmerDuration);
+        setMarketKeyValue(marketKey);
+
+
+
 }
 
 

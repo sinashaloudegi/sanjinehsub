@@ -1,7 +1,9 @@
 package ir.iconish.sanjinehsub.data.vm;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+
+
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
@@ -9,9 +11,7 @@ import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.model.Archive;
 import ir.iconish.sanjinehsub.data.repository.ArchiveRepository;
-import ir.iconish.sanjinehsub.data.repository.GetScoreRepository;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
-import ir.iconish.sanjinehsub.util.Purchase;
 
 public class ArchiveViewModel extends ViewModel {
 

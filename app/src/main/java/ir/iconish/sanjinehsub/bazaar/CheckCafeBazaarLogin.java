@@ -57,8 +57,7 @@ this.context=context;
 
       try {
         boolean isLoggedIn = service.isLoggedIn();
-        Log.i("Test","isLoggedIn" + isLoggedIn);
-        Log.e("Test","isLoggedIn" + isLoggedIn);
+        //Log.e("Test","isLoggedIn" + isLoggedIn);
 
         broadCastCheckBazaarLogin(isLoggedIn);
 
@@ -67,12 +66,12 @@ this.context=context;
       } catch (Exception e) {
         e.printStackTrace();
       }
-      Log.e("Test", "onServiceConnected(): Connected");
+
     }
 
     public void onServiceDisconnected(ComponentName name) {
       service = null;
-      Log.e("Test", "onServiceDisconnected(): Disconnected");
+      //Log.e("Test", "onServiceDisconnected(): Disconnected");
     }
   }
 

@@ -3,10 +3,11 @@
  */
 package ir.iconish.sanjinehsub.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -51,13 +52,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationViewHolder
 
 
 
-viewHolder.view.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-
-        recyclerIemListener.onTap(navigationItem);
-    }
-});
+viewHolder.view.setOnClickListener(v -> recyclerIemListener.onTap(navigationItem));
 
     }
 

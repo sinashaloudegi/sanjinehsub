@@ -1,69 +1,285 @@
 package ir.iconish.sanjinehsub.ui.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
+
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.messaging.FirebaseMessaging;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import ir.iconish.sanjinehsub.R;
-import ir.iconish.sanjinehsub.bazaar.UpdateCheck;
+import ir.iconish.sanjinehsub.adapter.DetailContractAdapter;
+import ir.iconish.sanjinehsub.adapter.InstallmentSection;
+import ir.iconish.sanjinehsub.adapter.SummaryContractAdapter;
+import ir.iconish.sanjinehsub.adapter.InquiryAdapter;
+import ir.iconish.sanjinehsub.adapter.TerminateContractAdapter;
+import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.vm.AppConfigViewModel;
+import ir.iconish.sanjinehsub.data.model.DetailInstallment;
+import ir.iconish.sanjinehsub.data.model.FullContract;
+import ir.iconish.sanjinehsub.data.model.FullInstallment;
+import ir.iconish.sanjinehsub.data.model.SummaryContract;
+import ir.iconish.sanjinehsub.data.model.CreditScrore;
+import ir.iconish.sanjinehsub.data.model.Inquiry;
+import ir.iconish.sanjinehsub.data.model.Person;
+import ir.iconish.sanjinehsub.data.vm.ReportViewModel;
+import ir.iconish.sanjinehsub.ui.guage.SpeedometerGauge;
+import ir.iconish.sanjinehsub.util.DateHepler;
 
-import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
-import ir.iconish.sanjinehsub.ui.DialogHelper;
-import ir.iconish.sanjinehsub.ui.Dialoglistener;
-import ir.iconish.sanjinehsub.util.AppConstants;
-import ir.iconish.sanjinehsub.util.InternetAccess;
-
-import static ir.iconish.sanjinehsub.util.AppConstants.PACKAGE_NAME;
-
-public class SplashActivity extends AppCompatActivity implements Dialoglistener {
+public class ReportActivity extends AppCompatActivity implements RecyclerIemListener {
 @Inject
-AppConfigViewModel appConfigViewModel;
+ReportViewModel reportViewModel;
+
+    @BindView(R.id.speedometer)
+    SpeedometerGauge speedometerGauge;
+
+    @BindView(R.id.txtRisk)
+    TextView txtRisk;
+
+    @BindView(R.id.txtCreditScoreValue)
+    TextView txtCreditScoreValue;
+
+    @BindView(R.id.txtCreditScoreMarkValue)
+    TextView txtCreditScoreMarkValue;
+
+    @BindView(R.id.txtCreditScoreRengeValue)
+    TextView txtCreditScoreRengeValue;
+
+
+    @BindView(R.id.txtCreditScoreCauseValue)
+    TextView txtCreditScoreCauseValue;
 
 
 
-    BroadcastReceiver broadcastReceiver;
-    UpdateCheck updateCheck;
+
+    @BindView(R.id.txtNationalCode)
+    TextView txtNationalCode;
+
+
+
+    @BindView(R.id.txtName)
+    TextView txtName;
+
+
+
+    @BindView(R.id.txtFamily)
+    TextView txtFamily;
+
+
+    @BindView(R.id.txtFatheName)
+    TextView txtFatheName;
+
+
+    @BindView(R.id.txtGender)
+    TextView txtGender;
+
+    @BindView(R.id.txtBarrowerSection)
+    TextView txtBarrowerSection;
+
+
+    @BindView(R.id.txtBirthCity)
+    TextView txtBirthCity;
+
+
+    @BindView(R.id.txtBirthDate)
+    TextView txtBirthDate;
+
+
+    @BindView(R.id.txtAddress)
+    TextView txtAddress;
+
+
+
+
+    @BindView(R.id.txtJamQarardadJariani)
+    TextView txtJamQarardadJariani;
+
+
+
+
+    @BindView(R.id.txtJamQaradadKhatemeYafte)
+    TextView txtJamQaradadKhatemeYafte;
+
+
+
+
+
+    @BindView(R.id.txtJamMablaghSarresidNashode)
+    TextView txtJamMablaghSarresidNashode;
+
+
+
+
+    @BindView(R.id.txtJamMablaghSarresidShodePardakhtNashode)
+    TextView txtJamMablaghSarresidShodePardakhtNashode;
+
+
+
+
+
+    @BindView(R.id.txtCurrency)
+    TextView txtCurrency;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @BindView(R.id.recyclerConract)
+    RecyclerView recyclerConract;
+
+
+
+
+
+    @BindView(R.id.recyclerInquiry)
+    RecyclerView recyclerInquiry;
+
+
+
+
+
+
+
+    @BindView(R.id.recyclerConractDetail)
+    RecyclerView recyclerConractDetail;
+
+
+
+
+    @BindView(R.id.recyclerInstallment)
+    RecyclerView recyclerInstallment;
+
+
+
+
+
+    @BindView(R.id.recyclerTerminateContract)
+    RecyclerView recyclerTerminateContract;
+
+
+
+
+
+    @BindView(R.id.imgExpandTerrminateContract)
+ImageView imgExpandTerrminateContract;
+
+
+
+
+    @BindView(R.id.imgExpandInstallment)
+ImageView imgExpandInstallment;
+
+
+
+    @BindView(R.id.imgExpandContracts)
+ImageView imgExpandContracts;
+
+
+
+    @BindView(R.id.imgUserExpand)
+ImageView imgUserExpand;
+
+
+
+    @BindView(R.id.rootLayoutUser)
+    LinearLayout rootLayoutUser;
+
+
+
+    @BindView(R.id.rootLayoutContract)
+    LinearLayout rootLayoutContract;
+
+
+
+    @BindView(R.id.rootLayoutInstallment)
+    LinearLayout rootLayoutInstallment;
+
+
+
+
+    @BindView(R.id.rootLayoutTerminateContract)
+    LinearLayout rootLayoutTerminateContract;
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-
-        initFirebase();
-
-
-
-
-
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-
-        StrictMode.setThreadPolicy(policy);
+        setContentView(R.layout.activity_report);
+        ButterKnife.bind(this);
+initGuage();
       ((AppController) getApplication()).getAppComponent().inject(this);
 attachViewModel();
 
+String reqToken=getIntent().getStringExtra("reqToken");
 
-appConfigViewModel.callAppConfigViewModel();
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        recyclerConract.setLayoutManager(mLayoutManager);
+
+
+
+
+        LinearLayoutManager mLayoutManagerInquiry = new LinearLayoutManager(this);
+        recyclerInquiry.setLayoutManager(mLayoutManagerInquiry);
+
+
+
+
+
+        LinearLayoutManager mLayoutManagerContract= new LinearLayoutManager(this);
+        recyclerConractDetail.setLayoutManager(mLayoutManagerContract);
+
+
+
+
+        RecyclerView.LayoutManager mLayoutManagerInstallment = new LinearLayoutManager(this);
+
+
+        recyclerInstallment.setLayoutManager(mLayoutManagerInstallment);
+
+
+
+
+        LinearLayoutManager mLayoutManagerTerminateContract= new LinearLayoutManager(this);
+        recyclerTerminateContract.setLayoutManager(mLayoutManagerTerminateContract);
+
+
+
+
+reportViewModel.callReportViewModel(reqToken);
 
 
 
@@ -71,123 +287,80 @@ appConfigViewModel.callAppConfigViewModel();
     }
 
 
-    private void startTimer(){
-        new Timer().schedule(new TimerTask() {
+    @OnClick(R.id.layoutTerminateContract)
+    public void layoutTerminateAction() {
+
+        expandCollapsView(rootLayoutTerminateContract,imgExpandTerrminateContract);
+        }
+
+
+    @OnClick(R.id.layoutInstallment)
+    public void layoutInstallmentAction() {
+
+        expandCollapsView(rootLayoutInstallment,imgExpandInstallment);
+        }
+
+
+    @OnClick(R.id.layoutContracts)
+    public void layoutContractsAction() {
+
+        expandCollapsView(rootLayoutContract,imgExpandContracts);
+        }
+
+
+    @OnClick(R.id.layoutPersonTitle)
+    public void layoutPersonTitleAction() {
+
+        expandCollapsView(rootLayoutUser,imgUserExpand);
+        }
+
+
+
+
+
+
+        private void expandCollapsView(View childeView,ImageView imgExpand){
+
+        if(childeView.getVisibility() == View.VISIBLE) {
+            childeView.setVisibility(View.GONE);
+            imgExpand.setImageResource(R.drawable.ic_expand_more);
+
+        }
+        else{
+            childeView.setVisibility(View.VISIBLE);
+            imgExpand.setImageResource(R.drawable.ic_expand_less);
+            }
+        }
+
+private void initGuage(){
+
+    speedometerGauge.setLabelConverter(new SpeedometerGauge.LabelConverter() {
         @Override
-        public void run() {
-            if(InternetAccess.isInternetAvailable()){
-
-                messageReciver();
-
-
-                updateCheck=   new UpdateCheck(getApplicationContext());
-                updateCheck.initService();
-            }
-            else {
-                ActivityNavigationHelper.navigateToActivity(SplashActivity.this,NoInternetActivity.class,true);
-            }
+        public String getLabelFor(double progress, double maxProgress) {
+            return String.valueOf((int) Math.round(progress));
         }
+    });
 
+    speedometerGauge.setMaxSpeed(900);
+    speedometerGauge.setUnitsText("");
+    speedometerGauge.setMajorTickStep(100);
+    speedometerGauge.setMinorTicks(0);
 
-    }, 1000);
-    }
+    speedometerGauge.setSpeed(0,true);
 
+    // Configure value range colors
+    speedometerGauge.addColoredRange(0, 459, getResources().getColor(R.color.orange));
+    speedometerGauge.addColoredRange(459, 519,  getResources().getColor(R.color.dark_yellow));
+    speedometerGauge.addColoredRange(519, 579,  getResources().getColor(R.color.white));
+    speedometerGauge.addColoredRange(579, 639,  getResources().getColor(R.color.light_green));
+    speedometerGauge.addColoredRange(639, 900,  getResources().getColor(R.color.dark_green));
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-      try {
-          updateCheck.releaseService();
-          unregisterReceiver(broadcastReceiver);
-      }
-      catch (Exception e){
-
-      }
-
-    }
-    private void messageReciver(){
-        IntentFilter filter = new IntentFilter();
-
-        filter.addAction("versionCode");
-
-
-
-
-
-
-        broadcastReceiver= new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-
-                String action=intent.getAction();
-
-                switch (action) {
-
-
-                    case "versionCode":
-                        long cafebazarVersionCode = intent.getLongExtra("versionCode",-1);
-                        chekheckRequired(cafebazarVersionCode);
-
-                        break;
-
-                }
-
-
-            }
-        };
-        registerReceiver(broadcastReceiver, filter);
-    }
-
-    private  void chekheckRequired(long cafebazarVesionCode){
-
-        if(cafebazarVesionCode>-1){
-            DialogHelper.showDialog(getString(R.string.new_version),getString(R.string.download_new_version),getString(R.string.download),getString(R.string.ignore),this,this);
-        }
-        else {
-
-            navigateToApp();
-        }
-    }
-
-    private void goToCafebazarPage(){
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("bazaar://details?id=" + PACKAGE_NAME));
-        intent.setPackage("com.farsitel.bazaar");
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
-    public void onDialogSubmitEvent(Object object) {
-        goToCafebazarPage();
-    }
-
-    @Override
-    public void onDialogCancelEvent(Object object)
-    {
-
-    navigateToApp();
-    }
-
-
-    private void navigateToApp(){
-        if(null==appConfigViewModel.getUserPassword()){
-            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-
-        }
-        else {
-           // appConfigViewModel.callAppConfigViewModel(0);
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-
-        }
-        finish();
-    }
-
+}
 
     private void attachViewModel() {
-        appConfigViewModel.getApiSuccessLiveDataResponse().observe(this, appConfig -> {
-                    startTimer();
+        reportViewModel.getApiSuccessLiveDataResponse().observe(this, creditScrore -> {
+setDataOnViews(creditScrore);
+
 /*                   startActivity(new Intent(SplashActivity.this, MainActivity.class));
 finish();*/
 
@@ -196,33 +369,33 @@ finish();*/
                 }
         );
 
-        appConfigViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {});
+        reportViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {});
 
-        appConfigViewModel.getApiErrorLiveData().observe(this, volleyError ->{
+        reportViewModel.getApiErrorLiveData().observe(this, volleyError ->{
             goToFailApiPage("ApiError");
 
         });
-        appConfigViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+        reportViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
 
         {
             goToFailApiPage("ServerError");
 
         });
-        appConfigViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+        reportViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
                 {
                     goToFailApiPage("TimeOutError");
                 }
 
         );
-        appConfigViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+        reportViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
             goToFailApiPage("ClientNetworkError");
 
 
         });
 
 
-        appConfigViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError ->{} );
-        appConfigViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError ->{} );
+        reportViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError ->{} );
+        reportViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError ->{} );
 
     }
     private void goToFailApiPage(String failCause){
@@ -234,21 +407,105 @@ finish();*/
 
     }
 
-    private void initFirebase(){
+private void setDataOnViews(CreditScrore creditScrore){
+
+    speedometerGauge.setSpeed(creditScrore.getIcsScore(),true);
+    txtRisk.setText(creditScrore.getRiskGradeTitle());
+    txtCreditScoreValue.setText(creditScrore.getRiskGrade());
+    txtCreditScoreMarkValue.setText(String.valueOf(creditScrore.getIcsScore()));
+    txtCreditScoreRengeValue.setText(creditScrore.getScoreRenge());
+    txtCreditScoreCauseValue.setText(creditScrore.getReason());
 
 
-        FirebaseApp.initializeApp(this);
 
-        FirebaseMessaging.getInstance().subscribeToTopic(AppConstants.TOPIC)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+    /////////////////////////////////////////////
+Person person=creditScrore.getPerson();
+
+     txtNationalCode.setText(person.getNtCode());
+
+     txtName.setText(person.getName());
+
+     txtFamily.setText(person.getFamily());
+
+     txtFatheName.setText(person.getFatherName());
+
+     txtGender.setText(person.getGender());
+     txtBarrowerSection.setText(person.getBorrowerClass());
+
+     txtBirthCity.setText(person.getBorrowerClass());
+    Log.e("date",person.getBirthDate()+"");
+     txtBirthDate.setText(DateHepler.convertTimeStampToPersianDate(Long.parseLong(person.getBirthDate())));
+     if (!"null".equals(person.getAddress())){
+     txtAddress.setText(person.getAddress());}
+/////////////////////////////////////////
 
 
-                    }
-                });
+    List<SummaryContract> contracts=creditScrore.getContractList();
 
 
+
+    SummaryContractAdapter contractAdapter=new SummaryContractAdapter(contracts,this);
+    recyclerConract.setAdapter(contractAdapter);
+    contractAdapter.notifyDataSetChanged();
+//////////////////////////////////////////////////////////////////////////////////
+
+    List<Inquiry> inquiryList=creditScrore.getInquiryList();
+    InquiryAdapter inquiryAdapter=new InquiryAdapter(inquiryList,this);
+    recyclerInquiry.setAdapter(inquiryAdapter);
+    inquiryAdapter.notifyDataSetChanged();
+
+//////////////////////////////////////////
+    FullContract fullContract=creditScrore.getFullContract();
+
+     txtJamQarardadJariani.setText(String.valueOf(fullContract.getNumberOfOpenContracts()));
+
+
+
+
+     txtJamQaradadKhatemeYafte.setText(String.valueOf(fullContract.getNumberOfTerminatedContracts()));
+
+
+
+     txtJamMablaghSarresidNashode.setText(String.valueOf(fullContract.getOutstandingAmount()));
+
+
+     txtJamMablaghSarresidShodePardakhtNashode.setText(String.valueOf(fullContract.getOverdueAmount()));
+
+
+
+     txtCurrency.setText(fullContract.getLookupsCurrencyCodes());
+
+    DetailContractAdapter detailContractAdapter=new DetailContractAdapter(fullContract.getDetailContractList(),this);
+    recyclerConractDetail.setAdapter(detailContractAdapter);
+    detailContractAdapter.notifyDataSetChanged();
+//////////////////////////////////////////////
+    Map<FullInstallment,List<DetailInstallment>> fullInstallmentListMap=creditScrore.getFullInstallmentListMap();
+     SectionedRecyclerViewAdapter sectionAdapter = new SectionedRecyclerViewAdapter();;
+    if(fullInstallmentListMap.size()>0){
+        int index=1;
+
+        for (Map.Entry<FullInstallment, List<DetailInstallment>> entry : fullInstallmentListMap.entrySet())
+        {
+            FullInstallment header=entry.getKey();
+            InstallmentSection installmentSection=new InstallmentSection(header,index,entry.getValue(),this);
+            sectionAdapter.addSection(header.getReportsContractDataCreditor(),installmentSection);
+            index++;
+        }
+
+        recyclerInstallment.setAdapter(sectionAdapter);
+
+    }
+//////////////////////////////////////////////////
+
+    TerminateContractAdapter terminateContractAdapter=new TerminateContractAdapter(creditScrore.getTerminateContracts(),this);
+    recyclerTerminateContract.setAdapter(terminateContractAdapter);
+    terminateContractAdapter.notifyDataSetChanged();
+
+
+}
+
+    @Override
+    public void onTap(Object obj) {
 
     }
 }

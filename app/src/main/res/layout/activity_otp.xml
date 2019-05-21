@@ -90,7 +90,7 @@ android:textColorHint="@color/darker_gray"
      android:layout_marginBottom="@dimen/size50"
      />
 
- <android.support.v7.widget.AppCompatButton
+ <androidx.appcompat.widget.AppCompatButton
 android:id="@+id/btnEnter"
 
      android:layout_width="match_parent"
@@ -102,7 +102,7 @@ android:layout_above="@+id/btnRetry"
      android:layout_height="wrap_content"
      />
 
- <android.support.v7.widget.AppCompatButton
+ <androidx.appcompat.widget.AppCompatButton
 
 android:id="@+id/btnRetry"
      android:layout_width="match_parent"

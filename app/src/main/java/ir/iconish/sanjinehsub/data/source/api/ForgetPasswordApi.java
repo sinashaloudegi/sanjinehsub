@@ -55,7 +55,6 @@ public class ForgetPasswordApi {
 
             }*/
         } catch (JSONException e) {
-            Log.e("err",e.toString());
             e.printStackTrace();
         }
 
@@ -66,7 +65,6 @@ public class ForgetPasswordApi {
 
 
         String   url=ConstantUrl.BASE+ConstantUrl.FORGET_PASSWORD;
-Log.e("urlCheckPassword=",url);
 JSONObject jsonObject=new JSONObject();
 
         try {
@@ -83,7 +81,6 @@ JSONObject jsonObject=new JSONObject();
                 response -> {
 
 
-                    Log.e("Server response",response.toString());
 
                     if (response!=null){
 

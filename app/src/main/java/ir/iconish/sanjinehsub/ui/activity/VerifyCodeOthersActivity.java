@@ -7,8 +7,7 @@ import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import java.util.UUID;
 
@@ -63,7 +65,7 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
 
 
   public static IabHelper mHelper;
-  BroadcastReceiver broadcastReceiver;
+
 
 
 
@@ -131,21 +133,13 @@ int reportStatus;
 
 
     getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, creditScorePreProcess -> {
-             // Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
 
 
               stopWating();
 
       new CreditStatusManager(this).handleReportStatus(creditScorePreProcess,txtAlert);
 
-           /*   if(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()== ReportStateEnum.SEND_VERIFY_CODE.getId() ||registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()== CreditResponseEnum.SUCCESS.getId()){
-                getScoreAtion(registerPurchaseInfoResultDto.getReqToken());}
-              else {
-                String error=CreditResponseEnum.fromValue(new Long(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId())).getValue();
-                ToastHelper.showErrorMessage(VerifyCodeOthersActivity.this,error);
-              //  txtAlert.setText(registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId()+":"+error);
-               // txtAlert.setVisibility(View.VISIBLE);
-              }*/
+
             }
     );
     getScoreViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
@@ -155,7 +149,6 @@ int reportStatus;
     });
     getScoreViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
     {
-      goToFailApiPage("ServerError");
     });
     getScoreViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
             {
@@ -172,88 +165,6 @@ int reportStatus;
     });
 
 
-
-
-
-
-
-
-
-   /* confirmVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, reportStateEnumId -> {
-      if (reportStateEnumId == 12){
-        if (!alreadyBazaarInited) {
-          checkCafeBazaarLogin.initService();
-        }
-        else {
-          UUID uuid = UUID.randomUUID();
-          String randomUUIDString = uuid.toString();
-          Log.i("Test", "randomUUIDString : " + randomUUIDString);
-          //"bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ"
-          mHelper.launchPurchaseFlow(VerifyCodeOthersActivity.this, "sanj01", 10001, mPurchaseFinishedListener, randomUUIDString);
-
-        }
-      }
-      else {
-        Toast.makeText(VerifyCodeOthersActivity.this, R.string.retry_others_otp, Toast.LENGTH_LONG).show();
-      }
-      }
-    );
-    confirmVerifyCodeViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
-    });
-    confirmVerifyCodeViewModel.getApiErrorLiveData().observe(this, volleyError -> {
-      goToFailApiPage("ApiError");
-    });
-    confirmVerifyCodeViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
-    {
-      goToFailApiPage("ServerError");
-    });
-    confirmVerifyCodeViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-      {
-        goToFailApiPage("TimeOutError");
-      }
-    );
-    confirmVerifyCodeViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
-      goToFailApiPage("ClientNetworkError");
-    });
-
-    confirmVerifyCodeViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
-    });
-    confirmVerifyCodeViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
-    });
-
-
-
-
-    getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, registerPurchaseInfoResultDto -> {
-        Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
-        stopWating();
-        getScoreAtion(registerPurchaseInfoResultDto.getReqToken(), registerPurchaseInfoResultDto.getMarketResultDto().getMarketResultEnumId());
-        Log.e("success", "in activity");
-      }
-    );
-    getScoreViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
-    });
-    getScoreViewModel.getApiErrorLiveData().observe(this, volleyError -> {
-      goToFailApiPage("ApiError");
-    });
-    getScoreViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
-    {
-      goToFailApiPage("ServerError");
-    });
-    getScoreViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-      {
-        goToFailApiPage("TimeOutError");
-      }
-    );
-    getScoreViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
-      goToFailApiPage("ClientNetworkError");
-    });
-
-    getScoreViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
-    });
-    getScoreViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
-    });
-*/
   }
 
 

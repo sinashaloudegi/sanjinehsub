@@ -14,30 +14,6 @@
 
 package ir.iconish.sanjinehsub.util;
 
-// This code was converted from code at http://iharder.sourceforge.net/base64/
-// Lots of extraneous features were removed.
-/* The original code said:
- * <p>
- * I am placing this code in the Public Domain. Do with it as you will.
- * This software comes with no guarantees or warranties but with
- * plenty of well-wishing instead!
- * Please visit
- * <a href="http://iharder.net/xmlizable">http://iharder.net/xmlizable</a>
- * periodically to check for updates or to contribute improvements.
- * </p>
- *
- * @author Robert Harder
- * @author rharder@usa.net
- * @version 1.3
- */
-
-/**
- * Base64 converter class. This code is not a complete MIME encoder;
- * it simply converts binary data to base64 data and back.
- *
- * <p>Note {@link CharBase64} is a GWT-compatible implementation of this
- * class.
- */
 public class Base64 {
     /** Specify encoding (value is {@code true}). */
     public final static boolean ENCODE = true;

@@ -7,13 +7,16 @@ import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
+
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import java.util.UUID;
 
@@ -50,6 +53,12 @@ public class GetScoreActivity extends AppCompatActivity {
   @BindView(R.id.txtAlert)
   TextView txtAlert;
 
+  @BindView(R.id.checkboxRules)
+  CheckBox checkboxRules;
+
+
+
+
   public static IabHelper mHelper;
   BroadcastReceiver broadcastReceiver;
 
@@ -71,6 +80,7 @@ public class GetScoreActivity extends AppCompatActivity {
     ((AppController) getApplication()).getAppComponent().inject(this);
     checkCafeBazaarLogin = new CheckCafeBazaarLogin(GetScoreActivity.this);
     messageReciver();
+    showWating();
     bazaarSetup(getScoreViewModel.getMarketKey());
     attachViewModel();
 
@@ -79,15 +89,25 @@ public class GetScoreActivity extends AppCompatActivity {
 
   @OnClick(R.id.btnGetScore)
   public void btnGetScoreAction() {
+
+    if(!checkboxRules.isChecked()){
+
+
+        txtAlert.setText(getString(R.string.accept_nt_code_mobile));
+      txtAlert.setVisibility(View.VISIBLE);
+        return;
+
+    }
+
+
     if (!alreadyBazaarInited) {
       checkCafeBazaarLogin.initService();
     }
     else {
       UUID uuid = UUID.randomUUID();
       String randomUUIDString = uuid.toString();
-      Log.i("Test", "randomUUIDString : " + randomUUIDString);
       //"bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ"
-      mHelper.launchPurchaseFlow(GetScoreActivity.this, "sanj01", 10001, mPurchaseFinishedListener, randomUUIDString);
+      mHelper.launchPurchaseFlow(GetScoreActivity.this, AppConstants.BAZAAR_SKU, 10001, mPurchaseFinishedListener, randomUUIDString);
 
     }
 
@@ -107,7 +127,6 @@ public class GetScoreActivity extends AppCompatActivity {
 
 
   private void  bazaarSetup(String bazaarKey){
-    Log.i("bazaarKey : " , bazaarKey);
     String base64EncodedPublicKey = bazaarKey ;
     // You can find it in your Bazaar console, in the Dealers section.
     // It is recommended to add more security than just pasting it in your source code;
@@ -151,7 +170,7 @@ new CreditStatusManager(this).handleReportStatus(creditScorePreProcess,txtAlert)
     });
     getScoreViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
     {
-      goToFailApiPage("ServerError");
+      //goToFailApiPage("ServerError");
     });
     getScoreViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
       {
@@ -208,19 +227,19 @@ new CreditStatusManager(this).handleReportStatus(creditScorePreProcess,txtAlert)
 
   public IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
     public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-      Log.i("Test", "Query inventory finished.");
+      //Log.e("Test", "Query inventory finished.");
       if (mHelper == null) return;
-
+stopWating();
       if (result.isFailure()) {
         Log.i("Test", "Failed to query invenreturn;tory: " + result);
 
       }
 
       if (inventory != null){
-      Purchase gasPurchase = inventory.getPurchase("sanj01");
+      Purchase gasPurchase = inventory.getPurchase(AppConstants.BAZAAR_SKU);
       if (gasPurchase != null && verifyDeveloperPayload(gasPurchase)) {
-        Log.i("Test", "We have sanj01. Consuming it.");
-        mHelper.consumeAsync(inventory.getPurchase("sanj01"), mConsumeFinishedListener);
+        //Log.e("Test", "We have sanj01. Consuming it.");
+        mHelper.consumeAsync(inventory.getPurchase(AppConstants.BAZAAR_SKU), mConsumeFinishedListener);
         return;
       }
       }
@@ -253,7 +272,7 @@ new CreditStatusManager(this).handleReportStatus(creditScorePreProcess,txtAlert)
               String randomUUIDString = uuid.toString();
               Log.i("Test", "randomUUIDString : " + randomUUIDString);
               //"bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ"
-              mHelper.launchPurchaseFlow(GetScoreActivity.this, "sanj01", 10001, mPurchaseFinishedListener, randomUUIDString);
+              mHelper.launchPurchaseFlow(GetScoreActivity.this, AppConstants.BAZAAR_SKU, 10001, mPurchaseFinishedListener, randomUUIDString);
 
             }
             else {
@@ -292,8 +311,6 @@ catch (Exception e){
 
 }
 
-
-    // very important:
     Log.i("Test", "Destroying helper.");
     if (mHelper != null) {
       mHelper.dispose();
@@ -323,13 +340,12 @@ catch (Exception e){
               showWating();
 
 
-      //String mobilephone,String ntcode,String persontypeid, String personalitytypeId,String paymenttypeid,int channelId,
 
 
               getScoreViewModel.callGetScoreViewModel(null,null,1,1, AppConstants.PAYMENT_TYPE,AppConstants.CHANNEL_ID,-1,purchase);
 
       if (purchase.getSku().equals("sanj01")) {
-        Log.i("Test", "Purchase is gas. Starting sanj01 consumption.");
+        //Log.e("Test", "Purchase is gas. Starting sanj02 consumption.");
         mHelper.consumeAsync(purchase, mConsumeFinishedListener);
       }
     }
@@ -342,12 +358,12 @@ catch (Exception e){
 
       if (mHelper == null) return;
       if (result.isSuccess()) {
-        Log.i("Test", "Consumption successful. Provisioning.");
+        //Log.e("Test", "Consumption successful. Provisioning.");
       }
       else {
-        Log.i("Test", "Error while consuming: " + result);
+        //Log.e("Test", "Error while consuming: " + result);
       }
-      Log.i("Test",  "End consumption flow.");
+      //Log.e("Test",  "End consumption flow.");
     }
   };
 
@@ -363,4 +379,9 @@ catch (Exception e){
     finish();
   }
 
+  private void goToNativeReportActivity(String reqToken){
+    Intent intent=new Intent(this,ReportActivity.class);
+    intent.putExtra("reqToken",reqToken);
+
+  }
 }

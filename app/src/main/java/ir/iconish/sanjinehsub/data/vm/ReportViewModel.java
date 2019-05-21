@@ -1,18 +1,22 @@
 package ir.iconish.sanjinehsub.data.vm;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+
+
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.model.AppConfig;
+import ir.iconish.sanjinehsub.data.model.CreditScrore;
 import ir.iconish.sanjinehsub.data.repository.AppConfigRepository;
+import ir.iconish.sanjinehsub.data.repository.ReportRepository;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 
-public class AppConfigViewModel extends ViewModel {
+public class ReportViewModel extends ViewModel {
 
 
-    private MutableLiveData<AppConfig> apiSuccessLiveDataResponse;
+    private MutableLiveData<CreditScrore> apiSuccessLiveDataResponse;
     private MutableLiveData<String> apiErrorLiveData;
     private MutableLiveData<String> apiServerErrorLiveData;
     private MutableLiveData<String> apiClientNetworkErrorLiveData;
@@ -21,7 +25,7 @@ public class AppConfigViewModel extends ViewModel {
 
 
 
-    AppConfigRepository appConfigRepository;
+    ReportRepository reportRepository;
 
     private MutableLiveData<String> apiForbiden403ErrorLiveData;
     private MutableLiveData<String> apiValidation422ErrorLiveData;
@@ -38,15 +42,15 @@ public class AppConfigViewModel extends ViewModel {
         return apiValidation422ErrorLiveData;
     }
 
-    public MutableLiveData<AppConfig> getApiSuccessLiveDataResponse() {
+    public MutableLiveData<CreditScrore> getApiSuccessLiveDataResponse() {
         return apiSuccessLiveDataResponse;
     }
 
     @Inject
-    public AppConfigViewModel(AppConfigRepository appConfigRepository)
+    public ReportViewModel(ReportRepository reportRepository)
     {
 
-        this.appConfigRepository=appConfigRepository;
+        this.reportRepository=reportRepository;
 
 
 
@@ -83,13 +87,13 @@ public class AppConfigViewModel extends ViewModel {
         return apiAuthFailureErrorLiveData;
     }
 
-    public void callAppConfigViewModel() {
+    public void callReportViewModel(String reqToken) {
 
 
-      appConfigRepository.callAppConfigRepository(new VolleyCallback() {
+      reportRepository.callReportRepository(reqToken,new VolleyCallback() {
           @Override
           public void onSuccess(Object obj) {
-            apiSuccessLiveDataResponse.setValue((AppConfig) obj);
+            apiSuccessLiveDataResponse.setValue((CreditScrore) obj);
 
           }
           @Override
@@ -132,8 +136,5 @@ public class AppConfigViewModel extends ViewModel {
           }
 
       });
-    }
-    public String getUserPassword(){
-        return appConfigRepository.getUserPassword();
     }
 }
