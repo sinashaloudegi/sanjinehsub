@@ -148,4 +148,6 @@
     <string name="txt_other_otp_title">لطفا کد ارسال شده به شماره تلفن مالک گزارش را وارد نمایید</string>
     <string name="confirm_phone_nt_code">تایید میکنم شماره موبایل در شبکه تلفن همراه به نام خودم ثبت شده است و با کد ملی وارد شده تطابق دارد</string>
     <string name="confirm_phone_nt_code_other">تایید میکنم شماره موبایل و کد ملی وارد شده در شبکه تلفن همراه با هم تطابق دارد</string>
+    <string name="report_exit">خروج از گزارش</string>
+    <string name="report_exit_sure">آیا می خواهید از گزارش خارج شوید؟</string>
 </resources>

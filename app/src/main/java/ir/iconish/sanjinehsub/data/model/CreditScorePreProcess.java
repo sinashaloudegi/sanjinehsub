@@ -8,7 +8,6 @@ public class CreditScorePreProcess {
     private String reportDescryption;
 
 
-
     public String getReqToken() {
         return reqToken;
     }

@@ -25,38 +25,37 @@ import ir.iconish.sanjinehsub.util.AppConstants;
 
 public class LoginApi {
 
-
+    private static final String TAG = "LoginApi";
     AppController
             appController;
 
 
     @Inject
     public LoginApi(AppController appController) {
-        this.appController=appController;
+        this.appController = appController;
     }
 
 
+    public User parseJson(JSONObject jsonObject) {
+        User user = new User();
 
-    public User parseJson(JSONObject jsonObject){
-        User user=new User();
+        try {
+            JSONObject jsonObjectRoot = jsonObject.getJSONObject("responseStatus");
+            int statusCode = jsonObjectRoot.getInt("value");
 
-      try {
-            JSONObject jsonObjectRoot=jsonObject.getJSONObject("responseStatus");
-          int statusCode=  jsonObjectRoot.getInt("value");
-
-          user.setResponseCodeEnum(LoginStatusEnum.fromValue(statusCode));
-            if(statusCode==1010){
-JSONObject jsonObjectUser=jsonObject.getJSONObject("accountInfo").getJSONObject("user");
-                String firstName=jsonObjectUser.getString("firstname");
-                String lastName=jsonObjectUser.getString("family");
-                String email=jsonObjectUser.getString("email");
-                String mobileNumber=jsonObjectUser.getString("mobile");
-                long userId=jsonObjectUser.getLong("userid");
-user.setFirstName(firstName);
-user.setLastName(lastName);
-user.setEmail(email);
-user.setMobileNumber(mobileNumber);
-user.setUserId(userId);
+            user.setResponseCodeEnum(LoginStatusEnum.fromValue(statusCode));
+            if (statusCode == 1010) {
+                JSONObject jsonObjectUser = jsonObject.getJSONObject("accountInfo").getJSONObject("user");
+                String firstName = jsonObjectUser.getString("firstname");
+                String lastName = jsonObjectUser.getString("family");
+                String email = jsonObjectUser.getString("email");
+                String mobileNumber = jsonObjectUser.getString("mobile");
+                long userId = jsonObjectUser.getLong("userid");
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setEmail(email);
+                user.setMobileNumber(mobileNumber);
+                user.setUserId(userId);
 
 
             }
@@ -70,82 +69,65 @@ user.setUserId(userId);
     }
 
 
+    public void callLoginApi(String mobileNumer, final VolleyCallback volleyCallback) {
 
 
+        String url = ConstantUrl.BASE + ConstantUrl.LOGIN;
 
-
-
-    public void callLoginApi(String mobileNumer,final VolleyCallback volleyCallback){
-
-
-        String   url=ConstantUrl.BASE+ConstantUrl.LOGIN;
-
-JSONObject jsonObject=new JSONObject();
+        JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("appid",AppConstants.APP_ID);
-            jsonObject.put("mobile",mobileNumer);
-            jsonObject.put("vasSubscribeId",AppConstants.VAS_SUBSCRIB);
+            jsonObject.put("appid", AppConstants.APP_ID);
+            jsonObject.put("mobile", mobileNumer);
+            jsonObject.put("vasSubscribeId", AppConstants.VAS_SUBSCRIB);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
-
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                url,jsonObject,
+                url, jsonObject,
                 response -> {
 
 
                     //Log.e("Server response",response.toString());
 
-                    if (response!=null){
+                    if (response != null) {
 
-                   User user=     parseJson(response);
-                   volleyCallback.onSuccess(user);
+                        User user = parseJson(response);
+                        volleyCallback.onSuccess(user);
 
                     }
-
-
-
 
 
                 }, error -> {
-                    if ((error instanceof NetworkError) || (error instanceof NoConnectionError) ) {
+            if ((error instanceof NetworkError) || (error instanceof NoConnectionError)) {
 
-                        volleyCallback.onClientNetworkError();
-
-
-
-                        return;
-                    }
-                    if (error instanceof TimeoutError){
-
-                        volleyCallback.onTimeOutError();
+                volleyCallback.onClientNetworkError();
 
 
-                        return;
-                    }
+                return;
+            }
+            if (error instanceof TimeoutError) {
+
+                volleyCallback.onTimeOutError();
 
 
+                return;
+            }
 
 
-                    if ((error instanceof ServerError)){
+            if ((error instanceof ServerError)) {
 
 
-                        volleyCallback.onServerError();
+                volleyCallback.onServerError();
 
-                        return;
-                    }
-
-
+                return;
+            }
 
 
+        }
 
-                }
-
-        )
-
-        {
+        ) {
 
 
             @Override
@@ -159,19 +141,13 @@ JSONObject jsonObject=new JSONObject();
         };
 
 
-
-
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
                 AppConstants.CLIENT_TIMEOUT,
                 0,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         String tag_json_arry = "loginApi";
         appController.addToRequestQueue(jsonObjReq, tag_json_arry);
-
-
-
-
-
+        Log.d(TAG, "callLoginApi: retrying");
 
     }
 

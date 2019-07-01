@@ -2,7 +2,6 @@ package ir.iconish.sanjinehsub.config;
 
 import android.content.Context;
 import android.content.res.Configuration;
-
 import android.text.TextUtils;
 
 import androidx.multidex.MultiDex;
@@ -23,8 +22,7 @@ import ir.iconish.sanjinehsub.util.FontsOverride;
 public class AppController extends MultiDexApplication {
 
 
-
-  private AppComponent appComponent;
+    private AppComponent appComponent;
 
     public AppComponent getAppComponent() {
         return appComponent;
@@ -56,9 +54,9 @@ public class AppController extends MultiDexApplication {
         mInstance = this;
 
 
-appComponent= DaggerAppComponent.builder()
-       .appModule(new AppModule(this))
-        .netModule(new NetModule()).build();
+        appComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .netModule(new NetModule()).build();
 
 
         FontsOverride.setDefaultFont(this, "DEFAULT", "font/iranyekanwebregular.ttf");
@@ -80,7 +78,7 @@ appComponent= DaggerAppComponent.builder()
 
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
-          mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         }
         return mRequestQueue;
     }

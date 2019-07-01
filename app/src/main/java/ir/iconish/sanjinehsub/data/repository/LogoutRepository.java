@@ -1,7 +1,6 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
-
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
@@ -20,10 +19,11 @@ public class LogoutRepository {
     }
 
     public void logout() {
-sharedPreferencesManager.clearAll();
+        sharedPreferencesManager.clearAll();
     }
-     public String getToken() {
-return sharedPreferencesManager.getTokenValue();
+
+    public String getToken() {
+        return sharedPreferencesManager.getTokenValue();
     }
 
 }

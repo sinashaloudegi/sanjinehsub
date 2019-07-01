@@ -1,16 +1,8 @@
 package ir.iconish.sanjinehsub.ui.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
-
-import android.util.Log;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -19,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -30,62 +20,28 @@ import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.adapter.ArchiveAdapter;
 import ir.iconish.sanjinehsub.adapter.listener.ArchiveRecyclerListener;
-import ir.iconish.sanjinehsub.bazaar.UpdateCheck;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.model.Archive;
-import ir.iconish.sanjinehsub.data.repository.ArchiveRepository;
-import ir.iconish.sanjinehsub.data.vm.AppConfigViewModel;
 import ir.iconish.sanjinehsub.data.vm.ArchiveViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
-import ir.iconish.sanjinehsub.ui.DialogHelper;
-import ir.iconish.sanjinehsub.ui.Dialoglistener;
 import ir.iconish.sanjinehsub.util.AnimationHelper;
 import ir.iconish.sanjinehsub.util.DownloadHelper;
-import ir.iconish.sanjinehsub.util.InternetAccess;
-
-import static ir.iconish.sanjinehsub.util.AppConstants.PACKAGE_NAME;
 
 public class ArchiveActivity extends AppCompatActivity implements ArchiveRecyclerListener {
-@Inject
-ArchiveViewModel archiveViewModel;
-
+    @Inject
+    ArchiveViewModel archiveViewModel;
 
 
     @BindView(R.id.swip)
     SwipeRefreshLayout swipeRefreshLayout;
 
 
-
-
-
-
     @BindView(R.id.recyclerArchive)
     RecyclerView recyclerView;
 
 
-
-
-
-
-
     @BindView(R.id.imgBack)
     ImageView imgBack;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @Override
@@ -96,8 +52,8 @@ ArchiveViewModel archiveViewModel;
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         ButterKnife.bind(this);
 
-      ((AppController) getApplication()).getAppComponent().inject(this);
-attachViewModel();
+        ((AppController) getApplication()).getAppComponent().inject(this);
+        attachViewModel();
 
 
         swipeRefreshLayout.setColorSchemeResources(
@@ -108,18 +64,11 @@ attachViewModel();
         recyclerView.setLayoutManager(mLayoutManager);
 
 
-
-
-
-swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.setRefreshing(true);
         archiveViewModel.callArchiveViewModel();
 
 
-
-
     }
-
-
 
 
     @Override
@@ -127,37 +76,35 @@ swipeRefreshLayout.setRefreshing(true);
         super.onDestroy();
 
 
+    }
+
+
+    private void setDataOnRecycler(List<Archive> archiveList) {
+
+        ArchiveAdapter archiveAdapter = new ArchiveAdapter(archiveList, this);
+        recyclerView.setAdapter(archiveAdapter);
+        archiveAdapter.notifyDataSetChanged();
+
+
+        swipeRefreshLayout.setEnabled(false);
+
 
     }
 
 
-
-private void setDataOnRecycler(List<Archive> archiveList){
-
-    ArchiveAdapter archiveAdapter=new ArchiveAdapter(archiveList,this);
-    recyclerView.setAdapter(archiveAdapter);
-    archiveAdapter.notifyDataSetChanged();
-
-
-    swipeRefreshLayout.setEnabled(false);
-
-
-}
-
-
-
     private void attachViewModel() {
         archiveViewModel.getApiSuccessLiveDataResponse().observe(this, archives -> {
-setDataOnRecycler(archives);
+            setDataOnRecycler(archives);
 
             swipeRefreshLayout.setRefreshing(false);
-           // Log.e("list",archives.toString());
+            // Log.e("list",archives.toString());
                 }
         );
 
-        archiveViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {});
+        archiveViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+        });
 
-        archiveViewModel.getApiErrorLiveData().observe(this, volleyError ->{
+        archiveViewModel.getApiErrorLiveData().observe(this, volleyError -> {
             goToFailApiPage("ApiError");
 
         });
@@ -180,14 +127,17 @@ setDataOnRecycler(archives);
         });
 
 
-        archiveViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError ->{} );
-        archiveViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError ->{} );
+        archiveViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+        });
+        archiveViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
 
     }
-    private void goToFailApiPage(String failCause){
 
-        Intent intent=new Intent(this,FailApiActivity.class);
-        intent.putExtra("failCause",failCause);
+    private void goToFailApiPage(String failCause) {
+
+        Intent intent = new Intent(this, FailApiActivity.class);
+        intent.putExtra("failCause", failCause);
         startActivity(intent);
         finish();
 
@@ -195,12 +145,12 @@ setDataOnRecycler(archives);
 
     @Override
     public void onDownloadTap(Archive archive) {
-        DownloadHelper.reportDownload(archive.getDownloadLink(),this);
+        DownloadHelper.reportDownload(archive.getDownloadLink(), this);
     }
 
     @Override
     public void onVisitTap(Archive archive) {
-ActivityNavigationHelper.navigateToWebView(archive.getViewLink(),this,WebViewActivity.class);
+        ActivityNavigationHelper.navigateToWebView(archive.getViewLink(), this, WebViewActivity.class);
     }
 
 

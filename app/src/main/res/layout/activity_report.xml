@@ -1,342 +1,320 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
- >
-
-
-
-    <ir.iconish.sanjinehsub.ui.guage.SpeedometerGauge
-        android:layout_height="400dip"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:padding="8dp"
-        android:id="@+id/speedometer" />
-
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textColor="@color/score_risk_color"
-android:gravity="center"
-    android:textSize="@dimen/font_12"
-    android:layout_marginTop="@dimen/margin10"
-    android:layout_below="@+id/speedometer"
-    android:id="@+id/txtRisk"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/margin5"
-        android:background="@color/credit_core_layout_color"
-        android:gravity="center"
-        android:id="@+id/creditScore"
-        android:layout_height="wrap_content">
-
+        <ir.iconish.sanjinehsub.ui.guage.SpeedometerGauge
+            android:id="@+id/speedometer"
+            android:layout_width="match_parent"
+            android:layout_height="400dip"
+            android:padding="8dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:layout_alignParentRight="true"
-
-            android:textSize="@dimen/font_12"
-            android:text="@string/txt_credit_score_caption"
-
-            android:id="@+id/txtCreditScoreCaption"/>
-
-
-   <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
-android:layout_toLeftOf="@+id/txtCreditScoreCaption"
-            android:textSize="@dimen/font_12"
-            android:text="@string/txt_credit_score_caption"
-            android:id="@+id/txtCreditScoreValue"/>
-
-
-
-
-
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@color/credit_core_mark_layout_color"
-        android:layout_below="@id/creditScore"
-        android:gravity="center"
-        android:id="@+id/creditScoreMark"
-        android:layout_height="wrap_content">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:layout_alignParentRight="true"
-
-            android:textSize="@dimen/font_12"
-            android:text="@string/txt_credit_score_mark_caption"
-
-            android:id="@+id/txtCreditScorMarkeCaption"/>
-
-
-   <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
-android:layout_toLeftOf="@+id/txtCreditScorMarkeCaption"
-            android:textSize="@dimen/font_12"
-            android:text="@string/txt_credit_score_caption"
-            android:id="@+id/txtCreditScoreMarkValue"/>
-
-
-
-
-
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@color/credit_core_renge_layout_color"
-        android:gravity="center"
-        android:id="@+id/creditScoreRenge"
-        android:layout_height="wrap_content">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:layout_alignParentRight="true"
-
-            android:textSize="@dimen/font_12"
-            android:text="@string/txt_score_renge"
-
-            android:id="@+id/txtCreditScorRengeCaption"/>
-
-
-   <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
-android:layout_toLeftOf="@+id/txtCreditScorRengeCaption"
-            android:textSize="@dimen/font_12"
-            android:text="@string/txt_credit_score_caption"
-            android:id="@+id/txtCreditScoreRengeValue"/>
-
-
-
-
-
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@color/credit_cause_layout_color"
-        android:gravity="center"
-        android:id="@+id/creditScoreCause"
-        android:layout_height="wrap_content">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
-
-            android:textSize="@dimen/font_12"
-            android:text="@string/txt_score_cause"
-
-            android:id="@+id/txtCreditScoreCause"/>
-
-
-   <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/credit_cause_value_color"
-android:layout_toLeftOf="@+id/txtCreditScoreCause"
-            android:textSize="@dimen/font_12"
-            android:text="@string/txt_credit_score_caption"
-            android:id="@+id/txtCreditScoreCauseValue"/>
-
-
-
-
-
-
-    </RelativeLayout>
-
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:id="@+id/layoutPersonTitle"
-
-    android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/imgUserExpand"
-            android:layout_centerVertical="true"
-            android:layout_width="@dimen/design_navigation_icon_size"
-            android:layout_height="@dimen/design_navigation_icon_size"
-android:layout_alignParentLeft="true"
-            app:srcCompat="@drawable/ic_expand_more"/>
-
-        <TextView
-            android:layout_centerVertical="true"
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:id="@+id/txtHeaderPerson"
-android:layout_alignParentRight="true"
-            android:textColor="@color/black"
-android:background="@color/light_row_color"
-            android:textSize="@dimen/font_12"
-            android:text="@string/currnt_user_info"
-
-           />
-</RelativeLayout>
-        <include
+            android:id="@+id/txtRisk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            layout="@layout/individual_info_layout">
-
-
-        </include>
-
-
+            android:layout_below="@+id/speedometer"
+            android:layout_marginTop="@dimen/margin10"
+            android:gravity="center"
+            android:textColor="@color/score_risk_color"
+            android:textSize="@dimen/font_12" />
 
 
         <RelativeLayout
-    android:layout_width="wrap_content"
-    android:id="@+id/layoutContracts"
-    android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/imgExpandContracts"
-            android:layout_centerVertical="true"
-            android:layout_width="@dimen/design_navigation_icon_size"
-            android:layout_height="@dimen/design_navigation_icon_size"
-android:layout_alignParentLeft="true"
-            app:srcCompat="@drawable/ic_expand_more"/>
-
-        <TextView
-            android:layout_centerVertical="true"
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:id="@+id/txtHeaderContracts"
-android:layout_alignParentRight="true"
-            android:textColor="@color/black"
-android:background="@color/light_row_color"
-            android:textSize="@dimen/font_12"
-            android:text="@string/contract_info"
-
-           />
-</RelativeLayout>
-        <include
+            android:id="@+id/creditScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            layout="@layout/contract_info_layout">
+            android:layout_marginTop="@dimen/margin5"
+            android:background="@color/credit_core_layout_color"
+            android:gravity="center">
 
 
-        </include>
+            <TextView
+                android:id="@+id/txtCreditScoreCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+
+                android:text="@string/txt_credit_score_caption"
+                android:textColor="@color/white"
+
+                android:textSize="@dimen/font_12" />
 
 
+            <TextView
+                android:id="@+id/txtCreditScoreValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/txtCreditScoreCaption"
+                android:text="@string/txt_credit_score_caption"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/font_12" />
 
 
+        </RelativeLayout>
 
         <RelativeLayout
-    android:layout_width="wrap_content"
-    android:id="@+id/layoutInstallment"
-    android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/imgExpandInstallment"
-            android:layout_centerVertical="true"
-            android:layout_width="@dimen/design_navigation_icon_size"
-            android:layout_height="@dimen/design_navigation_icon_size"
-android:layout_alignParentLeft="true"
-            app:srcCompat="@drawable/ic_expand_more"/>
-
-        <TextView
-            android:layout_centerVertical="true"
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:id="@+id/txtHeaderInstallment"
-android:layout_alignParentRight="true"
-            android:textColor="@color/black"
-android:background="@color/light_row_color"
-            android:textSize="@dimen/font_12"
-            android:text="@string/installment_report"
-
-           />
-</RelativeLayout>
-        <include
-
+            android:id="@+id/creditScoreMark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            layout="@layout/installment_layout">
+            android:layout_below="@id/creditScore"
+            android:background="@color/credit_core_mark_layout_color"
+            android:gravity="center">
 
 
-        </include>
+            <TextView
+                android:id="@+id/txtCreditScorMarkeCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
 
+                android:text="@string/txt_credit_score_mark_caption"
+                android:textColor="@color/white"
+
+                android:textSize="@dimen/font_12" />
+
+
+            <TextView
+                android:id="@+id/txtCreditScoreMarkValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/txtCreditScorMarkeCaption"
+                android:text="@string/txt_credit_score_caption"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/font_12" />
+
+
+        </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/creditScoreRenge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/credit_core_renge_layout_color"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/txtCreditScorRengeCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+
+                android:text="@string/txt_score_renge"
+                android:textColor="@color/white"
+
+                android:textSize="@dimen/font_12" />
+
+
+            <TextView
+                android:id="@+id/txtCreditScoreRengeValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/txtCreditScorRengeCaption"
+                android:text="@string/txt_credit_score_caption"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/font_12" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/creditScoreCause"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/credit_cause_layout_color"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/txtCreditScoreCause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/txt_score_cause"
+
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_12"
+
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txtCreditScoreCauseValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/txtCreditScoreCause"
+                android:text="@string/txt_credit_score_caption"
+                android:textColor="@color/credit_cause_value_color"
+                android:textSize="@dimen/font_12" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutPersonTitle"
             android:layout_width="wrap_content"
-            android:id="@+id/layoutTerminateContract"
+
             android:layout_height="wrap_content">
+
             <ImageView
-                android:id="@+id/imgExpandTerrminateContract"
-                android:layout_centerVertical="true"
+                android:id="@+id/imgUserExpand"
                 android:layout_width="@dimen/design_navigation_icon_size"
                 android:layout_height="@dimen/design_navigation_icon_size"
                 android:layout_alignParentLeft="true"
-                app:srcCompat="@drawable/ic_expand_more"/>
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_expand_more" />
 
             <TextView
-                android:layout_centerVertical="true"
+                android:id="@+id/txtHeaderPerson"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:id="@+id/txtTerrminateContract"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/black"
+                android:layout_centerVertical="true"
                 android:background="@color/light_row_color"
+                android:text="@string/currnt_user_info"
+                android:textColor="@color/black"
                 android:textSize="@dimen/font_12"
-                android:text="@string/terminate_contract_detail"
+                android:textStyle="bold"
 
                 />
         </RelativeLayout>
-        <include
 
+        <include
+            layout="@layout/individual_info_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/terminate_contract_layout">
+            android:layout_height="wrap_content">
 
 
         </include>
 
 
+        <RelativeLayout
+            android:id="@+id/layoutContracts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgExpandContracts"
+                android:layout_width="@dimen/design_navigation_icon_size"
+                android:layout_height="@dimen/design_navigation_icon_size"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_expand_more" />
+
+            <TextView
+                android:id="@+id/txtHeaderContracts"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/light_row_color"
+                android:text="@string/contract_info"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_12"
+                android:textStyle="bold"
+
+                />
+        </RelativeLayout>
+
+        <include
+            layout="@layout/contract_info_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
+        </include>
 
 
+        <RelativeLayout
+            android:id="@+id/layoutInstallment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgExpandInstallment"
+                android:layout_width="@dimen/design_navigation_icon_size"
+                android:layout_height="@dimen/design_navigation_icon_size"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_expand_more" />
+
+            <TextView
+                android:id="@+id/txtHeaderInstallment"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/light_row_color"
+                android:text="@string/installment_report"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_12"
+                android:textStyle="bold"
+
+                />
+        </RelativeLayout>
+
+        <include
+
+            layout="@layout/installment_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
+        </include>
 
-</LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutTerminateContract"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgExpandTerrminateContract"
+                android:layout_width="@dimen/design_navigation_icon_size"
+                android:layout_height="@dimen/design_navigation_icon_size"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_expand_more" />
+
+            <TextView
+                android:id="@+id/txtTerrminateContract"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/light_row_color"
+                android:text="@string/terminate_contract_detail"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_12"
+                android:textStyle="bold"
+
+                />
+        </RelativeLayout>
+
+        <include
+
+            layout="@layout/terminate_contract_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </include>
+
+
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -13,6 +13,46 @@ import ir.iconish.sanjinehsub.R;
 
 
 public class DialogHelper {
+    public static void sureBack(Activity activity) {
+
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+
+        View view = activity.getLayoutInflater().inflate(R.layout.back_dialog, null);
+
+        Button btnYes = view.findViewById(R.id.btn_yes_report);
+        Button btnCancel = view.findViewById(R.id.btn_cancel_report);
+        alert.setView(view);
+        final AlertDialog alertDialog = alert.create();
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    activity.finish();
+                    //      activity.finishAffinity();
+                } else {
+                    //    ActivityCompat.finishAffinity(activity);
+                    activity.finish();
+                }
+            }
+        });
+
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+
+
+        alertDialog.show();
+
+
+    }
 
     public static void sureExit(Activity activity) {
 
@@ -21,8 +61,8 @@ public class DialogHelper {
 
         View view = activity.getLayoutInflater().inflate(R.layout.exit_dialoug, null);
 
-        Button btnYes = view.findViewById(R.id.btn_yes);
-        Button btnCancel = view.findViewById(R.id.btn_cancel);
+        Button btnYes = view.findViewById(R.id.btn_yes_report);
+        Button btnCancel = view.findViewById(R.id.btn_cancel_report);
         alert.setView(view);
         final AlertDialog alertDialog = alert.create();
         btnYes.setOnClickListener(new View.OnClickListener() {
@@ -54,10 +94,6 @@ public class DialogHelper {
     }
 
 
-
-
-
-
     public static void showDialog(String dialogTitleText, String dialogBodyText, String submitButtonTitle, String cancelButtonTitle, Activity activity, Dialoglistener dialoglistener) {
 
 
@@ -65,14 +101,14 @@ public class DialogHelper {
 
         View view = activity.getLayoutInflater().inflate(R.layout.exit_dialoug, null);
 
-        Button btnSubmit = view.findViewById(R.id.btn_yes);
+        Button btnSubmit = view.findViewById(R.id.btn_yes_report);
         TextView txtTop = view.findViewById(R.id.txt_top);
 
         TextView txtBottom = view.findViewById(R.id.txt);
         txtBottom.setText(dialogBodyText);
 
         txtTop.setText(dialogTitleText);
-        Button btnCancel = view.findViewById(R.id.btn_cancel);
+        Button btnCancel = view.findViewById(R.id.btn_cancel_report);
 
 
         if (null == cancelButtonTitle) {

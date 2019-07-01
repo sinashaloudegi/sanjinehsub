@@ -1,7 +1,5 @@
 package ir.iconish.sanjinehsub.data.source.api;
 
-import android.util.Log;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -9,7 +7,6 @@ import com.android.volley.Request;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +21,6 @@ import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.model.Archive;
-import ir.iconish.sanjinehsub.data.model.PasswordValidationResponse;
 import ir.iconish.sanjinehsub.util.AppConstants;
 
 public class ArchiveApi {
@@ -50,7 +46,7 @@ for (int i=0;i<jsonLength;i++){
         String date=jsonObject.getString("reportDate");
         String token=jsonObject.getString("token");
         String downloadURL="http://creditscore.iconish.ir/icredit/getcreditscorepdf/"+token+"/param";
-        String viewLink="https://www.sanjineh.ir/report/"+token;
+        String viewLink = "https://www.sanjineh.ir/report/" + token + "?from=android_cafebazar";
         Archive archive=new Archive();
         archive.setDownloadLink(downloadURL);
         archive.setViewLink(viewLink);

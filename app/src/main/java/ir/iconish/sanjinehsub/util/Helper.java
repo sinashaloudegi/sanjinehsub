@@ -3,8 +3,6 @@ package ir.iconish.sanjinehsub.util;
 public class Helper {
     public static boolean validationNationalCode(String code){
         //check length
-
-
         long nationalCode = Long.parseLong(code);
         byte[] arrayNationalCode = new byte[10];
 

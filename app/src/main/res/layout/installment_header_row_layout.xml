@@ -1,370 +1,336 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:id="@+id/rootLayout"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/txtHeaderTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/header_section_color"
+        android:padding="@dimen/margin10"
+        android:text="@string/public_contract_info"
         android:textColor="@color/white"
-android:padding="@dimen/margin10"
-        android:id="@+id/txtHeaderTitle"
-        android:textSize="@dimen/font_12"
-        android:text="@string/public_contract_info"/>
+        android:textSize="@dimen/font_12" />
+
     <RelativeLayout
-        android:padding="@dimen/margin5"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/dark_row_color"
-        android:layout_height="wrap_content">
+        android:padding="@dimen/margin5">
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
             android:id="@+id/txtNegativeContractStatusCaption"
-            android:textSize="@dimen/font_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:text="@string/negative_contract_status"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_12"
+            android:textStyle="bold"
 
-        />
+            />
 
 
         <TextView
+            android:id="@+id/txtNegativeContractStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/credit_cause_value_color"
+            android:layout_marginRight="@dimen/margin5"
             android:layout_toLeftOf="@+id/txtNegativeContractStatusCaption"
-            android:layout_marginRight="@dimen/margin5"
-            android:textSize="@dimen/font_12"
-            android:id="@+id/txtNegativeContractStatus"/>
-
-
-
-
+            android:textColor="@color/credit_cause_value_color"
+            android:textSize="@dimen/font_12" />
 
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/light_row_color"
-        android:padding="@dimen/margin5"
 
-        android:layout_height="wrap_content">
+        android:padding="@dimen/margin5">
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
-
-            android:textSize="@dimen/font_12"
-            android:text="@string/bank_contract_status"
             android:id="@+id/txtBankContractTypeCaption"
-        />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/bank_contract_status"
+
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_12"
+            android:textStyle="bold" />
 
 
         <TextView
+            android:id="@+id/txtBankContractType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/credit_cause_value_color"
 
 
+            android:layout_marginRight="@dimen/margin5"
             android:layout_toLeftOf="@+id/txtBankContractTypeCaption"
-            android:layout_marginRight="@dimen/margin5"
 
 
-
-
-            android:textSize="@dimen/font_12"
-            android:id="@+id/txtBankContractType"/>
-
-
-
-
+            android:textColor="@color/credit_cause_value_color"
+            android:textSize="@dimen/font_12" />
 
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/dark_row_color"
-        android:padding="@dimen/margin5"
 
-        android:layout_height="wrap_content">
+        android:padding="@dimen/margin5">
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
             android:id="@+id/txtGoalOfCreditCaption"
-            android:textSize="@dimen/font_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:text="@string/goal_of_credit"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_12"
+            android:textStyle="bold"
 
-        />
+            />
 
 
         <TextView
+            android:id="@+id/txtGoalOfCredit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/credit_cause_value_color"
             android:layout_centerHorizontal="true"
-            android:textSize="@dimen/font_12"
+            android:layout_marginRight="@dimen/margin5"
             android:layout_toLeftOf="@+id/txtGoalOfCreditCaption"
-            android:layout_marginRight="@dimen/margin5"
+            android:textColor="@color/credit_cause_value_color"
 
-            android:id="@+id/txtGoalOfCredit"/>
-
-
-
-
+            android:textSize="@dimen/font_12" />
 
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/light_row_color"
-        android:padding="@dimen/margin5"
 
-        android:layout_height="wrap_content">
+        android:padding="@dimen/margin5">
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
             android:id="@+id/txtContractStartCaption"
-            android:textSize="@dimen/font_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:text="@string/contract_start"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_12"
+            android:textStyle="bold"
 
-        />
+            />
 
 
         <TextView
+            android:id="@+id/txtContractStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/credit_cause_value_color"
             android:layout_centerHorizontal="true"
-            android:textSize="@dimen/font_12"
-            android:layout_toLeftOf="@+id/txtContractStartCaption"
             android:layout_marginRight="@dimen/margin5"
-            android:id="@+id/txtContractStart"/>
-
-
-
-
+            android:layout_toLeftOf="@+id/txtContractStartCaption"
+            android:textColor="@color/credit_cause_value_color"
+            android:textSize="@dimen/font_12" />
 
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/dark_row_color"
-        android:padding="@dimen/margin5"
 
-        android:layout_height="wrap_content">
+        android:padding="@dimen/margin5">
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
             android:id="@+id/txtContractEndCaption"
-            android:textSize="@dimen/font_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:text="@string/contract_end"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_12"
+            android:textStyle="bold"
 
-        />
+            />
 
 
         <TextView
+            android:id="@+id/txtContractEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/credit_cause_value_color"
             android:layout_centerHorizontal="true"
-            android:textSize="@dimen/font_12"
+            android:layout_marginRight="@dimen/margin5"
 
             android:layout_toLeftOf="@+id/txtContractEndCaption"
-            android:layout_marginRight="@dimen/margin5"
+            android:textColor="@color/credit_cause_value_color"
 
-            android:id="@+id/txtContractEnd"/>
-
-
-
-
+            android:textSize="@dimen/font_12" />
 
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/light_row_color"
-        android:padding="@dimen/margin5"
 
-        android:layout_height="wrap_content">
+        android:padding="@dimen/margin5">
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
             android:id="@+id/txtStatusDateCaption"
-            android:textSize="@dimen/font_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:text="@string/status_date"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_12"
+            android:textStyle="bold"
 
-        />
+            />
 
 
         <TextView
+            android:id="@+id/txtStatusDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/credit_cause_value_color"
+            android:layout_marginRight="@dimen/margin5"
             android:layout_toLeftOf="@+id/txtStatusDateCaption"
-            android:layout_marginRight="@dimen/margin5"
-            android:textSize="@dimen/font_12"
-            android:id="@+id/txtStatusDate"/>
-
-
-
-
+            android:textColor="@color/credit_cause_value_color"
+            android:textSize="@dimen/font_12" />
 
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/dark_row_color"
-        android:padding="@dimen/margin5"
 
-        android:layout_height="wrap_content">
+        android:padding="@dimen/margin5">
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
             android:id="@+id/txtPaymentCurrencyCaption"
-            android:textSize="@dimen/font_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:text="@string/payment_currency"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_12"
+            android:textStyle="bold"
 
-        />
+            />
 
 
         <TextView
+            android:id="@+id/txtPaymentCurrency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/credit_cause_value_color"
+            android:layout_marginRight="@dimen/margin5"
             android:layout_toLeftOf="@+id/txtPaymentCurrencyCaption"
-            android:layout_marginRight="@dimen/margin5"
 
-            android:textSize="@dimen/font_12"
-            android:id="@+id/txtPaymentCurrency"/>
-
-
-
-
+            android:textColor="@color/credit_cause_value_color"
+            android:textSize="@dimen/font_12" />
 
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/light_row_color"
-        android:padding="@dimen/margin5"
 
-        android:layout_height="wrap_content">
+        android:padding="@dimen/margin5">
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
             android:id="@+id/txtPersonRoleCaption"
-            android:textSize="@dimen/font_12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:text="@string/person_role"
-        />
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_12"
+            android:textStyle="bold" />
 
 
         <TextView
+            android:id="@+id/txtPersonRole"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/credit_cause_value_color"
-            android:layout_toLeftOf="@+id/txtPersonRoleCaption"
             android:layout_marginRight="@dimen/margin5"
+            android:layout_toLeftOf="@+id/txtPersonRoleCaption"
 
 
-            android:textSize="@dimen/font_12"
-            android:id="@+id/txtPersonRole"/>
-
-
-
-
+            android:textColor="@color/credit_cause_value_color"
+            android:textSize="@dimen/font_12" />
 
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/dark_row_color"
-        android:padding="@dimen/margin5"
 
-        android:layout_height="wrap_content">
+        android:padding="@dimen/margin5">
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_alignParentRight="true"
-
-            android:textSize="@dimen/font_12"
-            android:text="@string/creditor_name"
             android:id="@+id/txtCreditorNameCaption"
-        />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/creditor_name"
+
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_12"
+            android:textStyle="bold" />
 
 
         <TextView
+            android:id="@+id/txtCreditorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/credit_cause_value_color"
 
-            android:layout_toLeftOf="@+id/txtCreditorNameCaption"
             android:layout_marginRight="@dimen/margin5"
+            android:layout_toLeftOf="@+id/txtCreditorNameCaption"
 
-            android:textSize="@dimen/font_12"
-            android:id="@+id/txtCreditorName"/>
-
-
-
-
+            android:textColor="@color/credit_cause_value_color"
+            android:textSize="@dimen/font_12" />
 
 
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/txtDetailTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/header_section_color"
-        android:textColor="@color/white"
         android:padding="@dimen/margin10"
-        android:id="@+id/txtDetailTitle"
-        android:textSize="@dimen/font_12"
-        android:text="@string/date_payment"/>
-
+        android:text="@string/date_payment"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_12" />
 
 
 </LinearLayout>

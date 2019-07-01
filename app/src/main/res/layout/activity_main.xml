@@ -1,59 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
-<RelativeLayout
-    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
 
 
-    android:layout_height="match_parent">
+        android:layout_height="match_parent">
 
-  <include
-    android:id="@+id/toolbar"
-    layout="@layout/main_toolbar"></include>
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/main_toolbar"></include>
 
-  <include android:id="@+id/centerMenu"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:layout_below="@+id/toolbar"
-           layout="@layout/center_main_menu"></include>
+        <include
+            android:id="@+id/centerMenu"
+            layout="@layout/center_main_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"></include>
 
 
-</RelativeLayout>
-  <com.google.android.material.navigation.NavigationView
-      android:id="@+id/navView"
-      android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-      android:layout_gravity="end"
-android:background="@color/dark_blue"
+    </RelativeLayout>
 
-      android:fitsSystemWindows="true">
-      <LinearLayout
-          android:orientation="vertical"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
-      <include layout="@layout/main_navigation_header"
-          />
-          <View
-              android:layout_width="wrap_content"
-              android:layout_below="@+id/navItemIcon"
-              android:background="@color/white"
-              android:layout_marginTop="@dimen/size2"
-              android:layout_height="@dimen/sizehalf"></View>
-      <android.support.v7.widget.RecyclerView
-          android:id="@+id/recNavigation"
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="@color/dark_blue"
 
-          android:background="@color/dark_blue"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content">
+        android:fitsSystemWindows="true">
 
-      </android.support.v7.widget.RecyclerView>
-      </LinearLayout>
-  </com.google.android.material.navigation.NavigationView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-  </androidx.drawerlayout.widget.DrawerLayout>
+            <include layout="@layout/main_navigation_header" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/sizehalf"
+                android:layout_below="@+id/navItemIcon"
+                android:layout_marginTop="@dimen/size2"
+                android:background="@color/white"></View>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recNavigation"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_blue">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

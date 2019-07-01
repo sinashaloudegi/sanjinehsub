@@ -2,7 +2,7 @@ package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -23,8 +23,8 @@ import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.model.LoginStatusEnum;
 import ir.iconish.sanjinehsub.data.vm.LoginViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
-import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.ui.DialogHelper;
+import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.util.Helper;
 
 public class LoginActivity extends AppCompatActivity {
@@ -32,51 +32,33 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.btnCheckPhone)
     AppCompatButton btnCheckPhone;
 
-@BindView(R.id.prgLogin)
-ProgressBar prgLogin;
-
-
+    private static final String TAG = "LoginActivity";
 
 
     @BindView(R.id.edtMobileNumber)
     EditText edtMobileNumber;
 
 
-
-
     @BindView(R.id.txtAlertPhone)
     TextView txtAlertPhone;
-
-
-
-
 
 
     @BindView(R.id.edtNationalCode)
     EditText edtNationalCode;
 
 
-
-
     @BindView(R.id.txtAlertNationalCode)
     TextView txtAlertNationalCode;
-
-
-
-
-
-
 
 
     @BindView(R.id.checkboxRules)
     CheckBox checkBoxRules;
 
 
-
-
-
     @Inject
     LoginViewModel loginViewModel;
+    @BindView(R.id.prgLogin)
+    ProgressBar prgLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,103 +68,90 @@ ProgressBar prgLogin;
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
 
-attachViewModel();
-
+        attachViewModel();
+        Log.d(TAG, "onCreate: Login");
     }
-
 
 
     @OnClick(R.id.txtRegisterRules)
     public void txtRegisterRulesAction() {
 
-        ActivityNavigationHelper.navigateToWebView(getString(R.string.rules_url),this,WebViewActivity.class);
+        ActivityNavigationHelper.navigateToWebView(getString(R.string.rules_url), this, WebViewActivity.class);
 
     }
 
 
-
-
     @OnClick(R.id.btnCheckPhone)
     public void btnCheckPhoneAction() {
+        Log.d(TAG, "btnCheckPhoneAction: clicked!");
         txtAlertPhone.setVisibility(View.INVISIBLE);
         txtAlertNationalCode.setVisibility(View.INVISIBLE);
-      String mobileNumber=  edtMobileNumber.getText().toString()  ;
-      String nationalCode=  edtNationalCode.getText().toString()  ;
+        String mobileNumber = edtMobileNumber.getText().toString();
+        String nationalCode = edtNationalCode.getText().toString();
 
-        if (!mobileNumber.startsWith("09")){
+        if (!mobileNumber.startsWith("09")) {
             txtAlertPhone.setText(getString(R.string.enter_correct_mobile_phone));
             txtAlertPhone.setVisibility(View.VISIBLE);
             return;
         }
 
 
-
-        if(mobileNumber.length()<11){
+        if (mobileNumber.length() < 11) {
             txtAlertPhone.setText(getString(R.string.enter_correct_mobile_phone));
             txtAlertPhone.setVisibility(View.VISIBLE);
             return;
         }
 
 
-
-        if(!checkBoxRules.isChecked()){
+        if (!checkBoxRules.isChecked()) {
             txtAlertPhone.setText(getString(R.string.accept_rules));
             txtAlertPhone.setVisibility(View.VISIBLE);
             return;
         }
 
 
-        if(nationalCode.length()<10){
+        if (nationalCode.length() < 10) {
             txtAlertNationalCode.setText(getString(R.string.enter_correct_count_national_code));
             txtAlertNationalCode.setVisibility(View.VISIBLE);
             return;
         }
 
 
-             if(!Helper.validationNationalCode(nationalCode)){
-                 txtAlertNationalCode.setText(getString(R.string.enter_correct_national_code));
-                 txtAlertNationalCode.setVisibility(View.VISIBLE);
+        if (!Helper.validationNationalCode(nationalCode)) {
+            txtAlertNationalCode.setText(getString(R.string.enter_correct_national_code));
+            txtAlertNationalCode.setVisibility(View.VISIBLE);
             return;
         }
 
 
-
-
-
-
-
-
-showWating();
-loginViewModel.callLoginViewModel(mobileNumber,nationalCode);
-       // startActivity(new Intent(this,LoginVerificatonActivity.class));
+        showWating();
+        loginViewModel.callLoginViewModel(mobileNumber, nationalCode);
+        // startActivity(new Intent(this,LoginVerificatonActivity.class));
         //finish();
-}
-
+    }
 
 
     private void attachViewModel() {
         loginViewModel.getApiSuccessLiveDataResponse().observe(this, user -> {
-stopWating();
+                    stopWating();
 
 
-if(user.getResponseCodeEnum().getValue()== LoginStatusEnum.USER_EXIST.getValue()){
-    ActivityNavigationHelper.navigateToActivity(this, CheckPasswordActivity.class,true);
-    //ActivityNavigationHelper.navigateToActivity(this, MainActivity.class,true);
-}
+                    if (user.getResponseCodeEnum().getValue() == LoginStatusEnum.USER_EXIST.getValue()) {
+                        ActivityNavigationHelper.navigateToActivity(this, CheckPasswordActivity.class, true);
+                        //ActivityNavigationHelper.navigateToActivity(this, MainActivity.class,true);
+                    } else if (user.getResponseCodeEnum().getValue() == LoginStatusEnum.USERISNEW.getValue()) {
+                        ActivityNavigationHelper.navigateToActivity(this, VerifyRegisterOtpActivity.class, true);
 
-else if (user.getResponseCodeEnum().getValue()== LoginStatusEnum.USERISNEW.getValue()){
-    ActivityNavigationHelper.navigateToActivity(this,VerifyRegisterOtpActivity.class,true);
-
-}
+                    }
 
 
-
-        }
+                }
         );
 
-        loginViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {});
+        loginViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+        });
 
-        loginViewModel.getApiErrorLiveData().observe(this, volleyError ->{
+        loginViewModel.getApiErrorLiveData().observe(this, volleyError -> {
             goToFailApiPage("ApiError");
 
         });
@@ -205,23 +174,22 @@ else if (user.getResponseCodeEnum().getValue()== LoginStatusEnum.USERISNEW.getVa
         });
 
 
-      loginViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError ->{} );
-        loginViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError ->{} );
+        loginViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+        });
+        loginViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
 
     }
 
 
+    private void goToFailApiPage(String failCause) {
 
-    private void goToFailApiPage(String failCause){
-
-        Intent intent=new Intent(this,FailApiActivity.class);
-        intent.putExtra("failCause",failCause);
+        Intent intent = new Intent(this, FailApiActivity.class);
+        intent.putExtra("failCause", failCause);
         startActivity(intent);
         finish();
 
     }
-
-
 
 
     @Override
@@ -230,17 +198,15 @@ else if (user.getResponseCodeEnum().getValue()== LoginStatusEnum.USERISNEW.getVa
     }
 
 
-
-    private void showWating(){
+    private void showWating() {
         prgLogin.setVisibility(View.VISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(btnCheckPhone,false);
+        ButtonHelper.toggleAppCompatButtonStatus(btnCheckPhone, false);
     }
-      private void stopWating(){
+
+    private void stopWating() {
         prgLogin.setVisibility(View.INVISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(btnCheckPhone,true);
+        ButtonHelper.toggleAppCompatButtonStatus(btnCheckPhone, true);
     }
-
-
 
 
 }

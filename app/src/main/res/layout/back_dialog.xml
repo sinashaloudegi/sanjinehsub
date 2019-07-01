@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="10dp">
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="10dp">
 
     <TextView
         android:id="@+id/txt_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_20"
-        android:layout_marginRight="@dimen/margin_20"
         android:layout_marginTop="@dimen/margin_20"
+        android:layout_marginRight="@dimen/margin_20"
         android:gravity="center"
         android:padding="5dp"
-        android:text="@string/exit_app"
+        android:text="@string/report_exit"
         android:textColor="@color/black"
         android:textSize="@dimen/font_18"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt"
@@ -28,46 +27,45 @@
         android:layout_below="@id/txt_top"
         android:layout_marginLeft="@dimen/margin_20"
         android:layout_marginRight="@dimen/margin_20"
+        android:alpha="0.8"
         android:gravity="center"
         android:padding="5dp"
-        android:alpha="0.8"
-        android:text="@string/exit_app_sure"
+        android:text="@string/report_exit_sure"
         android:textColor="@color/black"
-        android:textSize="@dimen/font_12"/>
-
+        android:textSize="@dimen/font_12" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_5"
         android:layout_below="@id/txt"
+        android:layout_marginBottom="@dimen/margin_5"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_yes_report"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="@dimen/padding_5"
             android:layout_marginTop="@dimen/margin_10"
             android:layout_marginBottom="@dimen/margin_15"
+            android:layout_weight="1"
             android:background="@color/all_transparent"
+            android:padding="@dimen/padding_5"
             android:text="بله"
-            android:textColor="@color/bluish"/>
+            android:textColor="@color/bluish" />
 
         <Button
             android:id="@+id/btn_cancel_report"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="@dimen/padding_5"
-
-            android:background="@color/all_transparent"
-            android:text="خیر"
             android:layout_marginTop="@dimen/margin_10"
             android:layout_marginBottom="@dimen/margin_15"
-            android:textColor="@color/red"/>
+
+            android:layout_weight="1"
+            android:background="@color/all_transparent"
+            android:padding="@dimen/padding_5"
+            android:text="خیر"
+            android:textColor="@color/red" />
 
     </LinearLayout>
 </RelativeLayout>

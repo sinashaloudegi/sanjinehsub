@@ -5,30 +5,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ir.iconish.sanjinehsub.R;
+import ir.iconish.sanjinehsub.ui.DialogHelper;
 import ir.iconish.sanjinehsub.ui.WebViewConfiguration;
-import ir.iconish.sanjinehsub.util.ToastHelper;
 
 public class WebViewActivity extends AppCompatActivity {
-
-
-
+    private static final String TAG = "WebViewActivity";
 
     @BindView(R.id.webView)
     WebView webView;
 
 
-
-
     @BindView(R.id.customViewContainer)
     FrameLayout customViewContainer;
-
+    String url = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,20 +34,26 @@ public class WebViewActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        String url = getIntent().getStringExtra("url");
+        url = getIntent().getStringExtra("url");
+        Log.d(TAG, "onCreate: " + url);
         webView.loadUrl(url);
-      ToastHelper.showInfoMessage(this,url);
-        new WebViewConfiguration(this,customViewContainer,webView,url).initWebView();
+        //ToastHelper.showInfoMessage(this, url);
+        new WebViewConfiguration(this, customViewContainer, webView, url).initWebView();
     }
 
     @Override
     public void onBackPressed() {
-        if(webView.canGoBack()){
+        if (webView.canGoBack()) {
 
             webView.goBack();
-        }
-        else {
-            finish();
+        } else {
+            Log.d(TAG, "onBackPressed: urlweb" + url);
+            if (url.contains("/report/")) {
+                DialogHelper.sureBack(this);
+            } else {
+                finish();
+            }
+
         }
     }
 }

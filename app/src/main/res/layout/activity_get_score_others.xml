@@ -1,173 +1,165 @@
-<RelativeLayout android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:paddingBottom="@dimen/margin_5"
-                xmlns:android="http://schemas.android.com/apk/res/android">
-
-
-  <include
-    android:id="@+id/getScoreOthersToolbar"
-    layout="@layout/get_score_toolbar"></include>
-
-  <ImageView
-    android:id="@+id/imgGetScoreOthers"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/size121"
-    android:layout_below="@+id/getScoreOthersToolbar"
-    app:srcCompat="@drawable/ic_creditscorepageicon"/>
-
-  <TextView
-    android:id="@+id/txtGetScoreOthers"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/imgGetScoreOthers"
-
-    android:gravity="center"
-    android:text="@string/get_score"
-    android:textColor="@color/black"
-    android:textSize="@dimen/login_steps_text_size"
-    android:layout_marginRight="@dimen/margin_10"
-    android:layout_marginLeft="@dimen/margin_10"/>
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/margin_5">
 
 
-  <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/input_layout_msisdn_Others"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/txtGetScoreOthers"
-    android:layout_marginTop="@dimen/margin_10"
-    android:layout_marginRight="@dimen/margin_10"
-    android:layout_marginLeft="@dimen/margin_10"
-    >
+    <include
+        android:id="@+id/getScoreOthersToolbar"
+        layout="@layout/get_score_toolbar"></include>
 
-    <EditText
-      android:id="@+id/edtMsisdnOthers"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:backgroundTint="@color/black"
-      android:ellipsize="start"
-      android:ems="10"
-      android:gravity="top|right"
-      android:hint="@string/msisdn_others"
-      android:inputType="number"
-      android:maxLength="11"
-        android:textSize="@dimen/login_steps_text_size"
-      android:singleLine="true"
-      android:textColor="@color/black"
-      android:textColorHint="@color/darker_gray"
-      />
-
-
-  </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
-  <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/input_layout_ntcode_Others"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/input_layout_msisdn_Others"
-    android:layout_marginTop="@dimen/margin_10"
-    android:layout_marginRight="@dimen/margin_10"
-    android:layout_marginLeft="@dimen/margin_10"
-    >
-
-    <EditText
-      android:id="@+id/edtNtcodeOthers"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:backgroundTint="@color/black"
-      android:ellipsize="start"
-      android:ems="10"
-      android:gravity="top|right"
-      android:hint="@string/ntcode_others"
-      android:inputType="number"
-        android:textSize="@dimen/login_steps_text_size"
-
-        android:maxLength="10"
-      android:singleLine="true"
-      android:textColor="@color/black"
-      android:textColorHint="@color/darker_gray"
-      />
-
-  </com.google.android.material.textfield.TextInputLayout>
-
-
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_marginTop="@dimen/margin10"
-      android:layout_below="@+id/input_layout_ntcode_Others"
-      android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/imgGetScoreOthers"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size121"
+        android:layout_below="@+id/getScoreOthersToolbar"
+        app:srcCompat="@drawable/ic_creditscorepageicon" />
 
     <TextView
-        android:id="@+id/txtRegisterRules"
+        android:id="@+id/txtGetScoreOthers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgGetScoreOthers"
+
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        android:gravity="center"
+        android:text="@string/get_score"
+        android:textColor="@color/black"
+        android:textSize="@dimen/login_steps_text_size" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_msisdn_Others"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtGetScoreOthers"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10">
+
+        <EditText
+            android:id="@+id/edtMsisdnOthers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:ellipsize="start"
+            android:ems="10"
+            android:gravity="top|right"
+            android:hint="@string/msisdn_others"
+            android:inputType="number"
+            android:maxLength="11"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/darker_gray"
+            android:textSize="@dimen/login_steps_text_size" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_ntcode_Others"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_layout_msisdn_Others"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10">
+
+        <EditText
+            android:id="@+id/edtNtcodeOthers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:ellipsize="start"
+            android:ems="10"
+            android:gravity="top|right"
+            android:hint="@string/ntcode_others"
+            android:inputType="number"
+            android:maxLength="10"
+
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/darker_gray"
+            android:textSize="@dimen/login_steps_text_size" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_layout_ntcode_Others"
+        android:layout_marginTop="@dimen/margin10">
+
+        <TextView
+            android:id="@+id/txtRegisterRules"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/checkboxRules"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:text="@string/confirm_phone_nt_code_other"
+            android:textColor="@color/black"
+            android:textSize="@dimen/login_steps_text_size" />
+
+        <CheckBox
+            android:id="@+id/checkboxRules"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+
+            />
+
+    </RelativeLayout>
+
+
+    <ProgressBar
+        android:id="@+id/prgGetScoreOthers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/checkboxRules"
-        android:autoLink="web"
+        android:layout_above="@id/btnGetScoreOthers"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_39"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/txtAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnGetScoreOthers"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:gravity="right"
+
+        android:text=""
+        android:textColor="@color/alert_incorrect_entry"
         android:textSize="@dimen/login_steps_text_size"
-        android:linksClickable="true"
-        android:text="@string/confirm_phone_nt_code_other"
-        android:layout_centerVertical="true"
-        android:textColor="@color/black"/>
+        android:visibility="invisible" />
 
-    <CheckBox
-        android:layout_alignParentRight="true"
-        android:id="@+id/checkboxRules"
 
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.AppCompatButton
+
+        android:id="@+id/btnGetScoreOthers"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5"
+        android:layout_marginBottom="@dimen/button_margin_button"
+        android:text="@string/enter_get_score_others"
+        android:textColor="@color/sanjinehColor"
+        android:textSize="@dimen/get_score_steps_text_size"
+        android:visibility="invisible"
+        app:backgroundTint="@color/yellow_button">
 
-        />
-
-  </RelativeLayout>
-
-
-
-  <ProgressBar
-    android:id="@+id/prgGetScoreOthers"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:visibility="visible"
-    android:layout_centerHorizontal="true"
-    android:layout_above="@id/btnGetScoreOthers"
-    android:layout_marginBottom="@dimen/margin_39"
-    />
-
-  <TextView
-    android:id="@+id/txtAlert"
-    android:layout_width="match_parent"
-    android:layout_marginBottom="@dimen/margin_20"
-    android:layout_height="wrap_content"
-    android:layout_above="@+id/btnGetScoreOthers"
-    android:visibility="invisible"
-      android:layout_marginRight="@dimen/margin_10"
-      android:layout_marginLeft="@dimen/margin_10"
-
-    android:gravity="right"
-    android:textSize="@dimen/login_steps_text_size"
-    android:text=""
-    android:textColor="@color/alert_incorrect_entry"/>
-
-
-  <android.support.v7.widget.AppCompatButton
-
-    android:id="@+id/btnGetScoreOthers"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_marginBottom="@dimen/button_margin_button"
-    android:text="@string/enter_get_score_others"
-    android:textColor="@color/sanjinehColor"
-    android:textSize="@dimen/get_score_steps_text_size"
-      android:visibility="invisible"
-    app:backgroundTint="@color/yellow_button"
-    android:layout_marginRight="@dimen/margin_5"
-    android:layout_marginLeft="@dimen/margin_5">
-
-  </android.support.v7.widget.AppCompatButton>
+    </androidx.appcompat.widget.AppCompatButton>
 
 
 </RelativeLayout>

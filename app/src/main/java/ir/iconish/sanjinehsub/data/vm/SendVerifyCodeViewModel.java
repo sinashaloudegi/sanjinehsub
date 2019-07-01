@@ -1,6 +1,7 @@
 package ir.iconish.sanjinehsub.data.vm;
 
 
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -85,8 +86,9 @@ public class SendVerifyCodeViewModel extends ViewModel {
         return apiAuthFailureErrorLiveData;
     }
 
+    private static final String TAG = "_SCORE";
     public void callSendVerifyCodeViewModel(String ntcode, String ownermobile) {
-
+        Log.d(TAG, "In callSendVerifyCodeViewModel: ");
 
       sendVerifyCodeRepository.callSendVerifyCodeRepository(ntcode,ownermobile,new VolleyCallback() {
           @Override

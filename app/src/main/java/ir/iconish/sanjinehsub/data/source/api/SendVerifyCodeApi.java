@@ -13,9 +13,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
@@ -25,99 +22,106 @@ import ir.iconish.sanjinehsub.util.AppConstants;
 public class SendVerifyCodeApi {
 
 
-  AppController appController;
+    private static final String TAG = "_SCORE";
+    AppController appController;
 
 
-  @Inject
-  public SendVerifyCodeApi(AppController appController) {
-    this.appController = appController;
-  }
-
-
-  public VerifyCodeOthersResponse parseJson(JSONObject jsonObject) {
-    VerifyCodeOthersResponse verifyCodeOthersResponse = new VerifyCodeOthersResponse();
-    try {
-      verifyCodeOthersResponse.setStatusCode(jsonObject.getInt("reportStateId"));
-      verifyCodeOthersResponse.setDescription(jsonObject.getString("reportStateValue"));
-      verifyCodeOthersResponse.setNoReportReqToken(jsonObject.getString("noreportReqToken"));
-
-    } catch (JSONException e) {
-      e.printStackTrace();
+    @Inject
+    public SendVerifyCodeApi(AppController appController) {
+        this.appController = appController;
     }
 
-    return verifyCodeOthersResponse;
-  }
+    public VerifyCodeOthersResponse parseJson(JSONObject jsonObject) {
+        VerifyCodeOthersResponse verifyCodeOthersResponse = new VerifyCodeOthersResponse();
+        try {
+            verifyCodeOthersResponse.setStatusCode(jsonObject.getInt("reportStateId"));
+            verifyCodeOthersResponse.setDescription(jsonObject.getString("reportDescryption"));
+            verifyCodeOthersResponse.setNoReportReqToken(jsonObject.getString("reportDescryption"));
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-  public void callSendVerifyCodeApi(String token,String ntcode, String ownermobile, String mobile, final VolleyCallback volleyCallback) {
-    String url = ConstantUrl.BASE_CREDIT+ ConstantUrl.SEND_VERIFYCODE ;
-    //https://creditscore.iconish.ir/icredit/sendVerifyCode/{ntcode}/{ownermobile}/{mobile}
-    Log.e("url=", url);
-
-
-    JSONObject body = new JSONObject();
-    try {
-      body.put("ntcode", ntcode);
-      body.put("ownermobile", ownermobile);
-      body.put("mobile", mobile);
-
-    }
-    catch (Exception e){
-
+        return verifyCodeOthersResponse;
     }
 
-    // JsonArrayRequest
+    public void callSendVerifyCodeApi(String token, String ntcode, String ownermobile, String mobile, final VolleyCallback volleyCallback) {
+        String url = ConstantUrl.BASE_MARKET + ConstantUrl.SEND_VERIFYCODE;
+        //https://creditscore.iconi.ir/icredit/sendVerifyCode/{ntcode}/{ownermobile}/{mobile}
+        Log.e("url=", url);
+        Log.d(TAG, "url is: " + url);
 
-    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, url, body,
-      response -> {
-        if (response != null) {
-          VerifyCodeOthersResponse verifyCodeOthersResponse = parseJson(response);
-          volleyCallback.onSuccess(verifyCodeOthersResponse);
-          // volleyCallback.onSuccess(visits);
+
+        JSONObject body = new JSONObject();
+        try {
+            Log.d(TAG, "nid:" + ntcode + " otherMobileNumber: " + ownermobile + " ownerMobileNumber: " + mobile);
+
+            body.put("nid", ntcode);
+            body.put("otherMobileNumber", ownermobile);
+            body.put("ownerMobileNumber", mobile);
+
+    /*        Log.d(TAG, "token: " + "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxOTI0MDYwNDM3MDQ3NTAzIiwiaWNvbkNyZWRpdCI6IjE5MjQwNjA0MzcwNDc1MDMiLCJpYXQiOjE1NjEzNzgwMjR9.i4OfH_KSc--5ScATB6gzI7S5Xk7s_uKC8i__JSq6jL4");
+
+            body.put("reqToken", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxOTI0MDYwNDM3MDQ3NTAzIiwiaWNvbkNyZWRpdCI6IjE5MjQwNjA0MzcwNDc1MDMiLCJpYXQiOjE1NjEzNzgwMjR9.i4OfH_KSc--5ScATB6gzI7S5Xk7s_uKC8i__JSq6jL4");
+*/
+        } catch (Exception e) {
+
         }
 
+        // JsonArrayRequest
 
-      }, error -> {
-        if ((error instanceof NetworkError) || (error instanceof NoConnectionError)) {
-          volleyCallback.onClientNetworkError();
-          return;
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, url, body,
+                response -> {
+                    Log.d(TAG, "callSendVerifyCodeApi: Response: " + response.toString());
+                    if (response != null) {
+                        VerifyCodeOthersResponse verifyCodeOthersResponse = parseJson(response);
+                        volleyCallback.onSuccess(verifyCodeOthersResponse);
+                        // volleyCallback.onSuccess(visits);
+                    }
+
+
+                }, error -> {
+            Log.d(TAG, "callSendVerifyCodeApi: error= " + error.toString());
+            if ((error instanceof NetworkError) || (error instanceof NoConnectionError)) {
+                volleyCallback.onClientNetworkError();
+                return;
+            }
+            if (error instanceof TimeoutError) {
+                volleyCallback.onTimeOutError();
+                return;
+            }
+
+
+            if ((error instanceof ServerError)) {
+                volleyCallback.onServerError();
+                return;
+            }
+
+
         }
-        if (error instanceof TimeoutError) {
-          volleyCallback.onTimeOutError();
-          return;
-        }
 
-
-        if ((error instanceof ServerError)) {
-          volleyCallback.onServerError();
-          return;
-        }
-
-
-
-      }
-
-    ) {
+        ) {
             @Override
             public String getBodyContentType() {
                 return "application/json; charset=utf-8";
             }
 
-    @Override
-    public Map<String, String> getHeaders() {
-        Map<String, String> params = new HashMap<String, String>();
-       params.put("Authorization", token);
-        return params;
-      }
+          /*  @Override
+        public Map<String, String> getHeaders() {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("Authorization", token);
+            Log.d(TAG, "getHeaders: token:" + token);
+            return params;
+        }*/
     };
 
 
-    jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(AppConstants.CLIENT_TIMEOUT, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-    String tag_json_arry = "sendVerifySmsApi";
-    appController.addToRequestQueue(jsonObjReq, tag_json_arry);
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(AppConstants.CLIENT_TIMEOUT, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        String tag_json_arry = "sendVerifySmsApi";
+        appController.addToRequestQueue(jsonObjReq, tag_json_arry);
 
 
-  }
+    }
 
 
 }

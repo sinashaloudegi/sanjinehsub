@@ -6,7 +6,7 @@ public class User {
     private String lastName;
     private String email;
     private String mobileNumber;
-private long userId;
+    private long userId;
 
     public LoginStatusEnum getResponseCodeEnum() {
         return responseCodeEnum;
@@ -23,7 +23,6 @@ private long userId;
     public void setUserId(long userId) {
         this.userId = userId;
     }
-
 
 
     public String getFirstName() {
@@ -57,10 +56,6 @@ private long userId;
     public void setMobileNumber(String mobileNumber) {
         this.mobileNumber = mobileNumber;
     }
-
-
-
-
 
 
 }

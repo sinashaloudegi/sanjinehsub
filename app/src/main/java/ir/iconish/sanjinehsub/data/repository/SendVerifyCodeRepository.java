@@ -1,6 +1,8 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.source.api.SendVerifyCodeApi;
@@ -22,9 +24,13 @@ public class SendVerifyCodeRepository {
     this.sharedPreferencesManager = sharedPreferencesManager;
   }
 
+    private static final String TAG = "_SCORE";
   public void callSendVerifyCodeRepository(String ntcode, String ownermobile, final VolleyCallback volleyCallback) {
     String msisdn = sharedPreferencesManager.getMobileNumberValue();
     String token = sharedPreferencesManager.getTokenValue();
+
+      Log.d(TAG, "callSendVerifyCodeRepository: Token:" + token);
+      Log.d(TAG, "In callSendVerifyCodeRepository: ");
     sendVerifyCodeApi.callSendVerifyCodeApi(token,ntcode, ownermobile, msisdn, new VolleyCallback() {
       @Override
       public void onSuccess(Object o) {

@@ -23,8 +23,6 @@ public class SharedPreferencesManager {
     private static final String TOKEN = "TOKEN";
 
 
-
-
     private SharedPreferences sharedPreferences;
 
     @Inject
@@ -33,190 +31,148 @@ public class SharedPreferencesManager {
     }
 
 
-
-    public  String getMobileNumberValue() {
-        return sharedPreferences.getString(MOBILE_NUMBER_VALUE , null);
+    public String getMobileNumberValue() {
+        return sharedPreferences.getString(MOBILE_NUMBER_VALUE, null);
     }
 
-    public  void setMobileNumberValue( String newValue) {
+    public void setMobileNumberValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(MOBILE_NUMBER_VALUE , newValue);
+        editor.putString(MOBILE_NUMBER_VALUE, newValue);
         editor.commit();
     }
 
 
-    public  String getEmailValue() {
-        return sharedPreferences.getString(EMAIL_VALUE , null);
+    public String getEmailValue() {
+        return sharedPreferences.getString(EMAIL_VALUE, null);
     }
 
-    public  void setEmailValue( String newValue) {
+    public void setEmailValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(EMAIL_VALUE , newValue);
+        editor.putString(EMAIL_VALUE, newValue);
         editor.commit();
     }
 
 
-    public  String getMarketKeyValue() {
-        return sharedPreferences.getString(MARKET_KEY , null);
+    public String getMarketKeyValue() {
+        return sharedPreferences.getString(MARKET_KEY, null);
     }
 
 
-
-
-    public  void setMarketKeyValue( String newValue) {
+    public void setMarketKeyValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(MARKET_KEY , newValue);
+        editor.putString(MARKET_KEY, newValue);
         editor.commit();
     }
 
 
-
-
-    public  int getTimerDurationValue() {
-        return sharedPreferences.getInt(TIMER_DURATION , 200000);
+    public int getTimerDurationValue() {
+        return sharedPreferences.getInt(TIMER_DURATION, 200000);
     }
 
 
-
-
-    public  void setTimerDurationValue( int newValue) {
+    public void setTimerDurationValue(int newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(TIMER_DURATION , newValue);
+        editor.putInt(TIMER_DURATION, newValue);
         editor.commit();
     }
 
 
-
-
-
-    public  String getTokenValue() {
-        return sharedPreferences.getString(TOKEN , null);
+    public String getTokenValue() {
+        return sharedPreferences.getString(TOKEN, null);
     }
 
 
-
-
-    public  void setTokenValue( String newValue) {
+    public void setTokenValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(TOKEN , newValue);
+        editor.putString(TOKEN, newValue);
         editor.commit();
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-      public  String getFirsNameValue() {
-        return sharedPreferences.getString(FIRST_NAME_VALUE , null);
+    public String getFirsNameValue() {
+        return sharedPreferences.getString(FIRST_NAME_VALUE, null);
     }
 
 
-
-
-    public  void setFirstNameValue( String newValue) {
+    public void setFirstNameValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(FIRST_NAME_VALUE , newValue);
+        editor.putString(FIRST_NAME_VALUE, newValue);
         editor.commit();
     }
 
 
-
-
-
-
-
-    public  String getLastNameValue() {
-        return sharedPreferences.getString(LAST_NAME_VALUE , null);
+    public String getLastNameValue() {
+        return sharedPreferences.getString(LAST_NAME_VALUE, null);
     }
 
-    public  void setLastNameValue( String newValue) {
+    public void setLastNameValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(LAST_NAME_VALUE , newValue);
+        editor.putString(LAST_NAME_VALUE, newValue);
+        editor.commit();
+    }
+
+    public String getNationalCodeValue() {
+        return sharedPreferences.getString(NATIONAL_CODE, null);
+    }
+
+    public void setNationalCodeValue(String newValue) {
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(NATIONAL_CODE, newValue);
+        editor.commit();
+    }
+
+    public int getResponseStatusCodeValue() {
+        return sharedPreferences.getInt(RESPONSE_STATUS_CODE_VALUE, -1);
+    }
+
+    public void setResponseStatusCodeValue(int newValue) {
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(RESPONSE_STATUS_CODE_VALUE, newValue);
         editor.commit();
     }
 
 
+    public long getUserIdValue() {
+        return sharedPreferences.getLong(USER_ID_VALUE, -1);
+    }
 
-
-
-
-      public  void setNationalCodeValue( String newValue) {
+    public void setUserIdValue(long newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(NATIONAL_CODE , newValue);
-        editor.commit();
-    }
-
-    public  String getNationalCodeValue() {
-        return sharedPreferences.getString(NATIONAL_CODE , null);
-    }
-
-
-
-
-
-      public  int getResponseStatusCodeValue() {
-        return sharedPreferences.getInt(RESPONSE_STATUS_CODE_VALUE , -1);
-    }
-
-    public  void setResponseStatusCodeValue( int newValue) {
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(RESPONSE_STATUS_CODE_VALUE , newValue);
+        editor.putLong(USER_ID_VALUE, newValue);
         editor.commit();
     }
 
 
-  public  long getUserIdValue() {
-        return sharedPreferences.getLong(USER_ID_VALUE , -1);
+    public String getPasswordValue() {
+        return sharedPreferences.getString(PASSWORD_VALUE, null);
     }
 
-    public  void setUserIdValue( long newValue) {
+    public void setPasswordValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putLong(USER_ID_VALUE , newValue);
+        editor.putString(PASSWORD_VALUE, newValue);
         editor.commit();
     }
 
 
+    public void clearAll() {
 
-  public  String getPasswordValue() {
-        return sharedPreferences.getString(PASSWORD_VALUE,null);
-    }
-
-    public  void setPasswordValue( String newValue) {
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(PASSWORD_VALUE , newValue);
-        editor.commit();
-    }
-
-
-public void clearAll(){
-
-        String marketKey=getMarketKeyValue();
-        int  timmerDuration=getTimerDurationValue();
+        String marketKey = getMarketKeyValue();
+        int timmerDuration = getTimerDurationValue();
         sharedPreferences.edit().clear().commit();
         setTimerDurationValue(timmerDuration);
         setMarketKeyValue(marketKey);
 
 
+    }
 
-}
 
+    public void clearPassword() {
 
-public void clearPassword(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(PASSWORD_VALUE);
+        editor.apply();
 
-    SharedPreferences.Editor editor = sharedPreferences.edit();
-    editor.remove(PASSWORD_VALUE);
-    editor.apply();
-
-}
-
+    }
 
 
 }

@@ -1,62 +1,63 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
-
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.model.PasswordValidationResponse;
 import ir.iconish.sanjinehsub.data.model.LoginStatusEnum;
+import ir.iconish.sanjinehsub.data.model.PasswordValidationResponse;
 import ir.iconish.sanjinehsub.data.source.api.VerifyRegisterOtpApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 
 
 public class VerifyRegisterOtpRepository {
-   VerifyRegisterOtpApi verifyRegisterOtpApi;
+    VerifyRegisterOtpApi verifyRegisterOtpApi;
 
 
-SharedPreferencesManager sharedPreferencesManager;
+    SharedPreferencesManager sharedPreferencesManager;
 
-@Inject
+    @Inject
     public VerifyRegisterOtpRepository(VerifyRegisterOtpApi verifyRegisterOtpApi, SharedPreferencesManager sharedPreferencesManager) {
 
-this.verifyRegisterOtpApi=verifyRegisterOtpApi;
-this.sharedPreferencesManager=sharedPreferencesManager;
+        this.verifyRegisterOtpApi = verifyRegisterOtpApi;
+        this.sharedPreferencesManager = sharedPreferencesManager;
     }
 
-    public void callVerifyRegisterOtpRepository  (String otp, final VolleyCallback volleyCallback) {
-        verifyRegisterOtpApi.callVerifyRegisterOtpApi(otp,sharedPreferencesManager.getMobileNumberValue(),new VolleyCallback() {
-        @Override
-        public   void onSuccess(Object o) {
+    public void callVerifyRegisterOtpRepository(String otp, final VolleyCallback volleyCallback) {
+        verifyRegisterOtpApi.callVerifyRegisterOtpApi(otp, sharedPreferencesManager.getMobileNumberValue(), new VolleyCallback() {
+            @Override
+            public void onSuccess(Object o) {
 
-            PasswordValidationResponse passwordValidationResponse= (PasswordValidationResponse) o;
+                PasswordValidationResponse passwordValidationResponse = (PasswordValidationResponse) o;
 
-            if(passwordValidationResponse.getRespobseStatusCode()== LoginStatusEnum.VERIFY_SUCCESS_AND_NEW.getValue()){
-            String token= passwordValidationResponse.getToken();
+                if (passwordValidationResponse.getRespobseStatusCode() == LoginStatusEnum.VERIFY_SUCCESS_AND_NEW.getValue()) {
+                    String token = passwordValidationResponse.getToken();
 
-sharedPreferencesManager.setPasswordValue(otp);
-sharedPreferencesManager.setTokenValue(token);
-}
-            volleyCallback.onSuccess(o);
-        }
-        @Override
-        public void onFail(String volleyError) {
-            volleyCallback.onFail(volleyError);
-        }
+                    sharedPreferencesManager.setPasswordValue(otp);
+                    sharedPreferencesManager.setTokenValue(token);
+                }
+                volleyCallback.onSuccess(o);
+            }
 
-        @Override
-        public void onServerError( ) {
-            volleyCallback.onServerError();
-        }
+            @Override
+            public void onFail(String volleyError) {
+                volleyCallback.onFail(volleyError);
+            }
 
-        @Override
-        public void onClientNetworkError() {
-            volleyCallback.onClientNetworkError();
-        }
-        @Override
-        public void onTimeOutError() {
-            volleyCallback.onTimeOutError();
-        }
+            @Override
+            public void onServerError() {
+                volleyCallback.onServerError();
+            }
+
+            @Override
+            public void onClientNetworkError() {
+                volleyCallback.onClientNetworkError();
+            }
+
+            @Override
+            public void onTimeOutError() {
+                volleyCallback.onTimeOutError();
+            }
 
             @Override
             public void onForbiden403(String volleyError) {
@@ -74,15 +75,15 @@ sharedPreferencesManager.setTokenValue(token);
             }
 
             @Override
-        public void onAuthFailureError401(String volleyError) {
-            volleyCallback.onAuthFailureError401(volleyError);
-        }
-    });
+            public void onAuthFailureError401(String volleyError) {
+                volleyCallback.onAuthFailureError401(volleyError);
+            }
+        });
 
 
-}
+    }
 
-    public int getTimerDuration(){
+    public int getTimerDuration() {
         return sharedPreferencesManager.getTimerDurationValue();
     }
 

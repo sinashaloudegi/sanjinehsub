@@ -3,7 +3,6 @@ package ir.iconish.sanjinehsub.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -18,9 +17,6 @@ public class EnterPasswordActivity extends AppCompatActivity {
     AppCompatButton btnEnter;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,22 +29,17 @@ public class EnterPasswordActivity extends AppCompatActivity {
     @OnClick(R.id.btnEnter)
     public void navMenuAction() {
 
-        startActivity(new Intent(this,MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
         finish();
-}
-
+    }
 
 
     @OnClick(R.id.txtForgetPassword)
     public void txtForgetPasswordAction() {
 
-        startActivity(new Intent(this,ForgetPasswordActivity.class));
+        startActivity(new Intent(this, ForgetPasswordActivity.class));
         finish();
-}
-
-
-
-
+    }
 
 
 }

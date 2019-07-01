@@ -3,158 +3,159 @@
 
 <!-- TODO: Update blank fragment layout -->
 
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-android:background="@color/sanjinehColor"
-    android:paddingRight="@dimen/margin10"
-    android:paddingLeft="@dimen/margin10"
-    android:paddingBottom="@dimen/button_margin_button"
-
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-
- <ImageView
-
-     android:id="@+id/imgLogo"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:layout_marginTop="@dimen/size8"
-
-
-     app:srcCompat="@drawable/ic_logo"/>
- <ImageView
-     android:id="@+id/imgLoginRegister"
-     android:layout_width="match_parent"
-     android:layout_height="@dimen/size80"
-     android:layout_below="@+id/imgLogo"
-
-     app:srcCompat="@drawable/ic_loginicon"/>
-
- <TextView
-     android:id="@+id/txtIsregister"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-android:layout_below="@+id/imgLoginRegister"
-     android:gravity="right"
-     android:layout_marginBottom="@dimen/margin10"
-android:textSize="@dimen/login_steps_text_size"
-     android:text="@string/account_credit"
-     android:textColor="@color/white"/>
-
-
- <RelativeLayout
-     android:layout_width="match_parent"
-     android:layout_centerInParent="true"
-     android:id="@+id/centerLayout"
-     android:layout_height="wrap_content">
- <TextView
-     android:id="@+id/txtAlertPhone"
-     android:layout_width="match_parent"
-     android:layout_marginTop="@dimen/margin5"
-     android:layout_height="wrap_content"
-     android:layout_below="@+id/edtMobileNumber"
-     android:visibility="invisible"
-     android:gravity="right"
-     android:textSize="@dimen/login_steps_text_size"
-
-     android:text="@string/force_enter_password"
-     android:textColor="@color/alert_incorrect_entry"/>
- <EditText
-     android:layout_width="match_parent"
-     android:backgroundTint="@color/white"
-     android:textColor="@color/white"
-     android:id="@+id/edtMobileNumber"
-     android:maxLength="11"
-     android:inputType="phone"
-     android:hint="@string/phone_hint"
-     android:textColorHint="@color/darker_gray"
-     android:gravity="center"
-     android:layout_height="wrap_content" />
-
-  <TextView
-     android:id="@+id/txtAlertNationalCode"
-     android:layout_width="match_parent"
-     android:layout_marginTop="@dimen/margin10"
-     android:layout_height="wrap_content"
-     android:layout_below="@+id/edtNationalCode"
-     android:visibility="invisible"
-     android:gravity="right"
-     android:textSize="@dimen/login_steps_text_size"
-
-     android:text="@string/force_enter_password"
-     android:textColor="@color/alert_incorrect_entry"/>
- <EditText
-     android:layout_width="match_parent"
-     android:layout_marginTop="@dimen/margin10"
-     android:backgroundTint="@color/white"
-     android:textColor="@color/white"
-     android:id="@+id/edtNationalCode"
-     android:maxLength="10"
-     android:inputType="phone"
-
-     android:hint="@string/national_code"
-     android:textColorHint="@color/darker_gray"
-     android:layout_below="@+id/txtAlertPhone"
-     android:gravity="center"
-     android:layout_height="wrap_content" />
-
-
-
-
-
- </RelativeLayout>
-
-<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_marginTop="@dimen/margin10"
-    android:layout_below="@+id/centerLayout"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@color/sanjinehColor"
+    android:paddingLeft="@dimen/margin10"
+    android:paddingRight="@dimen/margin10"
 
- <TextView
-     android:id="@+id/txtRegisterRules"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-android:layout_toLeftOf="@+id/checkboxRules"
-     android:autoLink="web"
-     android:textSize="@dimen/login_steps_text_size"
-     android:linksClickable="true"
-     android:text="@string/rules"
-     android:layout_centerVertical="true"
-     android:textColor="@color/white"/>
+    android:paddingBottom="@dimen/button_margin_button">
 
- <CheckBox
-     android:layout_alignParentRight="true"
-     android:id="@+id/checkboxRules"
 
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-android:layout_centerVertical="true"
+    <ImageView
 
-     />
+        android:id="@+id/imgLogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size8"
 
-</RelativeLayout>
- <ProgressBar
-     android:id="@+id/prgLogin"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:visibility="invisible"
-     android:layout_centerHorizontal="true"
-     android:layout_above="@+id/btnCheckPhone"
-     android:layout_marginBottom="@dimen/margin15"
-     />
- <android.support.v7.widget.AppCompatButton
 
-android:id="@+id/btnCheckPhone"
-     android:layout_width="match_parent"
-     android:text="@string/check_phone"
-     android:textColor="@color/dark_blue"
-     app:backgroundTint="@color/yellow_button"
-     android:layout_marginBottom="@dimen/button_margin_button"
+        app:srcCompat="@drawable/ic_logo" />
 
-     android:textSize="@dimen/button_text_size"
-     android:layout_alignParentBottom="true"
-     android:layout_height="wrap_content"
-     />
+    <ImageView
+        android:id="@+id/imgLoginRegister"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size80"
+        android:layout_below="@+id/imgLogo"
+
+        app:srcCompat="@drawable/ic_loginicon" />
+
+    <TextView
+        android:id="@+id/txtIsregister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgLoginRegister"
+        android:layout_marginBottom="@dimen/margin10"
+        android:gravity="right"
+        android:text="@string/account_credit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/login_steps_text_size" />
+
+
+    <RelativeLayout
+        android:id="@+id/centerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/txtAlertPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtMobileNumber"
+            android:layout_marginTop="@dimen/margin5"
+            android:gravity="right"
+            android:text="@string/force_enter_password"
+            android:textColor="@color/alert_incorrect_entry"
+
+            android:textSize="@dimen/login_steps_text_size"
+            android:visibility="invisible" />
+
+        <EditText
+            android:id="@+id/edtMobileNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            android:hint="@string/phone_hint"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:textColor="@color/white"
+            android:textColorHint="@color/darker_gray" />
+
+        <TextView
+            android:id="@+id/txtAlertNationalCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edtNationalCode"
+            android:layout_marginTop="@dimen/margin10"
+            android:gravity="right"
+            android:text="@string/force_enter_password"
+            android:textColor="@color/alert_incorrect_entry"
+
+            android:textSize="@dimen/login_steps_text_size"
+            android:visibility="invisible" />
+
+        <EditText
+            android:id="@+id/edtNationalCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtAlertPhone"
+            android:layout_marginTop="@dimen/margin10"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+
+            android:hint="@string/national_code"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:textColor="@color/white"
+            android:textColorHint="@color/darker_gray" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/centerLayout"
+        android:layout_marginTop="@dimen/margin10">
+
+        <TextView
+            android:id="@+id/txtRegisterRules"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/checkboxRules"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:text="@string/rules"
+            android:textColor="@color/white"
+            android:textSize="@dimen/login_steps_text_size" />
+
+        <CheckBox
+            android:id="@+id/checkboxRules"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+
+            />
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/prgLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnCheckPhone"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin15"
+        android:visibility="invisible" />
+
+    <androidx.appcompat.widget.AppCompatButton
+
+        android:id="@+id/btnCheckPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/button_margin_button"
+        android:text="@string/check_phone"
+
+        android:textColor="@color/dark_blue"
+        android:textSize="@dimen/button_text_size"
+        app:backgroundTint="@color/yellow_button" />
 
 </RelativeLayout>

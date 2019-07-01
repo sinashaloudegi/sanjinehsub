@@ -12,31 +12,30 @@ import ir.iconish.sanjinehsub.data.model.CreditScorePreProcess;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.ui.DialogHelper;
 import ir.iconish.sanjinehsub.ui.Dialoglistener;
-import ir.iconish.sanjinehsub.ui.activity.GetScoreActivity;
 import ir.iconish.sanjinehsub.ui.activity.ReportActivity;
 import ir.iconish.sanjinehsub.ui.activity.WebViewActivity;
 
 public class CreditStatusManager implements Dialoglistener {
     Activity activity;
 
+    private static final String TAG = "_SCORE";
+
     public CreditStatusManager(Activity activity) {
-        this.activity=activity;
+        this.activity = activity;
     }
 
-    public  void handleReportStatus(CreditScorePreProcess creditScorePreProcess, TextView textView){
+    public void handleReportStatus(CreditScorePreProcess creditScorePreProcess, TextView textView) {
 
         //int status=creditScorePreProcess.getStatus();
 
-     //   if(status==200) {
-            if (creditScorePreProcess.getReportStateId() == CreditResponseEnum.SUCCESS.getId()||creditScorePreProcess.getReportStateId()==CreditResponseEnum.NO_REPORT.getId()) {
+        //   if(status==200) {
+        if (creditScorePreProcess.getReportStateId() == CreditResponseEnum.SUCCESS.getId() || creditScorePreProcess.getReportStateId() == CreditResponseEnum.NO_REPORT.getId()) {
 
-                getScoreAtion(creditScorePreProcess.getReqToken(),activity);
-              // goToNativeReportActivity(creditScorePreProcess.getReqToken());
-            }
-
-            else {
-                showErrorCase("",creditScorePreProcess.getReportDescryption(),textView);
-            }
+            getScoreAtion(creditScorePreProcess.getReqToken(), activity);
+            // goToNativeReportActivity(creditScorePreProcess.getReqToken());
+        } else {
+            showErrorCase("", creditScorePreProcess.getReportDescryption(), textView);
+        }
 
        /* else {
 
@@ -45,9 +44,9 @@ showErrorCase(activity.getString(R.string.error)+" "+status,activity.getString(R
         }*/
     }
 
-
-    private  void getScoreAtion(String reqToken,Activity activity){
-        String url = "https://www.sanjineh.ir/report/" + reqToken;
+    private void getScoreAtion(String reqToken, Activity activity) {
+        String url = "https://www.sanjineh.ir/report/" + reqToken + "?from=android_cafebazar";
+        Log.d(TAG, "getScoreAtion:URL: ");
         ActivityNavigationHelper.navigateToWebView(url, activity, WebViewActivity.class);
         activity.finish();
     }
@@ -62,16 +61,16 @@ showErrorCase(activity.getString(R.string.error)+" "+status,activity.getString(R
 
     }
 
-    private void showErrorCase(String dialogTitle,String dialogBody,TextView textView){
+    private void showErrorCase(String dialogTitle, String dialogBody, TextView textView) {
 
-        DialogHelper.showDialog(dialogTitle,dialogBody,activity.getString(R.string.submit),null,activity,this);
+        DialogHelper.showDialog(dialogTitle, dialogBody, activity.getString(R.string.submit), null, activity, this);
         textView.setText(dialogBody);
         textView.setVisibility(View.VISIBLE);
     }
 
-    private void goToNativeReportActivity(String reqToken){
-        Intent intent=new Intent(activity, ReportActivity.class);
-        intent.putExtra("reqToken",reqToken);
+    private void goToNativeReportActivity(String reqToken) {
+        Intent intent = new Intent(activity, ReportActivity.class);
+        intent.putExtra("reqToken", reqToken);
         activity.startActivity(intent);
         activity.finish();
 

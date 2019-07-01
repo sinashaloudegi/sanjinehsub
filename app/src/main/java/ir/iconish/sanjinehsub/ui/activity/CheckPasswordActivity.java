@@ -2,8 +2,6 @@ package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -44,8 +42,6 @@ public class CheckPasswordActivity extends AppCompatActivity {
     CheckPasswordViewModel checkPasswordViewModel;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +56,7 @@ public class CheckPasswordActivity extends AppCompatActivity {
 
     @OnClick(R.id.imgBack)
     public void imgBackAction() {
-        ActivityNavigationHelper.navigateToActivity(this,LoginActivity.class,true);
+        ActivityNavigationHelper.navigateToActivity(this, LoginActivity.class, true);
 
     }
 
@@ -68,14 +64,10 @@ public class CheckPasswordActivity extends AppCompatActivity {
     public void navMenuAction() {
 
 
-
-
-
-
         txtAlert.setVisibility(View.INVISIBLE);
-        String password=  edtPassword.getText().toString()  ;
+        String password = edtPassword.getText().toString();
 
-        if(password.length()<4){
+        if (password.length() < 4) {
             txtAlert.setText(getString(R.string.password_max_min));
             txtAlert.setVisibility(View.VISIBLE);
             return;
@@ -83,18 +75,15 @@ public class CheckPasswordActivity extends AppCompatActivity {
 
         checkPassword(password);
 
-}
-
+    }
 
 
     @OnClick(R.id.txtForgetPassword)
     public void txtForgetPasswordAction() {
         clearPassword();
-        startActivity(new Intent(this,ForgetPasswordActivity.class));
+        startActivity(new Intent(this, ForgetPasswordActivity.class));
         finish();
-}
-
-
+    }
 
 
     private void attachViewModel() {
@@ -102,30 +91,13 @@ public class CheckPasswordActivity extends AppCompatActivity {
                     stopWating();
 
 
+                    if (passwordValidationResponse.getRespobseStatusCode() == 1012 || passwordValidationResponse.getRespobseStatusCode() == 1013 || passwordValidationResponse.getRespobseStatusCode() == 1000) {
 
-            if(passwordValidationResponse.getRespobseStatusCode()==1012||passwordValidationResponse.getRespobseStatusCode()==1013||passwordValidationResponse.getRespobseStatusCode()==1000) {
-
-                ActivityNavigationHelper.navigateToActivity(this, MainActivity.class, true);
-            }
-
-            else {
-                txtAlert.setText(passwordValidationResponse.getDescryptions());
-                txtAlert.setVisibility(View.VISIBLE);
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        ActivityNavigationHelper.navigateToActivity(this, MainActivity.class, true);
+                    } else {
+                        txtAlert.setText(passwordValidationResponse.getDescryptions());
+                        txtAlert.setVisibility(View.VISIBLE);
+                    }
 
 
 //if 1010 go to enter pass -- if 1011 go to otp
@@ -134,9 +106,10 @@ public class CheckPasswordActivity extends AppCompatActivity {
                 }
         );
 
-        checkPasswordViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {});
+        checkPasswordViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+        });
 
-        checkPasswordViewModel.getApiErrorLiveData().observe(this, volleyError ->{
+        checkPasswordViewModel.getApiErrorLiveData().observe(this, volleyError -> {
             goToFailApiPage("ApiError");
 
         });
@@ -159,36 +132,40 @@ public class CheckPasswordActivity extends AppCompatActivity {
         });
 
 
-        checkPasswordViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError ->{} );
-        checkPasswordViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError ->{} );
+        checkPasswordViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+        });
+        checkPasswordViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
 
     }
 
 
-    private void showWating(){
+    private void showWating() {
         prg.setVisibility(View.VISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(btnEnter,false);
+        ButtonHelper.toggleAppCompatButtonStatus(btnEnter, false);
     }
-    private void stopWating(){
+
+    private void stopWating() {
         prg.setVisibility(View.INVISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(btnEnter,true);
+        ButtonHelper.toggleAppCompatButtonStatus(btnEnter, true);
     }
 
-    private void goToFailApiPage(String failCause){
+    private void goToFailApiPage(String failCause) {
 
-        Intent intent=new Intent(this,FailApiActivity.class);
-        intent.putExtra("failCause",failCause);
+        Intent intent = new Intent(this, FailApiActivity.class);
+        intent.putExtra("failCause", failCause);
         startActivity(intent);
         finish();
 
     }
-private void checkPassword(String password){
+
+    private void checkPassword(String password) {
         showWating();
         checkPasswordViewModel.callCheckPasswordViewModel(password);
-}
+    }
 
-private void clearPassword(){
-    checkPasswordViewModel.clearPassword();
-}
+    private void clearPassword() {
+        checkPasswordViewModel.clearPassword();
+    }
 
 }
