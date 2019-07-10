@@ -3,6 +3,9 @@ package ir.iconish.sanjinehsub.data.source.api;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -10,6 +13,7 @@ import com.android.volley.Request;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,6 +24,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.config.AppController;
+import ir.iconish.sanjinehsub.data.model.CafeBazaarPaymentTypeEnum;
 import ir.iconish.sanjinehsub.data.model.CreditScorePreProcess;
 import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.Purchase;
@@ -35,7 +40,8 @@ public class CreditScorePreProcessApi {
     }
 
 
-    public CreditScorePreProcess parseJson(JSONObject jsonObject) {
+    @NonNull
+    public CreditScorePreProcess parseJson(@NonNull JSONObject jsonObject) {
         CreditScorePreProcess creditScorePreProcess = new CreditScorePreProcess();
         try {
 
@@ -65,11 +71,14 @@ public class CreditScorePreProcessApi {
     }
 
 
-    public void callGetScoreApi(String mobilephone, String ntcode, int persontypeid, int personalitytypeId, int paymenttypeid, int channelId, String token, int verifyCode, String ownerMobile, Purchase purchase, final VolleyCallback volleyCallback) {
+    public void callGetScoreApi(String mobilephone, String ntcode, int persontypeid, int personalitytypeId, int paymenttypeid, int channelId, @NonNull String token, int verifyCode, String ownerMobile, @Nullable Purchase purchase, @NonNull final VolleyCallback volleyCallback) {
 
         String url = ConstantUrl.BASE_MARKET + ConstantUrl.REGISTER_PURCHASEINFO;
         Log.d(TAG, "callGetScoreApi: CALLING" + url);
-
+        Crashlytics.setString("url", url);
+        Crashlytics.setString("ntcode", ntcode);
+        Crashlytics.setString("verifycode", verifyCode + "");
+        Crashlytics.setString("ownerMobile", ownerMobile);
         Uri.Builder builder = Uri.parse(url).buildUpon();
         builder.appendQueryParameter("ntcode", ntcode);
         builder.appendQueryParameter("mobilephone", mobilephone);
@@ -79,22 +88,30 @@ public class CreditScorePreProcessApi {
         builder.appendQueryParameter("paymenttypeid", String.valueOf(paymenttypeid));
         builder.appendQueryParameter("channelId", String.valueOf(channelId));
         builder.appendQueryParameter("verifycode", String.valueOf(verifyCode));
+        if (purchase == null) {
+            builder.appendQueryParameter("cafePaymentType", CafeBazaarPaymentTypeEnum.WALLET.name());
+        } else {
+            builder.appendQueryParameter("cafePaymentType", CafeBazaarPaymentTypeEnum.CAFE_SDK.name());
 
+        }
 
         String finalUrl = builder.build().toString();
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("purchaseitemtype", purchase.getItemType());
-            jsonObject.put("purchasepackagename", purchase.getPackageName());
-            jsonObject.put("purchasesku", purchase.getSku());
-            jsonObject.put("purchasetime", purchase.getPurchaseTime());
-            jsonObject.put("purchasestate", purchase.getPurchaseState());
-            jsonObject.put("developerpayload", purchase.getDeveloperPayload());
-            jsonObject.put("purchasetoken", purchase.getToken());
-            jsonObject.put("purchaseorderid", purchase.getOrderId());
-            jsonObject.put("purchaseoriginaljson", purchase.getOriginalJson());
-            jsonObject.put("purchasesignature", purchase.getSignature());
-            jsonObject.put("msisdn", mobilephone);
+            if (purchase != null) {
+                jsonObject.put("purchaseitemtype", purchase.getItemType());
+                jsonObject.put("purchasepackagename", purchase.getPackageName());
+                jsonObject.put("purchasesku", purchase.getSku());
+                jsonObject.put("purchasetime", purchase.getPurchaseTime());
+                jsonObject.put("purchasestate", purchase.getPurchaseState());
+                jsonObject.put("developerpayload", purchase.getDeveloperPayload());
+                jsonObject.put("purchasetoken", purchase.getToken());
+                jsonObject.put("purchaseorderid", purchase.getOrderId());
+                jsonObject.put("purchaseoriginaljson", purchase.getOriginalJson());
+                jsonObject.put("purchasesignature", purchase.getSignature());
+                jsonObject.put("msisdn", mobilephone);
+            }
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -129,8 +146,10 @@ public class CreditScorePreProcessApi {
             if ((error instanceof ServerError)) {
 
 
-                if (retry <= 3) {
+                if (retry < 3) {
+                    retry++;
                     Log.e("rety:", retry + "");
+
                     callGetScoreApi(mobilephone, ntcode, persontypeid, personalitytypeId, paymenttypeid, channelId, token, verifyCode, ownerMobile, purchase, volleyCallback);
 
                     return;
@@ -148,6 +167,7 @@ public class CreditScorePreProcessApi {
                 return "application/json; charset=utf-8";
             }
 
+            @NonNull
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -157,7 +177,7 @@ public class CreditScorePreProcessApi {
         };
 
 
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(AppConstants.CLIENT_TIMEOUT_CREDIT, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(AppConstants.CLIENT_TIMEOUT_CREDIT, 1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         String tag_json_arry = "getScoreApi";
         appController.addToRequestQueue(jsonObjReq, tag_json_arry);
 

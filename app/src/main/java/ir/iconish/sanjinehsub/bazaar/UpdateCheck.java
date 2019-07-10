@@ -1,14 +1,13 @@
 package ir.iconish.sanjinehsub.bazaar;
 
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.farsitel.bazaar.IUpdateCheckService;
 
@@ -16,8 +15,10 @@ import com.farsitel.bazaar.IUpdateCheckService;
 public class UpdateCheck {
 
 
-  IUpdateCheckService service;
-  UpdateServiceConnection connection;
+    @Nullable
+    IUpdateCheckService service;
+    @Nullable
+    UpdateServiceConnection connection;
   private static final String TAG = "UpdateCheck";
 Context context;
   public UpdateCheck(Context context) {
@@ -25,25 +26,27 @@ Context context;
   }
 
   class UpdateServiceConnection implements ServiceConnection {
-    public void onServiceConnected(ComponentName name, IBinder boundService) {
-      service = IUpdateCheckService.Stub
-        .asInterface((IBinder) boundService);
-      try {
-        long vCode = service.getVersionCode("ir.iconish.sanjinehsub");
+      @Override
+      public void onServiceConnected(ComponentName name, IBinder boundService) {
+          service = IUpdateCheckService.Stub
+                  .asInterface(boundService);
+          try {
+              long vCode = service.getVersionCode("ir.iconish.sanjinehsub");
     /*    Toast.makeText(context, "Version Code:" + vCode,
           Toast.LENGTH_LONG).show();*/
 
-        broadCastVersion(vCode);
-      } catch (Exception e) {
-        e.printStackTrace();
+              broadCastVersion(vCode);
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+          Log.d(TAG, "onServiceConnected(): Connected");
       }
-      Log.d(TAG, "onServiceConnected(): Connected");
-    }
 
-    public void onServiceDisconnected(ComponentName name) {
-      service = null;
-      Log.d(TAG, "onServiceDisconnected(): Disconnected");
-    }
+      @Override
+      public void onServiceDisconnected(ComponentName name) {
+          service = null;
+          Log.d(TAG, "onServiceDisconnected(): Disconnected");
+      }
   }
 
 

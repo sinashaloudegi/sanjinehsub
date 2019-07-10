@@ -1,10 +1,11 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.model.AppConfig;
-import ir.iconish.sanjinehsub.data.source.api.AppConfigApi;
 import ir.iconish.sanjinehsub.data.source.api.ReportApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
@@ -22,7 +23,7 @@ public class ReportRepository {
     this.sharedPreferencesManager=sharedPreferencesManager;
   }
 
-  public void callReportRepository(String reqToken,final VolleyCallback volleyCallback) {
+    public void callReportRepository(String reqToken, @NonNull final VolleyCallback volleyCallback) {
     reportApi.callReportsApi(reqToken,new VolleyCallback() {
       @Override
       public void onSuccess(Object o) {
@@ -75,8 +76,10 @@ public class ReportRepository {
 
 
   }
-  public String getUserPassword(){
-    return sharedPreferencesManager.getPasswordValue();
-  }
+
+    @Nullable
+    public String getUserPassword(){
+        return sharedPreferencesManager.getPasswordValue();
+    }
 
 }

@@ -4,7 +4,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
@@ -13,13 +14,16 @@ import ir.iconish.sanjinehsub.R;
 
 
 public class NavigationViewHolder extends RecyclerView.ViewHolder {
+    @Nullable
     @BindView(R.id.rootLayout) public View view;
+    @Nullable
     @BindView(R.id.textNavItem) public TextView txtTitle;
 
+    @Nullable
     @BindView(R.id.navItemIcon)  public ImageView navItemIcon;
 
 
-    public NavigationViewHolder(View convertView ) {
+    public NavigationViewHolder(@NonNull View convertView) {
         super(convertView);
         ButterKnife.bind(this, convertView);
         this.view =convertView;

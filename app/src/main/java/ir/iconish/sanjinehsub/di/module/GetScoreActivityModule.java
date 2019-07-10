@@ -1,6 +1,8 @@
 package ir.iconish.sanjinehsub.di.module;
 
 
+import androidx.annotation.NonNull;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -13,13 +15,14 @@ import ir.iconish.sanjinehsub.data.source.api.CreditScorePreProcessApi;
 public class GetScoreActivityModule {
 
 
-
+    @NonNull
     @Provides
     @Singleton
     public CreditScorePreProcessApi provideGetScoreApi(AppController appController){
         return new CreditScorePreProcessApi(appController);
     }
 
+    @NonNull
     @Provides
     @Singleton
     public CheckReportApi provideCheckReportApi(AppController appController){

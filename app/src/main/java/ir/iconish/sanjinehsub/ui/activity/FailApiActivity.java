@@ -2,14 +2,12 @@ package ir.iconish.sanjinehsub.ui.activity;
 
 
 import android.os.Bundle;
-
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
@@ -30,27 +28,24 @@ public class FailApiActivity extends AppCompatActivity {
 String failCause;
 
 
+    @Nullable
+    @BindView(R.id.fail_icon)
+    ImageView imageViewFail;
 
 
-
-  @BindView(R.id.fail_icon)
-  ImageView imageViewFail;
-
-
+    @Nullable
+    @BindView(R.id.text_no_connection)
+    TextView textMessage;
 
 
-  @BindView(R.id.text_no_connection)
-  TextView textMessage;
+    @Nullable
+    @BindView(R.id.btnRety)
+    AppCompatButton btnRetry;
 
 
-
-  @BindView(R.id.btnRety)
-  AppCompatButton btnRetry;
-
-
-
-  @BindView(R.id.prg)
-  ProgressBar progressBar;
+    @Nullable
+    @BindView(R.id.prg)
+    ProgressBar progressBar;
 
 
 

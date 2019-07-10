@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,129 +46,162 @@ public class ReportActivity extends AppCompatActivity implements RecyclerIemList
     @Inject
     ReportViewModel reportViewModel;
 
+    @Nullable
     @BindView(R.id.speedometer)
     SpeedometerGauge speedometerGauge;
 
+    @Nullable
     @BindView(R.id.txtRisk)
     TextView txtRisk;
 
+    @Nullable
     @BindView(R.id.txtCreditScoreValue)
     TextView txtCreditScoreValue;
 
+    @Nullable
     @BindView(R.id.txtCreditScoreMarkValue)
     TextView txtCreditScoreMarkValue;
 
+    @Nullable
     @BindView(R.id.txtCreditScoreRengeValue)
     TextView txtCreditScoreRengeValue;
 
 
+    @Nullable
     @BindView(R.id.txtCreditScoreCauseValue)
     TextView txtCreditScoreCauseValue;
 
 
+    @Nullable
     @BindView(R.id.txtNationalCode)
     TextView txtNationalCode;
 
 
+    @Nullable
     @BindView(R.id.txtName)
     TextView txtName;
 
 
+    @Nullable
     @BindView(R.id.txtFamily)
     TextView txtFamily;
 
 
+    @Nullable
     @BindView(R.id.txtFatheName)
     TextView txtFatheName;
 
 
+    @Nullable
     @BindView(R.id.txtGender)
     TextView txtGender;
 
+    @Nullable
     @BindView(R.id.txtBarrowerSection)
     TextView txtBarrowerSection;
 
 
+    @Nullable
     @BindView(R.id.txtBirthCity)
     TextView txtBirthCity;
 
 
+    @Nullable
     @BindView(R.id.txtBirthDate)
     TextView txtBirthDate;
 
 
+    @Nullable
     @BindView(R.id.txtAddress)
     TextView txtAddress;
 
 
+    @Nullable
     @BindView(R.id.txtJamQarardadJariani)
     TextView txtJamQarardadJariani;
 
 
+    @Nullable
     @BindView(R.id.txtJamQaradadKhatemeYafte)
     TextView txtJamQaradadKhatemeYafte;
 
 
+    @Nullable
     @BindView(R.id.txtJamMablaghSarresidNashode)
     TextView txtJamMablaghSarresidNashode;
 
 
+    @Nullable
     @BindView(R.id.txtJamMablaghSarresidShodePardakhtNashode)
     TextView txtJamMablaghSarresidShodePardakhtNashode;
 
 
+    @Nullable
     @BindView(R.id.txtCurrency)
     TextView txtCurrency;
 
 
+    @Nullable
     @BindView(R.id.recyclerConract)
     RecyclerView recyclerConract;
 
 
+    @Nullable
     @BindView(R.id.recyclerInquiry)
     RecyclerView recyclerInquiry;
 
 
+    @Nullable
     @BindView(R.id.recyclerConractDetail)
     RecyclerView recyclerConractDetail;
 
 
+    @Nullable
     @BindView(R.id.recyclerInstallment)
     RecyclerView recyclerInstallment;
 
 
+    @Nullable
     @BindView(R.id.recyclerTerminateContract)
     RecyclerView recyclerTerminateContract;
 
 
+    @Nullable
     @BindView(R.id.imgExpandTerrminateContract)
     ImageView imgExpandTerrminateContract;
 
 
+    @Nullable
     @BindView(R.id.imgExpandInstallment)
     ImageView imgExpandInstallment;
 
 
+    @Nullable
     @BindView(R.id.imgExpandContracts)
     ImageView imgExpandContracts;
 
 
+    @Nullable
     @BindView(R.id.imgUserExpand)
     ImageView imgUserExpand;
 
 
+    @Nullable
     @BindView(R.id.rootLayoutUser)
     LinearLayout rootLayoutUser;
 
 
+    @Nullable
     @BindView(R.id.rootLayoutContract)
     LinearLayout rootLayoutContract;
 
 
+    @Nullable
     @BindView(R.id.rootLayoutInstallment)
     LinearLayout rootLayoutInstallment;
 
 
+    @Nullable
     @BindView(R.id.rootLayoutTerminateContract)
     LinearLayout rootLayoutTerminateContract;
 
@@ -238,7 +273,7 @@ public class ReportActivity extends AppCompatActivity implements RecyclerIemList
     }
 
 
-    private void expandCollapsView(View childeView, ImageView imgExpand) {
+    private void expandCollapsView(View childeView, @NonNull ImageView imgExpand) {
 
         if (childeView.getVisibility() == View.VISIBLE) {
             childeView.setVisibility(View.GONE);
@@ -253,6 +288,7 @@ public class ReportActivity extends AppCompatActivity implements RecyclerIemList
     private void initGuage() {
 
         speedometerGauge.setLabelConverter(new SpeedometerGauge.LabelConverter() {
+            @NonNull
             @Override
             public String getLabelFor(double progress, double maxProgress) {
                 return String.valueOf((int) Math.round(progress));

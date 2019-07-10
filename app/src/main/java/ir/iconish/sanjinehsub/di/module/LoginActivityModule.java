@@ -1,7 +1,7 @@
 package ir.iconish.sanjinehsub.di.module;
 
 
-import android.content.Context;
+import androidx.annotation.NonNull;
 
 import javax.inject.Singleton;
 
@@ -9,13 +9,12 @@ import dagger.Module;
 import dagger.Provides;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.source.api.LoginApi;
-import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 
 @Module
 public class LoginActivityModule {
 
 
-
+    @NonNull
     @Provides
     @Singleton
     public LoginApi provideLoginApi(AppController appController){

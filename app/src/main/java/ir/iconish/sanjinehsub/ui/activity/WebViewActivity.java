@@ -6,6 +6,7 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import butterknife.BindView;
@@ -17,10 +18,12 @@ import ir.iconish.sanjinehsub.ui.WebViewConfiguration;
 public class WebViewActivity extends AppCompatActivity {
     private static final String TAG = "WebViewActivity";
 
+    @Nullable
     @BindView(R.id.webView)
     WebView webView;
 
 
+    @Nullable
     @BindView(R.id.customViewContainer)
     FrameLayout customViewContainer;
     String url = "";

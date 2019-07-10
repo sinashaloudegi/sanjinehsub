@@ -1,12 +1,11 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
+import androidx.annotation.NonNull;
 
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.model.PasswordValidationResponse;
 import ir.iconish.sanjinehsub.data.source.api.ArchiveApi;
-import ir.iconish.sanjinehsub.data.source.api.SetPasswordApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 
@@ -24,7 +23,7 @@ this.archiveApi=archiveApi;
 this.sharedPreferencesManager=sharedPreferencesManager;
     }
 
-    public void callArchiveRepository  ( final VolleyCallback volleyCallback) {
+    public void callArchiveRepository(@NonNull final VolleyCallback volleyCallback) {
         archiveApi.callArchivedApi(sharedPreferencesManager.getMobileNumberValue(),sharedPreferencesManager.getTokenValue(),new VolleyCallback() {
         @Override
         public   void onSuccess(Object o) {

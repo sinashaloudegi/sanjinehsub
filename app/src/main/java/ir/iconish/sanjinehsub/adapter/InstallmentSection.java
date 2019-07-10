@@ -2,9 +2,9 @@ package ir.iconish.sanjinehsub.adapter;
 
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.Serializable;
 import java.util.List;
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
@@ -44,8 +44,9 @@ List<DetailInstallment> detailInstallments;
         return detailInstallments.size();
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder getItemViewHolder(View view) {
+    public RecyclerView.ViewHolder getItemViewHolder(@NonNull View view) {
         return new DetailInstallmentViewHolder(view);
 
     }
@@ -87,8 +88,9 @@ List<DetailInstallment> detailInstallments;
 
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder getHeaderViewHolder(View view) {
+    public RecyclerView.ViewHolder getHeaderViewHolder(@NonNull View view) {
         return new InstallmentHeaderViewHolder(view);
     }
 

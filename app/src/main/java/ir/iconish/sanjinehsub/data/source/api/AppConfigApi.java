@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.source.api;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -33,7 +35,8 @@ public class AppConfigApi {
     }
 
 
-    public AppConfig parseJson(JSONObject jsonObject) {
+    @NonNull
+    public AppConfig parseJson(@NonNull JSONObject jsonObject) {
         AppConfig appConfig = new AppConfig();
 
         try {
@@ -51,7 +54,7 @@ public class AppConfigApi {
     }
 
 
-    public void callConfigApi(final VolleyCallback volleyCallback) {
+    public void callConfigApi(@NonNull final VolleyCallback volleyCallback) {
 
 
         String url = ConstantUrl.BASE_MARKET + ConstantUrl.APP_CONFIG;
@@ -104,6 +107,7 @@ public class AppConfigApi {
                 return "application/json; charset=utf-8";
             }
 
+            @NonNull
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -120,7 +124,7 @@ public class AppConfigApi {
 
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
                 AppConstants.CLIENT_TIMEOUT,
-                0,
+                1,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         String tag_json_arry = "checkPasswordApi";
         appController.addToRequestQueue(jsonObjReq, tag_json_arry);

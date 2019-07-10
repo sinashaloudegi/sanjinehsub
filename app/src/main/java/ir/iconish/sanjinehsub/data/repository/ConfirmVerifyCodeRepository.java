@@ -1,6 +1,8 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
+import androidx.annotation.NonNull;
+
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.source.api.ConfirmVerifyCodeApi;
@@ -22,7 +24,7 @@ public class ConfirmVerifyCodeRepository {
     this.sharedPreferencesManager = sharedPreferencesManager;
   }
 
-  public void callSendVerifyCodeRepository(String msisdn, String code, final VolleyCallback volleyCallback) {
+    public void callSendVerifyCodeRepository(String msisdn, String code, @NonNull final VolleyCallback volleyCallback) {
     confirmVerifyCodeApi.callConfirmVerifyCodeApi(msisdn, code, new VolleyCallback() {
       @Override
       public void onSuccess(Object o) {

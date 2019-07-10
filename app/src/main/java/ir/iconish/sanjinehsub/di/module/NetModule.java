@@ -3,7 +3,7 @@ package ir.iconish.sanjinehsub.di.module;
 
 import android.content.Context;
 
-
+import androidx.annotation.NonNull;
 
 import javax.inject.Singleton;
 
@@ -16,10 +16,10 @@ import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 public class NetModule {
 
 
-
+    @NonNull
     @Provides
     @Singleton
-    public SharedPreferencesManager provideSharedPrefrences(AppController application){
+    public SharedPreferencesManager provideSharedPrefrences(@NonNull AppController application) {
         return new SharedPreferencesManager(application.getSharedPreferences(SharedPreferencesManager.APP_SETTINGS, Context.MODE_PRIVATE));
     }
 

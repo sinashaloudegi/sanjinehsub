@@ -6,9 +6,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
-
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -62,7 +63,7 @@ token.continuePermissionRequest();
       permission(activity,permissionListener,Manifest.permission.ACCESS_COARSE_LOCATION);
   }
 
-    public static boolean checkAndRequestPermissions(Activity activity) {
+    public static boolean checkAndRequestPermissions(@NonNull Activity activity) {
         System.out.println("PermissionsUtils checkAndRequestPermissions()");
 
         int permissionLocation = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
@@ -86,8 +87,7 @@ token.continuePermissionRequest();
     }
 
 
-
-    public static void requestLocationPermission(Activity activity) {
+    public static void requestLocationPermission(@NonNull Activity activity) {
         if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -113,7 +113,7 @@ token.continuePermissionRequest();
         }
     }
 
-    public static void requestWriteExternalPermission(Activity activity) {
+    public static void requestWriteExternalPermission(@NonNull Activity activity) {
         if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
@@ -134,7 +134,7 @@ token.continuePermissionRequest();
         }
     }
 
-    public static boolean hasPermissions(Context context, String... permissions) {
+    public static boolean hasPermissions(@Nullable Context context, @Nullable String... permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
                 if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -144,6 +144,8 @@ token.continuePermissionRequest();
         }
         return true;
     }
+
+    @NonNull
     public static String staticMapUrlMaker(double latitude, double longitude, int height, int width, int zoom) {
 
         String url = "https://api.mapbox.com/v4/mapbox.emerald/pin-m-heart+e6353b(" + longitude + "," + latitude + ")/"+ longitude + "," + latitude + "," + zoom + "/" + width + "x" + height + ".png?" + "access_token=" + "pk.eyJ1IjoiYWxpMTM3NiIsImEiOiJjanFjMXh4YjYxMDBhM3htbmp3d3Bsd3UyIn0.7gknkaPOCzjZFc7lNyfBYg";

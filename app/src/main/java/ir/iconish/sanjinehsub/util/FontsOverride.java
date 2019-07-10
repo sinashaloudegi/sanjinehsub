@@ -8,7 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 
-
+import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -19,8 +19,8 @@ import ir.iconish.sanjinehsub.R;
 
 public final class FontsOverride {
 
-    public static void setDefaultFont(Context context,
-                                      String staticTypefaceFieldName, String fontAssetName) {
+    public static void setDefaultFont(@NonNull Context context,
+                                      @NonNull String staticTypefaceFieldName, String fontAssetName) {
 
 
 
@@ -46,7 +46,7 @@ public final class FontsOverride {
         replaceFont(staticTypefaceFieldName, regular);
     }
 
-    protected static void replaceFont(String staticTypefaceFieldName,
+    protected static void replaceFont(@NonNull String staticTypefaceFieldName,
                                       final Typeface newTypeface) {
         try {
             final Field staticField = Typeface.class
@@ -61,7 +61,7 @@ public final class FontsOverride {
     }
 
 
-    public static void setToolbarFont(Activity activity, CollapsingToolbarLayout collapsingToolbarLayout){
+    public static void setToolbarFont(@NonNull Activity activity, CollapsingToolbarLayout collapsingToolbarLayout) {
         Typeface tf = ResourcesCompat.getFont(activity, R.font.iranyekanwebregular);
         collapsingToolbarLayout.setCollapsedTitleTypeface(tf);
         collapsingToolbarLayout.setExpandedTitleTypeface(tf);

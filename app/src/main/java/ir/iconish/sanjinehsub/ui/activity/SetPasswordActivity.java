@@ -2,13 +2,12 @@ package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
@@ -20,29 +19,32 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.vm.CheckPasswordViewModel;
 import ir.iconish.sanjinehsub.data.vm.SetPasswordViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 
 public class SetPasswordActivity extends AppCompatActivity {
 
+    @Nullable
     @BindView(R.id.btnSendPassword)
     AppCompatButton btnSavePassword;
 
+    @Nullable
     @BindView(R.id.prg)
     ProgressBar prg;
 
 
+    @Nullable
     @BindView(R.id.txtAlert)
     TextView txtAlert;
 
 
+    @Nullable
     @BindView(R.id.edtPassword)
     EditText edtPassword;
 
 
-
+    @Nullable
     @BindView(R.id.edtConfirmPassword)
     EditText edtConfirmPassword;
 

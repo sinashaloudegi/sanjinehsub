@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.model;
 
+import androidx.annotation.NonNull;
+
 public  class BazaarPurchaseInfo  {
 
 	private String purchaseitemtype;
@@ -103,7 +105,8 @@ public  class BazaarPurchaseInfo  {
 		this.msisdn = msisdn;
 	}
 
-	@Override
+    @NonNull
+    @Override
 	public String toString() {
 		return "BazaarPurchaseInfo{" +
 			", purchaseitemtype='" + purchaseitemtype + '\'' +

@@ -1,7 +1,9 @@
 package ir.iconish.sanjinehsub.util;
 
+import androidx.annotation.NonNull;
+
 public class Helper {
-    public static boolean validationNationalCode(String code){
+    public static boolean validationNationalCode(@NonNull String code) {
         //check length
         long nationalCode = Long.parseLong(code);
         byte[] arrayNationalCode = new byte[10];
@@ -14,12 +16,14 @@ public class Helper {
 
         //Checking the control digit
         int sum = 0;
-        for (int i = 9; i > 0 ; i--)
+        for (int i = 9; i > 0; i--) {
             sum += arrayNationalCode[i] * (i+1);
+        }
         int temp = sum % 11;
-        if (temp < 2)
+        if (temp < 2) {
             return arrayNationalCode[0] == temp;
-        else
+        } else {
             return arrayNationalCode[0] == 11 - temp;
+        }
     }
 }

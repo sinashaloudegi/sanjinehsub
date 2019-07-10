@@ -15,6 +15,8 @@
 
 package ir.iconish.sanjinehsub.util;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,6 +53,7 @@ public class SkuDetails {
     public String getTitle() { return mTitle; }
     public String getDescription() { return mDescription; }
 
+    @NonNull
     @Override
     public String toString() {
         return "SkuDetails:" + mJson;

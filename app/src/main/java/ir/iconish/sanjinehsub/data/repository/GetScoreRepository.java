@@ -3,6 +3,11 @@ package ir.iconish.sanjinehsub.data.repository;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.crashlytics.android.Crashlytics;
+
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.source.api.CreditScorePreProcessApi;
@@ -26,11 +31,11 @@ public class GetScoreRepository {
         this.sharedPreferencesManager = sharedPreferencesManager;
     }
 
-    public void callGetScoreRepository(String ownerMobile, String ntCode, int persontypeid, int personalitytypeId, int paymenttypeid, int channelId, int verifycode, Purchase purchase, final VolleyCallback volleyCallback) {
+    public void callGetScoreRepository(String ownerMobile, String ntCode, int persontypeid, int personalitytypeId, int paymenttypeid, int channelId, int verifycode, Purchase purchase, @NonNull final VolleyCallback volleyCallback) {
 
         Log.d(TAG, "callGetScoreRepository: ____");
         String mobileNumber = sharedPreferencesManager.getMobileNumberValue();
-        //TODO: Check here for ntcode Null
+        Crashlytics.setString("MobileNumber", mobileNumber);
         if (persontypeid == 1) {
             Log.d(TAG, "Before: callGetScoreRepository: " + ntCode);
             ntCode = sharedPreferencesManager.getNationalCodeValue();
@@ -92,6 +97,7 @@ public class GetScoreRepository {
     }
 
 
+    @Nullable
     public String getMarketKey() {
         return sharedPreferencesManager.getMarketKeyValue();
     }

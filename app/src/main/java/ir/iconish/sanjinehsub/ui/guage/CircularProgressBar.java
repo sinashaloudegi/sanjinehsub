@@ -11,6 +11,9 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 /**
  * Created by danon on 01.03.14.
  */
@@ -29,6 +32,7 @@ public class CircularProgressBar extends View {
     private int color = DEFAULT_COLOR;
     private float textSize = 0;
     private int textColor = Color.BLACK;
+    @Nullable
     private LabelConverter labelConverter = null;
 
     private float density = 1.0f;
@@ -113,7 +117,7 @@ public class CircularProgressBar extends View {
         ValueAnimator animator = ValueAnimator.ofFloat(getProgress(), progress).setDuration(duration);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
+            public void onAnimationUpdate(@NonNull ValueAnimator animation) {
                 float f = (Float) animation.getAnimatedValue();
                 setProgress(f);
             }
@@ -161,8 +165,9 @@ public class CircularProgressBar extends View {
 
     public void setTextColor(int color) {
         this.textColor = textColor;
-        if (txtPaint != null)
+        if (txtPaint != null) {
             txtPaint.setColor(color);
+        }
         invalidate();
     }
 
@@ -172,11 +177,13 @@ public class CircularProgressBar extends View {
 
     public void setTextSize(float textSize) {
         this.textSize = textSize;
-        if (txtPaint != null)
+        if (txtPaint != null) {
             txtPaint.setTextSize(textSize);
+        }
         invalidate();
     }
 
+    @Nullable
     public LabelConverter getLabelConverter() {
         return labelConverter;
     }
@@ -187,7 +194,7 @@ public class CircularProgressBar extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
 
         // Clear canvas
@@ -242,7 +249,8 @@ public class CircularProgressBar extends View {
         txtPaint.setTextAlign(Paint.Align.CENTER);
     }
 
-    public static interface LabelConverter {
+    public interface LabelConverter {
+        @NonNull
         String getLabelFor(float progress, float max, Paint paint);
     }
 }

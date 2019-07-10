@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
@@ -23,17 +24,21 @@ import ir.iconish.sanjinehsub.util.ButtonHelper;
 
 public class CheckPasswordActivity extends AppCompatActivity {
 
+    @Nullable
     @BindView(R.id.btnEnter)
     AppCompatButton btnEnter;
 
+    @Nullable
     @BindView(R.id.prg)
     ProgressBar prg;
 
 
+    @Nullable
     @BindView(R.id.txtAlert)
     TextView txtAlert;
 
 
+    @Nullable
     @BindView(R.id.edtPassword)
     TextView edtPassword;
 

@@ -2,6 +2,8 @@ package ir.iconish.sanjinehsub.data.source.api;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -36,7 +38,8 @@ public class LoginApi {
     }
 
 
-    public User parseJson(JSONObject jsonObject) {
+    @NonNull
+    public User parseJson(@NonNull JSONObject jsonObject) {
         User user = new User();
 
         try {
@@ -69,7 +72,7 @@ public class LoginApi {
     }
 
 
-    public void callLoginApi(String mobileNumer, final VolleyCallback volleyCallback) {
+    public void callLoginApi(String mobileNumer, @NonNull final VolleyCallback volleyCallback) {
 
 
         String url = ConstantUrl.BASE + ConstantUrl.LOGIN;
@@ -130,6 +133,7 @@ public class LoginApi {
         ) {
 
 
+            @NonNull
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -143,7 +147,7 @@ public class LoginApi {
 
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
                 AppConstants.CLIENT_TIMEOUT,
-                0,
+                1,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         String tag_json_arry = "loginApi";
         appController.addToRequestQueue(jsonObjReq, tag_json_arry);

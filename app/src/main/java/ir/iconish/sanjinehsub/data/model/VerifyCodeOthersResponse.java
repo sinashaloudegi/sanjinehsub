@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.model;
 
+import androidx.annotation.NonNull;
+
 public class VerifyCodeOthersResponse {
 
   private int statusCode;
@@ -30,12 +32,13 @@ public class VerifyCodeOthersResponse {
     this.description = description;
   }
 
-  @Override
-  public String toString() {
-    return "VerifyCodeOthersResponse{" +
-            "statusCode=" + statusCode +
-            ", description='" + description + '\'' +
-            ", noReportReqToken='" + noReportReqToken + '\'' +
-            '}';
-  }
+    @NonNull
+    @Override
+    public String toString() {
+        return "VerifyCodeOthersResponse{" +
+                "statusCode=" + statusCode +
+                ", description='" + description + '\'' +
+                ", noReportReqToken='" + noReportReqToken + '\'' +
+                '}';
+    }
 }

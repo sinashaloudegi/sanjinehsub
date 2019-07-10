@@ -15,7 +15,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
-
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +47,7 @@ public class SpeedometerGauge extends View {
     private LabelConverter labelConverter;
     private String unitsText = "km/h";
 
+    @NonNull
     private List<ColoredRange> ranges = new ArrayList<ColoredRange>();
 
     private Paint backgroundPaint;
@@ -85,8 +86,9 @@ public class SpeedometerGauge extends View {
     }
 
     public void setMaxSpeed(double maxSpeed) {
-        if (maxSpeed <= 0)
+        if (maxSpeed <= 0) {
             throw new IllegalArgumentException("Non-positive value specified as max speed.");
+        }
         this.maxSpeed = maxSpeed;
         invalidate();
     }
@@ -96,10 +98,12 @@ public class SpeedometerGauge extends View {
     }
 
     public void setSpeed(double speed) {
-        if (speed < 0)
+        if (speed < 0) {
             throw new IllegalArgumentException("Non-positive value specified as a speed.");
-        if (speed > maxSpeed)
+        }
+        if (speed > maxSpeed) {
             speed = maxSpeed;
+        }
         this.speed = speed;
         invalidate();
     }
@@ -115,13 +119,16 @@ public class SpeedometerGauge extends View {
 
     @TargetApi(11)
     public ValueAnimator setSpeed(double progress, long duration, long startDelay) {
-        if (progress < 0)
+        if (progress < 0) {
             throw new IllegalArgumentException("Negative value specified as a speed.");
+        }
 
-        if (progress > maxSpeed)
+        if (progress > maxSpeed) {
             progress = maxSpeed;
+        }
 
         ValueAnimator va = ValueAnimator.ofObject(new TypeEvaluator<Double>() {
+            @NonNull
             @Override
             public Double evaluate(float fraction, Double startValue, Double endValue) {
                 return startValue + fraction * (endValue - startValue);
@@ -131,10 +138,12 @@ public class SpeedometerGauge extends View {
         va.setDuration(duration);
         va.setStartDelay(startDelay);
         va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            public void onAnimationUpdate(ValueAnimator animation) {
+            @Override
+            public void onAnimationUpdate(@NonNull ValueAnimator animation) {
                 Double value = (Double) animation.getAnimatedValue();
-                if (value != null)
+                if (value != null) {
                     setSpeed(value);
+                }
             }
         });
         va.start();
@@ -160,8 +169,9 @@ public class SpeedometerGauge extends View {
     }
 
     public void setMajorTickStep(double majorTickStep) {
-        if (majorTickStep <= 0)
+        if (majorTickStep <= 0) {
             throw new IllegalArgumentException("Non-positive value specified as a major tick step.");
+        }
         this.majorTickStep = majorTickStep;
         invalidate();
     }
@@ -190,12 +200,15 @@ public class SpeedometerGauge extends View {
     }
 
     public void addColoredRange(double begin, double end, int color) {
-        if (begin >= end)
+        if (begin >= end) {
             throw new IllegalArgumentException("Incorrect number range specified!");
-        if (begin < - 5.0/160* maxSpeed)
+        }
+        if (begin < -5.0 / 160 * maxSpeed) {
             begin = - 5.0/160* maxSpeed;
-        if (end > maxSpeed * (5.0/160 + 1))
+        }
+        if (end > maxSpeed * (5.0 / 160 + 1)) {
             end = maxSpeed * (5.0/160 + 1);
+        }
         ranges.add(new ColoredRange(color, begin, end));
         invalidate();
     }
@@ -225,7 +238,7 @@ public class SpeedometerGauge extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
 
         // Clear canvas
@@ -283,7 +296,7 @@ public class SpeedometerGauge extends View {
         setMeasuredDimension(width, height);
     }
 
-    private void drawNeedle(Canvas canvas) {
+    private void drawNeedle(@NonNull Canvas canvas) {
         RectF oval = getOval(canvas, 1);
         float radius = oval.width()*0.35f + 10;
         RectF smallOval = getOval(canvas, 0.2f);
@@ -301,7 +314,7 @@ public class SpeedometerGauge extends View {
         canvas.drawArc(smallOval, 180, 180, true, backgroundPaint);
     }
 
-    private void drawTicks(Canvas canvas) {
+    private void drawTicks(@NonNull Canvas canvas) {
         float availableAngle = 160;
         float majorStep = (float) (majorTickStep/ maxSpeed *availableAngle);
         float minorStep = majorStep / (1 + minorTicks);
@@ -379,7 +392,7 @@ public class SpeedometerGauge extends View {
         return oval;
     }
 
-    private void drawBackground(Canvas canvas) {
+    private void drawBackground(@NonNull Canvas canvas) {
         RectF oval = getOval(canvas, 1);
         canvas.drawArc(oval, 180, 180, true, backgroundPaint);
 
@@ -441,7 +454,7 @@ public class SpeedometerGauge extends View {
     }
 
 
-    public static interface LabelConverter {
+    public interface LabelConverter {
 
         String getLabelFor(double progress, double maxProgress);
 

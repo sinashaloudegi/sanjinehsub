@@ -15,6 +15,8 @@
 
 package ir.iconish.sanjinehsub.util;
 
+import androidx.annotation.NonNull;
+
 /**
  * Exception thrown when something went wrong with in-app billing.
  * An IabException has an associated IabResult (an error).
@@ -24,7 +26,7 @@ package ir.iconish.sanjinehsub.util;
 public class IabException extends Exception {
     IabResult mResult;
 
-    public IabException(IabResult r) {
+    public IabException(@NonNull IabResult r) {
         this(r, null);
     }
     public IabException(int response, String message) {

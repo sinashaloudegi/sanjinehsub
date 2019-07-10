@@ -1,6 +1,8 @@
 package ir.iconish.sanjinehsub.util;
 
 
+import androidx.annotation.NonNull;
+
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -15,6 +17,7 @@ public class DateHepler {
         return pdformater.format(persianDate);
     }
 
+    @NonNull
     public static String getPersianDate(long date){
 
         Calendar serverDate=   convertTimeWithTimeZome(date);
@@ -24,16 +27,14 @@ public class DateHepler {
         int serverDay=serverDate.get(Calendar.DAY_OF_MONTH);
 
 
-
-
-
-
-            String persianDate = convertGregorianToPersiabDate(serverYear,serverMonth,serverDay);
+        String persianDate = convertGregorianToPersiabDate(serverYear,serverMonth,serverDay);
 
 
         return persianDate;
     }
-    public static String convertGregorianToPersiabDate(int year,int month,int day){
+
+    @NonNull
+    public static String convertGregorianToPersiabDate(int year, int month, int day) {
 
         saman.zamani.persiandate.PersianDate persianDate=new saman.zamani.persiandate.PersianDate().initGrgDate(year,month,day);persianDate . getMonthDays();
         String y1=String.valueOf(persianDate.getShYear());
@@ -41,11 +42,13 @@ public class DateHepler {
         String d1=String.valueOf(persianDate.getShDay());
 
 
-        if(m1.length()==1)
+        if (m1.length() == 1) {
             m1="0"+m1;
+        }
 
-        if(d1.length()==1)
+        if (d1.length() == 1) {
             d1="0"+d1;
+        }
 
         String persianFullDate=y1+"/"+m1+"/"+d1;
         return  persianFullDate;

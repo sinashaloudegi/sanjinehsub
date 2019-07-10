@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.source.api;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -34,7 +36,8 @@ public class VerifyRegisterOtpApi {
     }
 
 
-    public PasswordValidationResponse parseJson(JSONObject jsonObject) {
+    @NonNull
+    public PasswordValidationResponse parseJson(@NonNull JSONObject jsonObject) {
         PasswordValidationResponse passwordValidationResponse = new PasswordValidationResponse();
         try {
             JSONObject jsonObjectRoot = jsonObject.getJSONObject("responseStatus");
@@ -60,7 +63,7 @@ public class VerifyRegisterOtpApi {
     }
 
 
-    public void callVerifyRegisterOtpApi(String otp, String mobileNumber, final VolleyCallback volleyCallback) {
+    public void callVerifyRegisterOtpApi(String otp, String mobileNumber, @NonNull final VolleyCallback volleyCallback) {
 
         String url = ConstantUrl.BASE + ConstantUrl.CONFIRM_REGISTER;
 
@@ -124,6 +127,7 @@ public class VerifyRegisterOtpApi {
                 return "application/json; charset=utf-8";
             }
 
+            @NonNull
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -140,7 +144,7 @@ public class VerifyRegisterOtpApi {
 
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
                 AppConstants.CLIENT_TIMEOUT,
-                0,
+                1,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         String tag_json_arry = "checkPasswordApi";
         appController.addToRequestQueue(jsonObjReq, tag_json_arry);

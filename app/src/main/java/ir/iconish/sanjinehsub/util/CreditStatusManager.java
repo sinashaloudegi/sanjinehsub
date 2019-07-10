@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.data.model.CreditResponseEnum;
 import ir.iconish.sanjinehsub.data.model.CreditScorePreProcess;
@@ -24,7 +26,7 @@ public class CreditStatusManager implements Dialoglistener {
         this.activity = activity;
     }
 
-    public void handleReportStatus(CreditScorePreProcess creditScorePreProcess, TextView textView) {
+    public void handleReportStatus(@NonNull CreditScorePreProcess creditScorePreProcess, @NonNull TextView textView) {
 
         //int status=creditScorePreProcess.getStatus();
 
@@ -44,7 +46,7 @@ showErrorCase(activity.getString(R.string.error)+" "+status,activity.getString(R
         }*/
     }
 
-    private void getScoreAtion(String reqToken, Activity activity) {
+    private void getScoreAtion(String reqToken, @NonNull Activity activity) {
         String url = "https://www.sanjineh.ir/report/" + reqToken + "?from=android_cafebazar";
         Log.d(TAG, "getScoreAtion:URL: ");
         ActivityNavigationHelper.navigateToWebView(url, activity, WebViewActivity.class);

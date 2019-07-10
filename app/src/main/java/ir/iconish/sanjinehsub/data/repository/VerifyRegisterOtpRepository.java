@@ -1,6 +1,8 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
+import androidx.annotation.NonNull;
+
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.model.LoginStatusEnum;
@@ -23,7 +25,7 @@ public class VerifyRegisterOtpRepository {
         this.sharedPreferencesManager = sharedPreferencesManager;
     }
 
-    public void callVerifyRegisterOtpRepository(String otp, final VolleyCallback volleyCallback) {
+    public void callVerifyRegisterOtpRepository(String otp, @NonNull final VolleyCallback volleyCallback) {
         verifyRegisterOtpApi.callVerifyRegisterOtpApi(otp, sharedPreferencesManager.getMobileNumberValue(), new VolleyCallback() {
             @Override
             public void onSuccess(Object o) {

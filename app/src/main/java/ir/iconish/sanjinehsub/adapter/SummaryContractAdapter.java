@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -31,8 +32,10 @@ public class SummaryContractAdapter extends RecyclerView.Adapter<SummaryContract
         this.recyclerIemListener = recyclerIemListener;
 
     }
+
+    @NonNull
     @Override
-    public SummaryContractViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SummaryContractViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.summary_contract_row, parent, false);
         ButterKnife.bind(this, itemView);
@@ -43,7 +46,7 @@ public class SummaryContractAdapter extends RecyclerView.Adapter<SummaryContract
     }
 
     @Override
-    public void onBindViewHolder(final SummaryContractViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final SummaryContractViewHolder viewHolder, final int i) {
 
 
         final SummaryContract contract = contracts.get(i);

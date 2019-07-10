@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -16,10 +17,12 @@ import ir.iconish.sanjinehsub.R;
 
 public class PasswordVerificatonActivity extends AppCompatActivity {
 
+    @Nullable
     @BindView(R.id.txtTimer)
     TextView txtTimer;
     CountDownTimer countDownTimer;
 
+    @Nullable
     @BindView(R.id.btnEnter)
     AppCompatButton btnEnter;
     @Override
@@ -41,6 +44,7 @@ public class PasswordVerificatonActivity extends AppCompatActivity {
 
         countDownTimer=    new CountDownTimer(200000, 1000) {
 
+            @Override
             public void onTick(long millisUntilFinished) {
                 if(millisUntilFinished<10000){
                     txtTimer.setTextColor(Color.RED);
@@ -49,15 +53,15 @@ public class PasswordVerificatonActivity extends AppCompatActivity {
 
             }
 
+            @Override
             public void onFinish() {
                 txtTimer.setText( "0");
-               // pinEntry.setEnabled(false);
-              //  pinEntry.setText("");
-             //   bottomLayout.setVisibility(View.VISIBLE);
+                // pinEntry.setEnabled(false);
+                //  pinEntry.setText("");
+                //   bottomLayout.setVisibility(View.VISIBLE);
                 try {
-                 //   unregisterReceiver(broadcastReceiver);
-                }
-                catch (Exception e){}
+                    //   unregisterReceiver(broadcastReceiver);
+                } catch (Exception e){}
             }
 
         }.start();

@@ -7,13 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 import ir.iconish.sanjinehsub.R;
 
 
 public class DialogHelper {
-    public static void sureBack(Activity activity) {
+    public static void sureBack(@NonNull Activity activity) {
 
 
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
@@ -54,7 +56,7 @@ public class DialogHelper {
 
     }
 
-    public static void sureExit(Activity activity) {
+    public static void sureExit(@NonNull Activity activity) {
 
 
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
@@ -94,7 +96,7 @@ public class DialogHelper {
     }
 
 
-    public static void showDialog(String dialogTitleText, String dialogBodyText, String submitButtonTitle, String cancelButtonTitle, Activity activity, Dialoglistener dialoglistener) {
+    public static void showDialog(String dialogTitleText, String dialogBodyText, String submitButtonTitle, @Nullable String cancelButtonTitle, @NonNull Activity activity, @NonNull Dialoglistener dialoglistener) {
 
 
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
@@ -139,7 +141,7 @@ public class DialogHelper {
             }
         });
 
-
+        alertDialog.setCancelable(true);
         alertDialog.show();
 
 

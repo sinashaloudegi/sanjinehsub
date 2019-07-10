@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 
 /**
@@ -17,17 +18,17 @@ public class CircledTextView extends AppCompatTextView {
     private int circleColor = Color.LTGRAY;
     private float density = 1;
 
-    public CircledTextView(Context context) {
+    public CircledTextView(@NonNull Context context) {
         super(context);
         density = getResources().getDisplayMetrics().density;
     }
 
-    public CircledTextView(Context context, AttributeSet attrs, int defStyle) {
+    public CircledTextView(@NonNull Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         density = getResources().getDisplayMetrics().density;
     }
 
-    public CircledTextView(Context context, AttributeSet attrs) {
+    public CircledTextView(@NonNull Context context, AttributeSet attrs) {
         super(context, attrs);
         density = getResources().getDisplayMetrics().density;
     }
@@ -44,7 +45,7 @@ public class CircledTextView extends AppCompatTextView {
 //    }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
 
         Rect rect = canvas.getClipBounds();

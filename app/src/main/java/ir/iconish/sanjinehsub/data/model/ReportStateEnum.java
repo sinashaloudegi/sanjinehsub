@@ -1,5 +1,8 @@
 package ir.iconish.sanjinehsub.data.model;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 public enum ReportStateEnum {
     START(1, "ثبت درخواست"),
     NOT_AVAILABLE_REPORT(2, "گزارش موجود نیست"),
@@ -36,6 +39,7 @@ public enum ReportStateEnum {
         this.id = id;
     }
 
+    @Nullable
     public static ReportStateEnum fromValue(Integer value) {
         if (value == 1) {
             return ReportStateEnum.START;
@@ -101,6 +105,8 @@ public enum ReportStateEnum {
         return id;
     }
 
+    @NonNull
+    @Override
     public String toString() {
         return this.value;
     }

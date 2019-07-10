@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 import java.util.Map;
 
@@ -121,6 +123,7 @@ private List<TerminateContract> terminateContracts;
         this.icsScore = icsScore;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "CreditScrore{" +

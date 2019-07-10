@@ -16,6 +16,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -24,6 +27,7 @@ public class WebViewConfiguration {
     WebView webView;
     Context context;
     String url;
+    @Nullable
     private View mCustomView;
     private WebChromeClient.CustomViewCallback customViewCallback;
 
@@ -70,22 +74,22 @@ public class WebViewConfiguration {
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.ECLAIR) {
             try {
 
-                Method m1 = WebSettings.class.getMethod("setDomStorageEnabled", new Class[]{Boolean.TYPE});
+                Method m1 = WebSettings.class.getMethod("setDomStorageEnabled", Boolean.TYPE);
                 m1.invoke(settings, Boolean.TRUE);
 
-                Method m2 = WebSettings.class.getMethod("setDatabaseEnabled", new Class[]{Boolean.TYPE});
+                Method m2 = WebSettings.class.getMethod("setDatabaseEnabled", Boolean.TYPE);
                 m2.invoke(settings, Boolean.TRUE);
 
-                Method m3 = WebSettings.class.getMethod("setDatabasePath", new Class[]{String.class});
+                Method m3 = WebSettings.class.getMethod("setDatabasePath", String.class);
                 m3.invoke(settings, "/data/data/" + context.getPackageName() + "/databases/");
 
-                Method m4 = WebSettings.class.getMethod("setAppCacheMaxSize", new Class[]{Long.TYPE});
+                Method m4 = WebSettings.class.getMethod("setAppCacheMaxSize", Long.TYPE);
                 m4.invoke(settings, 1024*1024*8);
 
-                Method m5 = WebSettings.class.getMethod("setAppCachePath", new Class[]{String.class});
+                Method m5 = WebSettings.class.getMethod("setAppCachePath", String.class);
                 m5.invoke(settings, "/data/data/" +context. getPackageName() + "/cache/");
 
-                Method m6 = WebSettings.class.getMethod("setAppCacheEnabled", new Class[]{Boolean.TYPE});
+                Method m6 = WebSettings.class.getMethod("setAppCacheEnabled", Boolean.TYPE);
                 m6.invoke(settings, Boolean.TRUE);
 
                // Log.e("TAG", "Enabled HTML5-Features");
@@ -122,7 +126,7 @@ public class WebViewConfiguration {
     }
     public class MyWebClient extends WebViewClient {
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        public boolean shouldOverrideUrlLoading(@NonNull WebView view, @NonNull String url) {
             if (url.endsWith(".pdf")) {
                 context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url.trim())));
                 // if want to download pdf manually create AsyncTask here
@@ -228,12 +232,12 @@ public class WebViewConfiguration {
         private View mVideoProgressView;
 
         @Override
-        public void onShowCustomView(View view, int requestedOrientation, CustomViewCallback callback) {
+        public void onShowCustomView(View view, int requestedOrientation, @NonNull CustomViewCallback callback) {
             onShowCustomView(view, callback);    //To change body of overridden methods use File | Settings | File Templates.
         }
 
         @Override
-        public void onShowCustomView(View view, CustomViewCallback callback) {
+        public void onShowCustomView(View view, @NonNull CustomViewCallback callback) {
 
             // if a view already exists then immediately terminate the new one
             if (mCustomView != null) {
@@ -260,8 +264,9 @@ public class WebViewConfiguration {
         @Override
         public void onHideCustomView() {
             super.onHideCustomView();
-            if (mCustomView == null)
+            if (mCustomView == null) {
                 return;
+            }
 
             webView.setVisibility(View.VISIBLE);
             customViewContainer.setVisibility(View.GONE);

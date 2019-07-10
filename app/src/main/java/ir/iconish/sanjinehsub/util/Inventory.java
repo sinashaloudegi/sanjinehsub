@@ -15,6 +15,9 @@
 
 package ir.iconish.sanjinehsub.util;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,17 +28,21 @@ import java.util.Map;
  * An Inventory is returned by such methods as {@link IabHelper#queryInventory}.
  */
 public class Inventory {
+    @NonNull
     Map<String,SkuDetails> mSkuMap = new HashMap<String,SkuDetails>();
+    @NonNull
     Map<String,Purchase> mPurchaseMap = new HashMap<String,Purchase>();
 
     Inventory() { }
 
     /** Returns the listing details for an in-app product. */
+    @Nullable
     public SkuDetails getSkuDetails(String sku) {
         return mSkuMap.get(sku);
     }
 
     /** Returns purchase information for a given product, or null if there is no purchase. */
+    @Nullable
     public Purchase getPurchase(String sku) {
         return mPurchaseMap.get(sku);
     }
@@ -59,33 +66,38 @@ public class Inventory {
      * a new Inventory.
      */
     public void erasePurchase(String sku) {
-        if (mPurchaseMap.containsKey(sku)) mPurchaseMap.remove(sku);
+        mPurchaseMap.remove(sku);
     }
 
     /** Returns a list of all owned product IDs. */
+    @NonNull
     List<String> getAllOwnedSkus() {
         return new ArrayList<String>(mPurchaseMap.keySet());
     }
 
     /** Returns a list of all owned product IDs of a given type */
+    @NonNull
     List<String> getAllOwnedSkus(String itemType) {
         List<String> result = new ArrayList<String>();
         for (Purchase p : mPurchaseMap.values()) {
-            if (p.getItemType().equals(itemType)) result.add(p.getSku());
+            if (p.getItemType().equals(itemType)) {
+                result.add(p.getSku());
+            }
         }
         return result;
     }
 
     /** Returns a list of all purchases. */
+    @NonNull
     List<Purchase> getAllPurchases() {
         return new ArrayList<Purchase>(mPurchaseMap.values());
     }
 
-    void addSkuDetails(SkuDetails d) {
+    void addSkuDetails(@NonNull SkuDetails d) {
         mSkuMap.put(d.getSku(), d);
     }
 
-    void addPurchase(Purchase p) {
+    void addPurchase(@NonNull Purchase p) {
         mPurchaseMap.put(p.getSku(), p);
     }
 }

@@ -1,11 +1,11 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.model.PasswordValidationResponse;
-import ir.iconish.sanjinehsub.data.source.api.CheckPasswordApi;
 import ir.iconish.sanjinehsub.data.source.api.ForgetPasswordApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
@@ -24,7 +24,7 @@ this.forgetPasswordApi=forgetPasswordApi;
 this.sharedPreferencesManager=sharedPreferencesManager;
     }
 
-    public void callForgetPasswordRepository  ( String mobileNumber,final VolleyCallback volleyCallback) {
+    public void callForgetPasswordRepository(String mobileNumber, @NonNull final VolleyCallback volleyCallback) {
         forgetPasswordApi.callForgetPasswordApi(sharedPreferencesManager.getMobileNumberValue(),new VolleyCallback() {
         @Override
         public   void onSuccess(Object o) {
@@ -74,8 +74,10 @@ this.sharedPreferencesManager=sharedPreferencesManager;
 
 
 }
+
+    @Nullable
 public String getMobileNumber(){
-    return sharedPreferencesManager.getMobileNumberValue();
+        return sharedPreferencesManager.getMobileNumberValue();
 }
 
 }

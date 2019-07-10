@@ -15,6 +15,8 @@
 
 package ir.iconish.sanjinehsub.util;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,6 +62,7 @@ public class Purchase implements Serializable {
     public String getOriginalJson() { return mOriginalJson; }
     public String getSignature() { return mSignature; }
 
+    @NonNull
     @Override
     public String toString() { return "PurchaseInfo(type:" + mItemType + "):" + mOriginalJson; }
 }

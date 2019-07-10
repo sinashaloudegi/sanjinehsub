@@ -62,10 +62,10 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "TESTid");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
         Log.d(TAG, "onCreate: ");
-/*
-      String reqToken=  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxOTExMDUwODA2NDEzMjI1IiwiaWNvbkNyZWRpdCI6IjE5MTEwNTA4MDY0MTMyMjUiLCJpYXQiOjE1NTc1NDU4MDF9.DEFEycDW90S9J5ZobgPGAnVZ-NR_A3FYoO7obsLziNw";
+    /*
+      String reqToken=  "eyJhbGciOiJIUzI1NiJ9   .eyJzdWIiOiIxOTExMDUwODA2NDEzMjI1IiwiaWNvbkNyZWRpdCI6IjE5MTEwNTA4MDY0MTMyMjUiLCJpYXQiOjE1NTc1NDU4MDF9.DEFEycDW90S9J5ZobgPGAnVZ-NR_A3FYoO7obsLziNw";
         goToNativeReportActivity(reqToken);
-*/
+    */
 
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -133,7 +133,7 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
         broadcastReceiver = new BroadcastReceiver() {
             @Override
-            public void onReceive(Context context, Intent intent) {
+            public void onReceive(Context context, @NonNull Intent intent) {
 
                 String action = intent.getAction();
 

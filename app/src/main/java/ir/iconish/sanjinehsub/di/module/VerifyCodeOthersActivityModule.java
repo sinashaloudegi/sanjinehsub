@@ -1,6 +1,8 @@
 package ir.iconish.sanjinehsub.di.module;
 
 
+import androidx.annotation.NonNull;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -12,7 +14,7 @@ import ir.iconish.sanjinehsub.data.source.api.ConfirmVerifyCodeApi;
 public class VerifyCodeOthersActivityModule {
 
 
-
+    @NonNull
     @Provides
     @Singleton
     public ConfirmVerifyCodeApi provideConfirmVerifyCodeApi(AppController appController){

@@ -2,6 +2,8 @@ package ir.iconish.sanjinehsub.data.source.api;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -46,7 +48,8 @@ public class ReportApi {
     }
 
 
-    public CreditScrore parseJson(JSONObject jsonObject) {
+    @NonNull
+    public CreditScrore parseJson(@NonNull JSONObject jsonObject) {
         CreditScrore creditScrore = new CreditScrore();
         Person person = new Person();
 
@@ -303,7 +306,7 @@ public class ReportApi {
     }
 
 
-    public void callReportsApi(String reqToken, final VolleyCallback volleyCallback) {
+    public void callReportsApi(String reqToken, @NonNull final VolleyCallback volleyCallback) {
 
 
         String url = ConstantUrl.BASE_CREDIT + ConstantUrl.REPORTS;
@@ -376,7 +379,7 @@ public class ReportApi {
 
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
                 AppConstants.CLIENT_TIMEOUT,
-                0,
+                1,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         String tag_json_arry = "reposrtsApi";
         appController.addToRequestQueue(jsonObjReq, tag_json_arry);

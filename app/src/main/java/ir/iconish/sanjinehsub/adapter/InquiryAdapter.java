@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -30,8 +31,10 @@ public class InquiryAdapter extends RecyclerView.Adapter<InquiryViewHolder> {
         this.recyclerIemListener = recyclerIemListener;
 
     }
+
+    @NonNull
     @Override
-    public InquiryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public InquiryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.inquiry_row, parent, false);
         ButterKnife.bind(this, itemView);
@@ -42,7 +45,7 @@ public class InquiryAdapter extends RecyclerView.Adapter<InquiryViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final InquiryViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final InquiryViewHolder viewHolder, final int i) {
 
 
         final Inquiry inquiry = inquiryList.get(i);

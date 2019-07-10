@@ -1,10 +1,6 @@
 package ir.iconish.sanjinehsub.ui.activity;
 
-import android.Manifest;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -13,15 +9,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
-
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -34,42 +25,35 @@ import ir.iconish.sanjinehsub.data.model.LoginStatusEnum;
 import ir.iconish.sanjinehsub.data.vm.VerifyRegisterOtpViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
-import ir.iconish.sanjinehsub.util.PermissionHelper;
-import ir.iconish.sanjinehsub.util.ToastHelper;
 
 public class VerifyRegisterOtpActivity extends AppCompatActivity {
 
+    @Nullable
     @BindView(R.id.txtTimer)
     TextView txtTimer;
 
 
-
+    @Nullable
     @BindView(R.id.btnEnter)
     AppCompatButton btnEnter;
 
 
-
-
+    @Nullable
     @BindView(R.id.txtAlert)
     TextView txtAlert;
 
 
-
-
+    @Nullable
     @BindView(R.id.edtVerifyCode)
     EditText edtVerificationCode;
 
 
-
-
-
+    @Nullable
     @BindView(R.id.prg)
     ProgressBar prg;
 
 
-
-
-
+    @Nullable
     @BindView(R.id.btnRetry)
     AppCompatButton btnRetry;
 
@@ -132,6 +116,7 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
 
         countDownTimer=    new CountDownTimer(timerDuration, 1000) {
 
+            @Override
             public void onTick(long millisUntilFinished) {
                 if(millisUntilFinished<10000){
                     txtTimer.setTextColor(Color.RED);
@@ -140,17 +125,17 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
 
             }
 
+            @Override
             public void onFinish() {
                 txtTimer.setText( "0");
                 btnEnter.setVisibility(View.INVISIBLE);
                 btnRetry.setVisibility(View.VISIBLE);
-               // pinEntry.setEnabled(false);
-              //  pinEntry.setText("");
-             //   bottomLayout.setVisibility(View.VISIBLE);
+                // pinEntry.setEnabled(false);
+                //  pinEntry.setText("");
+                //   bottomLayout.setVisibility(View.VISIBLE);
                 try {
-                 //   unregisterReceiver(broadcastReceiver);
-                }
-                catch (Exception e){}
+                    //   unregisterReceiver(broadcastReceiver);
+                } catch (Exception e){}
             }
 
         }.start();

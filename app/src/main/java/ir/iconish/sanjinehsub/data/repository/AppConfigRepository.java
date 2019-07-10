@@ -1,7 +1,8 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import javax.inject.Inject;
 
@@ -23,7 +24,7 @@ public class AppConfigRepository {
     this.sharedPreferencesManager=sharedPreferencesManager;
   }
 
-  public void callAppConfigRepository(final VolleyCallback volleyCallback) {
+    public void callAppConfigRepository(@NonNull final VolleyCallback volleyCallback) {
     appConfigApi.callConfigApi(new VolleyCallback() {
       @Override
       public void onSuccess(Object o) {
@@ -78,8 +79,10 @@ public class AppConfigRepository {
 
 
   }
-  public String getUserPassword(){
-    return sharedPreferencesManager.getPasswordValue();
-  }
+
+    @Nullable
+    public String getUserPassword(){
+        return sharedPreferencesManager.getPasswordValue();
+    }
 
 }

@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.model;
 
+import androidx.annotation.NonNull;
+
 public class Inquiry {
 
     private String  lookupsSubscriberType;
@@ -39,6 +41,7 @@ public class Inquiry {
         this.last1Year = last1Year;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Inquiry{" +

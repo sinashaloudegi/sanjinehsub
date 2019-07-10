@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.model;
 
+import androidx.annotation.NonNull;
+
 public class AppConfig {
 
 
@@ -40,13 +42,14 @@ public class AppConfig {
             this.timerDuration = timerDuration;
         }
 
-        @Override
-        public String toString() {
-            return "AppConfig{" +
-                    "marketEnumId=" + marketEnumId +
-                    ", marketEnumString='" + marketEnumString + '\'' +
-                    ", marketKey='" + marketKey + '\'' +
-                    ", timerDuration=" + timerDuration +
-                    '}';
-        }
+    @NonNull
+    @Override
+    public String toString() {
+        return "AppConfig{" +
+                "marketEnumId=" + marketEnumId +
+                ", marketEnumString='" + marketEnumString + '\'' +
+                ", marketKey='" + marketKey + '\'' +
+                ", timerDuration=" + timerDuration +
+                '}';
+    }
     }

@@ -1,6 +1,8 @@
 package ir.iconish.sanjinehsub.data.model;
 
 
+import androidx.annotation.NonNull;
+
 public class Sms  {
 
     private Integer reportStateId;
@@ -22,6 +24,7 @@ public class Sms  {
         this.reportStateValue = reportStateValue;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "SMSDTO{" +

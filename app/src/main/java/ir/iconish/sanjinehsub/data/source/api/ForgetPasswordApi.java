@@ -2,14 +2,14 @@ package ir.iconish.sanjinehsub.data.source.api;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
@@ -37,8 +37,8 @@ public class ForgetPasswordApi {
     }
 
 
-
-    public PasswordValidationResponse parseJson(JSONObject jsonObject){
+    @NonNull
+    public PasswordValidationResponse parseJson(@NonNull JSONObject jsonObject) {
         PasswordValidationResponse passwordValidationResponse=new PasswordValidationResponse();
 
       try {
@@ -61,7 +61,7 @@ public class ForgetPasswordApi {
         return passwordValidationResponse;
     }
 
-    public void callForgetPasswordApi(String mobileNumer,final VolleyCallback volleyCallback){
+    public void callForgetPasswordApi(String mobileNumer, @NonNull final VolleyCallback volleyCallback) {
 
 
         String   url=ConstantUrl.BASE+ConstantUrl.FORGET_PASSWORD;
@@ -155,6 +155,7 @@ JSONObject jsonObject=new JSONObject();
                 return "application/json; charset=utf-8";
             }
 
+            @NonNull
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -173,7 +174,7 @@ JSONObject jsonObject=new JSONObject();
 
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
                 AppConstants.CLIENT_TIMEOUT,
-                0,
+                1,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         String tag_json_arry = "checkPasswordApi";
         appController.addToRequestQueue(jsonObjReq, tag_json_arry);

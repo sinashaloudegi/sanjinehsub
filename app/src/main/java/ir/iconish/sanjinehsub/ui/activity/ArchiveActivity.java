@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,14 +34,17 @@ public class ArchiveActivity extends AppCompatActivity implements ArchiveRecycle
     ArchiveViewModel archiveViewModel;
 
 
+    @Nullable
     @BindView(R.id.swip)
     SwipeRefreshLayout swipeRefreshLayout;
 
 
+    @Nullable
     @BindView(R.id.recyclerArchive)
     RecyclerView recyclerView;
 
 
+    @Nullable
     @BindView(R.id.imgBack)
     ImageView imgBack;
 
@@ -144,12 +149,12 @@ public class ArchiveActivity extends AppCompatActivity implements ArchiveRecycle
     }
 
     @Override
-    public void onDownloadTap(Archive archive) {
+    public void onDownloadTap(@NonNull Archive archive) {
         DownloadHelper.reportDownload(archive.getDownloadLink(), this);
     }
 
     @Override
-    public void onVisitTap(Archive archive) {
+    public void onVisitTap(@NonNull Archive archive) {
         ActivityNavigationHelper.navigateToWebView(archive.getViewLink(), this, WebViewActivity.class);
     }
 

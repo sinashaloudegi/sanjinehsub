@@ -5,13 +5,14 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "ir.iconish.sanjinehsub"
+
         minSdkVersion 16
         targetSdkVersion 28
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
-        versionCode 8
-        versionName "1.1.6"
+        versionCode 9
+        versionName "1.1.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         renderscriptTargetApi 16
@@ -89,7 +90,7 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-gcm:16.1.0'
     //  implementation 'com.google.firebase:firebase-core:16.0.4'
-    implementation 'com.google.android.gms:play-services-base:16.1.0'
+    implementation 'com.google.android.gms:play-services-base:17.0.0'
 
 
     implementation 'androidx.multidex:multidex:2.0.0'
@@ -100,6 +101,13 @@ dependencies {
 
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.2.0'
     implementation 'com.github.samanzamani.persiandate:PersianDate:0.7'
+
+    implementation 'me.leolin:ShortcutBadger:1.1.22@aar'
+    implementation 'com.adpdigital.push:chabok-lib:2.17.1'
+
+    //If you want to get the push notification, add to dependencies
+    implementation 'com.google.android.gms:play-services-gcm:10.2.6'
+    implementation 'com.android.installreferrer:installreferrer:1.0'
 
 
 }

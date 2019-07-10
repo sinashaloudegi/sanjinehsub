@@ -9,9 +9,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
+
+import com.adpdigital.push.AdpPushClient;
+import com.crashlytics.android.Crashlytics;
 
 import javax.inject.Inject;
 
@@ -29,34 +33,41 @@ import ir.iconish.sanjinehsub.util.Helper;
 
 public class LoginActivity extends AppCompatActivity {
 
+    @Nullable
     @BindView(R.id.btnCheckPhone)
     AppCompatButton btnCheckPhone;
 
     private static final String TAG = "LoginActivity";
 
 
+    @Nullable
     @BindView(R.id.edtMobileNumber)
     EditText edtMobileNumber;
 
 
+    @Nullable
     @BindView(R.id.txtAlertPhone)
     TextView txtAlertPhone;
 
 
+    @Nullable
     @BindView(R.id.edtNationalCode)
     EditText edtNationalCode;
 
 
+    @Nullable
     @BindView(R.id.txtAlertNationalCode)
     TextView txtAlertNationalCode;
 
 
+    @Nullable
     @BindView(R.id.checkboxRules)
     CheckBox checkBoxRules;
 
 
     @Inject
     LoginViewModel loginViewModel;
+    @Nullable
     @BindView(R.id.prgLogin)
     ProgressBar prgLogin;
 
@@ -70,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
 
         attachViewModel();
         Log.d(TAG, "onCreate: Login");
+        Crashlytics.setString("onCreate", "Login");
     }
 
 
@@ -125,9 +137,12 @@ public class LoginActivity extends AppCompatActivity {
 
 
         showWating();
+        Crashlytics.setString("Mobile", mobileNumber);
+        Crashlytics.setString("nationalCode", nationalCode);
         loginViewModel.callLoginViewModel(mobileNumber, nationalCode);
         // startActivity(new Intent(this,LoginVerificatonActivity.class));
         //finish();
+
     }
 
 
@@ -135,7 +150,16 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getApiSuccessLiveDataResponse().observe(this, user -> {
                     stopWating();
 
+            String userId = AdpPushClient.get().getUserId();
 
+            if (userId != null && !userId.isEmpty()) {
+                AdpPushClient.get().register(userId);
+            } else {
+
+                //If user is not registered verify the user and
+                //call AdpPushClient.get().register("USER_ID") method at login page
+                AdpPushClient.get().register(user.getUserId() + "");
+            }
                     if (user.getResponseCodeEnum().getValue() == LoginStatusEnum.USER_EXIST.getValue()) {
                         ActivityNavigationHelper.navigateToActivity(this, CheckPasswordActivity.class, true);
                         //ActivityNavigationHelper.navigateToActivity(this, MainActivity.class,true);
@@ -185,6 +209,7 @@ public class LoginActivity extends AppCompatActivity {
     private void goToFailApiPage(String failCause) {
 
         Intent intent = new Intent(this, FailApiActivity.class);
+        Crashlytics.setString("failCause", failCause);
         intent.putExtra("failCause", failCause);
         startActivity(intent);
         finish();

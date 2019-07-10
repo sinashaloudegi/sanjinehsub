@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.model;
 
+import androidx.annotation.NonNull;
+
 public class CreditScorePreProcess {
 
 
@@ -32,6 +34,7 @@ public class CreditScorePreProcess {
         this.reportDescryption = reportDescryption;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "CreditScorePreProcess{" +

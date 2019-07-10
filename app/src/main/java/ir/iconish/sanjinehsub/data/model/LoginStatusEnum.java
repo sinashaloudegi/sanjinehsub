@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.model;
 
+import androidx.annotation.NonNull;
+
 public enum LoginStatusEnum {
     UnknownError(0, " خطا"),
     INTERNAL_ERROR(10, "بروز خطا"),
@@ -24,7 +26,7 @@ public enum LoginStatusEnum {
     private int value;
     private String name;
 
-    private LoginStatusEnum(int value, String name) {
+    LoginStatusEnum(int value, String name) {
         this.value = value;
         this.name = name;
     }
@@ -33,6 +35,7 @@ public enum LoginStatusEnum {
         return this.value;
     }
 
+    @NonNull
     public static LoginStatusEnum fromValue(int val) {
         switch(val) {
             case 0:

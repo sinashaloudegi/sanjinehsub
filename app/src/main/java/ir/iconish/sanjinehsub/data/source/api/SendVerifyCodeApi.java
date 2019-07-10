@@ -1,6 +1,9 @@
 package ir.iconish.sanjinehsub.data.source.api;
 
+import android.net.Uri;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
@@ -31,7 +34,8 @@ public class SendVerifyCodeApi {
         this.appController = appController;
     }
 
-    public VerifyCodeOthersResponse parseJson(JSONObject jsonObject) {
+    @NonNull
+    public VerifyCodeOthersResponse parseJson(@NonNull JSONObject jsonObject) {
         VerifyCodeOthersResponse verifyCodeOthersResponse = new VerifyCodeOthersResponse();
         try {
             verifyCodeOthersResponse.setStatusCode(jsonObject.getInt("reportStateId"));
@@ -45,12 +49,15 @@ public class SendVerifyCodeApi {
         return verifyCodeOthersResponse;
     }
 
-    public void callSendVerifyCodeApi(String token, String ntcode, String ownermobile, String mobile, final VolleyCallback volleyCallback) {
+    public void callSendVerifyCodeApi(String cafePaymentType, String token, String ntcode, String ownermobile, String mobile, @NonNull final VolleyCallback volleyCallback) {
         String url = ConstantUrl.BASE_MARKET + ConstantUrl.SEND_VERIFYCODE;
         //https://creditscore.iconi.ir/icredit/sendVerifyCode/{ntcode}/{ownermobile}/{mobile}
         Log.e("url=", url);
         Log.d(TAG, "url is: " + url);
 
+        Uri.Builder builder = Uri.parse(url).buildUpon();
+        builder.appendQueryParameter("cafePaymentType", cafePaymentType);
+        String finalUrl = builder.build().toString();
 
         JSONObject body = new JSONObject();
         try {
@@ -70,7 +77,7 @@ public class SendVerifyCodeApi {
 
         // JsonArrayRequest
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, url, body,
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, finalUrl, body,
                 response -> {
                     Log.d(TAG, "callSendVerifyCodeApi: Response: " + response.toString());
                     if (response != null) {
@@ -113,7 +120,7 @@ public class SendVerifyCodeApi {
             Log.d(TAG, "getHeaders: token:" + token);
             return params;
         }*/
-    };
+        };
 
 
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(AppConstants.CLIENT_TIMEOUT, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));

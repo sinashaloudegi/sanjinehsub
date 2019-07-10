@@ -18,6 +18,8 @@ package ir.iconish.sanjinehsub.util;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -51,7 +53,7 @@ public class Security {
      * @param signedData the signed JSON string (signed, not encrypted)
      * @param signature the signature for the data, signed with the private key
      */
-    public static boolean verifyPurchase(String base64PublicKey, String signedData, String signature) {
+    public static boolean verifyPurchase(@NonNull String base64PublicKey, @NonNull String signedData, @NonNull String signature) {
         if (TextUtils.isEmpty(signedData) || TextUtils.isEmpty(base64PublicKey) ||
                 TextUtils.isEmpty(signature)) {
             return false;
@@ -68,7 +70,7 @@ public class Security {
      * @param encodedPublicKey Base64-encoded public key
      * @throws IllegalArgumentException if encodedPublicKey is invalid
      */
-    public static PublicKey generatePublicKey(String encodedPublicKey) {
+    public static PublicKey generatePublicKey(@NonNull String encodedPublicKey) {
         try {
             byte[] decodedKey = Base64.decode(encodedPublicKey);
             KeyFactory keyFactory = KeyFactory.getInstance(KEY_FACTORY_ALGORITHM);
@@ -92,7 +94,7 @@ public class Security {
      * @param signature server signature
      * @return true if the data and signature match
      */
-    public static boolean verify(PublicKey publicKey, String signedData, String signature) {
+    public static boolean verify(PublicKey publicKey, String signedData, @NonNull String signature) {
         Signature sig;
         try {
             sig = Signature.getInstance(SIGNATURE_ALGORITHM);

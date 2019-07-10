@@ -6,19 +6,16 @@ package ir.iconish.sanjinehsub.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
-import ir.iconish.sanjinehsub.adapter.viewholder.DetailContractViewHolder;
 import ir.iconish.sanjinehsub.adapter.viewholder.TerminateContractViewHolder;
-import ir.iconish.sanjinehsub.data.model.DetailContract;
 import ir.iconish.sanjinehsub.data.model.TerminateContract;
 import ir.iconish.sanjinehsub.util.DateHepler;
 import ir.iconish.sanjinehsub.util.TextFormatter;
@@ -36,8 +33,10 @@ public class TerminateContractAdapter extends RecyclerView.Adapter<TerminateCont
         this.recyclerIemListener = recyclerIemListener;
 
     }
+
+    @NonNull
     @Override
-    public TerminateContractViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TerminateContractViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.terminate_contract_row_layout, parent, false);
         ButterKnife.bind(this, itemView);
@@ -48,7 +47,7 @@ public class TerminateContractAdapter extends RecyclerView.Adapter<TerminateCont
     }
 
     @Override
-    public void onBindViewHolder(final TerminateContractViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final TerminateContractViewHolder viewHolder, final int i) {
 
 
         final TerminateContract terminateContract = terminateContracts.get(i);

@@ -1,4 +1,7 @@
 package ir.iconish.sanjinehsub.data.model;
+
+import androidx.annotation.Nullable;
+
 public enum CreditResponseEnum {
     SUCCESS(100L, "موفقیت آمیز"),
     NOT_MATCH_MOBILE(101L, "موبایل متعلق به این کد ملی نیست"),
@@ -24,6 +27,7 @@ public enum CreditResponseEnum {
         this.id = id;
     }
 
+    @Nullable
     public static CreditResponseEnum fromValue(Long value) {
         if (value == 100L) {
             return CreditResponseEnum.SUCCESS;
@@ -67,6 +71,7 @@ public enum CreditResponseEnum {
         return id;
     }
 
+    @Override
     public String toString() {
         return this.id.toString();
     }

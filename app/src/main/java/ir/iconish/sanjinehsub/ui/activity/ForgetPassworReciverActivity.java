@@ -1,19 +1,15 @@
 package ir.iconish.sanjinehsub.ui.activity;
 
-import android.Manifest;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
@@ -32,28 +28,27 @@ import ir.iconish.sanjinehsub.util.ButtonHelper;
 
 public class ForgetPassworReciverActivity extends AppCompatActivity {
 
+    @Nullable
     @BindView(R.id.txtTimer)
     TextView txtTimer;
 
 
+    @Nullable
     @BindView(R.id.edtPassword)
     EditText edtPassword;
 
 
+    @Nullable
+    @BindView(R.id.btnRetry)
+    AppCompatButton btnRetry;
 
 
+    @Nullable
+    @BindView(R.id.txtAlert)
+    TextView txtAlert;
 
 
-
-      @BindView(R.id.btnRetry)
-      AppCompatButton btnRetry;
-
-
-
-      @BindView(R.id.txtAlert)
-      TextView txtAlert;
-
-
+    @Nullable
     @BindView(R.id.prg)
     ProgressBar prg;
 
@@ -66,6 +61,7 @@ public class ForgetPassworReciverActivity extends AppCompatActivity {
 
     CountDownTimer countDownTimer;
 
+    @Nullable
     @BindView(R.id.btnEnter)
     AppCompatButton btnEnter;
 
@@ -93,6 +89,7 @@ public class ForgetPassworReciverActivity extends AppCompatActivity {
 
         countDownTimer=    new CountDownTimer(timerDuration, 1000) {
 
+            @Override
             public void onTick(long millisUntilFinished) {
                 if(millisUntilFinished<10000){
                     txtTimer.setTextColor(Color.RED);
@@ -101,6 +98,7 @@ public class ForgetPassworReciverActivity extends AppCompatActivity {
 
             }
 
+            @Override
             public void onFinish() {
                 txtTimer.setText( "0");
 btnEnter.setVisibility(View.INVISIBLE);

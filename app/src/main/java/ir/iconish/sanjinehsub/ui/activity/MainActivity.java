@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
@@ -38,17 +39,21 @@ import ir.iconish.sanjinehsub.util.AppConstants;
 
 public class MainActivity extends AppCompatActivity implements RecyclerIemListener {
 
+    @Nullable
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
 
+    @Nullable
     @BindView(R.id.navView)
     NavigationView navigationView;
 
 
+    @Nullable
     @BindView(R.id.recNavigation)
     RecyclerView recyclerNavigation;
 
 
+    @Nullable
     @BindView(R.id.imgNavMenu)
     ImageView imgNavMenu;
 
@@ -77,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         ((AppController) getApplication()).getAppComponent().inject(this);
 
         initNavigation();
+
+
     }
 
 

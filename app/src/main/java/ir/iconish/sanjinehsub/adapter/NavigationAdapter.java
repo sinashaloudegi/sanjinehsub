@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -31,8 +32,10 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationViewHolder
         this.recyclerIemListener = recyclerIemListener;
 
     }
+
+    @NonNull
     @Override
-    public NavigationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NavigationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.nav_item_row, parent, false);
         ButterKnife.bind(this, itemView);
@@ -43,7 +46,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationViewHolder
     }
 
     @Override
-    public void onBindViewHolder(final NavigationViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final NavigationViewHolder viewHolder, final int i) {
 
 
         final NavigationItem navigationItem = navigationItems.get(i);

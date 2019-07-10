@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
+import com.adpdigital.push.AdpPushClient;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -16,6 +18,7 @@ import ir.iconish.sanjinehsub.di.component.AppComponent;
 import ir.iconish.sanjinehsub.di.component.DaggerAppComponent;
 import ir.iconish.sanjinehsub.di.module.AppModule;
 import ir.iconish.sanjinehsub.di.module.NetModule;
+import ir.iconish.sanjinehsub.ui.activity.LoginActivity;
 import ir.iconish.sanjinehsub.util.FontsOverride;
 
 
@@ -48,6 +51,30 @@ public class AppController extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
 
+
+//CHABOK
+        AdpPushClient.init(
+                getApplicationContext(),
+                LoginActivity.class,
+                "hibnosza/1033113418202", //based on your environment
+                "12cdf6cacacc052919344cd23bce0fac0e94a6ca",          //based on your environment
+                "puruzkeija",     //based on your environment
+                "hovezuzit"      //based on your environment
+        );
+        //true connects to Sandbox environment
+        //false connects to Production environment
+        AdpPushClient.get().setDevelopment(true);
+
+        String userId = AdpPushClient.get().getUserId();
+
+        if (userId != null && !userId.isEmpty()) {
+            AdpPushClient.get().register(userId);
+        } else {
+
+            //If user is not registered verify the user and
+            //call AdpPushClient.get().register("USER_ID") method at login page
+            AdpPushClient.get().register("USER_ID");
+        }
         FirebaseApp.initializeApp(this);
 
 
@@ -83,21 +110,29 @@ public class AppController extends MultiDexApplication {
         return mRequestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> req, String tag) {
+    public <T> void addToRequestQueue(@NonNull Request<T> req, String tag) {
         req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
         getRequestQueue().add(req);
     }
 
-    public <T> void addToRequestQueue(Request<T> req) {
+    public <T> void addToRequestQueue(@NonNull Request<T> req) {
         req.setTag(TAG);
         getRequestQueue().add(req);
     }
 
-    public void cancelPendingRequests(Object tag) {
+    public void cancelPendingRequests(@NonNull Object tag) {
         if (mRequestQueue != null) {
             mRequestQueue.cancelAll(tag);
         }
     }
 
+    @Override
+    public void onTerminate() {
+        if (AdpPushClient.get() != null) {
+            AdpPushClient.get().dismiss();
+        }
+
+        super.onTerminate();
+    }
 
 }

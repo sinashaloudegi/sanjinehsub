@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.source.api;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -32,111 +34,95 @@ public class ArchiveApi {
 
     @Inject
     public ArchiveApi(AppController appController) {
-        this.appController=appController;
+        this.appController = appController;
     }
 
 
-
-    public List<Archive> parseJson(JSONArray jsonArray){
-int jsonLength=jsonArray.length();
-List<Archive> archiveList=new ArrayList<>(jsonLength);
-for (int i=0;i<jsonLength;i++){
-    try {
-        JSONObject jsonObject=jsonArray.getJSONObject(i);
-        String date=jsonObject.getString("reportDate");
-        String token=jsonObject.getString("token");
-        String downloadURL="http://creditscore.iconish.ir/icredit/getcreditscorepdf/"+token+"/param";
-        String viewLink = "https://www.sanjineh.ir/report/" + token + "?from=android_cafebazar";
-        Archive archive=new Archive();
-        archive.setDownloadLink(downloadURL);
-        archive.setViewLink(viewLink);
-        archive.setReportDate(date);
-        archive.setReportToken(token);
-        archiveList.add(i,archive);
-    } catch (JSONException e) {
-        //Log.e("error",e.toString());
-        e.printStackTrace();
-    }
-}
+    @NonNull
+    public List<Archive> parseJson(@NonNull JSONArray jsonArray) {
+        int jsonLength = jsonArray.length();
+        List<Archive> archiveList = new ArrayList<>(jsonLength);
+        for (int i = 0; i < jsonLength; i++) {
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String date = jsonObject.getString("reportDate");
+                String token = jsonObject.getString("token");
+                String downloadURL = "http://creditscore.iconish.ir/icredit/getcreditscorepdf/" + token + "/param";
+                String viewLink = "https://www.sanjineh.ir/report/" + token + "?from=android_cafebazar";
+                Archive archive = new Archive();
+                archive.setDownloadLink(downloadURL);
+                archive.setViewLink(viewLink);
+                archive.setReportDate(date);
+                archive.setReportToken(token);
+                archiveList.add(i, archive);
+            } catch (JSONException e) {
+                //Log.e("error",e.toString());
+                e.printStackTrace();
+            }
+        }
 
         return archiveList;
     }
 
 
+    public void callArchivedApi(String mobileNumber, @NonNull final String token, @NonNull final VolleyCallback volleyCallback) {
 
 
-
-
-
-    public void callArchivedApi(String mobileNumber,final String token,final VolleyCallback volleyCallback){
-
-
-        String   url=ConstantUrl.BASE_CREDIT+ConstantUrl.ARCHIVE+mobileNumber;
-
+        String url = ConstantUrl.BASE_CREDIT + ConstantUrl.ARCHIVE + mobileNumber;
 
 
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.POST,
-                url,null,
+                url, null,
                 response -> {
 
 
+                    if (response != null) {
 
-                    if (response!=null){
-
-                        List<Archive> archiveList=     parseJson(response);
-                   volleyCallback.onSuccess(archiveList);
+                        List<Archive> archiveList = parseJson(response);
+                        volleyCallback.onSuccess(archiveList);
 
                     }
-
-
-
 
 
                 }, error -> {
-                    if ((error instanceof NetworkError) || (error instanceof NoConnectionError) ) {
+            if ((error instanceof NetworkError) || (error instanceof NoConnectionError)) {
 
-                        volleyCallback.onClientNetworkError();
-
-
-
-                        return;
-                    }
-                    if (error instanceof TimeoutError){
-
-                        volleyCallback.onTimeOutError();
+                volleyCallback.onClientNetworkError();
 
 
-                        return;
-                    }
+                return;
+            }
+            if (error instanceof TimeoutError) {
+
+                volleyCallback.onTimeOutError();
 
 
+                return;
+            }
 
 
-                    if ((error instanceof ServerError)){
+            if ((error instanceof ServerError)) {
 
 
-                        volleyCallback.onServerError();
+                volleyCallback.onServerError();
 
-                        return;
-                    }
-
-
+                return;
+            }
 
 
-                }
+        }
 
-        )
-
-        {
+        ) {
             @Override
             public String getBodyContentType() {
                 return "application/json; charset=utf-8";
             }
 
+            @NonNull
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
-               // Log.e("tokenH=",token);
+                // Log.e("tokenH=",token);
                 params.put("appid", AppConstants.APP_ID);
                 params.put("Authorization", token);
 
@@ -148,18 +134,12 @@ for (int i=0;i<jsonLength;i++){
         };
 
 
-
-
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
                 AppConstants.CLIENT_TIMEOUT,
-                0,
+                1,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         String tag_json_arry = "setPasswordApi";
         appController.addToRequestQueue(jsonObjReq, tag_json_arry);
-
-
-
-
 
 
     }

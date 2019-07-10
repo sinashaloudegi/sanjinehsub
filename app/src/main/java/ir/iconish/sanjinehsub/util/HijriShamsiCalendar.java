@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.util;
 
+import androidx.annotation.NonNull;
+
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +44,7 @@ public class HijriShamsiCalendar extends GregorianCalendar {
                 + (HIJRI_SHAMSI_EPOCH - 1);
     }
 
+    @NonNull
     private static Map<String, Integer> toHijriShamsi(Double jd) {
         Double depoch, cycle, cyear, aux1, aux2, ycycle, yday, year, month, day;
         Map<String, Integer> hijriShamsiDate = new HashMap<String, Integer>();
@@ -71,6 +74,7 @@ public class HijriShamsiCalendar extends GregorianCalendar {
         return hijriShamsiDate;
     }
 
+    @NonNull
     private static Map<String, Integer> toGregorian(Double jd) {
         Double wjd, depoch, quadricent, dqc, cent, dcent, quad, dquad, yindex, dyindex, year, yearday, month, day;
         Integer leapadj;

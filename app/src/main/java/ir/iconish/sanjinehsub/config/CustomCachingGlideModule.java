@@ -2,6 +2,8 @@ package ir.iconish.sanjinehsub.config;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.Registry;
@@ -17,7 +19,7 @@ import com.bumptech.glide.request.RequestOptions;
 @GlideModule
 public class CustomCachingGlideModule extends AppGlideModule {
     @Override
-    public void applyOptions(Context context, GlideBuilder builder) {
+    public void applyOptions(@NonNull Context context, @NonNull GlideBuilder builder) {
         int diskCacheSizeBytes = 1024 * 1024 * 150; // 150 MB
 
         builder.setDefaultRequestOptions(

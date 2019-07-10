@@ -17,6 +17,6 @@ public class AppConstants {
     public static final String TOPIC = "SanjinehSub";
     public static final String CHANNEL_NAME = "Iconish";
     public static final String CHANNEL_DESCRIPTION = "https://iconish.ir/";
-    public static final String BAZAAR_SKU = "sanj02";
-//    public static final String BAZAAR_SKU = "sanj01";
+    //    public static final String BAZAAR_SKU = "sanj02";
+    public static final String BAZAAR_SKU = "sanj01";
 }

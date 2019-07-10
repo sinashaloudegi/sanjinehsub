@@ -1,6 +1,7 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
+import androidx.annotation.NonNull;
 
 import javax.inject.Inject;
 
@@ -23,7 +24,7 @@ this.checkPasswordApi=checkPasswordApi;
 this.sharedPreferencesManager=sharedPreferencesManager;
     }
 
-    public void callCheckPasswordRepository  (String password, final VolleyCallback volleyCallback) {
+    public void callCheckPasswordRepository(String password, @NonNull final VolleyCallback volleyCallback) {
         checkPasswordApi.callCheckPasswordApi(password,sharedPreferencesManager.getMobileNumberValue(),new VolleyCallback() {
         @Override
         public   void onSuccess(Object o) {

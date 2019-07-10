@@ -1,6 +1,7 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
+import androidx.annotation.NonNull;
 
 import javax.inject.Inject;
 
@@ -24,7 +25,7 @@ this.loginApi=loginApi;
 this.sharedPreferencesManager=sharedPreferencesManager;
     }
 
-    public void callLoginRepository  (String mobileNumer ,String nationalCode, final VolleyCallback volleyCallback) {
+    public void callLoginRepository(String mobileNumer, String nationalCode, @NonNull final VolleyCallback volleyCallback) {
         loginApi.callLoginApi(mobileNumer,new VolleyCallback() {
         @Override
         public   void onSuccess(Object o) {

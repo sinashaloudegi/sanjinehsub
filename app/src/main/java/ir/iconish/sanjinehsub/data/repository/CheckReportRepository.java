@@ -1,6 +1,8 @@
 package ir.iconish.sanjinehsub.data.repository;
 
 
+import androidx.annotation.NonNull;
+
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.source.api.CheckReportApi;
@@ -21,7 +23,7 @@ public class CheckReportRepository {
     this.sharedPreferencesManager = sharedPreferencesManager;
   }
 
-  public void callCheckReportRepository(String ntcode, final VolleyCallback volleyCallback) {
+    public void callCheckReportRepository(String ntcode, @NonNull final VolleyCallback volleyCallback) {
     String msisdn = sharedPreferencesManager.getMobileNumberValue();
     checkReportApi.callCheckReportApi(ntcode, msisdn, new VolleyCallback() {
       @Override

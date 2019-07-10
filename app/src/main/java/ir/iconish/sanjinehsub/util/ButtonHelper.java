@@ -4,28 +4,31 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 
 public class ButtonHelper {
 
-    public static void toggleButtonStatus(Button button,boolean enable) {
+    public static void toggleButtonStatus(@NonNull Button button, boolean enable) {
 
-        if (enable)
+        if (enable) {
             button.getBackground().setColorFilter(null);
-        else
-        button.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+        } else {
+            button.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+        }
 
 
         button.setEnabled(enable);
 
     }
 
-     public static void toggleAppCompatButtonStatus(AppCompatButton button, boolean enable) {
+    public static void toggleAppCompatButtonStatus(@NonNull AppCompatButton button, boolean enable) {
 
-        if (enable)
+        if (enable) {
             button.getBackground().setColorFilter(null);
-        else
+        } else {
             button.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+        }
 
 
         button.setEnabled(enable);

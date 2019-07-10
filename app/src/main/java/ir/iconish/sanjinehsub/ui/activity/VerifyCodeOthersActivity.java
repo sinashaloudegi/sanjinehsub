@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -34,14 +36,19 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
 
     private static final String TAG = "_SCORE";
     public static IabHelper mHelper;
+    @Nullable
     @BindView(R.id.btnEnterVerifyCodeOthers)
     AppCompatButton btnEnterVerifyCodeOthers;
+    @Nullable
     @BindView(R.id.txtAlert)
     TextView txtAlert;
+    @Nullable
     @BindView(R.id.edtVerifyCodeOthers)
     EditText edtVerifyCodeOthers;
+    @Nullable
     @BindView(R.id.prgVerifyCodeOthers)
     ProgressBar prgVerifyCodeOthers;
+    @Nullable
     @BindView(R.id.imgBack)
     ImageView imgBack;
     @Inject
@@ -50,8 +57,11 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
     GetScoreViewModel getScoreViewModel;
     CheckCafeBazaarLogin checkCafeBazaarLogin;
     int reportStatus;
+    @Nullable
     String msisdn = null;
+    @Nullable
     String ntcode = null;
+    @Nullable
     Purchase purchase = null;
     private boolean alreadyBazaarInited = false;
 
@@ -159,15 +169,16 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        if (this != null)
+        if (this != null) {
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+        }
         super.onDestroy();
 
 
     }
 
 
-    boolean verifyDeveloperPayload(Purchase p) {
+    boolean verifyDeveloperPayload(@NonNull Purchase p) {
         String payload = p.getDeveloperPayload();
         return true;
     }

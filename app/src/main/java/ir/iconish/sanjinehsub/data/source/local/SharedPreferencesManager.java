@@ -3,6 +3,8 @@ package ir.iconish.sanjinehsub.data.source.local;
 
 import android.content.SharedPreferences;
 
+import androidx.annotation.Nullable;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -31,6 +33,7 @@ public class SharedPreferencesManager {
     }
 
 
+    @Nullable
     public String getMobileNumberValue() {
         return sharedPreferences.getString(MOBILE_NUMBER_VALUE, null);
     }
@@ -42,6 +45,7 @@ public class SharedPreferencesManager {
     }
 
 
+    @Nullable
     public String getEmailValue() {
         return sharedPreferences.getString(EMAIL_VALUE, null);
     }
@@ -53,6 +57,7 @@ public class SharedPreferencesManager {
     }
 
 
+    @Nullable
     public String getMarketKeyValue() {
         return sharedPreferences.getString(MARKET_KEY, null);
     }
@@ -77,6 +82,7 @@ public class SharedPreferencesManager {
     }
 
 
+    @Nullable
     public String getTokenValue() {
         return sharedPreferences.getString(TOKEN, null);
     }
@@ -89,6 +95,7 @@ public class SharedPreferencesManager {
     }
 
 
+    @Nullable
     public String getFirsNameValue() {
         return sharedPreferences.getString(FIRST_NAME_VALUE, null);
     }
@@ -101,6 +108,7 @@ public class SharedPreferencesManager {
     }
 
 
+    @Nullable
     public String getLastNameValue() {
         return sharedPreferences.getString(LAST_NAME_VALUE, null);
     }
@@ -111,6 +119,7 @@ public class SharedPreferencesManager {
         editor.commit();
     }
 
+    @Nullable
     public String getNationalCodeValue() {
         return sharedPreferences.getString(NATIONAL_CODE, null);
     }
@@ -143,6 +152,7 @@ public class SharedPreferencesManager {
     }
 
 
+    @Nullable
     public String getPasswordValue() {
         return sharedPreferences.getString(PASSWORD_VALUE, null);
     }

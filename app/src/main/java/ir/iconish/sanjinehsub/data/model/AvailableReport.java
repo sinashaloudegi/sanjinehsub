@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.model;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class AvailableReport implements Serializable {
@@ -24,7 +26,8 @@ public class AvailableReport implements Serializable {
 		isAvailable = available;
 	}
 
-	@Override
+    @NonNull
+    @Override
 	public String toString() {
 		return "AvailableDTO{" +
 				"validMobile=" + validMobile +

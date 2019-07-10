@@ -87,10 +87,11 @@ public class SendVerifyCodeViewModel extends ViewModel {
     }
 
     private static final String TAG = "_SCORE";
-    public void callSendVerifyCodeViewModel(String ntcode, String ownermobile) {
+
+    public void callSendVerifyCodeViewModel(String cafePaymentType, String ntcode, String ownermobile) {
         Log.d(TAG, "In callSendVerifyCodeViewModel: ");
 
-      sendVerifyCodeRepository.callSendVerifyCodeRepository(ntcode,ownermobile,new VolleyCallback() {
+        sendVerifyCodeRepository.callSendVerifyCodeRepository(cafePaymentType, ntcode, ownermobile, new VolleyCallback() {
           @Override
           public void onSuccess(Object obj) {
             apiSuccessLiveDataResponse.setValue((VerifyCodeOthersResponse) obj);

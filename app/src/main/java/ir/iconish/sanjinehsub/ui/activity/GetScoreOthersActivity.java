@@ -15,9 +15,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+
+import com.crashlytics.android.Crashlytics;
 
 import java.util.UUID;
 
@@ -29,10 +34,13 @@ import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
+import ir.iconish.sanjinehsub.data.model.CafeBazaarPaymentTypeEnum;
 import ir.iconish.sanjinehsub.data.model.CreditResponseEnum;
+import ir.iconish.sanjinehsub.data.model.NumberOfSanjineh;
 import ir.iconish.sanjinehsub.data.model.ReportStateEnum;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.data.vm.SendVerifyCodeViewModel;
+import ir.iconish.sanjinehsub.data.vm.UserNumberOfSanjinehViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.ui.DialogHelper;
 import ir.iconish.sanjinehsub.ui.Dialoglistener;
@@ -48,21 +56,29 @@ import ir.iconish.sanjinehsub.util.ToastHelper;
 public class GetScoreOthersActivity extends AppCompatActivity implements Dialoglistener {
 
     private static final String TAG = "_SCORE";
+    @Nullable
     public static IabHelper mHelper;
+    @Nullable
     @BindView(R.id.edtNtcodeOthers)
     EditText edtNtcodeOthers;
+    @Nullable
     @BindView(R.id.edtMsisdnOthers)
     EditText edtMsisdnOthers;
+    @Nullable
     @BindView(R.id.btnGetScoreOthers)
     AppCompatButton btnGetScoreOthers;
+    @Nullable
     @BindView(R.id.prgGetScoreOthers)
     ProgressBar prgGetScoreOthers;
+    @Nullable
     @BindView(R.id.imgBack)
     ImageView imgBack;
+    @Nullable
     @BindView(R.id.txtAlert)
     TextView txtAlert;
     @Inject
     GetScoreViewModel getScoreViewModel;
+    @Nullable
     @BindView(R.id.checkboxRules)
     CheckBox checkboxRules;
     Purchase purchase;
@@ -70,10 +86,15 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
     @Inject
     SendVerifyCodeViewModel sendVerifyCodeViewModel;
     BroadcastReceiver broadcastReceiver;
+    NumberOfSanjineh numberOfSanjineh;
+    @NonNull
     IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
-        public void onConsumeFinished(Purchase purchase, IabResult result) {
+        @Override
+        public void onConsumeFinished(Purchase purchase, @NonNull IabResult result) {
 
-            if (mHelper == null) return;
+            if (mHelper == null) {
+                return;
+            }
             if (result.isSuccess()) {
                 Log.e("Test", "Consumption successful. Provisioning.");
             } else {
@@ -81,9 +102,13 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
             Log.e("Test", "End consumption flow.");
         }
     };
+    @NonNull
     public IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
-        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            if (mHelper == null) return;
+        @Override
+        public void onQueryInventoryFinished(@NonNull IabResult result, @Nullable Inventory inventory) {
+            if (mHelper == null) {
+                return;
+            }
             stopWating();
             if (result.isFailure()) {
                 Log.e("Test", "Failed to query inventory: " + result);
@@ -101,8 +126,10 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
             Log.e("Test", "Initial inventory query finished; enabling main UI.");
         }
     };
+    @NonNull
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+        @Override
+        public void onIabPurchaseFinished(@NonNull IabResult result, @NonNull Purchase purchase) {
             GetScoreOthersActivity.this.purchase = purchase;
             Log.d(TAG, "onIabPurchaseFinished: Finished! ");
 
@@ -123,9 +150,9 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
                 mHelper.consumeAsync(purchase, mConsumeFinishedListener);
             }
             showWating();
-            sendVerifyCodeViewModel.callSendVerifyCodeViewModel(edtNtcodeOthers.getText().toString(), edtMsisdnOthers.getText().toString());
+            sendVerifyCodeViewModel.callSendVerifyCodeViewModel(CafeBazaarPaymentTypeEnum.CAFE_SDK.name(), edtNtcodeOthers.getText().toString(), edtMsisdnOthers.getText().toString());
 
-/*
+/*1
             //getScoreViewModel.callGetScoreViewModel(purchase,edtMsisdnOthers.getText().toString(),edtNtcodeOthers.getText().toString());
             //getScoreViewModel.callGetScoreViewModel(edtMsisdnOthers.getText().toString(),edtNtcodeOthers.getText().toString(),2,1, AppConstants.PAYMENT_TYPE,AppConstants.CHANNEL_ID,purchase);
 */
@@ -133,6 +160,8 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
         }
     };
     private boolean alreadyBazaarInited = false;
+    @Inject
+    UserNumberOfSanjinehViewModel getUserHasSanjinehViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +174,7 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
         showWating();
         bazaarSetup(getScoreViewModel.getMarketKey());
         attachViewModel();
+        getUserHasSanjinehViewModel.callGetUserSanjinehViewModel();
     }
 
     private void bazaarSetup(String bazaarKey) {
@@ -176,7 +206,9 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i("Test", "onActivityResult(" + requestCode + "," + resultCode + "," + data);
-        if (mHelper == null) return;
+        if (mHelper == null) {
+            return;
+        }
 
         // Pass on the activity result to the helper for handling
         if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
@@ -239,24 +271,35 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
         if (!alreadyBazaarInited) {
             checkCafeBazaarLogin.initService();
         } else {
-            UUID uuid = UUID.randomUUID();
-            String randomUUIDString = uuid.toString();
-            Log.i(TAG, "randomUUIDString : " + randomUUIDString);
-            //"bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ"
-            Log.d(TAG, "btnGetScoreOthersAction: lauchPurchaseFlow starting...");
-            //TODO: Check if user has report limit
-            mHelper.launchPurchaseFlow(GetScoreOthersActivity.this, AppConstants.BAZAAR_SKU, 10001, mPurchaseFinishedListener, randomUUIDString);
+            choosePaymentType();
+
 
         }
     }
 
+    private boolean userHasSanjineh() {
+        boolean hasSanjineh = false;
+        if (this.numberOfSanjineh == null || this.numberOfSanjineh.getUnitValue() <= 0 || this.numberOfSanjineh.getBalance() <= 0) {
+            Crashlytics.setBool("userHasSanjineh", hasSanjineh);
+            return hasSanjineh;
+        }
+        int sanjinehValue = (this.numberOfSanjineh.getBalance()) / (this.numberOfSanjineh.getUnitValue());
+
+        hasSanjineh = sanjinehValue >= 1;
+
+        Crashlytics.setBool("userHasSanjineh", hasSanjineh);
+        return hasSanjineh;
+    }
+
     @Override
     public void onDestroy() {
-        if (GetScoreOthersActivity.this != null)
+        if (GetScoreOthersActivity.this != null) {
             GetScoreOthersActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+        }
         super.onDestroy();
-        if (broadcastReceiver != null)
+        if (broadcastReceiver != null) {
             unregisterReceiver(broadcastReceiver);
+        }
 
         try {
             checkCafeBazaarLogin.releaseService();
@@ -278,7 +321,35 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
     }
 
     private void attachViewModel() {
+        getUserHasSanjinehViewModel.getApiSuccessLiveDataResponse().observe(this, numberOfSanjineh -> {
+                    this.numberOfSanjineh = numberOfSanjineh;
+                    Crashlytics.setString("NumberOfSanjineh", numberOfSanjineh.toString());
+                    Log.d(TAG, "this.numberOfSanjineh: " + numberOfSanjineh.toString());
+                }
+        );
 
+        getUserHasSanjinehViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+        });
+        getUserHasSanjinehViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+            goToFailApiPage("ApiError");
+        });
+        getUserHasSanjinehViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+        {
+            //goToFailApiPage("ServerError");
+        });
+        getUserHasSanjinehViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+                {
+                    goToFailApiPage("TimeOutError");
+                }
+        );
+        getUserHasSanjinehViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+            goToFailApiPage("ClientNetworkError");
+        });
+
+        getUserHasSanjinehViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+        });
+        getUserHasSanjinehViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
         sendVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, verifyCodeOthersResponse -> {
                     Log.d(TAG, "attachViewModel:GetScoreOthersActivity getStatusCode" + verifyCodeOthersResponse.getStatusCode());
                     stopWating();
@@ -409,7 +480,7 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
 
         broadcastReceiver = new BroadcastReceiver() {
             @Override
-            public void onReceive(Context context, Intent intent) {
+            public void onReceive(Context context, @NonNull Intent intent) {
 
                 String action = intent.getAction();
 
@@ -420,11 +491,10 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
                         boolean cafeBazarLogin = intent.getBooleanExtra("checkbazaarlogin", false);
                         if (cafeBazarLogin) {
                             alreadyBazaarInited = true;
-                            UUID uuid = UUID.randomUUID();
-                            String randomUUIDString = uuid.toString();
-                            Log.i("Test", "randomUUIDString : " + randomUUIDString);
+
                             //"bGoa+V7g/yqDXvKRqq+JTFn4uQZbPiQJo4pf9RzJ"
-                            mHelper.launchPurchaseFlow(GetScoreOthersActivity.this, AppConstants.BAZAAR_SKU, 10001, mPurchaseFinishedListener, randomUUIDString);
+
+                            choosePaymentType();
 
                         } else {
                             alreadyBazaarInited = false;
@@ -444,12 +514,12 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
         registerReceiver(broadcastReceiver, filter);
     }
 
-    boolean verifyDeveloperPayload(Purchase p) {
+    boolean verifyDeveloperPayload(@NonNull Purchase p) {
         String payload = p.getDeveloperPayload();
         return true;
     }
 
-    private void getScoreAtion(String reqToken, Activity activity) {
+    private void getScoreAtion(String reqToken, @NonNull Activity activity) {
         String url = "https://www.sanjineh.ir/report/" + reqToken + "?from=android_cafebazar";
         ActivityNavigationHelper.navigateToWebView(url, activity, WebViewActivity.class);
         activity.finish();
@@ -457,11 +527,41 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
 
     @Override
     public void onDialogSubmitEvent(Object object) {
+        Log.d(TAG, "onDialogSubmitEvent: ");
+        showWating();
+        sendVerifyCodeViewModel.callSendVerifyCodeViewModel(CafeBazaarPaymentTypeEnum.WALLET.name(), edtNtcodeOthers.getText().toString(), edtMsisdnOthers.getText().toString());
 
     }
 
     @Override
     public void onDialogCancelEvent(Object object) {
+        Log.d(TAG, "onDialogCancelEvent: ");
+        startPurchase();
+    }
 
+    private void choosePaymentType() {
+
+        if (userHasSanjineh()) {
+            int sanjinehValue = (this.numberOfSanjineh.getBalance()) / (this.numberOfSanjineh.getUnitValue());
+            Crashlytics.setString("userHasSanjineh", this.numberOfSanjineh.getBalance() + "");
+            String toastMesasge = "شما دارای " + sanjinehValue + "سنجینه در کیف پول خود هستید ";
+            Toast.makeText(this, toastMesasge, Toast.LENGTH_LONG).show();
+            DialogHelper.showDialog("نحوه پرداخت", "پرداخت از کیف پول یا کافه بازار؟", "کیف پول", "کافه بازار", this, this);
+
+        } else {
+            startPurchase();
+        }
+
+    }
+
+    private void startPurchase() {
+
+        UUID uuid = UUID.randomUUID();
+        String randomUUIDString = uuid.toString();
+        if (mHelper != null) {
+            Crashlytics.setString("flagEndAsync", "mHelper.flagEndAsync();");
+            mHelper.flagEndAsync();
+        }
+        mHelper.launchPurchaseFlow(GetScoreOthersActivity.this, AppConstants.BAZAAR_SKU, 10001, mPurchaseFinishedListener, randomUUIDString);
     }
 }

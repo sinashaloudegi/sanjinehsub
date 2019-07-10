@@ -6,7 +6,8 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.farsitel.bazaar.ILoginCheckService;
 
@@ -14,12 +15,16 @@ import com.farsitel.bazaar.ILoginCheckService;
 public class CheckCafeBazaarLogin {
 
 
-  ILoginCheckService service;
+    @Nullable
+    ILoginCheckService service;
 
-  LoginCheckServiceConnection connection;
+    @Nullable
+    LoginCheckServiceConnection connection;
 
-  SharedPreferences pref = null ;
-  SharedPreferences.Editor editor = null ;
+    @Nullable
+    SharedPreferences pref = null ;
+    @Nullable
+    SharedPreferences.Editor editor = null ;
 
   private static final String TAG = "LoginCheck";
 
@@ -52,27 +57,28 @@ this.context=context;
 
     private static final String TAG = "LoginCheck";
 
-    public void onServiceConnected(ComponentName name, IBinder boundService) {
-      service = ILoginCheckService.Stub.asInterface((IBinder) boundService);
+      @Override
+      public void onServiceConnected(ComponentName name, IBinder boundService) {
+          service = ILoginCheckService.Stub.asInterface(boundService);
 
-      try {
-        boolean isLoggedIn = service.isLoggedIn();
-        //Log.e("Test","isLoggedIn" + isLoggedIn);
+          try {
+              boolean isLoggedIn = service.isLoggedIn();
+              //Log.e("Test","isLoggedIn" + isLoggedIn);
 
-        broadCastCheckBazaarLogin(isLoggedIn);
+              broadCastCheckBazaarLogin(isLoggedIn);
 
 
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
 
-      } catch (Exception e) {
-        e.printStackTrace();
       }
 
-    }
-
-    public void onServiceDisconnected(ComponentName name) {
-      service = null;
-      //Log.e("Test", "onServiceDisconnected(): Disconnected");
-    }
+      @Override
+      public void onServiceDisconnected(ComponentName name) {
+          service = null;
+          //Log.e("Test", "onServiceDisconnected(): Disconnected");
+      }
   }
 
 

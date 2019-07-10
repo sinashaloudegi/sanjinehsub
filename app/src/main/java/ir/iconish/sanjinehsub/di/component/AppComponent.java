@@ -1,10 +1,6 @@
 package ir.iconish.sanjinehsub.di.component;
 
 
-
-
-
-
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -41,17 +37,29 @@ import ir.iconish.sanjinehsub.ui.activity.VerifyRegisterOtpActivity;
 public interface AppComponent {
 
     void inject(LoginActivity activity);
+
     void inject(SplashActivity activity);
+
     void inject(GetScoreActivity activity);
+
     void inject(CheckPasswordActivity activity);
+
     void inject(ForgetPasswordActivity activity);
+
     void inject(ForgetPassworReciverActivity activity);
+
     void inject(SetPasswordActivity activity);
+
     void inject(VerifyRegisterOtpActivity activity);
+
     void inject(MainActivity activity);
+
     void inject(GetScoreOthersActivity activity);
+
     void inject(VerifyCodeOthersActivity activity);
+
     void inject(ArchiveActivity activity);
+
     void inject(ReportActivity activity);
 
 
