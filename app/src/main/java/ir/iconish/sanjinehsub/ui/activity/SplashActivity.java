@@ -38,7 +38,10 @@ import static ir.iconish.sanjinehsub.util.AppConstants.PACKAGE_NAME;
 
 
 public class SplashActivity extends AppCompatActivity implements Dialoglistener {
+
+
     private static final String TAG = "SplashActivity";
+
     @Inject
     AppConfigViewModel appConfigViewModel;
 
@@ -49,6 +52,7 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         Log.d(TAG, "onCreate: Splash");
@@ -57,10 +61,7 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
         initFirebase();
 
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "String");
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "TESTid");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
         Log.d(TAG, "onCreate: ");
     /*
       String reqToken=  "eyJhbGciOiJIUzI1NiJ9   .eyJzdWIiOiIxOTExMDUwODA2NDEzMjI1IiwiaWNvbkNyZWRpdCI6IjE5MTEwNTA4MDY0MTMyMjUiLCJpYXQiOjE1NTc1NDU4MDF9.DEFEycDW90S9J5ZobgPGAnVZ-NR_A3FYoO7obsLziNw";
@@ -71,15 +72,15 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-
         StrictMode.setThreadPolicy(policy);
         ((AppController) getApplication()).getAppComponent().inject(this);
+
+
         attachViewModel();
 
 
         appConfigViewModel.callAppConfigViewModel();
 
-        System.out.println("Hello");
     }
 
     private void goToNativeReportActivity(String reqToken) {
@@ -119,7 +120,7 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
         try {
             updateCheck.releaseService();
             unregisterReceiver(broadcastReceiver);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
 
@@ -137,15 +138,9 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
                 String action = intent.getAction();
 
-                switch (action) {
-
-
-                    case "versionCode":
-                        long cafebazarVersionCode = intent.getLongExtra("versionCode", -1);
-                        chekheckRequired(cafebazarVersionCode);
-
-                        break;
-
+                if ("versionCode".equals(action)) {
+                    long cafebazarVersionCode = intent.getLongExtra("versionCode", -1);
+                    checkRequired(cafebazarVersionCode);
                 }
 
 
@@ -154,7 +149,7 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
         registerReceiver(broadcastReceiver, filter);
     }
 
-    private void chekheckRequired(long cafebazarVesionCode) {
+    private void checkRequired(long cafebazarVesionCode) {
 
         if (cafebazarVesionCode > -1) {
             DialogHelper.showDialog(getString(R.string.new_version), getString(R.string.download_new_version), getString(R.string.download), getString(R.string.ignore), this, this);
@@ -199,6 +194,7 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
     private void attachViewModel() {
         appConfigViewModel.getApiSuccessLiveDataResponse().observe(this, appConfig -> {
+
                     startTimer();
 /*                   startActivity(new Intent(SplashActivity.this, MainActivity.class));
 finish();*/
@@ -251,7 +247,10 @@ finish();*/
     }
 
     private void initFirebase() {
-
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "String");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "TESTid");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
         FirebaseApp.initializeApp(this);
 

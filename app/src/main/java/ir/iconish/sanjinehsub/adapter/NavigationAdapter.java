@@ -22,9 +22,8 @@ import ir.iconish.sanjinehsub.data.model.NavigationItem;
 public class NavigationAdapter extends RecyclerView.Adapter<NavigationViewHolder> {
 
 
-    private  List<NavigationItem> navigationItems;
-
-    RecyclerIemListener recyclerIemListener ;
+    RecyclerIemListener recyclerIemListener;
+    private List<NavigationItem> navigationItems;
 
     public NavigationAdapter(List<NavigationItem> navigationItems, RecyclerIemListener recyclerIemListener) {
         this.navigationItems = navigationItems;
@@ -54,8 +53,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationViewHolder
         viewHolder.txtTitle.setText(navigationItem.getTitle());
 
 
-
-viewHolder.view.setOnClickListener(v -> recyclerIemListener.onTap(navigationItem));
+        viewHolder.view.setOnClickListener(v -> recyclerIemListener.onTap(navigationItem));
 
     }
 
@@ -64,7 +62,12 @@ viewHolder.view.setOnClickListener(v -> recyclerIemListener.onTap(navigationItem
         return (null != navigationItems ? navigationItems.size() : 0);
 
     }
-    @Override public long getItemId(int position) { return position; }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     @Override
     public int getItemViewType(int position) {
         return position;

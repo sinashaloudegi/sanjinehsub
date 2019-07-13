@@ -97,7 +97,6 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
             }
             if (result.isSuccess()) {
                 Log.e("Test", "Consumption successful. Provisioning.");
-            } else {
             }
             Log.e("Test", "End consumption flow.");
         }

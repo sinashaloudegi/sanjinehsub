@@ -110,6 +110,10 @@ public class CreditScorePreProcessApi {
                 jsonObject.put("purchaseoriginaljson", purchase.getOriginalJson());
                 jsonObject.put("purchasesignature", purchase.getSignature());
                 jsonObject.put("msisdn", mobilephone);
+                Crashlytics.setString("purchasetoken", purchase.getToken());
+                Crashlytics.setString("msisdn", mobilephone);
+                Crashlytics.setString("url", finalUrl);
+
             }
 
 
@@ -119,6 +123,7 @@ public class CreditScorePreProcessApi {
 
         Log.d(TAG, "callGetScoreApi: finalURL:" + finalUrl);
         Log.d(TAG, "callGetScoreApi: finalURL:" + jsonObject.toString());
+
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, finalUrl, jsonObject,
                 response -> {
                     Log.d(TAG, "callGetScoreApi: Response" + response);
@@ -135,10 +140,26 @@ public class CreditScorePreProcessApi {
             Log.d(TAG, "callGetScoreApi: error" + error);
             if ((error instanceof NetworkError) || (error instanceof NoConnectionError)) {
                 volleyCallback.onClientNetworkError();
+                if (retry < 3) {
+                    retry++;
+                    Log.e("rety:", retry + "");
+
+                    callGetScoreApi(mobilephone, ntcode, persontypeid, personalitytypeId, paymenttypeid, channelId, token, verifyCode, ownerMobile, purchase, volleyCallback);
+
+                    return;
+                }
                 return;
             }
             if (error instanceof TimeoutError) {
                 volleyCallback.onTimeOutError();
+                if (retry < 3) {
+                    retry++;
+                    Log.e("rety:", retry + "");
+
+                    callGetScoreApi(mobilephone, ntcode, persontypeid, personalitytypeId, paymenttypeid, channelId, token, verifyCode, ownerMobile, purchase, volleyCallback);
+
+                    return;
+                }
                 return;
             }
 

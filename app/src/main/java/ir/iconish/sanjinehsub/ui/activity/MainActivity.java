@@ -14,7 +14,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -69,11 +68,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
         FirebaseApp.initializeApp(this);
 
-        FirebaseMessaging.getInstance().subscribeToTopic(AppConstants.CHANNEL_ID_NOTIFICATON).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                // Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
-            }
+        FirebaseMessaging.getInstance().subscribeToTopic(AppConstants.CHANNEL_ID_NOTIFICATON).addOnSuccessListener(aVoid -> {
+            // Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
         });
 
 
@@ -231,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+
         recyclerNavigation.setLayoutManager(layoutManager);
 
         NavigationAdapter navigationAdapter = new NavigationAdapter(navigationItems, this);
@@ -278,8 +275,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
 
             case 6:
-                https:
-//www.sanjineh.ir/terms
+                //www.sanjineh.ir/terms
                 ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/terms?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
 
                 break;

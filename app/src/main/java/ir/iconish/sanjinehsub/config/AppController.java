@@ -12,6 +12,7 @@ import com.adpdigital.push.AdpPushClient;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.FirebaseApp;
 
 import ir.iconish.sanjinehsub.di.component.AppComponent;
@@ -66,15 +67,15 @@ public class AppController extends MultiDexApplication {
         AdpPushClient.get().setDevelopment(true);
 
         String userId = AdpPushClient.get().getUserId();
-
-        if (userId != null && !userId.isEmpty()) {
+        Crashlytics.setString("userId", userId);
+   /*     if (userId != null && !userId.isEmpty()) {
             AdpPushClient.get().register(userId);
         } else {
 
             //If user is not registered verify the user and
             //call AdpPushClient.get().register("USER_ID") method at login page
-            AdpPushClient.get().register("USER_ID");
-        }
+            AdpPushClient.get().register("user");
+        }*/
         FirebaseApp.initializeApp(this);
 
 

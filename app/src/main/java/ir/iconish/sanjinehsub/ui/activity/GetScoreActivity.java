@@ -51,6 +51,7 @@ import ir.iconish.sanjinehsub.util.Inventory;
 import ir.iconish.sanjinehsub.util.Purchase;
 import ir.iconish.sanjinehsub.util.ToastHelper;
 
+@SuppressWarnings("ALL")
 public class GetScoreActivity extends AppCompatActivity implements Dialoglistener {
 
     private static final String TAG = "_SCORE";

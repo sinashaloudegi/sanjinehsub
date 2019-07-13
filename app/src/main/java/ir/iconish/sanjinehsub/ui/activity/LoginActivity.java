@@ -158,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 //If user is not registered verify the user and
                 //call AdpPushClient.get().register("USER_ID") method at login page
-                AdpPushClient.get().register(user.getUserId() + "");
+                AdpPushClient.get().register(user.getMobileNumber() + "");
             }
                     if (user.getResponseCodeEnum().getValue() == LoginStatusEnum.USER_EXIST.getValue()) {
                         ActivityNavigationHelper.navigateToActivity(this, CheckPasswordActivity.class, true);
