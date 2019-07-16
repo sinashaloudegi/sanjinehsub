@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: Splash");
-
+        Toast.makeText(this, "New Sanjineh", Toast.LENGTH_SHORT).show();
         FirebaseApp.initializeApp(this);
 
         FirebaseMessaging.getInstance().subscribeToTopic(AppConstants.CHANNEL_ID_NOTIFICATON).addOnSuccessListener(aVoid -> {
