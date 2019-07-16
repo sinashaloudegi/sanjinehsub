@@ -248,6 +248,7 @@ public class GetScoreActivity extends AppCompatActivity implements Dialoglistene
     }
 
     private void bazaarSetup(String bazaarKey) {
+
         String base64EncodedPublicKey = bazaarKey;
         // You can find it in your Bazaar console, in the Dealers section.
         // It is recommended to add more security than just pasting it in your source code;

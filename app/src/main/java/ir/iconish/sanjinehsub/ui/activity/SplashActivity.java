@@ -207,27 +207,17 @@ finish();*/
         appConfigViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
         });
 
-        appConfigViewModel.getApiErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ApiError");
-
-        });
+        appConfigViewModel.getApiErrorLiveData().observe(this, volleyError -> goToFailApiPage("ApiError"));
         appConfigViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
 
-        {
-            goToFailApiPage("ServerError");
-
-        });
+                goToFailApiPage("ServerError"));
         appConfigViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
                 {
                     goToFailApiPage("TimeOutError");
                 }
 
         );
-        appConfigViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ClientNetworkError");
-
-
-        });
+        appConfigViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> goToFailApiPage("ClientNetworkError"));
 
 
         appConfigViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
