@@ -5,7 +5,6 @@ import android.graphics.PorterDuff;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
 
 public class ButtonHelper {
 
@@ -22,7 +21,7 @@ public class ButtonHelper {
 
     }
 
-    public static void toggleAppCompatButtonStatus(@NonNull AppCompatButton button, boolean enable) {
+    public static void toggleAppCompatButtonStatus(@NonNull Button button, boolean enable) {
 
         if (enable) {
             button.getBackground().setColorFilter(null);

@@ -148,4 +148,6 @@
     <string name="confirm_phone_nt_code_other">تایید میکنم شماره موبایل و کد ملی وارد شده در شبکه تلفن همراه با هم تطابق دارد</string>
     <string name="report_exit">خروج از گزارش</string>
     <string name="report_exit_sure">آیا می خواهید از گزارش خارج شوید؟</string>
+    <string name="mobile_number_hint">شماره موبایل</string>
+    <string name="login_enter">وارد شوید</string>
 </resources>

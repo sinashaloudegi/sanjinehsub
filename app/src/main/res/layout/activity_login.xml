@@ -1,161 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<!-- TODO: Update blank fragment layout -->
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sanjinehColor"
-    android:paddingLeft="@dimen/margin10"
-    android:paddingRight="@dimen/margin10"
-
-    android:paddingBottom="@dimen/button_margin_button">
-
+    tools:context=".ui.activity.NewLoginActivity">
 
     <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sanjineh_logo" />
 
-        android:id="@+id/imgLogo"
-        android:layout_width="match_parent"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/LoginTextInputLayoutStyle"
+        android:layout_width="411dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size8"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
 
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="154dp"
+        android:hint="@string/login_enter"
+        android:inputType="phone"
+        app:layout_constraintBottom_toTopOf="@+id/prgLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3">
 
-        app:srcCompat="@drawable/ic_logo" />
-
-    <ImageView
-        android:id="@+id/imgLoginRegister"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size80"
-        android:layout_below="@+id/imgLogo"
-
-        app:srcCompat="@drawable/ic_loginicon" />
-
-    <TextView
-        android:id="@+id/txtIsregister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imgLoginRegister"
-        android:layout_marginBottom="@dimen/margin10"
-        android:gravity="right"
-        android:text="@string/account_credit"
-        android:textColor="@color/white"
-        android:textSize="@dimen/login_steps_text_size" />
-
-
-    <RelativeLayout
-        android:id="@+id/centerLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
-
-        <TextView
-            android:id="@+id/txtAlertPhone"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mobile_number_login_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edtMobileNumber"
-            android:layout_marginTop="@dimen/margin5"
-            android:gravity="right"
-            android:text="@string/force_enter_password"
-            android:textColor="@color/alert_incorrect_entry"
+            android:inputType="textPassword" />
 
-            android:textSize="@dimen/login_steps_text_size"
-            android:visibility="invisible" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/edtMobileNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
-            android:gravity="center"
-            android:hint="@string/phone_hint"
-            android:inputType="phone"
-            android:maxLength="11"
-            android:textColor="@color/white"
-            android:textColorHint="@color/darker_gray" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/enter_login_button"
+        android:layout_width="263dp"
+        android:layout_height="74dp"
+        android:layout_marginStart="73dp"
+        android:layout_marginLeft="73dp"
+        android:layout_marginEnd="73dp"
+        android:layout_marginRight="73dp"
+        android:layout_marginBottom="64dp"
+        android:enabled="false"
+        android:text="@string/login_enter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/txtAlertNationalCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edtNationalCode"
-            android:layout_marginTop="@dimen/margin10"
-            android:gravity="right"
-            android:text="@string/force_enter_password"
-            android:textColor="@color/alert_incorrect_entry"
-
-            android:textSize="@dimen/login_steps_text_size"
-            android:visibility="invisible" />
-
-        <EditText
-            android:id="@+id/edtNationalCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtAlertPhone"
-            android:layout_marginTop="@dimen/margin10"
-            android:backgroundTint="@color/white"
-            android:gravity="center"
-
-            android:hint="@string/national_code"
-            android:inputType="phone"
-            android:maxLength="10"
-            android:textColor="@color/white"
-            android:textColorHint="@color/darker_gray" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/centerLayout"
-        android:layout_marginTop="@dimen/margin10">
+        app:barrierDirection="top"
+        tools:layout_editor_absoluteY="731dp" />
 
-        <TextView
-            android:id="@+id/txtRegisterRules"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/checkboxRules"
-            android:autoLink="web"
-            android:linksClickable="true"
-            android:text="@string/rules"
-            android:textColor="@color/white"
-            android:textSize="@dimen/login_steps_text_size" />
-
-        <CheckBox
-            android:id="@+id/checkboxRules"
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-
-            />
-
-    </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/prgLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnCheckPhone"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/margin15"
-        android:visibility="invisible" />
+        android:layout_marginBottom="64dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="295dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="141dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="28dp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/login_illustration" />
 
-        android:id="@+id/btnCheckPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/button_margin_button"
-        android:text="@string/check_phone"
 
-        android:textColor="@color/dark_blue"
-        android:textSize="@dimen/button_text_size"
-        app:backgroundTint="@color/yellow_button" />
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

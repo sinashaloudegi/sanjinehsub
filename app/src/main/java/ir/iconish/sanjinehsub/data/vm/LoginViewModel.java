@@ -84,10 +84,10 @@ public class LoginViewModel extends ViewModel {
         return apiAuthFailureErrorLiveData;
     }
 
-    public void callLoginViewModel(String mobileNumber,String nationalCode) {
+    public void callLoginViewModel(String mobileNumber) {
 
 
-      loginRepository.callLoginRepository(mobileNumber,nationalCode,new VolleyCallback() {
+        loginRepository.callLoginRepository(mobileNumber, "s", new VolleyCallback() {
           @Override
           public void onSuccess(Object obj) {
             apiSuccessLiveDataResponse.setValue((User) obj);

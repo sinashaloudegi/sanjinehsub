@@ -2,17 +2,17 @@ package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.CheckBox;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.AppCompatButton;
 
 import com.adpdigital.push.AdpPushClient;
 import com.crashlytics.android.Crashlytics;
@@ -29,47 +29,25 @@ import ir.iconish.sanjinehsub.data.vm.LoginViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.ui.DialogHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
-import ir.iconish.sanjinehsub.util.Helper;
 
 public class LoginActivity extends AppCompatActivity {
 
-    @Nullable
-    @BindView(R.id.btnCheckPhone)
-    AppCompatButton btnCheckPhone;
 
     private static final String TAG = "LoginActivity";
-
-
     @Nullable
-    @BindView(R.id.edtMobileNumber)
-    EditText edtMobileNumber;
+    @BindView(R.id.mobile_number_login_edit_text)
+    EditText mobileNumberLoginEditText;
 
-
-    @Nullable
-    @BindView(R.id.txtAlertPhone)
-    TextView txtAlertPhone;
-
-
-    @Nullable
-    @BindView(R.id.edtNationalCode)
-    EditText edtNationalCode;
-
-
-    @Nullable
-    @BindView(R.id.txtAlertNationalCode)
-    TextView txtAlertNationalCode;
-
-
-    @Nullable
-    @BindView(R.id.checkboxRules)
-    CheckBox checkBoxRules;
-
-
-    @Inject
-    LoginViewModel loginViewModel;
     @Nullable
     @BindView(R.id.prgLogin)
     ProgressBar prgLogin;
+
+    @Nullable
+    @BindView(R.id.enter_login_button)
+    Button enterLoginButton;
+    @Inject
+    LoginViewModel loginViewModel;
+    private String mobileNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,30 +56,54 @@ public class LoginActivity extends AppCompatActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
-
         attachViewModel();
-        Log.d(TAG, "onCreate: Login");
-        Crashlytics.setString("onCreate", "Login");
-    }
-
-
-    @OnClick(R.id.txtRegisterRules)
-    public void txtRegisterRulesAction() {
-
-        ActivityNavigationHelper.navigateToWebView(getString(R.string.rules_url), this, WebViewActivity.class);
+        mobileNumberLoginEditTextChangeListener();
 
     }
 
+    private void mobileNumberLoginEditTextChangeListener() {
+        mobileNumberLoginEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-    @OnClick(R.id.btnCheckPhone)
-    public void btnCheckPhoneAction() {
-        Log.d(TAG, "btnCheckPhoneAction: clicked!");
-        txtAlertPhone.setVisibility(View.INVISIBLE);
-        txtAlertNationalCode.setVisibility(View.INVISIBLE);
-        String mobileNumber = edtMobileNumber.getText().toString();
-        String nationalCode = edtNationalCode.getText().toString();
+            }
 
-        if (!mobileNumber.startsWith("09")) {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if (isMobileNumberValid(charSequence.toString())) {
+                    enterLoginButton.setEnabled(true);
+                    mobileNumber = mobileNumberLoginEditText.getText().toString();
+                    mobileNumberLoginEditText.setError("Eshtebahe dadash");
+                } else {
+                    enterLoginButton.setEnabled(false);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+
+    @OnClick(R.id.enter_login_button)
+    public void enterLoginButtonClick() {
+
+        showWating();
+        if (enterLoginButton.isEnabled() && isMobileNumberValid((mobileNumberLoginEditText.getText().toString()))) {
+            mobileNumber = mobileNumberLoginEditText.getText().toString();
+
+        } else {
+            Toast.makeText(this, "Please Enter Correct Mobile Number", Toast.LENGTH_SHORT).show();
+        }
+
+
+        //TODO: also check if the rule is checked and after that you need to make an api call
+        loginViewModel.callLoginViewModel(mobileNumber);
+   /*     if (!mobileNumber.startsWith("09")) {
             txtAlertPhone.setText(getString(R.string.enter_correct_mobile_phone));
             txtAlertPhone.setVisibility(View.VISIBLE);
             return;
@@ -112,36 +114,7 @@ public class LoginActivity extends AppCompatActivity {
             txtAlertPhone.setText(getString(R.string.enter_correct_mobile_phone));
             txtAlertPhone.setVisibility(View.VISIBLE);
             return;
-        }
-
-
-        if (!checkBoxRules.isChecked()) {
-            txtAlertPhone.setText(getString(R.string.accept_rules));
-            txtAlertPhone.setVisibility(View.VISIBLE);
-            return;
-        }
-
-
-        if (nationalCode.length() < 10) {
-            txtAlertNationalCode.setText(getString(R.string.enter_correct_count_national_code));
-            txtAlertNationalCode.setVisibility(View.VISIBLE);
-            return;
-        }
-
-
-        if (!Helper.validationNationalCode(nationalCode)) {
-            txtAlertNationalCode.setText(getString(R.string.enter_correct_national_code));
-            txtAlertNationalCode.setVisibility(View.VISIBLE);
-            return;
-        }
-
-
-        showWating();
-        Crashlytics.setString("Mobile", mobileNumber);
-        Crashlytics.setString("nationalCode", nationalCode);
-        loginViewModel.callLoginViewModel(mobileNumber, nationalCode);
-        // startActivity(new Intent(this,LoginVerificatonActivity.class));
-        //finish();
+        }*/
 
     }
 
@@ -225,13 +198,19 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showWating() {
         prgLogin.setVisibility(View.VISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(btnCheckPhone, false);
+        ButtonHelper.toggleAppCompatButtonStatus(enterLoginButton, false);
     }
 
     private void stopWating() {
         prgLogin.setVisibility(View.INVISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(btnCheckPhone, true);
+        ButtonHelper.toggleAppCompatButtonStatus(enterLoginButton, true);
     }
 
+    private boolean isMobileNumberValid(String mobileNumber) {
+
+
+        return mobileNumber.length() > 10;
+
+    }
 
 }
