@@ -1,119 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<!-- TODO: Update blank fragment layout -->
-
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-android:background="@color/sanjinehColor"
-    android:paddingRight="@dimen/margin10"
-    android:paddingLeft="@dimen/margin10"
-    android:paddingBottom="@dimen/button_margin_button"
-
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
 
 
- <RelativeLayout
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content">
-  <ImageView
+    <ImageView
+        android:id="@+id/img_sanjineh_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="140dp"
+        android:layout_gravity="center"
+        android:contentDescription="sanjineh_logo"
+        app:srcCompat="@drawable/sanjineh_logo" />
 
-      android:id="@+id/imgLogoVerifyOthers"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/size8"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
 
-      app:srcCompat="@drawable/ic_logo"/>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:text="09123782108"
+            android:textSize="16sp" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginLeft="4dp"
+            android:gravity="center"
+            android:text="کد فعالسازی برای شماره"
+            android:textSize="16sp" />
 
+    </LinearLayout>
 
-  <ImageView
-      android:padding="@dimen/padding_5"
-      android:id="@+id/imgBack"
-      android:layout_width="wrap_content"
-      android:layout_centerVertical="true"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="@dimen/size8"
-      android:layout_alignParentLeft="true"
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text=" پیامک شده است" />
 
-      app:srcCompat="@drawable/ic_back"/>
+    <TextView
+        android:id="@+id/txtTimer"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="@dimen/size100"
+        android:gravity="center"
+        android:text="@string/timer_start_value"
+        android:textColor="@color/black"
+        android:textSize="@dimen/login_steps_text_size" />
 
+    <TextView
+        android:id="@+id/txtAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin10"
+        android:gravity="right"
+        android:text="@string/force_enter_password"
+        android:textColor="@color/alert_incorrect_entry"
 
+        android:textSize="@dimen/login_steps_text_size"
+        android:visibility="invisible" />
 
- </RelativeLayout>
+    <EditText
+        android:id="@+id/edtVerifyCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:backgroundTint="@color/white"
+        android:gravity="center"
+        android:hint="@string/activision_code"
+        android:inputType="phone"
+        android:maxLength="4"
+        android:text="5064"
+        android:textColor="@color/white"
+        android:textColorHint="@color/darker_gray" />
 
+    <ProgressBar
+        android:id="@+id/prg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size50"
+        android:visibility="invisible" />
 
- <TextView
-     android:id="@+id/txtTimer"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-android:layout_above="@+id/edtVerifyCode"
-     android:gravity="center"
-     android:layout_marginBottom="@dimen/size100"
-android:textSize="@dimen/login_steps_text_size"
-     android:text="@string/timer_start_value"
-     android:textColor="@color/white"/>
- <TextView
-     android:id="@+id/txtAlert"
-     android:layout_width="match_parent"
-     android:layout_marginTop="@dimen/margin10"
-     android:layout_height="wrap_content"
-     android:layout_below="@+id/edtVerifyCode"
-     android:gravity="right"
-     android:textSize="@dimen/login_steps_text_size"
-     android:visibility="invisible"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnEnter"
 
-     android:text="@string/force_enter_password"
-     android:textColor="@color/alert_incorrect_entry"/>
- <EditText
-     android:layout_width="match_parent"
-     android:layout_centerInParent="true"
-     android:backgroundTint="@color/white"
-     android:textColor="@color/white"
-     android:id="@+id/edtVerifyCode"
-     android:maxLength="4"
-     android:inputType="phone"
-     android:text="5064"
-android:hint="@string/activision_code"
-android:textColorHint="@color/darker_gray"
-     android:gravity="center"
-     android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/enter"
+        android:textColor="@color/dark_blue"
+        android:textSize="@dimen/button_text_size" />
 
- <ProgressBar
-     android:id="@+id/prg"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:visibility="invisible"
-     android:layout_centerHorizontal="true"
-     android:layout_above="@+id/btnEnter"
-     android:layout_marginBottom="@dimen/size50"
-     />
+    <androidx.appcompat.widget.AppCompatButton
 
- <androidx.appcompat.widget.AppCompatButton
-android:id="@+id/btnEnter"
+        android:id="@+id/btnRetry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/button_margin_button"
+        android:text="@string/retry_verfication"
+        android:textColor="@color/dark_blue"
+        android:textSize="@dimen/button_text_size"
+        android:visibility="invisible" />
 
-     android:layout_width="match_parent"
-     android:text="@string/enter"
-     android:textColor="@color/dark_blue"
-     app:backgroundTint="@color/yellow_button"
-android:layout_above="@+id/btnRetry"
-     android:textSize="@dimen/button_text_size"
-     android:layout_height="wrap_content"
-     />
-
- <androidx.appcompat.widget.AppCompatButton
-
-android:id="@+id/btnRetry"
-     android:layout_width="match_parent"
-     android:text="@string/retry_verfication"
-     android:textColor="@color/dark_blue"
-     app:backgroundTint="@color/light_gray"
-     android:layout_marginBottom="@dimen/button_margin_button"
-android:visibility="invisible"
-     android:textSize="@dimen/button_text_size"
-     android:layout_alignParentBottom="true"
-     android:layout_height="wrap_content"
-     />
-
-</RelativeLayout>
+</LinearLayout>

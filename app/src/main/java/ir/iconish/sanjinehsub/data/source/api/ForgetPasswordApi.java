@@ -33,22 +33,22 @@ public class ForgetPasswordApi {
 
     @Inject
     public ForgetPasswordApi(AppController appController) {
-        this.appController=appController;
+        this.appController = appController;
     }
 
 
     @NonNull
     public PasswordValidationResponse parseJson(@NonNull JSONObject jsonObject) {
-        PasswordValidationResponse passwordValidationResponse=new PasswordValidationResponse();
+        PasswordValidationResponse passwordValidationResponse = new PasswordValidationResponse();
 
-      try {
-            JSONObject jsonObjectRoot=jsonObject.getJSONObject("responseStatus");
-          int statusCode=  jsonObjectRoot.getInt("value");
-                String descr=jsonObjectRoot.getString("descr");
+        try {
+            JSONObject jsonObjectRoot = jsonObject.getJSONObject("responseStatus");
+            int statusCode = jsonObjectRoot.getInt("value");
+            String descr = jsonObjectRoot.getString("descr");
 
 
-          passwordValidationResponse.setRespobseStatusCode(statusCode);
-          passwordValidationResponse.setDescryptions(descr);
+            passwordValidationResponse.setRespobseStatusCode(statusCode);
+            passwordValidationResponse.setDescryptions(descr);
 
 
              /*   else if (statusCode==1011){
@@ -64,70 +64,62 @@ public class ForgetPasswordApi {
     public void callForgetPasswordApi(String mobileNumer, @NonNull final VolleyCallback volleyCallback) {
 
 
-        String   url=ConstantUrl.BASE+ConstantUrl.FORGET_PASSWORD;
-JSONObject jsonObject=new JSONObject();
+        String url = ConstantUrl.BASE + ConstantUrl.FORGET_PASSWORD;
+        JSONObject jsonObject = new JSONObject();
 
         try {
 
-            jsonObject.put("mobilenumber",mobileNumer);
-            jsonObject.put("lang","Fa");
-            jsonObject.put("channel",AppConstants.CHANNEL);
+            jsonObject.put("mobilenumber", mobileNumer);
+            jsonObject.put("lang", "Fa");
+            jsonObject.put("channel", AppConstants.CHANNEL);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                url,jsonObject,
+                url, jsonObject,
                 response -> {
 
 
+                    if (response != null) {
 
-                    if (response!=null){
+                        PasswordValidationResponse passwordValidationResponse = parseJson(response);
+                        volleyCallback.onSuccess(passwordValidationResponse);
 
-                        PasswordValidationResponse passwordValidationResponse=     parseJson(response);
-                   volleyCallback.onSuccess(passwordValidationResponse);
-
-                       // volleyCallback.onSuccess(visits);
+                        // volleyCallback.onSuccess(visits);
                     }
-
-
-
 
 
                 }, error -> {
-                    Log.e("api error=",error.toString());
-                    if ((error instanceof NetworkError) || (error instanceof NoConnectionError) ) {
+            Log.e("api error=", error.toString());
+            if ((error instanceof NetworkError) || (error instanceof NoConnectionError)) {
 
-                        volleyCallback.onClientNetworkError();
-
-
-
-                        return;
-                    }
-                    if (error instanceof TimeoutError){
-
-                        volleyCallback.onTimeOutError();
+                volleyCallback.onClientNetworkError();
 
 
-                        return;
-                    }
+                return;
+            }
+            if (error instanceof TimeoutError) {
+
+                volleyCallback.onTimeOutError();
 
 
+                return;
+            }
 
 
-                    if ((error instanceof ServerError)){
+            if ((error instanceof ServerError)) {
 
 
-                        volleyCallback.onServerError();
+                volleyCallback.onServerError();
 
-                        return;
-                    }
+                return;
+            }
 
 
+            int statusCode = error.networkResponse.statusCode;
 
-                    int statusCode=error.networkResponse.statusCode;
-
-                   // String message=new String(error.networkResponse.data);
+            // String message=new String(error.networkResponse.data);
                  /*   String errorMessage=ApiErrorHelper.parseError(message);
                     if (statusCode==401){
                         volleyCallback.onAuthFailureError401(errorMessage);
@@ -145,11 +137,9 @@ JSONObject jsonObject=new JSONObject();
 
                     volleyCallback.onFail(errorMessage);*/
 
-                }
+        }
 
-        )
-
-        {
+        ) {
             @Override
             public String getBodyContentType() {
                 return "application/json; charset=utf-8";
@@ -170,18 +160,12 @@ JSONObject jsonObject=new JSONObject();
         };
 
 
-
-
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
                 AppConstants.CLIENT_TIMEOUT,
                 1,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         String tag_json_arry = "checkPasswordApi";
         appController.addToRequestQueue(jsonObjReq, tag_json_arry);
-
-
-
-
 
 
     }

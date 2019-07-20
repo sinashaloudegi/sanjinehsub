@@ -23,7 +23,6 @@ import ir.iconish.sanjinehsub.ui.activity.GetScoreActivity;
 import ir.iconish.sanjinehsub.ui.activity.GetScoreOthersActivity;
 import ir.iconish.sanjinehsub.ui.activity.LoginActivity;
 import ir.iconish.sanjinehsub.ui.activity.MainActivity;
-import ir.iconish.sanjinehsub.ui.activity.NewLoginActivity;
 import ir.iconish.sanjinehsub.ui.activity.ReportActivity;
 import ir.iconish.sanjinehsub.ui.activity.SetPasswordActivity;
 import ir.iconish.sanjinehsub.ui.activity.SplashActivity;
@@ -63,7 +62,6 @@ public interface AppComponent {
 
     void inject(ReportActivity activity);
 
-    void inject(NewLoginActivity activity);
 
 
 }

@@ -25,6 +25,7 @@ public class PasswordVerificatonActivity extends AppCompatActivity {
     @Nullable
     @BindView(R.id.btnEnter)
     AppCompatButton btnEnter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,43 +35,42 @@ public class PasswordVerificatonActivity extends AppCompatActivity {
         startTimer();
 
 
-
-
-
     }
 
     private void startTimer() {
-       // int timerDuration=checkPasswordViewModel.getTimerDuration();
+        // int timerDuration=checkPasswordViewModel.getTimerDuration();
 
-        countDownTimer=    new CountDownTimer(200000, 1000) {
+        countDownTimer = new CountDownTimer(200000, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
-                if(millisUntilFinished<10000){
+                if (millisUntilFinished < 10000) {
                     txtTimer.setTextColor(Color.RED);
                 }
-                txtTimer.setText( millisUntilFinished / 1000+"" );
+                txtTimer.setText(millisUntilFinished / 1000 + "");
 
             }
 
             @Override
             public void onFinish() {
-                txtTimer.setText( "0");
+                txtTimer.setText("0");
                 // pinEntry.setEnabled(false);
                 //  pinEntry.setText("");
                 //   bottomLayout.setVisibility(View.VISIBLE);
                 try {
                     //   unregisterReceiver(broadcastReceiver);
-                } catch (Exception e){}
+                } catch (Exception e) {
+                }
             }
 
         }.start();
 
     }
+
     @OnClick(R.id.btnEnter)
     public void btnEnterAction() {
 
-        startActivity(new Intent(this,MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 }

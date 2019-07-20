@@ -58,18 +58,11 @@ public class VerifyRegisterOtpActivity extends AppCompatActivity {
     AppCompatButton btnRetry;
 
 
-
-
-
-
     CountDownTimer countDownTimer;
 
 
-
-
-
-@Inject
-VerifyRegisterOtpViewModel confirmRegisterViewModel;
+    @Inject
+    VerifyRegisterOtpViewModel confirmRegisterViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +76,8 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
         startTimer();
 
 
-
-
-
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -100,34 +91,35 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
             edtVerificationCode.setText(code);
 
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
         }
 
     }
+
     @OnClick(R.id.imgBack)
     public void imgBackAction() {
-        ActivityNavigationHelper.navigateToActivity(this,LoginActivity.class,true);
+        ActivityNavigationHelper.navigateToActivity(this, LoginActivity.class, true);
 
     }
-    private void startTimer() {
-       // long timerDuration=Long.parseLong(getString(R.string.timer_start_value));
-        int timerDuration=confirmRegisterViewModel.getTimerDuration();
 
-        countDownTimer=    new CountDownTimer(timerDuration, 1000) {
+    private void startTimer() {
+        // long timerDuration=Long.parseLong(getString(R.string.timer_start_value));
+        int timerDuration = confirmRegisterViewModel.getTimerDuration();
+
+        countDownTimer = new CountDownTimer(timerDuration, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
-                if(millisUntilFinished<10000){
+                if (millisUntilFinished < 10000) {
                     txtTimer.setTextColor(Color.RED);
                 }
-                txtTimer.setText( millisUntilFinished / 1000+"" );
+                txtTimer.setText(millisUntilFinished / 1000 + "");
 
             }
 
             @Override
             public void onFinish() {
-                txtTimer.setText( "0");
+                txtTimer.setText("0");
                 btnEnter.setVisibility(View.INVISIBLE);
                 btnRetry.setVisibility(View.VISIBLE);
                 // pinEntry.setEnabled(false);
@@ -135,17 +127,19 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
                 //   bottomLayout.setVisibility(View.VISIBLE);
                 try {
                     //   unregisterReceiver(broadcastReceiver);
-                } catch (Exception e){}
+                } catch (Exception e) {
+                }
             }
 
         }.start();
 
     }
+
     @OnClick(R.id.btnEnter)
     public void btnEnterAction() {
         txtAlert.setVisibility(View.INVISIBLE);
-        String otp=  edtVerificationCode.getText().toString()  ;
-        if(otp.length()<1){
+        String otp = edtVerificationCode.getText().toString();
+        if (otp.length() < 1) {
             txtAlert.setText(getString(R.string.enter_correct_password));
             txtAlert.setVisibility(View.VISIBLE);
             return;
@@ -158,12 +152,10 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
     }
 
 
-     @OnClick(R.id.btnRetry)
+    @OnClick(R.id.btnRetry)
     public void btnRetryAction() {
-         ActivityNavigationHelper.navigateToActivity(this,LoginActivity.class,true);
+        ActivityNavigationHelper.navigateToActivity(this, LoginActivity.class, true);
     }
-
-
 
 
     private void attachViewModel() {
@@ -171,38 +163,23 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
                     stopWating();
 
 
-
-                    if(passwordValidationResponse.getRespobseStatusCode()== LoginStatusEnum.VERIFY_SUCCESS_AND_NEW.getValue()) {
+                    if (passwordValidationResponse.getRespobseStatusCode() == LoginStatusEnum.VERIFY_SUCCESS_AND_NEW.getValue()) {
 
 //ActivityNavigationHelper.navigateToActivity(this,SetPasswordActivity.class,true);
                         ActivityNavigationHelper.navigateToActivity(this, MainActivity.class, true);
-                    }
-
-                    else {
+                    } else {
                         txtAlert.setText((LoginStatusEnum.fromValue(passwordValidationResponse.getRespobseStatusCode()).getDescr()));
                         txtAlert.setVisibility(View.VISIBLE);
                     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                 }
         );
 
-        confirmRegisterViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {});
+        confirmRegisterViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+        });
 
-        confirmRegisterViewModel.getApiErrorLiveData().observe(this, volleyError ->{
+        confirmRegisterViewModel.getApiErrorLiveData().observe(this, volleyError -> {
             goToFailApiPage("ApiError");
 
         });
@@ -225,34 +202,37 @@ VerifyRegisterOtpViewModel confirmRegisterViewModel;
         });
 
 
-        confirmRegisterViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError ->{} );
-        confirmRegisterViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError ->{} );
+        confirmRegisterViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+        });
+        confirmRegisterViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
 
     }
 
 
-    private void showWating(){
+    private void showWating() {
         prg.setVisibility(View.VISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(btnEnter,false);
+        ButtonHelper.toggleAppCompatButtonStatus(btnEnter, false);
     }
-    private void stopWating(){
+
+    private void stopWating() {
         prg.setVisibility(View.INVISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(btnEnter,true);
+        ButtonHelper.toggleAppCompatButtonStatus(btnEnter, true);
     }
 
-    private void goToFailApiPage(String failCause){
+    private void goToFailApiPage(String failCause) {
 
-        Intent intent=new Intent(this,FailApiActivity.class);
-        intent.putExtra("failCause",failCause);
+        Intent intent = new Intent(this, FailApiActivity.class);
+        intent.putExtra("failCause", failCause);
         startActivity(intent);
         finish();
 
     }
-    private void verifyRegisterOtp(String otp){
+
+    private void verifyRegisterOtp(String otp) {
         showWating();
         confirmRegisterViewModel.callVerifyRegisterOtpViewModel(otp);
     }
-
 
 
 }

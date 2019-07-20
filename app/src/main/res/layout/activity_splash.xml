@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <LinearLayout
+    <ImageView
+        android:id="@+id/sanjineh_logo_splash"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:contentDescription="sanjineh_logo"
+        app:srcCompat="@drawable/sanjineh_logo" />
 
-        <ImageView
-            android:id="@+id/splashImage"
-            android:layout_width="match_parent"
-
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/splash" />
-    </LinearLayout>
 </FrameLayout>

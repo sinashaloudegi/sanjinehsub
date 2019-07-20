@@ -39,8 +39,8 @@ public class CheckPasswordActivity extends AppCompatActivity {
 
 
     @Nullable
-    @BindView(R.id.edtPassword)
-    TextView edtPassword;
+    @BindView(R.id.edt_txt_get_password)
+    TextView editTextGetPassword;
 
 
     @Inject
@@ -70,7 +70,7 @@ public class CheckPasswordActivity extends AppCompatActivity {
 
 
         txtAlert.setVisibility(View.INVISIBLE);
-        String password = edtPassword.getText().toString();
+        String password = editTextGetPassword.getText().toString();
 
         if (password.length() < 4) {
             txtAlert.setText(getString(R.string.password_max_min));

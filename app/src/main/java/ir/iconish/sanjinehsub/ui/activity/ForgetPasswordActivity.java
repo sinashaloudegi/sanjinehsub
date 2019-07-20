@@ -45,25 +45,16 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     ForgetPasswordViewModel forgetPasswordViewModel;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
-edtPhone.setText(forgetPasswordViewModel.getMobileNumber());
+        edtPhone.setText(forgetPasswordViewModel.getMobileNumber());
         attachViewModel();
 
     }
-
-
-
-
-
-
-
-
 
 
     private void attachViewModel() {
@@ -71,11 +62,10 @@ edtPhone.setText(forgetPasswordViewModel.getMobileNumber());
                     stopWating();
 
 
-                    if(passwordValidationResponse.getRespobseStatusCode()==1000){
+                    if (passwordValidationResponse.getRespobseStatusCode() == 1000) {
 
-                        ActivityNavigationHelper.navigateToActivity(this,ForgetPassworReciverActivity.class,true);
-                    }
-                    else {
+                        ActivityNavigationHelper.navigateToActivity(this, ForgetPassworReciverActivity.class, true);
+                    } else {
 
                         txtAlert.setText(passwordValidationResponse.getDescryptions());
                         txtAlert.setVisibility(View.VISIBLE);
@@ -86,9 +76,10 @@ edtPhone.setText(forgetPasswordViewModel.getMobileNumber());
                 }
         );
 
-        forgetPasswordViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {});
+        forgetPasswordViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+        });
 
-        forgetPasswordViewModel.getApiErrorLiveData().observe(this, volleyError ->{
+        forgetPasswordViewModel.getApiErrorLiveData().observe(this, volleyError -> {
             goToFailApiPage("ApiError");
 
         });
@@ -111,46 +102,50 @@ edtPhone.setText(forgetPasswordViewModel.getMobileNumber());
         });
 
 
-        forgetPasswordViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError ->{} );
-        forgetPasswordViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError ->{} );
+        forgetPasswordViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+        });
+        forgetPasswordViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
 
     }
 
 
-    private void showWating(){
+    private void showWating() {
         prg.setVisibility(View.VISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(btnSendPassword,false);
+        ButtonHelper.toggleAppCompatButtonStatus(btnSendPassword, false);
     }
-    private void stopWating(){
+
+    private void stopWating() {
         prg.setVisibility(View.INVISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(btnSendPassword,true);
+        ButtonHelper.toggleAppCompatButtonStatus(btnSendPassword, true);
     }
 
-    private void goToFailApiPage(String failCause){
+    private void goToFailApiPage(String failCause) {
 
-        Intent intent=new Intent(this,FailApiActivity.class);
-        intent.putExtra("failCause",failCause);
+        Intent intent = new Intent(this, FailApiActivity.class);
+        intent.putExtra("failCause", failCause);
         startActivity(intent);
         finish();
 
     }
-    private void forgetPassword(String mobilePhone){
+
+    private void forgetPassword(String mobilePhone) {
         showWating();
         forgetPasswordViewModel.callForgetPasswordViewModel(mobilePhone);
     }
+
     @OnClick(R.id.btnSendPassword)
     public void btnSendPasswordAction() {
         txtAlert.setVisibility(View.INVISIBLE);
-        String mobileNumber=  edtPhone.getText().toString()  ;
-        if (!mobileNumber.startsWith("09")){
+        String mobileNumber = edtPhone.getText().toString();
+        if (!mobileNumber.startsWith("09")) {
             txtAlert.setText(getString(R.string.enter_correct_mobile_phone));
             txtAlert.setVisibility(View.VISIBLE);
             return;
         }
 
 
-
-        if(mobileNumber.length()<11){
+        if (mobileNumber.length() < 11) {
             txtAlert.setText(getString(R.string.enter_correct_mobile_phone));
             txtAlert.setVisibility(View.VISIBLE);
             return;
@@ -158,6 +153,6 @@ edtPhone.setText(forgetPasswordViewModel.getMobileNumber());
 
         forgetPassword(mobileNumber);
 
-}
+    }
 
 }

@@ -13,8 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -45,9 +43,9 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
     @Inject
     AppConfigViewModel appConfigViewModel;
 
-
     BroadcastReceiver broadcastReceiver;
     UpdateCheck updateCheck;
+
     private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
@@ -77,10 +75,7 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
 
         attachViewModel();
-
-
         appConfigViewModel.callAppConfigViewModel();
-
     }
 
     private void goToNativeReportActivity(String reqToken) {
@@ -97,10 +92,7 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
             @Override
             public void run() {
                 if (InternetAccess.isInternetAvailable()) {
-
                     messageReciver();
-
-
                     updateCheck = new UpdateCheck(getApplicationContext());
                     updateCheck.initService();
                 } else {
@@ -184,7 +176,6 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
 
         } else {
-            // appConfigViewModel.callAppConfigViewModel(0);
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
 
         }
@@ -193,33 +184,15 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
 
     private void attachViewModel() {
-        appConfigViewModel.getApiSuccessLiveDataResponse().observe(this, appConfig -> {
-
-                    startTimer();
-/*                   startActivity(new Intent(SplashActivity.this, MainActivity.class));
-finish();*/
-
-//if 1010 go to enter pass -- if 1011 go to otp
-
-                }
-        );
+        appConfigViewModel.getApiSuccessLiveDataResponse().observe(this, appConfig -> startTimer());
 
         appConfigViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
         });
 
         appConfigViewModel.getApiErrorLiveData().observe(this, volleyError -> goToFailApiPage("ApiError"));
-        appConfigViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
-
-                goToFailApiPage("ServerError"));
-        appConfigViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-                {
-                    goToFailApiPage("TimeOutError");
-                }
-
-        );
+        appConfigViewModel.getApiServerErrorLiveData().observe(this, volleyError -> goToFailApiPage("ServerError"));
+        appConfigViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError -> goToFailApiPage("TimeOutError"));
         appConfigViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> goToFailApiPage("ClientNetworkError"));
-
-
         appConfigViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
         });
         appConfigViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
@@ -245,12 +218,8 @@ finish();*/
         FirebaseApp.initializeApp(this);
 
         FirebaseMessaging.getInstance().subscribeToTopic(AppConstants.TOPIC)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                .addOnCompleteListener(task -> {
 
-
-                    }
                 });
 
 

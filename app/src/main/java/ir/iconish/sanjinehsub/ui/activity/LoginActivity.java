@@ -7,7 +7,10 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -35,19 +38,41 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     @Nullable
-    @BindView(R.id.mobile_number_login_edit_text)
+    @BindView(R.id.edt_txt_mobile_number_login)
     EditText mobileNumberLoginEditText;
 
     @Nullable
-    @BindView(R.id.prgLogin)
+    @BindView(R.id.prg_login)
     ProgressBar prgLogin;
 
+
     @Nullable
-    @BindView(R.id.enter_login_button)
+    @BindView(R.id.txt_number_error)
+    TextView txtNumberError;
+
+    @Nullable
+    @BindView(R.id.btn_enter_login)
     Button enterLoginButton;
+
+
+    @Nullable
+    @BindView(R.id.check_box_blank)
+    ImageView checkBoxBlank;
+
+    @Nullable
+    @BindView(R.id.layout_check_rule)
+    FrameLayout layoutCheckRule;
+
+
+    @Nullable
+    @BindView(R.id.check_box)
+    ImageView checkBox;
+
     @Inject
     LoginViewModel loginViewModel;
     private String mobileNumber;
+
+    boolean ruleIsChecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +81,28 @@ public class LoginActivity extends AppCompatActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
+
         attachViewModel();
-        mobileNumberLoginEditTextChangeListener();
+        mobileNumberLoginEditTextOnChangeListener();
 
     }
 
-    private void mobileNumberLoginEditTextChangeListener() {
+    private void toggleCheckRule() {
+
+        if (ruleIsChecked) {
+            ruleIsChecked = false;
+            checkBoxBlank.setVisibility(View.VISIBLE);
+            checkBox.setVisibility(View.GONE);
+        } else {
+            ruleIsChecked = true;
+            checkBoxBlank.setVisibility(View.GONE);
+            checkBox.setVisibility(View.VISIBLE);
+
+        }
+
+    }
+
+    private void mobileNumberLoginEditTextOnChangeListener() {
         mobileNumberLoginEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -70,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                txtNumberError.setVisibility(View.INVISIBLE);
                 if (isMobileNumberValid(charSequence.toString())) {
                     enterLoginButton.setEnabled(true);
                     mobileNumber = mobileNumberLoginEditText.getText().toString();
@@ -88,33 +129,28 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @OnClick(R.id.layout_check_rule)
+    public void onRuleCheckBoxListener() {
+        toggleCheckRule();
+    }
 
-    @OnClick(R.id.enter_login_button)
+    @OnClick(R.id.btn_enter_login)
     public void enterLoginButtonClick() {
-
         showWating();
         if (enterLoginButton.isEnabled() && isMobileNumberValid((mobileNumberLoginEditText.getText().toString()))) {
+         /*   if (checkBoxCheckRules.isSelected()) {
+                loginViewModel.callLoginViewModel(mobileNumber);
+
+            } else {
+                txtNumberError.setVisibility(View.VISIBLE);
+            }*/
+
             mobileNumber = mobileNumberLoginEditText.getText().toString();
 
         } else {
-            Toast.makeText(this, "Please Enter Correct Mobile Number", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please Enter Correct Mobile Number", Toast.LENGTH_LONG).show();
         }
 
-
-        //TODO: also check if the rule is checked and after that you need to make an api call
-        loginViewModel.callLoginViewModel(mobileNumber);
-   /*     if (!mobileNumber.startsWith("09")) {
-            txtAlertPhone.setText(getString(R.string.enter_correct_mobile_phone));
-            txtAlertPhone.setVisibility(View.VISIBLE);
-            return;
-        }
-
-
-        if (mobileNumber.length() < 11) {
-            txtAlertPhone.setText(getString(R.string.enter_correct_mobile_phone));
-            txtAlertPhone.setVisibility(View.VISIBLE);
-            return;
-        }*/
 
     }
 
@@ -122,7 +158,6 @@ public class LoginActivity extends AppCompatActivity {
     private void attachViewModel() {
         loginViewModel.getApiSuccessLiveDataResponse().observe(this, user -> {
                     stopWating();
-
             String userId = AdpPushClient.get().getUserId();
 
             if (userId != null && !userId.isEmpty()) {
@@ -208,8 +243,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isMobileNumberValid(String mobileNumber) {
 
-
-        return mobileNumber.length() > 10;
+        return mobileNumber.startsWith("09") && mobileNumber.length() >= 11;
 
     }
 

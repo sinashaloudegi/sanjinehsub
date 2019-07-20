@@ -29,7 +29,7 @@
     <string name="bank_service">خدمات بانکی</string>
     <string name="burse">بورس</string>
     <string name="password_recovery_sms">بازیابی رمز عبور از طریق پیامک</string>
-    <string name="password">کلمه عبور</string>
+    <string name="password">رمز عبور</string>
     <string name="repeat_password">تکرار کلمه عبور</string>
     <string name="enter">ورود</string>
     <string name="mobile_number">تلفن همراه</string>
@@ -150,4 +150,8 @@
     <string name="report_exit_sure">آیا می خواهید از گزارش خارج شوید؟</string>
     <string name="mobile_number_hint">شماره موبایل</string>
     <string name="login_enter">وارد شوید</string>
+    <string name="enter_sanjineh">ورود به سنجینه</string>
+    <string name="number_not_valid">شماره وارد شده صحیح نمی باشد</string>
+    <string name="accept_it">را می پذیرم</string>
+    <string name="rules_and_regulations">قوانین و مقررات</string>
 </resources>
