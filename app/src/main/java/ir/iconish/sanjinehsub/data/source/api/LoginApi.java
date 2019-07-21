@@ -124,7 +124,6 @@ public class LoginApi {
 
                 volleyCallback.onServerError();
 
-                return;
             }
 
 
@@ -136,7 +135,7 @@ public class LoginApi {
             @NonNull
             @Override
             public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
 
                 return params;
             }

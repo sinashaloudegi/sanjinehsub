@@ -28,7 +28,7 @@ this.sharedPreferencesManager=sharedPreferencesManager;
     public void callLoginRepository(String mobileNumer, String nationalCode, @NonNull final VolleyCallback volleyCallback) {
         loginApi.callLoginApi(mobileNumer,new VolleyCallback() {
         @Override
-        public   void onSuccess(Object o) {
+        public void onSuccess(Object o) {
 
             User user= (User) o;
 

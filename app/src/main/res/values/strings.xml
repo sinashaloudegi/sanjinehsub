@@ -152,6 +152,6 @@
     <string name="login_enter">وارد شوید</string>
     <string name="enter_sanjineh">ورود به سنجینه</string>
     <string name="number_not_valid">شماره وارد شده صحیح نمی باشد</string>
-    <string name="accept_it">را می پذیرم</string>
+    <string name="accept_it">قوانین و مقررات را می پذیرم</string>
     <string name="rules_and_regulations">قوانین و مقررات</string>
 </resources>

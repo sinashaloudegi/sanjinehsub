@@ -43,6 +43,7 @@ public class AppConfigApi {
             int marketEnumId = jsonObject.getInt("marketEnumId");
             int timerDuration = jsonObject.getInt("timerDuration");
             String marketKey = jsonObject.getString("marketKey");
+
             appConfig.setMarketEnumId(marketEnumId);
             appConfig.setTimerDuration(timerDuration);
             appConfig.setMarketKey(marketKey);

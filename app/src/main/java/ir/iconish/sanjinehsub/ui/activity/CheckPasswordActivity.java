@@ -1,10 +1,17 @@
 package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +23,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Optional;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.vm.CheckPasswordViewModel;
@@ -23,6 +31,11 @@ import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 
 public class CheckPasswordActivity extends AppCompatActivity {
+
+
+    @Nullable
+    @BindView(R.id.txt_forget_password)
+    TextView txtForgetPassword;
 
     @Nullable
     @BindView(R.id.btnEnter)
@@ -57,14 +70,36 @@ public class CheckPasswordActivity extends AppCompatActivity {
 
 
         attachViewModel();
+
+
+        coloredAndClickableText();
     }
 
+    private void coloredAndClickableText() {
+        SpannableString spannableString = new SpannableString(txtForgetPassword.getText().toString());
+        ForegroundColorSpan red = new ForegroundColorSpan(Color.RED);
+        spannableString.setSpan(red, 33, 38, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        ClickableSpan onRuleClicked = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(CheckPasswordActivity.this, "forget", Toast.LENGTH_SHORT).show();
+            }
+        };
+        spannableString.setSpan(red, 33, 38, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(onRuleClicked, 33, 38, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        txtForgetPassword.setText(spannableString);
+        txtForgetPassword.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    @Optional
     @OnClick(R.id.imgBack)
     public void imgBackAction() {
         ActivityNavigationHelper.navigateToActivity(this, LoginActivity.class, true);
 
     }
 
+    @Optional
     @OnClick(R.id.btnEnter)
     public void navMenuAction() {
 
@@ -82,7 +117,7 @@ public class CheckPasswordActivity extends AppCompatActivity {
 
     }
 
-
+    @Optional
     @OnClick(R.id.txtForgetPassword)
     public void txtForgetPasswordAction() {
         clearPassword();

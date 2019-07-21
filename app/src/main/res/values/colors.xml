@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#0b74bc</color>
     <color name="colorPrimaryDark">#303f9f</color>
-    <color name="colorAccent">#fdcb1e</color>
+    <color name="colorAccent">#0b74bc</color>
 
 
     <color name="yellow_button">#fdcb1e</color>

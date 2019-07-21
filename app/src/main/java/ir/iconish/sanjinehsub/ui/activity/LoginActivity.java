@@ -1,9 +1,15 @@
 package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,13 +48,13 @@ public class LoginActivity extends AppCompatActivity {
     EditText mobileNumberLoginEditText;
 
     @Nullable
+    @BindView(R.id.txt_accept_rules)
+    TextView txtAcceptRule;
+
+    @Nullable
     @BindView(R.id.prg_login)
     ProgressBar prgLogin;
 
-
-    @Nullable
-    @BindView(R.id.txt_number_error)
-    TextView txtNumberError;
 
     @Nullable
     @BindView(R.id.btn_enter_login)
@@ -70,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Inject
     LoginViewModel loginViewModel;
+
     private String mobileNumber;
 
     boolean ruleIsChecked = false;
@@ -81,11 +88,29 @@ public class LoginActivity extends AppCompatActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
-
         attachViewModel();
         mobileNumberLoginEditTextOnChangeListener();
-
+        coloredAndClickableText();
     }
+
+    private void coloredAndClickableText() {
+        SpannableString spannableString = new SpannableString(txtAcceptRule.getText().toString());
+        ForegroundColorSpan red = new ForegroundColorSpan(Color.RED);
+
+        ClickableSpan onRuleClicked = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(LoginActivity.this, "Rules", Toast.LENGTH_SHORT).show();
+            }
+        };
+        spannableString.setSpan(red, 0, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(onRuleClicked, 0, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+        txtAcceptRule.setText(spannableString);
+        txtAcceptRule.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
 
     private void toggleCheckRule() {
 
@@ -111,11 +136,9 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                txtNumberError.setVisibility(View.INVISIBLE);
                 if (isMobileNumberValid(charSequence.toString())) {
                     enterLoginButton.setEnabled(true);
                     mobileNumber = mobileNumberLoginEditText.getText().toString();
-                    mobileNumberLoginEditText.setError("Eshtebahe dadash");
                 } else {
                     enterLoginButton.setEnabled(false);
                 }
@@ -136,19 +159,18 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_enter_login)
     public void enterLoginButtonClick() {
-        showWating();
-        if (enterLoginButton.isEnabled() && isMobileNumberValid((mobileNumberLoginEditText.getText().toString()))) {
-         /*   if (checkBoxCheckRules.isSelected()) {
+        if (isMobileNumberValid((mobileNumberLoginEditText.getText().toString()))) {
+            if (ruleIsChecked) {
+                showWating();
+
+                mobileNumber = mobileNumberLoginEditText.getText().toString();
                 loginViewModel.callLoginViewModel(mobileNumber);
-
             } else {
-                txtNumberError.setVisibility(View.VISIBLE);
-            }*/
-
-            mobileNumber = mobileNumberLoginEditText.getText().toString();
+                Toast.makeText(this, getString(R.string.accept_rules), Toast.LENGTH_SHORT).show();
+            }
 
         } else {
-            Toast.makeText(this, "Please Enter Correct Mobile Number", Toast.LENGTH_LONG).show();
+            mobileNumberLoginEditText.setError("شماره وارد شده صحیح نمی باشد");
         }
 
 
@@ -159,7 +181,6 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getApiSuccessLiveDataResponse().observe(this, user -> {
                     stopWating();
             String userId = AdpPushClient.get().getUserId();
-
             if (userId != null && !userId.isEmpty()) {
                 AdpPushClient.get().register(userId);
             } else {
@@ -183,27 +204,14 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
         });
 
-        loginViewModel.getApiErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ApiError");
-
-        });
+        loginViewModel.getApiErrorLiveData().observe(this, volleyError -> goToFailApiPage("ApiError"));
         loginViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
 
-        {
-            goToFailApiPage("ServerError");
-
-        });
+                goToFailApiPage("ServerError"));
         loginViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-                {
-                    goToFailApiPage("TimeOutError");
-                }
-
+                goToFailApiPage("TimeOutError")
         );
-        loginViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ClientNetworkError");
-
-
-        });
+        loginViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> goToFailApiPage("ClientNetworkError"));
 
 
         loginViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
@@ -243,7 +251,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isMobileNumberValid(String mobileNumber) {
 
-        return mobileNumber.startsWith("09") && mobileNumber.length() >= 11;
+
+        return mobileNumber.startsWith("09") && mobileNumber.length() == 11;
 
     }
 
