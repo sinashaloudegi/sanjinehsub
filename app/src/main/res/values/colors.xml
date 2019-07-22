@@ -35,6 +35,7 @@
     <color name="header_section_color">#636368</color>
     <color name="dark_row_color">#fafafa</color>
     <color name="light_row_color">#ffffff</color>
+    <color name="main_color">#0b74bc</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#fff</color>
 
 </resources>

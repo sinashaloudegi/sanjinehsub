@@ -1,7 +1,6 @@
 package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -77,12 +76,13 @@ public class CheckPasswordActivity extends AppCompatActivity {
 
     private void coloredAndClickableText() {
         SpannableString spannableString = new SpannableString(txtForgetPassword.getText().toString());
-        ForegroundColorSpan red = new ForegroundColorSpan(Color.RED);
+        ForegroundColorSpan red = new ForegroundColorSpan(getResources().getColor(R.color.main_color));
         spannableString.setSpan(red, 33, 38, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         ClickableSpan onRuleClicked = new ClickableSpan() {
             @Override
             public void onClick(View view) {
+                // TODO: 7/22/2019 link to forget password activity
                 Toast.makeText(CheckPasswordActivity.this, "forget", Toast.LENGTH_SHORT).show();
             }
         };

@@ -1,7 +1,6 @@
 package ir.iconish.sanjinehsub.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -58,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Nullable
     @BindView(R.id.btn_enter_login)
-    Button enterLoginButton;
+    Button btnEnterLogin;
 
 
     @Nullable
@@ -91,19 +90,23 @@ public class LoginActivity extends AppCompatActivity {
         attachViewModel();
         mobileNumberLoginEditTextOnChangeListener();
         coloredAndClickableText();
+
     }
 
+
+    //This method is used to make a part of a text colored and clickable
     private void coloredAndClickableText() {
         SpannableString spannableString = new SpannableString(txtAcceptRule.getText().toString());
-        ForegroundColorSpan red = new ForegroundColorSpan(Color.RED);
+        ForegroundColorSpan color = new ForegroundColorSpan(getResources().getColor(R.color.main_color));
 
         ClickableSpan onRuleClicked = new ClickableSpan() {
             @Override
             public void onClick(View view) {
+                // TODO: 7/22/2019 link to the rules page
                 Toast.makeText(LoginActivity.this, "Rules", Toast.LENGTH_SHORT).show();
             }
         };
-        spannableString.setSpan(red, 0, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(color, 0, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(onRuleClicked, 0, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 
@@ -137,10 +140,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (isMobileNumberValid(charSequence.toString())) {
-                    enterLoginButton.setEnabled(true);
+                    btnEnterLogin.setEnabled(true);
                     mobileNumber = mobileNumberLoginEditText.getText().toString();
                 } else {
-                    enterLoginButton.setEnabled(false);
+                    btnEnterLogin.setEnabled(false);
                 }
 
             }
@@ -158,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btn_enter_login)
-    public void enterLoginButtonClick() {
+    public void btnEnterLoginClick() {
         if (isMobileNumberValid((mobileNumberLoginEditText.getText().toString()))) {
             if (ruleIsChecked) {
                 showWating();
@@ -241,18 +244,18 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showWating() {
         prgLogin.setVisibility(View.VISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(enterLoginButton, false);
+        ButtonHelper.toggleAppCompatButtonStatus(btnEnterLogin, false);
     }
 
     private void stopWating() {
         prgLogin.setVisibility(View.INVISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(enterLoginButton, true);
+        ButtonHelper.toggleAppCompatButtonStatus(btnEnterLogin, true);
     }
 
     private boolean isMobileNumberValid(String mobileNumber) {
 
 
-        return mobileNumber.startsWith("09") && mobileNumber.length() == 11;
+        return mobileNumber.matches("(\\+98|0)?9\\d{9}");
 
     }
 
