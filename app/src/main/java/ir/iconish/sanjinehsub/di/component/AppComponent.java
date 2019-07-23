@@ -63,5 +63,4 @@ public interface AppComponent {
     void inject(ReportActivity activity);
 
 
-
 }

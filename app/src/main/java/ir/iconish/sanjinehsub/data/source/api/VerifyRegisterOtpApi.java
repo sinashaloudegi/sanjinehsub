@@ -65,7 +65,7 @@ public class VerifyRegisterOtpApi {
 
     public void callVerifyRegisterOtpApi(String otp, String mobileNumber, @NonNull final VolleyCallback volleyCallback) {
 
-        String url = ConstantUrl.BASE + ConstantUrl.CONFIRM_REGISTER;
+        String url = ConstantUrl.BASE_SECURITY + ConstantUrl.CONFIRM_REGISTER;
 
         JSONObject jsonObject = new JSONObject();
 

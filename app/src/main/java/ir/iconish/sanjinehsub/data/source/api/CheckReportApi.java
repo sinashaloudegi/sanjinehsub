@@ -50,7 +50,7 @@ public class CheckReportApi {
     public void callCheckReportApi(String ntcode, String mobileNumber, @NonNull final VolleyCallback volleyCallback) {
 
 
-        String url = ConstantUrl.BASE_CREDIT + ConstantUrl.CHECK_REPORT + ntcode + "/" + mobileNumber;
+        String url = ConstantUrl.BASE_CREDITSCORE + ConstantUrl.CHECK_REPORT + ntcode + "/" + mobileNumber;
         // Log.e("url=", url);
 
         // JsonArrayRequest

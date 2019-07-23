@@ -48,34 +48,19 @@ public class AppController extends MultiDexApplication {
     }
 
 
+    public static synchronized AppController getInstance() {
+        return mInstance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        setUpChabok();
 
-
-//CHABOK
-        AdpPushClient.init(
-                getApplicationContext(),
-                LoginActivity.class,
-                "hibnosza/1033113418202", //based on your environment
-                "12cdf6cacacc052919344cd23bce0fac0e94a6ca",          //based on your environment
-                "puruzkeija",     //based on your environment
-                "hovezuzit"      //based on your environment
-        );
-        //true connects to Sandbox environment
-        //false connects to Production environment
-        AdpPushClient.get().setDevelopment(true);
 
         String userId = AdpPushClient.get().getUserId();
         Crashlytics.setString("userId", userId);
-   /*     if (userId != null && !userId.isEmpty()) {
-            AdpPushClient.get().register(userId);
-        } else {
 
-            //If user is not registered verify the user and
-            //call AdpPushClient.get().register("USER_ID") method at login page
-            AdpPushClient.get().register("user");
-        }*/
         FirebaseApp.initializeApp(this);
 
 
@@ -87,6 +72,25 @@ public class AppController extends MultiDexApplication {
                 .netModule(new NetModule()).build();
 
 
+        fontSetup();
+    }
+
+    private void setUpChabok() {
+        //CHABOK
+        AdpPushClient.init(
+                getApplicationContext(),
+                LoginActivity.class,
+                "hibnosza/1033113418202", //based on your environment
+                "12cdf6cacacc052919344cd23bce0fac0e94a6ca",          //based on your environment
+                "puruzkeija",     //based on your environment
+                "hovezuzit"      //based on your environment
+        );
+        //true connects to Sandbox environment
+        //false connects to Production environment
+        AdpPushClient.get().setDevelopment(true);
+    }
+
+    private void fontSetup() {
         FontsOverride.setDefaultFont(this, "DEFAULT", "font/iranyekanwebregular.ttf");
 
         FontsOverride.setDefaultFont(this, "MONOSPACE", "font/iranyekanwebregular.ttf");
@@ -96,13 +100,10 @@ public class AppController extends MultiDexApplication {
 
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
 
-    public static synchronized AppController getInstance() {
-        return mInstance;
-    }
 
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {

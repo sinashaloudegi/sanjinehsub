@@ -19,18 +19,17 @@ public class LoginViewModel extends ViewModel {
     private MutableLiveData<String> apiClientNetworkErrorLiveData;
     private MutableLiveData<String> apiTimeOutErrorLiveData;
     private MutableLiveData<String> apiAuthFailureErrorLiveData;
-
-
-
-    LoginRepository loginRepository;
-
     private MutableLiveData<String> apiForbiden403ErrorLiveData;
     private MutableLiveData<String> apiValidation422ErrorLiveData;
     private MutableLiveData<String> api404LiveData;
 
+    LoginRepository loginRepository;
+
+
     public MutableLiveData<String> getApi404LiveData() {
         return api404LiveData;
     }
+
     public MutableLiveData<String> getApiForbiden403ErrorLiveData() {
         return apiForbiden403ErrorLiveData;
     }
@@ -44,11 +43,9 @@ public class LoginViewModel extends ViewModel {
     }
 
     @Inject
-    public LoginViewModel(LoginRepository loginRepository)
-    {
+    public LoginViewModel(LoginRepository loginRepository) {
 
-        this.loginRepository=loginRepository;
-
+        this.loginRepository = loginRepository;
 
 
         apiSuccessLiveDataResponse = new MutableLiveData<>();
@@ -61,8 +58,6 @@ public class LoginViewModel extends ViewModel {
         apiValidation422ErrorLiveData = new MutableLiveData<>();
         api404LiveData = new MutableLiveData<>();
     }
-
-
 
     public MutableLiveData<String> getApiErrorLiveData() {
         return apiErrorLiveData;
@@ -87,52 +82,54 @@ public class LoginViewModel extends ViewModel {
     public void callLoginViewModel(String mobileNumber) {
 
 
-        loginRepository.callLoginRepository(mobileNumber, "s", new VolleyCallback() {
-          @Override
-          public void onSuccess(Object obj) {
-            apiSuccessLiveDataResponse.setValue((User) obj);
+        loginRepository.callLoginRepository(mobileNumber, new VolleyCallback() {
+            @Override
+            public void onSuccess(Object obj) {
+                apiSuccessLiveDataResponse.setValue((User) obj);
 
-          }
-          @Override
-          public void on404(String volleyError) {
-              api404LiveData.setValue(volleyError);
-          }
-          @Override
-          public void onFail(String volleyError) {
-              apiErrorLiveData.setValue(volleyError);
-          }
+            }
 
-          @Override
-          public void onServerError( ) {
-              apiServerErrorLiveData.setValue(null);
-          }
+            @Override
+            public void on404(String volleyError) {
+                api404LiveData.setValue(volleyError);
+            }
 
-          @Override
-          public void onClientNetworkError( ) {
-              apiClientNetworkErrorLiveData.setValue(null);
-          }
+            @Override
+            public void onFail(String volleyError) {
+                apiErrorLiveData.setValue(volleyError);
+            }
 
-          @Override
-          public void onTimeOutError() {
-              apiTimeOutErrorLiveData.setValue(null);
-          }
+            @Override
+            public void onServerError() {
+                apiServerErrorLiveData.setValue(null);
+            }
 
-          @Override
-          public void onForbiden403(String volleyError) {
-              apiForbiden403ErrorLiveData.setValue(volleyError);
-          }
+            @Override
+            public void onClientNetworkError() {
+                apiClientNetworkErrorLiveData.setValue(null);
+            }
 
-          @Override
-          public void onValidationError422(String volleyError) {
-              apiValidation422ErrorLiveData.setValue(volleyError);
-          }
+            @Override
+            public void onTimeOutError() {
+                apiTimeOutErrorLiveData.setValue(null);
+            }
 
-          @Override
-          public void onAuthFailureError401(String volleyError) {
-              apiAuthFailureErrorLiveData.setValue(volleyError);
-          }
+            @Override
+            public void onForbiden403(String volleyError) {
+                apiForbiden403ErrorLiveData.setValue(volleyError);
+            }
 
-      });
+            @Override
+            public void onValidationError422(String volleyError) {
+                apiValidation422ErrorLiveData.setValue(volleyError);
+            }
+
+            @Override
+            public void onAuthFailureError401(String volleyError) {
+                apiAuthFailureErrorLiveData.setValue(volleyError);
+            }
+
+        });
     }
 
 }

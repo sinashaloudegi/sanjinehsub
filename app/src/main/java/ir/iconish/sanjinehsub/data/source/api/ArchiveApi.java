@@ -68,7 +68,7 @@ public class ArchiveApi {
     public void callArchivedApi(String mobileNumber, @NonNull final String token, @NonNull final VolleyCallback volleyCallback) {
 
 
-        String url = ConstantUrl.BASE_CREDIT + ConstantUrl.ARCHIVE + mobileNumber;
+        String url = ConstantUrl.BASE_CREDITSCORE + ConstantUrl.ARCHIVE + mobileNumber;
 
 
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.POST,

@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +103,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
                     }
                 });*/
 
+        Logger.addLogAdapter(new AndroidLogAdapter());
+
+        Logger.d("MainActivity");
     }
 
 

@@ -41,7 +41,7 @@ public class SharedPreferencesManager {
     public void setMobileNumberValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(MOBILE_NUMBER_VALUE, newValue);
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -53,7 +53,7 @@ public class SharedPreferencesManager {
     public void setEmailValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(EMAIL_VALUE, newValue);
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -66,7 +66,7 @@ public class SharedPreferencesManager {
     public void setMarketKeyValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(MARKET_KEY, newValue);
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -78,7 +78,7 @@ public class SharedPreferencesManager {
     public void setTimerDurationValue(int newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(TIMER_DURATION, newValue);
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -91,7 +91,7 @@ public class SharedPreferencesManager {
     public void setTokenValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TOKEN, newValue);
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -104,7 +104,7 @@ public class SharedPreferencesManager {
     public void setFirstNameValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(FIRST_NAME_VALUE, newValue);
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -116,7 +116,7 @@ public class SharedPreferencesManager {
     public void setLastNameValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(LAST_NAME_VALUE, newValue);
-        editor.commit();
+        editor.apply();
     }
 
     @Nullable
@@ -127,7 +127,7 @@ public class SharedPreferencesManager {
     public void setNationalCodeValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(NATIONAL_CODE, newValue);
-        editor.commit();
+        editor.apply();
     }
 
     public int getResponseStatusCodeValue() {
@@ -137,7 +137,7 @@ public class SharedPreferencesManager {
     public void setResponseStatusCodeValue(int newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(RESPONSE_STATUS_CODE_VALUE, newValue);
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -148,7 +148,7 @@ public class SharedPreferencesManager {
     public void setUserIdValue(long newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong(USER_ID_VALUE, newValue);
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -160,7 +160,7 @@ public class SharedPreferencesManager {
     public void setPasswordValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PASSWORD_VALUE, newValue);
-        editor.commit();
+        editor.apply();
     }
 
 
@@ -168,7 +168,7 @@ public class SharedPreferencesManager {
 
         String marketKey = getMarketKeyValue();
         int timmerDuration = getTimerDurationValue();
-        sharedPreferences.edit().clear().commit();
+        sharedPreferences.edit().clear().apply();
         setTimerDurationValue(timmerDuration);
         setMarketKeyValue(marketKey);
 

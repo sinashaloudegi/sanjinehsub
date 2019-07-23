@@ -149,10 +149,7 @@ public class CheckPasswordActivity extends AppCompatActivity {
         checkPasswordViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
         });
 
-        checkPasswordViewModel.getApiErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ApiError");
-
-        });
+        checkPasswordViewModel.getApiErrorLiveData().observe(this, volleyError -> goToFailApiPage("ApiError"));
         checkPasswordViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
 
         {
@@ -160,16 +157,10 @@ public class CheckPasswordActivity extends AppCompatActivity {
 
         });
         checkPasswordViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-                {
-                    goToFailApiPage("TimeOutError");
-                }
+                goToFailApiPage("TimeOutError")
 
         );
-        checkPasswordViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ClientNetworkError");
-
-
-        });
+        checkPasswordViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> goToFailApiPage("ClientNetworkError"));
 
 
         checkPasswordViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {

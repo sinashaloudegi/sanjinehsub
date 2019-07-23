@@ -1,16 +1,13 @@
 package ir.iconish.sanjinehsub.data.vm;
 
 
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.model.PasswordValidationResponse;
-import ir.iconish.sanjinehsub.data.model.User;
 import ir.iconish.sanjinehsub.data.repository.CheckPasswordRepository;
-import ir.iconish.sanjinehsub.data.repository.LoginRepository;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
 
 public class CheckPasswordViewModel extends ViewModel {
@@ -22,18 +19,17 @@ public class CheckPasswordViewModel extends ViewModel {
     private MutableLiveData<String> apiClientNetworkErrorLiveData;
     private MutableLiveData<String> apiTimeOutErrorLiveData;
     private MutableLiveData<String> apiAuthFailureErrorLiveData;
-
-
-
-    CheckPasswordRepository checkPasswordRepository;
-
     private MutableLiveData<String> apiForbiden403ErrorLiveData;
     private MutableLiveData<String> apiValidation422ErrorLiveData;
     private MutableLiveData<String> api404LiveData;
 
+    CheckPasswordRepository checkPasswordRepository;
+
+
     public MutableLiveData<String> getApi404LiveData() {
         return api404LiveData;
     }
+
     public MutableLiveData<String> getApiForbiden403ErrorLiveData() {
         return apiForbiden403ErrorLiveData;
     }
@@ -47,11 +43,9 @@ public class CheckPasswordViewModel extends ViewModel {
     }
 
     @Inject
-    public CheckPasswordViewModel(CheckPasswordRepository checkPasswordRepository)
-    {
+    public CheckPasswordViewModel(CheckPasswordRepository checkPasswordRepository) {
 
-        this.checkPasswordRepository=checkPasswordRepository;
-
+        this.checkPasswordRepository = checkPasswordRepository;
 
 
         apiSuccessLiveDataResponse = new MutableLiveData<>();
@@ -64,8 +58,6 @@ public class CheckPasswordViewModel extends ViewModel {
         apiValidation422ErrorLiveData = new MutableLiveData<>();
         api404LiveData = new MutableLiveData<>();
     }
-
-
 
     public MutableLiveData<String> getApiErrorLiveData() {
         return apiErrorLiveData;
@@ -90,59 +82,63 @@ public class CheckPasswordViewModel extends ViewModel {
     public void callCheckPasswordViewModel(String password) {
 
 
-      checkPasswordRepository.callCheckPasswordRepository(password,new VolleyCallback() {
-          @Override
-          public void onSuccess(Object obj) {
+        checkPasswordRepository.callCheckPasswordRepository(password, new VolleyCallback() {
+            @Override
+            public void onSuccess(Object obj) {
 
-              PasswordValidationResponse passwordValidationResponse= (PasswordValidationResponse) obj;
-            apiSuccessLiveDataResponse.setValue(passwordValidationResponse);
+                PasswordValidationResponse passwordValidationResponse = (PasswordValidationResponse) obj;
+                apiSuccessLiveDataResponse.setValue(passwordValidationResponse);
 
-          }
-          @Override
-          public void on404(String volleyError) {
-              api404LiveData.setValue(volleyError);
-          }
-          @Override
-          public void onFail(String volleyError) {
-              apiErrorLiveData.setValue(volleyError);
-          }
+            }
 
-          @Override
-          public void onServerError( ) {
-              apiServerErrorLiveData.setValue(null);
-          }
+            @Override
+            public void on404(String volleyError) {
+                api404LiveData.setValue(volleyError);
+            }
 
-          @Override
-          public void onClientNetworkError( ) {
-              apiClientNetworkErrorLiveData.setValue(null);
-          }
+            @Override
+            public void onFail(String volleyError) {
+                apiErrorLiveData.setValue(volleyError);
+            }
 
-          @Override
-          public void onTimeOutError() {
-              apiTimeOutErrorLiveData.setValue(null);
-          }
+            @Override
+            public void onServerError() {
+                apiServerErrorLiveData.setValue(null);
+            }
 
-          @Override
-          public void onForbiden403(String volleyError) {
-              apiForbiden403ErrorLiveData.setValue(volleyError);
-          }
+            @Override
+            public void onClientNetworkError() {
+                apiClientNetworkErrorLiveData.setValue(null);
+            }
 
-          @Override
-          public void onValidationError422(String volleyError) {
-              apiValidation422ErrorLiveData.setValue(volleyError);
-          }
+            @Override
+            public void onTimeOutError() {
+                apiTimeOutErrorLiveData.setValue(null);
+            }
 
-          @Override
-          public void onAuthFailureError401(String volleyError) {
-              apiAuthFailureErrorLiveData.setValue(volleyError);
-          }
+            @Override
+            public void onForbiden403(String volleyError) {
+                apiForbiden403ErrorLiveData.setValue(volleyError);
+            }
 
-      });
+            @Override
+            public void onValidationError422(String volleyError) {
+                apiValidation422ErrorLiveData.setValue(volleyError);
+            }
+
+            @Override
+            public void onAuthFailureError401(String volleyError) {
+                apiAuthFailureErrorLiveData.setValue(volleyError);
+            }
+
+        });
     }
-    public void clearPassword(){
+
+    public void clearPassword() {
         checkPasswordRepository.clearPassword();
     }
-    public int getTimerDuration(){
+
+    public int getTimerDuration() {
         return checkPasswordRepository.getTimerDuration();
     }
 }

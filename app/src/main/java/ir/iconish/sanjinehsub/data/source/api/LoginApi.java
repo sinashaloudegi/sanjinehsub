@@ -1,7 +1,5 @@
 package ir.iconish.sanjinehsub.data.source.api;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -38,44 +36,10 @@ public class LoginApi {
     }
 
 
-    @NonNull
-    public User parseJson(@NonNull JSONObject jsonObject) {
-        User user = new User();
-
-        try {
-            JSONObject jsonObjectRoot = jsonObject.getJSONObject("responseStatus");
-            int statusCode = jsonObjectRoot.getInt("value");
-
-            user.setResponseCodeEnum(LoginStatusEnum.fromValue(statusCode));
-            if (statusCode == 1010) {
-                JSONObject jsonObjectUser = jsonObject.getJSONObject("accountInfo").getJSONObject("user");
-                String firstName = jsonObjectUser.getString("firstname");
-                String lastName = jsonObjectUser.getString("family");
-                String email = jsonObjectUser.getString("email");
-                String mobileNumber = jsonObjectUser.getString("mobile");
-                long userId = jsonObjectUser.getLong("userid");
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setEmail(email);
-                user.setMobileNumber(mobileNumber);
-                user.setUserId(userId);
-
-
-            }
-
-        } catch (JSONException e) {
-            //Log.e("err",e.toString());
-            e.printStackTrace();
-        }
-
-        return user;
-    }
-
-
     public void callLoginApi(String mobileNumer, @NonNull final VolleyCallback volleyCallback) {
 
 
-        String url = ConstantUrl.BASE + ConstantUrl.LOGIN;
+        String url = ConstantUrl.BASE_SECURITY + ConstantUrl.LOGIN;
 
         JSONObject jsonObject = new JSONObject();
         try {
@@ -91,8 +55,6 @@ public class LoginApi {
                 url, jsonObject,
                 response -> {
 
-
-                    //Log.e("Server response",response.toString());
 
                     if (response != null) {
 
@@ -135,9 +97,8 @@ public class LoginApi {
             @NonNull
             @Override
             public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<>();
 
-                return params;
+                return new HashMap<>();
             }
 
 
@@ -148,11 +109,42 @@ public class LoginApi {
                 AppConstants.CLIENT_TIMEOUT,
                 1,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
         String tag_json_arry = "loginApi";
         appController.addToRequestQueue(jsonObjReq, tag_json_arry);
-        Log.d(TAG, "callLoginApi: retrying");
 
     }
 
+    @NonNull
+    public User parseJson(@NonNull JSONObject jsonObject) {
+        User user = new User();
 
+        try {
+            JSONObject jsonObjectRoot = jsonObject.getJSONObject("responseStatus");
+            int statusCode = jsonObjectRoot.getInt("value");
+
+            user.setResponseCodeEnum(LoginStatusEnum.fromValue(statusCode));
+            if (statusCode == 1010) {
+                JSONObject jsonObjectUser = jsonObject.getJSONObject("accountInfo").getJSONObject("user");
+                String firstName = jsonObjectUser.getString("firstname");
+                String lastName = jsonObjectUser.getString("family");
+                String email = jsonObjectUser.getString("email");
+                String mobileNumber = jsonObjectUser.getString("mobile");
+                long userId = jsonObjectUser.getLong("userid");
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setEmail(email);
+                user.setMobileNumber(mobileNumber);
+                user.setUserId(userId);
+
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
 }

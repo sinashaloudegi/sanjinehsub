@@ -12,50 +12,52 @@ import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 
 
 public class CheckPasswordRepository {
-   CheckPasswordApi checkPasswordApi;
+    CheckPasswordApi checkPasswordApi;
 
 
-SharedPreferencesManager sharedPreferencesManager;
+    SharedPreferencesManager sharedPreferencesManager;
 
-@Inject
+    @Inject
     public CheckPasswordRepository(CheckPasswordApi checkPasswordApi, SharedPreferencesManager sharedPreferencesManager) {
 
-this.checkPasswordApi=checkPasswordApi;
-this.sharedPreferencesManager=sharedPreferencesManager;
+        this.checkPasswordApi = checkPasswordApi;
+        this.sharedPreferencesManager = sharedPreferencesManager;
     }
 
     public void callCheckPasswordRepository(String password, @NonNull final VolleyCallback volleyCallback) {
-        checkPasswordApi.callCheckPasswordApi(password,sharedPreferencesManager.getMobileNumberValue(),new VolleyCallback() {
-        @Override
-        public   void onSuccess(Object o) {
+        checkPasswordApi.callCheckPasswordApi(password, sharedPreferencesManager.getMobileNumberValue(), new VolleyCallback() {
+            @Override
+            public void onSuccess(Object o) {
 
-            PasswordValidationResponse passwordValidationResponse= (PasswordValidationResponse) o;
-            if(passwordValidationResponse.getRespobseStatusCode()==1012||passwordValidationResponse.getRespobseStatusCode()==1013||passwordValidationResponse.getRespobseStatusCode()==1000) {
-               sharedPreferencesManager.setPasswordValue(password);
-               sharedPreferencesManager.setTokenValue(passwordValidationResponse.getToken());
+                PasswordValidationResponse passwordValidationResponse = (PasswordValidationResponse) o;
+                if (passwordValidationResponse.getRespobseStatusCode() == 1012 || passwordValidationResponse.getRespobseStatusCode() == 1013 || passwordValidationResponse.getRespobseStatusCode() == 1000) {
+                    sharedPreferencesManager.setPasswordValue(password);
+                    sharedPreferencesManager.setTokenValue(passwordValidationResponse.getToken());
 
-           }
+                }
 
-            volleyCallback.onSuccess(o);
-        }
-        @Override
-        public void onFail(String volleyError) {
-            volleyCallback.onFail(volleyError);
-        }
+                volleyCallback.onSuccess(o);
+            }
 
-        @Override
-        public void onServerError( ) {
-            volleyCallback.onServerError();
-        }
+            @Override
+            public void onFail(String volleyError) {
+                volleyCallback.onFail(volleyError);
+            }
 
-        @Override
-        public void onClientNetworkError() {
-            volleyCallback.onClientNetworkError();
-        }
-        @Override
-        public void onTimeOutError() {
-            volleyCallback.onTimeOutError();
-        }
+            @Override
+            public void onServerError() {
+                volleyCallback.onServerError();
+            }
+
+            @Override
+            public void onClientNetworkError() {
+                volleyCallback.onClientNetworkError();
+            }
+
+            @Override
+            public void onTimeOutError() {
+                volleyCallback.onTimeOutError();
+            }
 
             @Override
             public void onForbiden403(String volleyError) {
@@ -73,19 +75,19 @@ this.sharedPreferencesManager=sharedPreferencesManager;
             }
 
             @Override
-        public void onAuthFailureError401(String volleyError) {
-            volleyCallback.onAuthFailureError401(volleyError);
-        }
-    });
+            public void onAuthFailureError401(String volleyError) {
+                volleyCallback.onAuthFailureError401(volleyError);
+            }
+        });
 
 
-}
+    }
 
-    public void clearPassword(){
+    public void clearPassword() {
         sharedPreferencesManager.clearPassword();
     }
 
-    public int getTimerDuration(){
+    public int getTimerDuration() {
         return sharedPreferencesManager.getTimerDurationValue();
     }
 }

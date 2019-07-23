@@ -64,7 +64,7 @@ public class ForgetPasswordApi {
     public void callForgetPasswordApi(String mobileNumer, @NonNull final VolleyCallback volleyCallback) {
 
 
-        String url = ConstantUrl.BASE + ConstantUrl.FORGET_PASSWORD;
+        String url = ConstantUrl.BASE_SECURITY + ConstantUrl.FORGET_PASSWORD;
         JSONObject jsonObject = new JSONObject();
 
         try {

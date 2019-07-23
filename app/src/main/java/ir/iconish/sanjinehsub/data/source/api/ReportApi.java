@@ -309,7 +309,7 @@ public class ReportApi {
     public void callReportsApi(String reqToken, @NonNull final VolleyCallback volleyCallback) {
 
 
-        String url = ConstantUrl.BASE_CREDIT + ConstantUrl.REPORTS;
+        String url = ConstantUrl.BASE_CREDITSCORE + ConstantUrl.REPORTS;
 
         JSONObject jsonObject = new JSONObject();
         try {

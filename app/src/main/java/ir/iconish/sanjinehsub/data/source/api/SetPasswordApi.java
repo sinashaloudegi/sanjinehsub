@@ -60,7 +60,7 @@ public class SetPasswordApi {
     public void callSetPasswordApi(String password, String mobileNumber, @NonNull final VolleyCallback volleyCallback) {
 
 
-        String   url=ConstantUrl.BASE+ConstantUrl.CHANGHE_PASSWORD;
+        String url = ConstantUrl.BASE_SECURITY + ConstantUrl.CHANGHE_PASSWORD;
 
 JSONObject jsonObject=new JSONObject();
 

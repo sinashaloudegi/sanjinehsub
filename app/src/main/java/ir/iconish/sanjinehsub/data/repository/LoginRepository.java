@@ -13,61 +13,61 @@ import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 
 
 public class LoginRepository {
-   LoginApi loginApi;
+    LoginApi loginApi;
 
 
-SharedPreferencesManager sharedPreferencesManager;
+    SharedPreferencesManager sharedPreferencesManager;
 
-@Inject
-    public LoginRepository( LoginApi loginApi, SharedPreferencesManager sharedPreferencesManager) {
+    @Inject
+    public LoginRepository(LoginApi loginApi, SharedPreferencesManager sharedPreferencesManager) {
 
-this.loginApi=loginApi;
-this.sharedPreferencesManager=sharedPreferencesManager;
+        this.loginApi = loginApi;
+        this.sharedPreferencesManager = sharedPreferencesManager;
     }
 
-    public void callLoginRepository(String mobileNumer, String nationalCode, @NonNull final VolleyCallback volleyCallback) {
-        loginApi.callLoginApi(mobileNumer,new VolleyCallback() {
-        @Override
-        public void onSuccess(Object o) {
+    public void callLoginRepository(String mobileNumer, @NonNull final VolleyCallback volleyCallback) {
+        loginApi.callLoginApi(mobileNumer, new VolleyCallback() {
+            @Override
+            public void onSuccess(Object o) {
 
-            User user= (User) o;
+                User user = (User) o;
 
-            if(user.getResponseCodeEnum().getValue()== LoginStatusEnum.USER_EXIST.getValue()){
-                sharedPreferencesManager.setMobileNumberValue(user.getMobileNumber());
-                sharedPreferencesManager.setFirstNameValue(user.getFirstName());
-                sharedPreferencesManager.setLastNameValue(user.getLastName());
-                sharedPreferencesManager.setEmailValue(user.getEmail());
-                sharedPreferencesManager.setNationalCodeValue(nationalCode);
-                sharedPreferencesManager.setResponseStatusCodeValue(user.getResponseCodeEnum().getValue());
-                sharedPreferencesManager.setUserIdValue(user.getUserId());
+                if (user.getResponseCodeEnum().getValue() == LoginStatusEnum.USER_EXIST.getValue()) {
+                    sharedPreferencesManager.setMobileNumberValue(user.getMobileNumber());
+                    sharedPreferencesManager.setFirstNameValue(user.getFirstName());
+                    sharedPreferencesManager.setLastNameValue(user.getLastName());
+                    sharedPreferencesManager.setEmailValue(user.getEmail());
+                    sharedPreferencesManager.setResponseStatusCodeValue(user.getResponseCodeEnum().getValue());
+                    sharedPreferencesManager.setUserIdValue(user.getUserId());
 
+                } else if (user.getResponseCodeEnum().getValue() == LoginStatusEnum.USERISNEW.getValue()) {
+
+                    sharedPreferencesManager.setMobileNumberValue(mobileNumer);
+
+                }
+
+                volleyCallback.onSuccess(o);
             }
-            else if (user.getResponseCodeEnum().getValue()== LoginStatusEnum.USERISNEW.getValue()){
 
-                sharedPreferencesManager.setMobileNumberValue(mobileNumer);
-
+            @Override
+            public void onFail(String volleyError) {
+                volleyCallback.onFail(volleyError);
             }
 
-            volleyCallback.onSuccess(o);
-        }
-        @Override
-        public void onFail(String volleyError) {
-            volleyCallback.onFail(volleyError);
-        }
+            @Override
+            public void onServerError() {
+                volleyCallback.onServerError();
+            }
 
-        @Override
-        public void onServerError( ) {
-            volleyCallback.onServerError();
-        }
+            @Override
+            public void onClientNetworkError() {
+                volleyCallback.onClientNetworkError();
+            }
 
-        @Override
-        public void onClientNetworkError() {
-            volleyCallback.onClientNetworkError();
-        }
-        @Override
-        public void onTimeOutError() {
-            volleyCallback.onTimeOutError();
-        }
+            @Override
+            public void onTimeOutError() {
+                volleyCallback.onTimeOutError();
+            }
 
             @Override
             public void onForbiden403(String volleyError) {
@@ -85,13 +85,13 @@ this.sharedPreferencesManager=sharedPreferencesManager;
             }
 
             @Override
-        public void onAuthFailureError401(String volleyError) {
-            volleyCallback.onAuthFailureError401(volleyError);
-        }
-    });
+            public void onAuthFailureError401(String volleyError) {
+                volleyCallback.onAuthFailureError401(volleyError);
+            }
+        });
 
 
-}
+    }
 
 
 }

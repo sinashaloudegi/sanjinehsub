@@ -64,7 +64,7 @@ public class CheckPasswordApi {
     public void callCheckPasswordApi(String password, String mobileNumber, @NonNull final VolleyCallback volleyCallback) {
 
 
-        String url = ConstantUrl.BASE + ConstantUrl.CHECK_PASSWORD;
+        String url = ConstantUrl.BASE_SECURITY + ConstantUrl.CHECK_PASSWORD;
 
         JSONObject jsonObject = new JSONObject();
 

@@ -33,6 +33,7 @@ import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.model.LoginStatusEnum;
+import ir.iconish.sanjinehsub.data.model.User;
 import ir.iconish.sanjinehsub.data.vm.LoginViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.ui.DialogHelper;
@@ -90,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
         attachViewModel();
         mobileNumberLoginEditTextOnChangeListener();
         coloredAndClickableText();
-
     }
 
 
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         ClickableSpan onRuleClicked = new ClickableSpan() {
             @Override
             public void onClick(View view) {
-                // TODO: 7/22/2019 link to the rules page
+                ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/terms?from=android_cafebazar", LoginActivity.this, WebViewActivity.class);
                 Toast.makeText(LoginActivity.this, "Rules", Toast.LENGTH_SHORT).show();
             }
         };
@@ -173,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         } else {
-            mobileNumberLoginEditText.setError("شماره وارد شده صحیح نمی باشد");
+            mobileNumberLoginEditText.setError(getResources().getString(R.string.mobile_not_valid));
         }
 
 
@@ -183,18 +183,11 @@ public class LoginActivity extends AppCompatActivity {
     private void attachViewModel() {
         loginViewModel.getApiSuccessLiveDataResponse().observe(this, user -> {
                     stopWating();
-            String userId = AdpPushClient.get().getUserId();
-            if (userId != null && !userId.isEmpty()) {
-                AdpPushClient.get().register(userId);
-            } else {
 
-                //If user is not registered verify the user and
-                //call AdpPushClient.get().register("USER_ID") method at login page
-                AdpPushClient.get().register(user.getMobileNumber() + "");
-            }
+            registerToChabok(user);
+
                     if (user.getResponseCodeEnum().getValue() == LoginStatusEnum.USER_EXIST.getValue()) {
                         ActivityNavigationHelper.navigateToActivity(this, CheckPasswordActivity.class, true);
-                        //ActivityNavigationHelper.navigateToActivity(this, MainActivity.class,true);
                     } else if (user.getResponseCodeEnum().getValue() == LoginStatusEnum.USERISNEW.getValue()) {
                         ActivityNavigationHelper.navigateToActivity(this, VerifyRegisterOtpActivity.class, true);
 
@@ -222,6 +215,19 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
         });
 
+    }
+
+    private void registerToChabok(User user) {
+        //This is for Chabok, add user mobile number as userId
+        String userId = AdpPushClient.get().getUserId();
+        if (userId != null && !userId.isEmpty()) {
+            AdpPushClient.get().register(userId);
+        } else {
+
+            //If user is not registered verify the user and
+            //call AdpPushClient.get().register("USER_ID") method at login page
+            AdpPushClient.get().register(user.getMobileNumber() + "");
+        }
     }
 
 

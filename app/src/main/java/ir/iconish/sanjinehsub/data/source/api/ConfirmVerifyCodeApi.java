@@ -46,7 +46,7 @@ public class ConfirmVerifyCodeApi {
     public void callConfirmVerifyCodeApi(String msisdn, String code, @NonNull final VolleyCallback volleyCallback) {
 
 
-        String url = ConstantUrl.BASE_CREDIT + ConstantUrl.Confirm_VERIFYCODE + msisdn + "/" + code;
+        String url = ConstantUrl.BASE_CREDITSCORE + ConstantUrl.Confirm_VERIFYCODE + msisdn + "/" + code;
 
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET, url, null,
