@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/toolbar_height"
-    android:background="@drawable/ic_topbar"
-    >
-<ImageView
-    android:layout_marginTop="@dimen/size2"
-    android:layout_alignParentRight="true"
-    android:layout_width="@dimen/small_icon_size"
-    android:layout_height="@dimen/small_icon_size"
-    android:layout_margin="@dimen/margin_5"
-android:id="@+id/imgNavMenu"
-    app:srcCompat="@drawable/navigatiin_menu"/>
+    android:background="@drawable/ic_topbar">
+
+    <ImageView
+        android:id="@+id/imgNavMenu"
+        android:layout_width="@dimen/small_icon_size"
+        android:layout_height="@dimen/small_icon_size"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/margin_5"
+        android:layout_marginTop="@dimen/size2"
+        app:srcCompat="@drawable/navigatiin_menu" />
 
 </RelativeLayout>

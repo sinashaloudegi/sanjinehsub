@@ -4,8 +4,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -26,14 +28,30 @@ public class UpdateCheck {
         this.context = context;
     }
 
+    private boolean isPackageInstalled(Context context) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            pm.getPackageInfo("com.farsitel.bazaar", PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+
+        }
+    }
+
     public void initService() {
-        Log.i(TAG, "initService()");
-        connection = new UpdateServiceConnection();
-        Intent i = new Intent(
-                "com.farsitel.bazaar.service.UpdateCheckService.BIND");
-        i.setPackage("com.farsitel.bazaar");
-        boolean ret = context.bindService(i, connection, Context.BIND_AUTO_CREATE);
-        Log.d(TAG, "initService() bound value: " + ret);
+
+        if (isPackageInstalled(context)) {
+            Log.i(TAG, "initService()");
+            connection = new UpdateServiceConnection();
+            Intent i = new Intent(
+                    "com.farsitel.bazaar.service.UpdateCheckService.BIND");
+            i.setPackage("com.farsitel.bazaar");
+            boolean ret = context.bindService(i, connection, Context.BIND_AUTO_CREATE);
+            Log.d(TAG, "initService() bound value: " + ret);
+        } else {
+            broadCastVersion(-1);
+        }
     }
 
     /**
@@ -60,8 +78,8 @@ public class UpdateCheck {
                     .asInterface(boundService);
             try {
                 long vCode = service.getVersionCode("ir.iconish.sanjinehsub");
-    /*    Toast.makeText(context, "Version Code:" + vCode,
-          Toast.LENGTH_LONG).show();*/
+                Toast.makeText(context, "Version Code:" + vCode,
+                        Toast.LENGTH_LONG).show();
 
                 broadCastVersion(vCode);
             } catch (Exception e) {

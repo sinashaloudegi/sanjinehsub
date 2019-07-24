@@ -35,26 +35,6 @@ public class AppConfigApi {
     }
 
 
-    @NonNull
-    public AppConfig parseJson(@NonNull JSONObject jsonObject) {
-        AppConfig appConfig = new AppConfig();
-
-        try {
-            int marketEnumId = jsonObject.getInt("marketEnumId");
-            int timerDuration = jsonObject.getInt("timerDuration");
-            String marketKey = jsonObject.getString("marketKey");
-
-            appConfig.setMarketEnumId(marketEnumId);
-            appConfig.setTimerDuration(timerDuration);
-            appConfig.setMarketKey(marketKey);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return appConfig;
-    }
-
-
     public void callConfigApi(@NonNull final VolleyCallback volleyCallback) {
 
 
@@ -96,7 +76,6 @@ public class AppConfigApi {
 
                 volleyCallback.onServerError();
 
-                return;
             }
 
 
@@ -133,5 +112,22 @@ public class AppConfigApi {
 
     }
 
+    @NonNull
+    public AppConfig parseJson(@NonNull JSONObject jsonObject) {
+        AppConfig appConfig = new AppConfig();
 
+        try {
+            int marketEnumId = jsonObject.getInt("marketEnumId");
+            int timerDuration = jsonObject.getInt("timerDuration");
+            String marketKey = jsonObject.getString("marketKey");
+
+            appConfig.setMarketEnumId(marketEnumId);
+            appConfig.setTimerDuration(timerDuration);
+            appConfig.setMarketKey(marketKey);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return appConfig;
+    }
 }

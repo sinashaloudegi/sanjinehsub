@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,18 +52,16 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        Log.d(TAG, "onCreate: Splash");
+
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         initFirebase();
 
+/*
 
-        Log.d(TAG, "onCreate: ");
-    /*
-      String reqToken=  "eyJhbGciOiJIUzI1NiJ9   .eyJzdWIiOiIxOTExMDUwODA2NDEzMjI1IiwiaWNvbkNyZWRpdCI6IjE5MTEwNTA4MDY0MTMyMjUiLCJpYXQiOjE1NTc1NDU4MDF9.DEFEycDW90S9J5ZobgPGAnVZ-NR_A3FYoO7obsLziNw";
-        goToNativeReportActivity(reqToken);
-    */
+        String reqToken = "eyJhbGciOiJIUzI1NiJ9   .eyJzdWIiOiIxOTExMDUwODA2NDEzMjI1IiwiaWNvbkNyZWRpdCI6IjE5MTEwNTA4MDY0MTMyMjUiLCJpYXQiOjE1NTc1NDU4MDF9.DEFEycDW90S9J5ZobgPGAnVZ-NR_A3FYoO7obsLziNw";
+        goToNativeReportActivity(reqToken);*/
 
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -73,16 +70,8 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
         StrictMode.setThreadPolicy(policy);
         ((AppController) getApplication()).getAppComponent().inject(this);
 
-
         attachViewModel();
         appConfigViewModel.callAppConfigViewModel();
-    }
-
-    private void goToNativeReportActivity(String reqToken) {
-        Intent intent = new Intent(this, ReportActivity.class);
-        intent.putExtra("reqToken", reqToken);
-        startActivity(intent);
-        finish();
 
 
     }
@@ -105,24 +94,11 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
     }
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        try {
-            updateCheck.releaseService();
-            unregisterReceiver(broadcastReceiver);
-        } catch (Exception ignored) {
-
-        }
-
-    }
-
     private void messageReciver() {
+
         IntentFilter filter = new IntentFilter();
 
         filter.addAction("versionCode");
-
 
         broadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -224,4 +200,19 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
 
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        try {
+            updateCheck.releaseService();
+            unregisterReceiver(broadcastReceiver);
+        } catch (Exception ignored) {
+
+        }
+
+    }
+
+
 }

@@ -21,73 +21,67 @@ public class CheckCafeBazaarLogin {
     @Nullable
     LoginCheckServiceConnection connection;
 
-    @Nullable
-    SharedPreferences pref = null ;
-    @Nullable
-    SharedPreferences.Editor editor = null ;
-
-  private static final String TAG = "LoginCheck";
-
-Context context;
-  public CheckCafeBazaarLogin(Context context){
-
-this.context=context;
-
-  }
-
-
-
-
-
-  public void initService() {
-    connection = new LoginCheckServiceConnection();
-    Intent i = new Intent("com.farsitel.bazaar.service.LoginCheckService.BIND");
-    i.setPackage("com.farsitel.bazaar");
-    boolean ret = context.bindService(i, connection, Context.BIND_AUTO_CREATE);
-  }
-
-
-  public void releaseService() {
-    context.unbindService(connection);
-    connection = null;
-  }
-
-
-  public class LoginCheckServiceConnection implements ServiceConnection {
-
     private static final String TAG = "LoginCheck";
+    @Nullable
+    SharedPreferences pref = null;
+    @Nullable
+    SharedPreferences.Editor editor = null;
+    Context context;
 
-      @Override
-      public void onServiceConnected(ComponentName name, IBinder boundService) {
-          service = ILoginCheckService.Stub.asInterface(boundService);
+    public CheckCafeBazaarLogin(Context context) {
 
-          try {
-              boolean isLoggedIn = service.isLoggedIn();
-              //Log.e("Test","isLoggedIn" + isLoggedIn);
+        this.context = context;
 
-              broadCastCheckBazaarLogin(isLoggedIn);
-
-
-          } catch (Exception e) {
-              e.printStackTrace();
-          }
-
-      }
-
-      @Override
-      public void onServiceDisconnected(ComponentName name) {
-          service = null;
-          //Log.e("Test", "onServiceDisconnected(): Disconnected");
-      }
-  }
+    }
 
 
-  private void broadCastCheckBazaarLogin(boolean versionCode){
+    public void initService() {
+        connection = new LoginCheckServiceConnection();
+        Intent i = new Intent("com.farsitel.bazaar.service.LoginCheckService.BIND");
+        i.setPackage("com.farsitel.bazaar");
+        boolean ret = context.bindService(i, connection, Context.BIND_AUTO_CREATE);
+    }
 
-    Intent intent = new Intent("checkbazaarlogin");
-    intent.putExtra("checkbazaarlogin", versionCode);
-    context.sendBroadcast(intent);
 
-  }
+    public void releaseService() {
+        context.unbindService(connection);
+        connection = null;
+    }
+
+    private void broadCastCheckBazaarLogin(boolean isLogin) {
+
+        Intent intent = new Intent("checkbazaarlogin");
+        intent.putExtra("checkbazaarlogin", isLogin);
+        context.sendBroadcast(intent);
+
+    }
+
+    public class LoginCheckServiceConnection implements ServiceConnection {
+
+        private static final String TAG = "LoginCheck";
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder boundService) {
+            service = ILoginCheckService.Stub.asInterface(boundService);
+
+            try {
+                boolean isLoggedIn = service.isLoggedIn();
+                //Log.e("Test","isLoggedIn" + isLoggedIn);
+
+                broadCastCheckBazaarLogin(isLoggedIn);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            service = null;
+            //Log.e("Test", "onServiceDisconnected(): Disconnected");
+        }
+    }
 
 }
