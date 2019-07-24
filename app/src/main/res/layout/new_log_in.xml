@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.androi  d.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/layout_actvitiy_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:gravity="center|bottom"
+        android:orientation="vertical"
+        tools:context=".ui.activity.LoginActivity">
+
+
+        <ImageView
+            android:id="@+id/img_sanjineh_logo"
+            android:layout_width="180dp"
+            android:layout_height="131dp"
+            android:contentDescription="sanjineh_logo"
+            app:srcCompat="@drawable/sanjineh_logo" />
+
+        <ImageView
+            android:id="@+id/img_sanjineh_login_logo"
+            android:layout_width="180dp"
+            android:layout_height="131dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:contentDescription="sanjineh_login"
+            app:srcCompat="@drawable/login_illustration" />
+
+        <TextView
+            android:id="@+id/enter_login_txt"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:text="@string/enter_sanjineh"
+            android:textColor="#263c3b"
+            android:textSize="20sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_phone_text"
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/mobile_number_hint"
+            android:inputType="phone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_txt_mobile_number_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:textAlignment="center" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_chk_rules"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="end"
+            android:orientation="horizontal"
+            tools:targetApi="jelly_bean_mr1">
+
+
+            <TextView
+                android:id="@+id/txt_accept_rules"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="6dp"
+                android:text="@string/accept_it"
+                android:textSize="12sp" />
+
+
+            <FrameLayout
+                android:id="@+id/layout_check_rule"
+                android:layout_width="28dp"
+                android:layout_height="28dp">
+
+                <ImageView
+                    android:id="@+id/check_box_blank"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="check_box_blank"
+                    android:src="@drawable/check_box_blank" />
+
+                <ImageView
+                    android:id="@+id/check_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="check_box"
+                    android:src="@drawable/check_box"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_enter_login"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="280dp"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom"
+                android:enabled="false"
+                android:imeOptions="actionSend|flagNoEnterAction"
+                android:text="@string/login_enter"
+                android:textColor="@color/white" />
+
+            <ProgressBar
+                android:id="@+id/prg_login"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="invisible" />
+        </FrameLayout>
+    </LinearLayout>
+
+
+</ScrollView>

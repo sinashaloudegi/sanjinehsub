@@ -7,7 +7,6 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -50,6 +49,7 @@ public class UpdateCheck {
             boolean ret = context.bindService(i, connection, Context.BIND_AUTO_CREATE);
             Log.d(TAG, "initService() bound value: " + ret);
         } else {
+            //if cafeBazaar app is not installed, return -1 as version code
             broadCastVersion(-1);
         }
     }
@@ -78,8 +78,8 @@ public class UpdateCheck {
                     .asInterface(boundService);
             try {
                 long vCode = service.getVersionCode("ir.iconish.sanjinehsub");
-                Toast.makeText(context, "Version Code:" + vCode,
-                        Toast.LENGTH_LONG).show();
+             /*   Toast.makeText(context, "Version Code:" + vCode,
+                        Toast.LENGTH_LONG).show();*/
 
                 broadCastVersion(vCode);
             } catch (Exception e) {
