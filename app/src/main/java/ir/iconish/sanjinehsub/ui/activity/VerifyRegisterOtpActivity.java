@@ -96,11 +96,11 @@ public class VerifyRegisterOtpActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.imgBack)
+    /*@OnClick(R.id.imgBack)
     public void imgBackAction() {
         ActivityNavigationHelper.navigateToActivity(this, LoginActivity.class, true);
 
-    }
+    }*/
 
     private void startTimer() {
         // long timerDuration=Long.parseLong(getString(R.string.timer_start_value));

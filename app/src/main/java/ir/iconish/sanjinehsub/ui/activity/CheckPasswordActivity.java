@@ -10,8 +10,8 @@ import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -81,9 +81,10 @@ public class CheckPasswordActivity extends AppCompatActivity {
 
         ClickableSpan onRuleClicked = new ClickableSpan() {
             @Override
-            public void onClick(View view) {
-                // TODO: 7/22/2019 link to forget password activity
-                Toast.makeText(CheckPasswordActivity.this, "forget", Toast.LENGTH_SHORT).show();
+            public void onClick(@NonNull View view) {
+                clearPassword();
+                startActivity(new Intent(CheckPasswordActivity.this, ForgetPasswordActivity.class));
+                finish();
             }
         };
         spannableString.setSpan(red, 33, 38, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -92,12 +93,6 @@ public class CheckPasswordActivity extends AppCompatActivity {
         txtForgetPassword.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    @Optional
-    @OnClick(R.id.imgBack)
-    public void imgBackAction() {
-        ActivityNavigationHelper.navigateToActivity(this, LoginActivity.class, true);
-
-    }
 
     @Optional
     @OnClick(R.id.btnEnter)
@@ -115,14 +110,6 @@ public class CheckPasswordActivity extends AppCompatActivity {
 
         checkPassword(password);
 
-    }
-
-    @Optional
-    @OnClick(R.id.txtForgetPassword)
-    public void txtForgetPasswordAction() {
-        clearPassword();
-        startActivity(new Intent(this, ForgetPasswordActivity.class));
-        finish();
     }
 
 

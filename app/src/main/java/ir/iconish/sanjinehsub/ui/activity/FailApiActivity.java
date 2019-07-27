@@ -25,7 +25,7 @@ import ir.iconish.sanjinehsub.util.ButtonHelper;
 
 public class FailApiActivity extends AppCompatActivity {
 
-String failCause;
+    String failCause;
 
 
     @Nullable
@@ -48,142 +48,123 @@ String failCause;
     ProgressBar progressBar;
 
 
-
-
-
-
-  public String getFailCause() {
-    return failCause;
-  }
-
-  public void setFailCause(String failCause) {
-    this.failCause = failCause;
-  }
-
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_fail_api);
-    AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-
-    ButterKnife.bind(this);
-
-    failCause=getIntent().getStringExtra("failCause");
-
-showCorrectData();
-
-  }
-
-
-
-  private void showCorrectData(){
-    if(failCause.equals("ServerError")){
-
-
-      imageViewFail.setImageDrawable(getResources().getDrawable(R.drawable.fail_api_icon));
-      textMessage.setText(getText(R.string.no_server_connection));
-    }
-    else if(failCause.equals("TimeOutError")){
-      imageViewFail.setImageDrawable(getResources().getDrawable(R.drawable.fail_api_icon));
-      textMessage.setText(getText(R.string.no_server_connection));
-    }
-    else if(failCause.equals("ClientNetworkError")){
-imageViewFail.setImageDrawable(getResources().getDrawable(R.drawable.no_connection_error_icon));
-      textMessage.setText(getText(R.string.no_internet));
+    public String getFailCause() {
+        return failCause;
     }
 
- else if(failCause.equals("ApiError")){
-imageViewFail.setImageDrawable(getResources().getDrawable(R.drawable.fail_api_icon));
-      textMessage.setText(getText(R.string.no_server_connection));
+    public void setFailCause(String failCause) {
+        this.failCause = failCause;
     }
 
 
-  }
-  @OnClick(R.id.btnRety)
-  public void showAllConfirm(View view) {
-    progressBar.setVisibility(View.VISIBLE);
-    ButtonHelper.toggleButtonStatus(btnRetry,false);
-checkInternet();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_fail_api);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-  }
+        ButterKnife.bind(this);
 
-private void checkInternet(){
-isInternetAvailable();
+        failCause = getIntent().getStringExtra("failCause");
+        showCorrectData();
 
-}
-
-
-private void doInternetAvialbaleAction(){
+    }
 
 
-
- runOnUiThread(()->{
-    progressBar.setVisibility(View.INVISIBLE);
-    ButtonHelper.toggleButtonStatus(btnRetry,true);  });
-
-finish();
-
-
-
-
-  }
-
-
-
-
-private void doFailInternetAvialbaleAction(){
-
- runOnUiThread(()->{
-
-    progressBar.setVisibility(View.INVISIBLE);
-    ButtonHelper.toggleButtonStatus(btnRetry,true);  });
-
-}
-
-
-
-
-  public void isInternetAvailable() {
-
-
-
-    new Thread(new Runnable() {
-      @Override
-      public void run() {
-
-
-
-        String host = "www.google.com";
-        int port = 80;
-        Socket socket = new Socket();
-
-        try {
-          socket.connect(new InetSocketAddress(host, port), 10000);
-          socket.close();
-
-
-
-          doInternetAvialbaleAction();
-        } catch (Exception e) {
-          try {
-            socket.close();
-          } catch (IOException es) {
-
-          }
-          doFailInternetAvialbaleAction();
-
+    private void showCorrectData() {
+        switch (failCause) {
+            case "ServerError":
+                imageViewFail.setImageDrawable(getResources().getDrawable(R.drawable.fail_api_icon));
+                textMessage.setText(getText(R.string.no_server_connection));
+                break;
+            case "TimeOutError":
+                imageViewFail.setImageDrawable(getResources().getDrawable(R.drawable.fail_api_icon));
+                textMessage.setText(getText(R.string.no_server_connection));
+                break;
+            case "ClientNetworkError":
+                imageViewFail.setImageDrawable(getResources().getDrawable(R.drawable.no_connection_error_icon));
+                textMessage.setText(getText(R.string.no_internet));
+                break;
+            case "ApiError":
+                imageViewFail.setImageDrawable(getResources().getDrawable(R.drawable.fail_api_icon));
+                textMessage.setText(getText(R.string.no_server_connection));
+                break;
         }
 
-      }
-    }).start();
+
+    }
+
+    @OnClick(R.id.btnRety)
+    public void showAllConfirm(View view) {
+        progressBar.setVisibility(View.VISIBLE);
+        ButtonHelper.toggleButtonStatus(btnRetry, false);
+        checkInternet();
+
+    }
+
+    private void checkInternet() {
+        isInternetAvailable();
+
+    }
 
 
-  }
+    private void doInternetAvialbaleAction() {
 
 
-  @Override
-  public void onBackPressed() {
-    //DialogHelper.sureExit(this);
-  }
+        runOnUiThread(() -> {
+            progressBar.setVisibility(View.INVISIBLE);
+            ButtonHelper.toggleButtonStatus(btnRetry, true);
+        });
+
+        finish();
+
+
+    }
+
+
+    private void doFailInternetAvialbaleAction() {
+
+        runOnUiThread(() -> {
+
+            progressBar.setVisibility(View.INVISIBLE);
+            ButtonHelper.toggleButtonStatus(btnRetry, true);
+        });
+
+    }
+
+
+    public void isInternetAvailable() {
+
+
+        new Thread(() -> {
+            String host = "www.google.com";
+            int port = 80;
+            Socket socket = new Socket();
+
+            try {
+                socket.connect(new InetSocketAddress(host, port), 10000);
+                socket.close();
+
+
+                doInternetAvialbaleAction();
+            } catch (Exception e) {
+                try {
+                    socket.close();
+                } catch (IOException ignored) {
+
+                }
+                doFailInternetAvialbaleAction();
+
+            }
+
+        }).start();
+
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        //DialogHelper.sureExit(this);
+    }
 }

@@ -139,12 +139,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (isMobileNumberValid(charSequence.toString())) {
-                    btnEnterLogin.setEnabled(true);
                     mobileNumber = mobileNumberLoginEditText.getText().toString();
-                } else {
-                    btnEnterLogin.setEnabled(false);
-                }
 
             }
 

@@ -53,8 +53,6 @@ public class ForgetPassworReciverActivity extends AppCompatActivity {
     ProgressBar prg;
 
 
-
-
     @Inject
     CheckPasswordViewModel checkPasswordViewModel;
 
@@ -78,44 +76,42 @@ public class ForgetPassworReciverActivity extends AppCompatActivity {
         startTimer();
 
 
-
-
-
     }
 
     private void startTimer() {
 //long timer=Long.parseLong(getString(R.string.timer_start_value));
-        int timerDuration=checkPasswordViewModel.getTimerDuration();
+        int timerDuration = checkPasswordViewModel.getTimerDuration();
 
-        countDownTimer=    new CountDownTimer(timerDuration, 1000) {
+        countDownTimer = new CountDownTimer(timerDuration, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
-                if(millisUntilFinished<10000){
+                if (millisUntilFinished < 10000) {
                     txtTimer.setTextColor(Color.RED);
                 }
-                txtTimer.setText( millisUntilFinished / 1000+"" );
+                txtTimer.setText(millisUntilFinished / 1000 + "");
 
             }
 
             @Override
             public void onFinish() {
-                txtTimer.setText( "0");
-btnEnter.setVisibility(View.INVISIBLE);
-btnRetry.setVisibility(View.VISIBLE);
+                txtTimer.setText("0");
+                btnEnter.setVisibility(View.INVISIBLE);
+                btnRetry.setVisibility(View.VISIBLE);
 
             }
 
         }.start();
 
     }
+
     @OnClick(R.id.btnEnter)
     public void btnEnterAction() {
 
         txtAlert.setVisibility(View.INVISIBLE);
-        String password=  edtPassword.getText().toString()  ;
+        String password = edtPassword.getText().toString();
 
-        if(password.length()<4){
+        if (password.length() < 4) {
             txtAlert.setText(getString(R.string.password_max_min));
             txtAlert.setVisibility(View.VISIBLE);
             return;
@@ -126,16 +122,13 @@ btnRetry.setVisibility(View.VISIBLE);
     }
 
 
-
-
     private void receiveCodeAction(String code) {
         try {
             code = code.replaceAll("[^0-9]", "");
             edtPassword.setText(code);
 
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
         }
 
     }
@@ -143,7 +136,7 @@ btnRetry.setVisibility(View.VISIBLE);
 
     @OnClick(R.id.imgBack)
     public void imgBackAction() {
-        ActivityNavigationHelper.navigateToActivity(this,ForgetPasswordActivity.class,true);
+        ActivityNavigationHelper.navigateToActivity(this, ForgetPasswordActivity.class, true);
 
     }
 
@@ -155,13 +148,10 @@ btnRetry.setVisibility(View.VISIBLE);
     }
 
 
-
-
     @OnClick(R.id.btnRetry)
     public void btnRetryAction() {
-ActivityNavigationHelper.navigateToActivity(this,ForgetPasswordActivity.class,true);
+        ActivityNavigationHelper.navigateToActivity(this, ForgetPasswordActivity.class, true);
     }
-
 
 
     private void attachViewModel() {
@@ -169,11 +159,10 @@ ActivityNavigationHelper.navigateToActivity(this,ForgetPasswordActivity.class,tr
                     stopWating();
 
 
-                    if(passwordValidationResponse.getRespobseStatusCode()==1000){
+                    if (passwordValidationResponse.getRespobseStatusCode() == 1000) {
 
-                        ActivityNavigationHelper.navigateToActivity(this,MainActivity.class,true);
-                    }
-                    else {
+                        ActivityNavigationHelper.navigateToActivity(this, MainActivity.class, true);
+                    } else {
 
                         txtAlert.setText(passwordValidationResponse.getDescryptions());
                         txtAlert.setVisibility(View.VISIBLE);
@@ -184,9 +173,10 @@ ActivityNavigationHelper.navigateToActivity(this,ForgetPasswordActivity.class,tr
                 }
         );
 
-        checkPasswordViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {});
+        checkPasswordViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+        });
 
-        checkPasswordViewModel.getApiErrorLiveData().observe(this, volleyError ->{
+        checkPasswordViewModel.getApiErrorLiveData().observe(this, volleyError -> {
             goToFailApiPage("ApiError");
 
         });
@@ -209,30 +199,34 @@ ActivityNavigationHelper.navigateToActivity(this,ForgetPasswordActivity.class,tr
         });
 
 
-        checkPasswordViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError ->{} );
-        checkPasswordViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError ->{} );
+        checkPasswordViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+        });
+        checkPasswordViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
 
     }
 
 
-    private void showWating(){
+    private void showWating() {
         prg.setVisibility(View.VISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(btnEnter,false);
+        ButtonHelper.toggleAppCompatButtonStatus(btnEnter, false);
     }
-    private void stopWating(){
+
+    private void stopWating() {
         prg.setVisibility(View.INVISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(btnEnter,true);
+        ButtonHelper.toggleAppCompatButtonStatus(btnEnter, true);
     }
 
-    private void goToFailApiPage(String failCause){
+    private void goToFailApiPage(String failCause) {
 
-        Intent intent=new Intent(this,FailApiActivity.class);
-        intent.putExtra("failCause",failCause);
+        Intent intent = new Intent(this, FailApiActivity.class);
+        intent.putExtra("failCause", failCause);
         startActivity(intent);
         finish();
 
     }
-    private void checkPassword(String password){
+
+    private void checkPassword(String password) {
         showWating();
         checkPasswordViewModel.callCheckPasswordViewModel(password);
     }
