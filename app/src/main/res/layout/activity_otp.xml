@@ -1,120 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- TODO: Update blank fragment layout -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:orientation="vertical">
+    android:background="@color/white">
 
 
     <ImageView
-        android:id="@+id/img_sanjineh_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="140dp"
-        android:layout_gravity="center"
-        android:contentDescription="sanjineh_logo"
+
+        android:id="@+id/imgLogoVerifyOthers"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline18"
+        app:layout_constraintDimensionRatio="16:4.5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline12"
+        app:layout_constraintStart_toStartOf="@+id/guideline11"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/sanjineh_logo" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+
+    <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+
         android:layout_marginTop="16dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:gravity="end"
-            android:text="09123782108"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginLeft="4dp"
-            android:gravity="center"
-            android:text="کد فعالسازی برای شماره"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text=" پیامک شده است" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:padding="@dimen/padding_5"
+        app:layout_constraintBottom_toTopOf="@+id/guideline18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline12"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.01999998"
+        app:srcCompat="@drawable/back" />
 
     <TextView
         android:id="@+id/txtTimer"
-        android:layout_width="match_parent"
-        android:layout_height="73dp"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="@dimen/size100"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="@string/timer_start_value"
         android:textColor="@color/black"
-        android:textSize="@dimen/login_steps_text_size" />
+        android:textSize="@dimen/login_steps_text_size"
+        app:layout_constraintEnd_toStartOf="@+id/guideline12"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="@+id/guideline11"
+        app:layout_constraintTop_toBottomOf="@+id/txt_code_sent" />
 
     <TextView
         android:id="@+id/txtAlert"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin10"
+        android:layout_marginTop="28dp"
+
         android:gravity="right"
         android:text="@string/force_enter_password"
         android:textColor="@color/alert_incorrect_entry"
-
         android:textSize="@dimen/login_steps_text_size"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/guideline12"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/guideline11"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
-    <EditText
-        android:id="@+id/edtVerifyCode"
-        android:layout_width="match_parent"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/LoginTextInputLayoutStyle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:backgroundTint="@color/white"
-        android:gravity="center"
-        android:hint="@string/activision_code"
-        android:inputType="phone"
-        android:maxLength="4"
-        android:text="5064"
-        android:textColor="@color/white"
-        android:textColorHint="@color/darker_gray" />
+
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="124dp"
+        android:hint="کد فعالسازی"
+        app:layout_constraintBottom_toTopOf="@+id/btnEnter"
+        app:layout_constraintEnd_toStartOf="@+id/guideline12"
+        app:layout_constraintStart_toStartOf="@+id/guideline11"
+        app:layout_constraintTop_toBottomOf="@+id/txtTimer">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtVerifyCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ProgressBar
         android:id="@+id/prg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/size50"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/btnEnter"
+        app:layout_constraintEnd_toEndOf="@+id/btnEnter"
+        app:layout_constraintStart_toStartOf="@+id/btnEnter"
+        app:layout_constraintTop_toTopOf="@+id/btnEnter" />
 
-    <androidx.appcompat.widget.AppCompatButton
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEnter"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorAccent"
+        android:text="ورود"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline12"
+        app:layout_constraintStart_toStartOf="@+id/guideline11" />
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/enter"
-        android:textColor="@color/dark_blue"
-        android:textSize="@dimen/button_text_size" />
 
-    <androidx.appcompat.widget.AppCompatButton
-
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRetry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/button_margin_button"
-        android:text="@string/retry_verfication"
-        android:textColor="@color/dark_blue"
-        android:textSize="@dimen/button_text_size"
-        android:visibility="invisible" />
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorAccent"
+        android:text="تلاش مجدد"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline12"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline11" />
 
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_code_sent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:gravity="center"
+        android:text="کد فعالسازی برای شماره 09123782108  پیامک شده است"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline12"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline11"
+        app:layout_constraintTop_toBottomOf="@+id/imgLogoVerifyOthers" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="40dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="40dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="120dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

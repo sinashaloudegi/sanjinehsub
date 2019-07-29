@@ -31,22 +31,22 @@ public class SetPasswordApi {
 
     @Inject
     public SetPasswordApi(AppController appController) {
-        this.appController=appController;
+        this.appController = appController;
     }
 
 
     @NonNull
     public PasswordValidationResponse parseJson(@NonNull JSONObject jsonObject) {
-        PasswordValidationResponse passwordValidationResponse=new PasswordValidationResponse();
+        PasswordValidationResponse passwordValidationResponse = new PasswordValidationResponse();
 
-      try {
-            JSONObject jsonObjectRoot=jsonObject.getJSONObject("responseStatus");
-          int statusCode=  jsonObjectRoot.getInt("value");
-                String descr=jsonObjectRoot.getString("descr");
+        try {
+            JSONObject jsonObjectRoot = jsonObject.getJSONObject("responseStatus");
+            int statusCode = jsonObjectRoot.getInt("value");
+            String descr = jsonObjectRoot.getString("descr");
 
 
-          passwordValidationResponse.setRespobseStatusCode(statusCode);
-          passwordValidationResponse.setDescryptions(descr);
+            passwordValidationResponse.setRespobseStatusCode(statusCode);
+            passwordValidationResponse.setDescryptions(descr);
 
 
         } catch (JSONException e) {
@@ -62,74 +62,62 @@ public class SetPasswordApi {
 
         String url = ConstantUrl.BASE_SECURITY + ConstantUrl.CHANGHE_PASSWORD;
 
-JSONObject jsonObject=new JSONObject();
+        JSONObject jsonObject = new JSONObject();
 
         try {
 
-            jsonObject.put("mobile",mobileNumber);
-            jsonObject.put("password",password);
-            jsonObject.put("oldPassword","1234");
-            jsonObject.put("channel",AppConstants.CHANNEL);
+            jsonObject.put("mobile", mobileNumber);
+            jsonObject.put("password", password);
+            jsonObject.put("oldPassword", "1234");
+            jsonObject.put("channel", AppConstants.CHANNEL);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                url,jsonObject,
+                url, jsonObject,
                 response -> {
 
 
+                    if (response != null) {
 
-                    if (response!=null){
+                        PasswordValidationResponse passwordValidationResponse = parseJson(response);
+                        volleyCallback.onSuccess(passwordValidationResponse);
 
-                        PasswordValidationResponse passwordValidationResponse=     parseJson(response);
-                   volleyCallback.onSuccess(passwordValidationResponse);
-
-                       // volleyCallback.onSuccess(visits);
+                        // volleyCallback.onSuccess(visits);
                     }
-
-
-
 
 
                 }, error -> {
-                   // Log.e("api error=",error.toString());
-                    if ((error instanceof NetworkError) || (error instanceof NoConnectionError) ) {
+            // Log.e("api error=",error.toString());
+            if ((error instanceof NetworkError) || (error instanceof NoConnectionError)) {
 
-                        volleyCallback.onClientNetworkError();
-
-
-
-                        return;
-                    }
-                    if (error instanceof TimeoutError){
-
-                        volleyCallback.onTimeOutError();
+                volleyCallback.onClientNetworkError();
 
 
-                        return;
-                    }
+                return;
+            }
+            if (error instanceof TimeoutError) {
+
+                volleyCallback.onTimeOutError();
 
 
+                return;
+            }
 
 
-                    if ((error instanceof ServerError)){
+            if ((error instanceof ServerError)) {
 
 
-                        volleyCallback.onServerError();
+                volleyCallback.onServerError();
 
-                        return;
-                    }
-
-
+                return;
+            }
 
 
+        }
 
-                }
-
-        )
-
-        {
+        ) {
             @Override
             public String getBodyContentType() {
                 return "application/json; charset=utf-8";
@@ -150,8 +138,6 @@ JSONObject jsonObject=new JSONObject();
         };
 
 
-
-
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
                 AppConstants.CLIENT_TIMEOUT,
 
@@ -159,10 +145,6 @@ JSONObject jsonObject=new JSONObject();
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         String tag_json_arry = "setPasswordApi";
         appController.addToRequestQueue(jsonObjReq, tag_json_arry);
-
-
-
-
 
 
     }

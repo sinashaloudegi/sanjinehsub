@@ -139,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    mobileNumber = mobileNumberLoginEditText.getText().toString();
+                mobileNumber = mobileNumberLoginEditText.getText().toString();
 
             }
 
@@ -180,11 +180,10 @@ public class LoginActivity extends AppCompatActivity {
                     stopWating();
 
             registerToChabok(user);
-
                     if (user.getResponseCodeEnum().getValue() == LoginStatusEnum.USER_EXIST.getValue()) {
                         ActivityNavigationHelper.navigateToActivity(this, CheckPasswordActivity.class, true);
                     } else if (user.getResponseCodeEnum().getValue() == LoginStatusEnum.USERISNEW.getValue()) {
-                        ActivityNavigationHelper.navigateToActivity(this, VerifyRegisterOtpActivity.class, true);
+                        ActivityNavigationHelper.navigateToActivityWithData(this, VerifyRegisterOtpActivity.class, true, "mobile", mobileNumber);
 
                     }
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +43,8 @@ public class VerifyRegisterOtpActivity extends AppCompatActivity {
     @BindView(R.id.txtAlert)
     TextView txtAlert;
 
+    static String mobileNumber;
+
 
     @Nullable
     @BindView(R.id.edtVerifyCode)
@@ -63,6 +66,9 @@ public class VerifyRegisterOtpActivity extends AppCompatActivity {
 
     @Inject
     VerifyRegisterOtpViewModel confirmRegisterViewModel;
+    @Nullable
+    @BindView(R.id.txt_code_sent)
+    TextView txtCodeSent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +78,22 @@ public class VerifyRegisterOtpActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
 
+
+        mobileNumber = this.getIntent().getExtras().getString("mobile");
+
+        codeSentStringBuilder();
         attachViewModel();
         startTimer();
 
 
+    }
+
+    private void codeSentStringBuilder() {
+        String str1 = "کد فعالسازی برای شماره";
+        String str2 = "پیامک شده است";
+        String result = String.format("%1$s %2$s \n %3$s", str1, mobileNumber, str2);
+        txtCodeSent.setText(result);
+        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -96,11 +114,11 @@ public class VerifyRegisterOtpActivity extends AppCompatActivity {
 
     }
 
-    /*@OnClick(R.id.imgBack)
+    @OnClick(R.id.imgBack)
     public void imgBackAction() {
         ActivityNavigationHelper.navigateToActivity(this, LoginActivity.class, true);
 
-    }*/
+    }
 
     private void startTimer() {
         // long timerDuration=Long.parseLong(getString(R.string.timer_start_value));
@@ -166,7 +184,7 @@ public class VerifyRegisterOtpActivity extends AppCompatActivity {
                     if (passwordValidationResponse.getRespobseStatusCode() == LoginStatusEnum.VERIFY_SUCCESS_AND_NEW.getValue()) {
 
 //ActivityNavigationHelper.navigateToActivity(this,SetPasswordActivity.class,true);
-                        ActivityNavigationHelper.navigateToActivity(this, MainActivity.class, true);
+                        ActivityNavigationHelper.navigateToActivity(this, SetPasswordActivity.class, true);
                     } else {
                         txtAlert.setText((LoginStatusEnum.fromValue(passwordValidationResponse.getRespobseStatusCode()).getDescr()));
                         txtAlert.setVisibility(View.VISIBLE);

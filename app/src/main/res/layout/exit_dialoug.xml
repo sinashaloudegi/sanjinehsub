@@ -48,26 +48,28 @@
             android:id="@+id/btn_yes_report"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="@dimen/padding_5"
+            android:layout_margin="@dimen/margin_8"
             android:layout_marginTop="@dimen/margin_10"
             android:layout_marginBottom="@dimen/margin_15"
+            android:layout_weight="1"
             android:background="@color/all_transparent"
+            android:padding="@dimen/padding_5"
             android:text="بله"
-            android:textColor="@color/bluish"/>
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btn_cancel_report"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="@dimen/padding_5"
-
-            android:background="@color/all_transparent"
-            android:text="خیر"
+            android:layout_margin="@dimen/margin_8"
             android:layout_marginTop="@dimen/margin_10"
             android:layout_marginBottom="@dimen/margin_15"
-            android:textColor="@color/red"/>
+
+            android:layout_weight="1"
+            android:background="@color/all_transparent"
+            android:padding="@dimen/padding_5"
+            android:text="خیر"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 </RelativeLayout>

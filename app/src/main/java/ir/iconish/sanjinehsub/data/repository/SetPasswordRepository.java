@@ -12,47 +12,49 @@ import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 
 
 public class SetPasswordRepository {
-   SetPasswordApi setPasswordApi;
+    SetPasswordApi setPasswordApi;
 
 
-SharedPreferencesManager sharedPreferencesManager;
+    SharedPreferencesManager sharedPreferencesManager;
 
-@Inject
+    @Inject
     public SetPasswordRepository(SetPasswordApi setPasswordApi, SharedPreferencesManager sharedPreferencesManager) {
 
-this.setPasswordApi=setPasswordApi;
-this.sharedPreferencesManager=sharedPreferencesManager;
+        this.setPasswordApi = setPasswordApi;
+        this.sharedPreferencesManager = sharedPreferencesManager;
     }
 
     public void callSetPasswordRepository(String password, @NonNull final VolleyCallback volleyCallback) {
-        setPasswordApi.callSetPasswordApi(password,sharedPreferencesManager.getMobileNumberValue(),new VolleyCallback() {
-        @Override
-        public   void onSuccess(Object o) {
-            PasswordValidationResponse passwordValidationResponse= (PasswordValidationResponse) o;
+        setPasswordApi.callSetPasswordApi(password, sharedPreferencesManager.getMobileNumberValue(), new VolleyCallback() {
+            @Override
+            public void onSuccess(Object o) {
+                PasswordValidationResponse passwordValidationResponse = (PasswordValidationResponse) o;
 
-if(passwordValidationResponse.getRespobseStatusCode()==9999){
-    sharedPreferencesManager.setPasswordValue(password);
-}
-            volleyCallback.onSuccess(o);
-        }
-        @Override
-        public void onFail(String volleyError) {
-            volleyCallback.onFail(volleyError);
-        }
+                if (passwordValidationResponse.getRespobseStatusCode() == 9999) {
+                    sharedPreferencesManager.setPasswordValue(password);
+                }
+                volleyCallback.onSuccess(o);
+            }
 
-        @Override
-        public void onServerError( ) {
-            volleyCallback.onServerError();
-        }
+            @Override
+            public void onFail(String volleyError) {
+                volleyCallback.onFail(volleyError);
+            }
 
-        @Override
-        public void onClientNetworkError() {
-            volleyCallback.onClientNetworkError();
-        }
-        @Override
-        public void onTimeOutError() {
-            volleyCallback.onTimeOutError();
-        }
+            @Override
+            public void onServerError() {
+                volleyCallback.onServerError();
+            }
+
+            @Override
+            public void onClientNetworkError() {
+                volleyCallback.onClientNetworkError();
+            }
+
+            @Override
+            public void onTimeOutError() {
+                volleyCallback.onTimeOutError();
+            }
 
             @Override
             public void onForbiden403(String volleyError) {
@@ -70,13 +72,13 @@ if(passwordValidationResponse.getRespobseStatusCode()==9999){
             }
 
             @Override
-        public void onAuthFailureError401(String volleyError) {
-            volleyCallback.onAuthFailureError401(volleyError);
-        }
-    });
+            public void onAuthFailureError401(String volleyError) {
+                volleyCallback.onAuthFailureError401(volleyError);
+            }
+        });
 
 
-}
+    }
 
 
 }

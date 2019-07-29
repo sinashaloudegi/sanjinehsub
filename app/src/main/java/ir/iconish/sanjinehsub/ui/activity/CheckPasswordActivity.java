@@ -37,16 +37,16 @@ public class CheckPasswordActivity extends AppCompatActivity {
     TextView txtForgetPassword;
 
     @Nullable
-    @BindView(R.id.btnEnter)
+    @BindView(R.id.btn_enter_login)
     AppCompatButton btnEnter;
 
     @Nullable
-    @BindView(R.id.prg)
+    @BindView(R.id.prg_login)
     ProgressBar prg;
 
 
     @Nullable
-    @BindView(R.id.txtAlert)
+    @BindView(R.id.txt_alert)
     TextView txtAlert;
 
 
@@ -95,7 +95,7 @@ public class CheckPasswordActivity extends AppCompatActivity {
 
 
     @Optional
-    @OnClick(R.id.btnEnter)
+    @OnClick(R.id.btn_enter_login)
     public void navMenuAction() {
 
 
