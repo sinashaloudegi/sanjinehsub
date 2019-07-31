@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_centerInParent="true"
-    android:paddingTop="@dimen/padding_3"
-    android:layout_marginRight="@dimen/padding_3"
     android:id="@+id/rootLayout"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_marginRight="@dimen/padding_3"
+    android:layout_margin="8dp"
+    android:paddingTop="@dimen/padding_3">
 
     <ImageView
-        android:layout_width="@dimen/design_navigation_icon_size"
-        android:layout_height="@dimen/design_navigation_icon_size"
         android:id="@+id/navItemIcon"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
         android:layout_alignParentRight="true"
-        app:srcCompat="@drawable/unknown_profile"
-        />
+
+        app:srcCompat="@drawable/unknown_profile" />
 
     <TextView
         android:id="@+id/textNavItem"
@@ -24,17 +24,16 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/margin5"
         android:layout_toLeftOf="@+id/navItemIcon"
-        android:textColor="@color/white"
-
+        android:textColor="#89898a"
         android:textSize="@dimen/navigation_text_size"
         android:textStyle="normal|bold" />
 
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/navItemIcon"
-        android:background="@color/white"
-        android:layout_marginTop="@dimen/size2"
-        android:layout_height="@dimen/sizehalf"></View>
+    <!--   <View
+           android:layout_width="wrap_content"
+           android:layout_height="@dimen/sizehalf"
+           android:layout_below="@+id/navItemIcon"
+           android:layout_marginTop="@dimen/size2"
+           android:background="#89898a"></View>-->
 
 </RelativeLayout>

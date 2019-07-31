@@ -197,27 +197,15 @@ public class VerifyRegisterOtpActivity extends AppCompatActivity {
         confirmRegisterViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
         });
 
-        confirmRegisterViewModel.getApiErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ApiError");
-
-        });
+        confirmRegisterViewModel.getApiErrorLiveData().observe(this, volleyError -> goToFailApiPage("ApiError"));
         confirmRegisterViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
 
-        {
-            goToFailApiPage("ServerError");
-
-        });
+                goToFailApiPage("ServerError"));
         confirmRegisterViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-                {
-                    goToFailApiPage("TimeOutError");
-                }
+                goToFailApiPage("TimeOutError")
 
         );
-        confirmRegisterViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ClientNetworkError");
-
-
-        });
+        confirmRegisterViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> goToFailApiPage("ClientNetworkError"));
 
 
         confirmRegisterViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {

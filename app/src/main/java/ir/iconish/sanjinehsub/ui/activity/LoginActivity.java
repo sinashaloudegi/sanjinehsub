@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -101,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
 
         ClickableSpan onRuleClicked = new ClickableSpan() {
             @Override
-            public void onClick(View view) {
+            public void onClick(@NonNull View view) {
                 ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/terms?from=android_cafebazar", LoginActivity.this, WebViewActivity.class);
                 Toast.makeText(LoginActivity.this, "Rules", Toast.LENGTH_SHORT).show();
             }
@@ -168,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         } else {
-            mobileNumberLoginEditText.setError(getResources().getString(R.string.mobile_not_valid));
+            mobileNumberLoginEditText.setError("شماره موبایل معتبر نیست");
         }
 
 

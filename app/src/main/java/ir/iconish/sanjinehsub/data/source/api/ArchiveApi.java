@@ -38,33 +38,6 @@ public class ArchiveApi {
     }
 
 
-    @NonNull
-    public List<Archive> parseJson(@NonNull JSONArray jsonArray) {
-        int jsonLength = jsonArray.length();
-        List<Archive> archiveList = new ArrayList<>(jsonLength);
-        for (int i = 0; i < jsonLength; i++) {
-            try {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String date = jsonObject.getString("reportDate");
-                String token = jsonObject.getString("token");
-                String downloadURL = "http://creditscore.iconish.ir/icredit/getcreditscorepdf/" + token + "/param";
-                String viewLink = "https://www.sanjineh.ir/report/" + token + "?from=android_cafebazar";
-                Archive archive = new Archive();
-                archive.setDownloadLink(downloadURL);
-                archive.setViewLink(viewLink);
-                archive.setReportDate(date);
-                archive.setReportToken(token);
-                archiveList.add(i, archive);
-            } catch (JSONException e) {
-                //Log.e("error",e.toString());
-                e.printStackTrace();
-            }
-        }
-
-        return archiveList;
-    }
-
-
     public void callArchivedApi(String mobileNumber, @NonNull final String token, @NonNull final VolleyCallback volleyCallback) {
 
 
@@ -106,7 +79,6 @@ public class ArchiveApi {
 
                 volleyCallback.onServerError();
 
-                return;
             }
 
 
@@ -121,7 +93,7 @@ public class ArchiveApi {
             @NonNull
             @Override
             public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 // Log.e("tokenH=",token);
                 params.put("appid", AppConstants.APP_ID);
                 params.put("Authorization", token);
@@ -144,5 +116,29 @@ public class ArchiveApi {
 
     }
 
+    @NonNull
+    public List<Archive> parseJson(@NonNull JSONArray jsonArray) {
+        int jsonLength = jsonArray.length();
+        List<Archive> archiveList = new ArrayList<>(jsonLength);
+        for (int i = 0; i < jsonLength; i++) {
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String date = jsonObject.getString("reportDate");
+                String token = jsonObject.getString("token");
+                String downloadURL = "http://creditscore.iconish.ir/icredit/getcreditscorepdf/" + token + "/param";
+                String viewLink = "https://www.sanjineh.ir/report/" + token + "?from=android_cafebazar";
+                Archive archive = new Archive();
+                archive.setDownloadLink(downloadURL);
+                archive.setViewLink(viewLink);
+                archive.setReportDate(date);
+                archive.setReportToken(token);
+                archiveList.add(i, archive);
+            } catch (JSONException e) {
+                //Log.e("error",e.toString());
+                e.printStackTrace();
+            }
+        }
 
+        return archiveList;
+    }
 }

@@ -53,6 +53,7 @@ public class ArchiveActivity extends AppCompatActivity implements ArchiveRecycle
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_archive);
+
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         ButterKnife.bind(this);
@@ -102,34 +103,21 @@ public class ArchiveActivity extends AppCompatActivity implements ArchiveRecycle
             setDataOnRecycler(archives);
 
             swipeRefreshLayout.setRefreshing(false);
-            // Log.e("list",archives.toString());
                 }
         );
 
         archiveViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
         });
 
-        archiveViewModel.getApiErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ApiError");
-
-        });
+        archiveViewModel.getApiErrorLiveData().observe(this, volleyError -> goToFailApiPage("ApiError"));
         archiveViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
 
-        {
-            goToFailApiPage("ServerError");
-
-        });
+                goToFailApiPage("ServerError"));
         archiveViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-                {
-                    goToFailApiPage("TimeOutError");
-                }
+                goToFailApiPage("TimeOutError")
 
         );
-        archiveViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ClientNetworkError");
-
-
-        });
+        archiveViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> goToFailApiPage("ClientNetworkError"));
 
 
         archiveViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {

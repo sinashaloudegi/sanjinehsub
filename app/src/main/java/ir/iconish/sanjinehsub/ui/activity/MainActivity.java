@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -18,8 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     @BindView(R.id.recNavigation)
     RecyclerView recyclerNavigation;
 
+    @Nullable
+    @BindView(R.id.txt_user_name)
+    TextView txtUserName;
 
     @Nullable
     @BindView(R.id.imgNavMenu)
@@ -81,7 +83,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
 
+
         initNavigation();
+
+        txtUserName.setText("کاربر مهمان");
+
 
 /*
         FirebaseInstanceId.getInstance().getInstanceId()
@@ -103,9 +109,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
                     }
                 });*/
 
-        Logger.addLogAdapter(new AndroidLogAdapter());
 
-        Logger.d("MainActivity");
     }
 
 
@@ -124,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
         startActivity(new Intent(this, cls));
     }
+
 
     @OnClick(R.id.rootOtherScore)
     public void rootOtherScoreAction() {
@@ -199,22 +204,22 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
 
         NavigationItem n2 = new NavigationItem();
-        n2.setTitle(getString(R.string.nav_profile));
-        n2.setDrawbleId(R.drawable.ic_person_nav);
+        n2.setTitle("خانه");
+        n2.setDrawbleId(R.drawable.home);
         n2.setId(2);
         navigationItems.add(0, n2);
 
 
         NavigationItem n3 = new NavigationItem();
-        n3.setTitle(getString(R.string.nav_archive));
-        n3.setDrawbleId(R.drawable.ic_archive_nav);
+        n3.setTitle("باشگاه خوش حسابان");
+        n3.setDrawbleId(R.drawable.khoshhesaban_gray);
         n3.setId(3);
         navigationItems.add(1, n3);
 
 
         NavigationItem n4 = new NavigationItem();
-        n4.setTitle(getString(R.string.nav_about));
-        n4.setDrawbleId(R.drawable.ic_info_nav);
+        n4.setTitle("آرشیو گزارش ها");
+        n4.setDrawbleId(R.drawable.archive);
         n4.setId(4);
         navigationItems.add(2, n4);
 
@@ -225,29 +230,26 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         navigationItems.add(2, n9);*/
 
         NavigationItem n5 = new NavigationItem();
-        n5.setTitle(getString(R.string.nav_report));
-        n5.setDrawbleId(R.drawable.ic_erro_report);
+        n5.setTitle("آموزش بهبود رتبه اعتباری");
+        n5.setDrawbleId(R.drawable.help_credit_score);
         n5.setId(5);
         navigationItems.add(3, n5);
 
 
         NavigationItem n6 = new NavigationItem();
-        n6.setTitle(getString(R.string.nav_rules));
-        n6.setDrawbleId(R.drawable.ic_rule_nav);
+        n6.setTitle("درباره ما");
         n6.setId(6);
         navigationItems.add(4, n6);
 
 
         NavigationItem n7 = new NavigationItem();
-        n7.setTitle(getString(R.string.nav_exit_account));
-        n7.setDrawbleId(R.drawable.ic_signout_nav);
+        n7.setTitle("قوانین و مقررات");
         n7.setId(7);
         navigationItems.add(5, n7);
 
 
         NavigationItem n8 = new NavigationItem();
-        n8.setTitle(getString(R.string.nav_exit_app));
-        n8.setDrawbleId(R.drawable.ic_exit_app_nav);
+        n8.setTitle(getString(R.string.nav_exit_account));
         n8.setId(8);
         navigationItems.add(6, n8);
 
@@ -283,13 +285,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
 
             case 3:
-                ActivityNavigationHelper.navigateToActivity(MainActivity.this, ArchiveActivity.class, false);
 
                 break;
 
 
             case 4:
-                ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/aboutus?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
+                /*  ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/aboutus?from=android_cafebazar", MainActivity.this, WebViewActivity.class);*/
+                ActivityNavigationHelper.navigateToActivity(MainActivity.this, ArchiveActivity.class, false);
 
                 break;
 

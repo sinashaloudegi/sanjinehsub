@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:weightSum="100"
-android:layout_centerInParent="true"
-    android:layout_marginTop="@dimen/margin5"
-    android:padding="@dimen/margin10"
     android:id="@+id/rootLayout"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
     android:background="@drawable/curve_accepted_visit_shape"
-    android:layout_height="wrap_content">
+    android:gravity="center"
+    android:weightSum="100">
 
     <ImageView
+        android:id="@+id/imgVisit"
         android:layout_width="@dimen/design_navigation_icon_size"
-        android:layout_height="@dimen/design_navigation_icon_size"
+        android:layout_height="68dp"
         android:layout_alignParentLeft="true"
-     android:id="@+id/imgVisit"
-        app:srcCompat="@drawable/ic_visibility_black"
-        />
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/visibility" />
 
 
     <ImageView
-        android:layout_width="@dimen/design_navigation_icon_size"
-        android:layout_height="@dimen/design_navigation_icon_size"
-android:layout_marginLeft="@dimen/margin_39"
-
-android:layout_toRightOf="@+id/imgVisit"
         android:id="@+id/imgDownload"
-        app:srcCompat="@drawable/ic_downlod_black"
-        />
+        android:layout_width="@dimen/design_navigation_icon_size"
+        android:layout_height="68dp"
 
-
-
-
-
-    <TextView
-        android:id="@+id/textNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-android:layout_alignParentRight="true"
-        android:textSize="@dimen/navigation_text_size"
-        android:layout_centerVertical="true"
-        android:text="fdgdfgdfgggggg"
-        android:textStyle="normal|bold" />
-
-
-
-
-
-
+        android:layout_marginStart="69dp"
+        android:layout_marginLeft="69dp"
+        android:layout_toRightOf="@+id/imgVisit"
+        android:baselineAligned="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgVisit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/download" />
 
 
     <TextView
         android:id="@+id/textDate"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-android:layout_marginRight="@dimen/margin_39"
-        android:textColor="@color/black"
-        android:layout_centerVertical="true"
+        android:layout_height="68dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
         android:layout_toLeftOf="@+id/textNum"
+        android:gravity="center"
+        android:textColor="@color/black"
         android:textSize="@dimen/navigation_text_size"
-        android:textStyle="normal|bold" />
+        android:textStyle="normal|bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgDownload"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textNum"
+        android:layout_width="wrap_content"
+        android:layout_height="62dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="62dp"
+        android:gravity="center"
+        android:text="fdgdfgdfgggggg"
+        android:textColor="@color/black"
+        android:textSize="@dimen/navigation_text_size"
+        android:textStyle="normal|bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textDate"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
-
-
-
-
-
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

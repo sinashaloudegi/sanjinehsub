@@ -35,15 +35,15 @@ public class WebViewConfiguration {
     private FrameLayout customViewContainer;
 
 
-    public WebViewConfiguration(Context context,FrameLayout customViewContainer,WebView webView,String url) {
-        this.webView=webView;
-        this.url=url;
-        this.context=context;
-        this.customViewContainer=customViewContainer;
+    public WebViewConfiguration(Context context, FrameLayout customViewContainer, WebView webView, String url) {
+        this.webView = webView;
+        this.url = url;
+        this.context = context;
+        this.customViewContainer = customViewContainer;
     }
 
     @SuppressLint("JavascriptInterface")
-    public void initWebView(){
+    public void initWebView() {
 
         webView.setBackgroundColor(Color.TRANSPARENT);
 //        webView.setBackgroundResource(R.drawable.splash);
@@ -71,7 +71,7 @@ public class WebViewConfiguration {
         webView.setScrollbarFadingEnabled(false);
 
 
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.ECLAIR) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
             try {
 
                 Method m1 = WebSettings.class.getMethod("setDomStorageEnabled", Boolean.TYPE);
@@ -84,23 +84,20 @@ public class WebViewConfiguration {
                 m3.invoke(settings, "/data/data/" + context.getPackageName() + "/databases/");
 
                 Method m4 = WebSettings.class.getMethod("setAppCacheMaxSize", Long.TYPE);
-                m4.invoke(settings, 1024*1024*8);
+                m4.invoke(settings, 1024 * 1024 * 8);
 
                 Method m5 = WebSettings.class.getMethod("setAppCachePath", String.class);
-                m5.invoke(settings, "/data/data/" +context. getPackageName() + "/cache/");
+                m5.invoke(settings, "/data/data/" + context.getPackageName() + "/cache/");
 
                 Method m6 = WebSettings.class.getMethod("setAppCacheEnabled", Boolean.TYPE);
                 m6.invoke(settings, Boolean.TRUE);
 
-               // Log.e("TAG", "Enabled HTML5-Features");
-            }
-            catch (NoSuchMethodException e) {
-               // Log.e("TAG", "Reflection fail", e);
-            }
-            catch (InvocationTargetException e) {
-               // Log.e("TAG", "Reflection fail", e);
-            }
-            catch (IllegalAccessException e) {
+                // Log.e("TAG", "Enabled HTML5-Features");
+            } catch (NoSuchMethodException e) {
+                // Log.e("TAG", "Reflection fail", e);
+            } catch (InvocationTargetException e) {
+                // Log.e("TAG", "Reflection fail", e);
+            } catch (IllegalAccessException e) {
                 //Log.e("TAG", "Reflection fail", e);
             }
         }
@@ -114,16 +111,11 @@ public class WebViewConfiguration {
         }
 
 
-
-
-
-
-
-
         webView.addJavascriptInterface(this, "Android");
 
         webView.loadUrl(url);
     }
+
     public class MyWebClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(@NonNull WebView view, @NonNull String url) {
@@ -177,7 +169,7 @@ public class WebViewConfiguration {
                     Log.i("Email", "url :  " + url);
                     mail.putExtra(Intent.EXTRA_SUBJECT, "");
                     mail.putExtra(Intent.EXTRA_TEXT, body);
-                   context. startActivity(mail);
+                    context.startActivity(mail);
                     return true;
                 }
 
@@ -212,6 +204,7 @@ public class WebViewConfiguration {
 
         }
     }
+
     public class MyWebChromeClient extends WebChromeClient {
 
         @Override

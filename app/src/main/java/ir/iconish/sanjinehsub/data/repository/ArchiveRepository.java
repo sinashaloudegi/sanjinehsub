@@ -11,43 +11,45 @@ import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 
 
 public class ArchiveRepository {
-   ArchiveApi archiveApi;
+    ArchiveApi archiveApi;
 
 
-SharedPreferencesManager sharedPreferencesManager;
+    SharedPreferencesManager sharedPreferencesManager;
 
-@Inject
+    @Inject
     public ArchiveRepository(ArchiveApi archiveApi, SharedPreferencesManager sharedPreferencesManager) {
 
-this.archiveApi=archiveApi;
-this.sharedPreferencesManager=sharedPreferencesManager;
+        this.archiveApi = archiveApi;
+        this.sharedPreferencesManager = sharedPreferencesManager;
     }
 
     public void callArchiveRepository(@NonNull final VolleyCallback volleyCallback) {
-        archiveApi.callArchivedApi(sharedPreferencesManager.getMobileNumberValue(),sharedPreferencesManager.getTokenValue(),new VolleyCallback() {
-        @Override
-        public   void onSuccess(Object o) {
+        archiveApi.callArchivedApi(sharedPreferencesManager.getMobileNumberValue(), sharedPreferencesManager.getTokenValue(), new VolleyCallback() {
+            @Override
+            public void onSuccess(Object o) {
 
-            volleyCallback.onSuccess(o);
-        }
-        @Override
-        public void onFail(String volleyError) {
-            volleyCallback.onFail(volleyError);
-        }
+                volleyCallback.onSuccess(o);
+            }
 
-        @Override
-        public void onServerError( ) {
-            volleyCallback.onServerError();
-        }
+            @Override
+            public void onFail(String volleyError) {
+                volleyCallback.onFail(volleyError);
+            }
 
-        @Override
-        public void onClientNetworkError() {
-            volleyCallback.onClientNetworkError();
-        }
-        @Override
-        public void onTimeOutError() {
-            volleyCallback.onTimeOutError();
-        }
+            @Override
+            public void onServerError() {
+                volleyCallback.onServerError();
+            }
+
+            @Override
+            public void onClientNetworkError() {
+                volleyCallback.onClientNetworkError();
+            }
+
+            @Override
+            public void onTimeOutError() {
+                volleyCallback.onTimeOutError();
+            }
 
             @Override
             public void onForbiden403(String volleyError) {
@@ -65,13 +67,13 @@ this.sharedPreferencesManager=sharedPreferencesManager;
             }
 
             @Override
-        public void onAuthFailureError401(String volleyError) {
-            volleyCallback.onAuthFailureError401(volleyError);
-        }
-    });
+            public void onAuthFailureError401(String volleyError) {
+                volleyCallback.onAuthFailureError401(volleyError);
+            }
+        });
 
 
-}
+    }
 
 
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -21,9 +20,6 @@ import ir.iconish.sanjinehsub.util.ToastHelper;
 public class NoInternetActivity extends AppCompatActivity {
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,32 +33,32 @@ public class NoInternetActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.retryOnline)
-    public void retryOnline(){
-      retryAccessNetwork();
+    public void retryOnline() {
+        retryAccessNetwork();
     }
 
 
-     @OnClick(R.id.icnConnection)
-    public void checkConnection(){
+    @OnClick(R.id.icnConnection)
+    public void checkConnection() {
 
 
-retryAccessNetwork();
+        retryAccessNetwork();
 
 
     }
 
 
-    private void retryAccessNetwork(){
-        if (isInternetAvailable()){
+    private void retryAccessNetwork() {
+        if (isInternetAvailable()) {
 
 
-            startActivity(new Intent(this,SplashActivity.class));
+            startActivity(new Intent(this, SplashActivity.class));
             finish();
-        }
-        else {
+        } else {
             showErrorAlert("InternetNotAvailable");
         }
     }
+
     public boolean isInternetAvailable() {
 
 
@@ -85,6 +81,6 @@ retryAccessNetwork();
 
     public void showErrorAlert(String error) {
 
-        ToastHelper.showErrorMessage(NoInternetActivity.this,getString(R.string.no_internet));
+        ToastHelper.showErrorMessage(NoInternetActivity.this, getString(R.string.no_internet));
     }
 }

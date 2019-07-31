@@ -16,11 +16,19 @@
 
         <include
             android:id="@+id/centerMenu"
-            layout="@layout/center_main_menu"
+            layout="@layout/center_main_menu_new"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar" />
 
+
+        <include
+            android:id="@+id/centerMenu"
+            layout="@layout/center_main_menu"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar" />
 
     </RelativeLayout>
 
@@ -29,8 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:background="@color/dark_blue"
-
+        android:background="@color/white"
         android:fitsSystemWindows="true">
 
         <LinearLayout
@@ -41,17 +48,17 @@
             <include layout="@layout/main_navigation_header" />
 
             <View
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
+                android:layout_gravity="center"
                 android:layout_height="@dimen/sizehalf"
-                android:layout_marginTop="@dimen/size2"
-                android:background="@color/white" />
+                android:layout_marginTop="0dp"
+                android:background="#99000000" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recNavigation"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/dark_blue">
+                android:background="@color/white">
 
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
