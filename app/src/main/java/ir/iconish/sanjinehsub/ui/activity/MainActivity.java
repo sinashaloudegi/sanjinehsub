@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     ImageView imgNavMenu;
 
 
+    @BindView(R.id.main_webview)
+    WebView mWebView;
+
     private static final String TAG = "MainActivity";
     @Inject
     LogoutViewModel logoutViewModel;
@@ -109,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
                     }
                 });*/
 
+        mWebView.loadUrl("https://www.google.com");
+        //ToastHelper.showInfoMessage(this, url);
 
     }
 

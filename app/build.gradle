@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "ir.iconish.sanjinehsub"
 
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 29
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -107,6 +107,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-gcm:17.0.0'
     implementation 'com.android.installreferrer:installreferrer:1.0'
     implementation 'com.orhanobut:logger:2.2.0'
+    implementation 'com.github.florent37:expansionpanel:1.2.2'
 
 
 }

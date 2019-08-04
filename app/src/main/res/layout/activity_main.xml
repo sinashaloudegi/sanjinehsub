@@ -14,12 +14,16 @@
             android:id="@+id/toolbar"
             layout="@layout/main_toolbar" />
 
+
         <include
             android:id="@+id/centerMenu"
             layout="@layout/center_main_menu_new"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar" />
+            android:layout_height="500dp"
+            android:layout_below="@+id/toolbar"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp" />
 
 
         <include
