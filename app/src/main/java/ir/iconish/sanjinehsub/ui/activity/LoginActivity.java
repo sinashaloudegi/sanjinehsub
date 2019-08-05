@@ -180,8 +180,9 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getApiSuccessLiveDataResponse().observe(this, user -> {
                     stopWating();
 
-            registerToChabok(user);
+
                     if (user.getResponseCodeEnum().getValue() == LoginStatusEnum.USER_EXIST.getValue()) {
+                        registerToChabok(user);
                         ActivityNavigationHelper.navigateToActivity(this, CheckPasswordActivity.class, true);
                     } else if (user.getResponseCodeEnum().getValue() == LoginStatusEnum.USERISNEW.getValue()) {
                         ActivityNavigationHelper.navigateToActivityWithData(this, VerifyRegisterOtpActivity.class, true, "mobile", mobileNumber);
@@ -221,6 +222,7 @@ public class LoginActivity extends AppCompatActivity {
 
             //If user is not registered verify the user and
             //call AdpPushClient.get().register("USER_ID") method at login page
+
             AdpPushClient.get().register(user.getMobileNumber() + "");
         }
     }

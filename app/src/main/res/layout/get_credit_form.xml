@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <include layout="@layout/get_credit_mobile_ntcode" />
+
+    <include layout="@layout/get_credit_rule_check" />
+
+    <include layout="@layout/get_credit_buttons" />
+</androidx.constraintlayout.widget.ConstraintLayout>

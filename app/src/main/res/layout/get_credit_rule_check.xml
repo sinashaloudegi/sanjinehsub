@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/get_credit_form">
+
+
+    <FrameLayout
+        android:id="@+id/layout_check_rule"
+        android:layout_width="30dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/materialButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_accept_rules"
+        app:layout_constraintTop_toBottomOf="@+id/editText1">
+
+        <ImageView
+            android:id="@+id/check_box_blank"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="check_box_blank"
+            android:src="@drawable/check_box_blank" />
+
+        <ImageView
+            android:id="@+id/check_box"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="check_box"
+            android:src="@drawable/check_box"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/txt_accept_rules"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="با انتخاب دکمه تایید، تطابق کد ملی وارد شده و مالکیت شماره تلفن همراه را تایید می کنم"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/layout_check_rule"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText1" />
+</merge>
