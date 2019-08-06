@@ -76,6 +76,7 @@
                 android:background="@color/white">
 
             </androidx.recyclerview.widget.RecyclerView>
+
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 
