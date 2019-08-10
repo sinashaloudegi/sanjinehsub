@@ -58,9 +58,7 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
         initFirebase();
 
-/*
-
-        String reqToken = "eyJhbGciOiJIUzI1NiJ9   .eyJzdWIiOiIxOTExMDUwODA2NDEzMjI1IiwiaWNvbkNyZWRpdCI6IjE5MTEwNTA4MDY0MTMyMjUiLCJpYXQiOjE1NTc1NDU4MDF9.DEFEycDW90S9J5ZobgPGAnVZ-NR_A3FYoO7obsLziNw";
+    /*String reqToken = "eyJhbGciOiJIUzI1NiJ9               .eyJzdWIiOiIxOTExMDUwODA2NDEzMjI1IiwiaWNvbkNyZWRpdCI6IjE5MTEwNTA4MDY0MTMyMjUiLCJpYXQiOjE1NTc1NDU4MDF9.DEFEycDW90S9J5ZobgPGAnVZ-NR_A3FYoO7obsLziNw";
         goToNativeReportActivity(reqToken);*/
 
 

@@ -26,7 +26,6 @@
         tools:layout_conversion_wrapWidth="578" />
 
     <TextView
-
         android:id="@+id/text_no_connection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.adpdigital.push.AdpPushClient;
 import com.crashlytics.android.Crashlytics;
+import com.google.android.material.textfield.TextInputLayout;
 
 import javax.inject.Inject;
 
@@ -75,6 +76,11 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.check_box)
     ImageView checkBox;
 
+    @Nullable
+    @BindView(R.id.layout_phone_text)
+    TextInputLayout layoutPhoneText;
+
+
     @Inject
     LoginViewModel loginViewModel;
 
@@ -92,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         attachViewModel();
         mobileNumberLoginEditTextOnChangeListener();
         coloredAndClickableText();
+
     }
 
 
@@ -104,7 +111,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(@NonNull View view) {
                 ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/terms?from=android_cafebazar", LoginActivity.this, WebViewActivity.class);
-                Toast.makeText(LoginActivity.this, "Rules", Toast.LENGTH_SHORT).show();
             }
         };
         spannableString.setSpan(color, 0, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -169,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         } else {
-            mobileNumberLoginEditText.setError("شماره موبایل معتبر نیست");
+            layoutPhoneText.setError("شماره وارد شده صحیح نمی باشد\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
         }
 
 

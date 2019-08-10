@@ -10,7 +10,6 @@
     <uses-permission
         android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
         tools:ignore="ProtectedPermissions" />
-
     <application
         android:name=".config.AppController"
         android:allowBackup="true"
@@ -21,23 +20,18 @@
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher"
-        android:supportsRtl="false"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,6 +43,7 @@
             android:name=".ui.activity.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize|stateVisible"
             android:isScrollContainer="true"
             android:launchMode="standard"
             android:screenOrientation="portrait">

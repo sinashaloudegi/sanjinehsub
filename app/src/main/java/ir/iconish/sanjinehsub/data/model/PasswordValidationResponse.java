@@ -7,9 +7,6 @@ public class PasswordValidationResponse {
     private String token;
 
 
-
-
-
     public int getRespobseStatusCode() {
         return respobseStatusCode;
     }

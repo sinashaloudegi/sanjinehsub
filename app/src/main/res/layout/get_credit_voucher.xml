@@ -231,7 +231,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:gravity="end"
-            android:text="مشاهده بیشتر"
+            android:text="مشاهده ‌همه"
             android:textColor="#0b74bc"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"

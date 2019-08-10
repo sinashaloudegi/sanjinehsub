@@ -58,7 +58,7 @@ public class LoginApi {
 
                     if (response != null) {
 
-                        User user = parseJson(response);
+                        User user = parseJson(response, mobileNumer);
                         volleyCallback.onSuccess(user);
 
                     }
@@ -117,7 +117,7 @@ public class LoginApi {
     }
 
     @NonNull
-    public User parseJson(@NonNull JSONObject jsonObject) {
+    public User parseJson(@NonNull JSONObject jsonObject, String mobileNumber) {
         User user = new User();
 
         try {
@@ -125,17 +125,18 @@ public class LoginApi {
             int statusCode = jsonObjectRoot.getInt("value");
 
             user.setResponseCodeEnum(LoginStatusEnum.fromValue(statusCode));
+            user.setMobileNumber((statusCode == 1010 || statusCode == 1011) ? mobileNumber : null);
             if (statusCode == 1010) {
                 JSONObject jsonObjectUser = jsonObject.getJSONObject("accountInfo").getJSONObject("user");
                 String firstName = jsonObjectUser.getString("firstname");
                 String lastName = jsonObjectUser.getString("family");
                 String email = jsonObjectUser.getString("email");
-                String mobileNumber = jsonObjectUser.getString("mobile");
+                //String mobileNumber = jsonObjectUser.getString("mobile");
                 long userId = jsonObjectUser.getLong("userid");
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
                 user.setEmail(email);
-                user.setMobileNumber(mobileNumber);
+                //user.setMobileNumber(mobileNumber);
                 user.setUserId(userId);
 
 
