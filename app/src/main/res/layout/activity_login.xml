@@ -135,7 +135,7 @@
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="96dp"
         android:background="#a7a7a7  "
         android:enabled="true"
         android:imeOptions="actionSend|flagNoEnterAction"
@@ -144,7 +144,6 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.457"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
 
     <androidx.constraintlayout.widget.Guideline

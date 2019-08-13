@@ -3,10 +3,8 @@ package ir.iconish.sanjinehsub.ui.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,9 +27,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
+import ir.iconish.sanjinehsub.adapter.CoinAdapter;
 import ir.iconish.sanjinehsub.adapter.NavigationAdapter;
 import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
 import ir.iconish.sanjinehsub.config.AppController;
+import ir.iconish.sanjinehsub.data.model.CoinPrice;
 import ir.iconish.sanjinehsub.data.model.NavigationItem;
 import ir.iconish.sanjinehsub.data.vm.LogoutViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
@@ -70,12 +70,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d(TAG, "onCreate: Splash");
-        Toast.makeText(this, "New Sanjineh", Toast.LENGTH_SHORT).show();
         FirebaseApp.initializeApp(this);
 
         FirebaseMessaging.getInstance().subscribeToTopic(AppConstants.CHANNEL_ID_NOTIFICATON).addOnSuccessListener(aVoid -> {
-            // Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
         });
 
 
@@ -331,6 +328,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         }
     }
 
+    private void setDataOnCoinRecycler(List<CoinPrice> coinPriceList) {
+
+        CoinAdapter coinAdapter = new CoinAdapter(coinPriceList, this);
+        // recyclerView.setAdapter(coinAdapter);
+        coinAdapter.notifyDataSetChanged();
+
+
+    }
     private void downloadLastVersion() {
         String url = "http://dl.iconish.ir/app/SanjinehAppSub1.1.2.apk";
         Intent i = new Intent(Intent.ACTION_VIEW);

@@ -65,7 +65,6 @@ public class SetPasswordApi {
         JSONObject jsonObject = new JSONObject();
 
         try {
-
             jsonObject.put("mobile", mobileNumber);
             jsonObject.put("password", password);
             jsonObject.put("oldPassword", "1234");

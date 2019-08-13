@@ -109,7 +109,7 @@ public class VerifyRegisterOtpActivity extends AppCompatActivity {
             edtVerificationCode.setText(code);
 
 
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
     }
@@ -145,7 +145,7 @@ public class VerifyRegisterOtpActivity extends AppCompatActivity {
                 //   bottomLayout.setVisibility(View.VISIBLE);
                 try {
                     //   unregisterReceiver(broadcastReceiver);
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
 
@@ -183,7 +183,6 @@ public class VerifyRegisterOtpActivity extends AppCompatActivity {
 
                     if (passwordValidationResponse.getRespobseStatusCode() == LoginStatusEnum.VERIFY_SUCCESS_AND_NEW.getValue()) {
 
-//ActivityNavigationHelper.navigateToActivity(this,SetPasswordActivity.class,true);
                         ActivityNavigationHelper.navigateToActivity(this, SetPasswordActivity.class, true);
                     } else {
                         txtAlert.setText((LoginStatusEnum.fromValue(passwordValidationResponse.getRespobseStatusCode()).getDescr()));

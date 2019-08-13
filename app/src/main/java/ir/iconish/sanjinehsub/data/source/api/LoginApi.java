@@ -50,7 +50,6 @@ public class LoginApi {
             e.printStackTrace();
         }
 
-
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 url, jsonObject,
                 response -> {

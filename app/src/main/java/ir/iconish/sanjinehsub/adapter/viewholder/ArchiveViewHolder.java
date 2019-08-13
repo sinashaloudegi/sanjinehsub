@@ -20,7 +20,6 @@ public class ArchiveViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.textNum) public TextView txtNum;
     @Nullable
     @BindView(R.id.textDate) public TextView txtDate;
-
     @Nullable
     @BindView(R.id.imgVisit)  public ImageView imgVisit;
     @Nullable
