@@ -91,6 +91,7 @@ public class UserNumberOfSanjinehViewModel extends ViewModel {
         mUserNumberOfSanjinehRepository.callGetNumberOfSanjinehRepository(new VolleyCallback() {
             @Override
             public void onSuccess(Object O) {
+                Log.d(TAG, "onSuccess: " + O.toString());
                 apiSuccessLiveDataResponse.setValue((NumberOfSanjineh) O);
             }
 
