@@ -84,7 +84,9 @@ public class UserNumberOfSanjinehViewModel extends ViewModel {
         return apiAuthFailureErrorLiveData;
     }
 
-
+    public String getMobileNumber() {
+        return mUserNumberOfSanjinehRepository.geMobileNumber();
+    }
     public void callGetUserSanjinehViewModel() {
         Log.d(TAG, "callGetScoreViewModel: ");
 

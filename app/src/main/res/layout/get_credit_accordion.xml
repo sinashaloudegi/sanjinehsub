@@ -89,11 +89,17 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/relativeLayout7"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <include
                     android:id="@+id/credit_form"
-                    layout="@layout/get_credit_form" />
+                    layout="@layout/get_credit_form"
+                    android:visibility="visible" />
+
+                <include
+                    android:id="@+id/credit_otp"
+                    layout="@layout/get_credit_otp"
+                    android:visibility="invisible" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.github.florent37.expansionpanel.ExpansionLayout>

@@ -9,10 +9,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,13 +69,14 @@ import ir.iconish.sanjinehsub.ui.Dialoglistener;
 import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
 import ir.iconish.sanjinehsub.util.CreditStatusManager;
+import ir.iconish.sanjinehsub.util.Helper;
 import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
 import ir.iconish.sanjinehsub.util.Inventory;
 import ir.iconish.sanjinehsub.util.Purchase;
 import ir.iconish.sanjinehsub.util.ToastHelper;
 
-public class MainActivity extends AppCompatActivity implements RecyclerIemListener, Dialoglistener {
+public class MainActivity extends AppCompatActivity implements RecyclerIemListener, Dialoglistener, AdapterView.OnItemSelectedListener {
 
     @Nullable
     @BindView(R.id.drawerLayout)
@@ -82,6 +86,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     @BindView(R.id.navView)
     NavigationView navigationView;
 
+    @Nullable
+    @BindView(R.id.spnr_choose_self_others)
+    Spinner spnrChooseSelfOthers;
 
     @Nullable
     @BindView(R.id.recNavigation)
@@ -90,10 +97,42 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     @Nullable
     @BindView(R.id.txt_user_name)
     TextView txtUserName;
+    @Nullable
+    @BindView(R.id.txt_get_credit_info)
+    TextView txtGetCreditInfo;
 
     @Nullable
     @BindView(R.id.imgNavMenu)
     ImageView imgNavMenu;
+
+    @Nullable
+    @BindView(R.id.edt_txt_ntcode_get_credit)
+    EditText edtNtcodeOthers;
+
+    @Nullable
+    @BindView(R.id.edt_txt_mobile_number_get_credit)
+    EditText edtMsisdnOthers;
+
+
+    @Nullable
+    @BindView(R.id.credit_form)
+    View creditForm;
+
+    @Nullable
+    @BindView(R.id.credit_otp)
+    View creditOtp;
+
+ /*   @Nullable
+    @BindView(R.id.get_credit_header)
+    ExpansionHeader getCreditHeader;
+
+    @Nullable
+    @BindView(R.id.get_credit_layout)
+    ExpansionLayout getCreditLayout;
+    @Nullable
+    @BindView(R.id.get_otp_layout)
+    ExpansionLayout getOtpLayout;*/
+
 
     /////////////////////////////////////////CafeBazaar Purchase Flow///////////////////////////////////////////////
     @Nullable
@@ -104,12 +143,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     @Nullable
     @BindView(R.id.check_box)
     ImageView checkBox;
-    @Nullable
-    @BindView(R.id.edt_txt_mobile_number_login)
-    EditText edtNtcodeOthers;
-    @Nullable
-    @BindView(R.id.edt_txt_mobile_number_login2)
-    EditText edtMsisdnOthers;
+
     BroadcastReceiver broadcastReceiver;
     boolean ruleIsChecked = false;
     private static final String TAG = "MainActivity";
@@ -118,9 +152,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     Purchase purchase;
     @Inject
     SendVerifyCodeViewModel sendVerifyCodeViewModel;
-
-
-
+    boolean isSelf = true;
 
 
     private void navigateToActivity(Class cls) {
@@ -406,7 +438,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         @Override
         public void onIabPurchaseFinished(@NonNull IabResult result, @NonNull Purchase purchase) {
             MainActivity.this.purchase = purchase;
-            Log.i(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
+            Log.i(TAG, "PurchaseFinished: " + result + ", purchase: " + purchase);
 
 
             if (mHelper == null) {
@@ -437,10 +469,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
             Crashlytics.setString("purchaseFinished", "finished!");
             Crashlytics.setString("purchaseToken", purchase.getToken());
-            // TODO: 8/17/2019 change true to check if the report is for self or other
-            if (false) {
-                getScoreViewModel.callGetScoreViewModel(null, null, 1, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, -1, purchase);
+            if (isSelf) {
+                getScoreViewModel.callGetScoreViewModel(null, edtNtcodeOthers.getText().toString(), 1, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, -1, purchase);
             } else {
+                Log.d(TAG, "onIabPurchaseFinished: sendingVerifyCode");
                 sendVerifyCodeViewModel.callSendVerifyCodeViewModel(CafeBazaarPaymentTypeEnum.CAFE_SDK.name(), edtNtcodeOthers.getText().toString(), edtMsisdnOthers.getText().toString());
             }
 
@@ -458,6 +490,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         setContentView(R.layout.activity_main);
         FirebaseApp.initializeApp(this);
 
+
         FirebaseMessaging.getInstance().subscribeToTopic(AppConstants.CHANNEL_ID_NOTIFICATON).addOnSuccessListener(aVoid -> {
         });
 
@@ -466,21 +499,35 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
 
-
+        setUpSpinner();
         initNavigation();
         checkCafeBazaarLogin = new CheckCafeBazaarLogin(MainActivity.this);
         messageReciver();
         showWating();
         txtUserName.setText("کاربر مهمان");
+        creditForm.setVisibility(View.VISIBLE);
+        creditOtp.setVisibility(View.INVISIBLE);
 
         bazaarSetup(getScoreViewModel.getMarketKey());
-
+        if (isSelf) {
+            edtMsisdnOthers.setText(getUserHasSanjinehViewModel.getMobileNumber());
+        }
 
         attachViewModel();
         Log.d(TAG, "onCreate: GetScoreActivity");
         getUserHasSanjinehViewModel.callGetUserSanjinehViewModel();
 
 
+    }
+
+    private void setUpSpinner() {
+        spnrChooseSelfOthers.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.spnr_self_other_choose, android.R.layout.simple_spinner_item);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnrChooseSelfOthers.setAdapter(adapter);
+        spnrChooseSelfOthers.setSelection(0);
     }
 
     @OnClick(R.id.layout_check_rule)
@@ -517,9 +564,43 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
     @OnClick(R.id.btn_get_credit)
     public void btnGetCreditAction() {
+        Log.d(TAG, "btnGetCreditAction: Clicked!");
+        String msisdn = edtMsisdnOthers.getText().toString().trim();
+        String ntCode = edtNtcodeOthers.getText().toString().trim();
+        Log.d(TAG, "btnGetCreditAction: Clicked! msisdn " + msisdn + " ntcoe= " + ntCode);
+
+        if (!(msisdn.length() > 0) && !(ntCode.length() > 0)) {
+           /* txtAlert.setText(getString(R.string.force_enter_phone_ntcode));
+            txtAlert.setVisibility(View.VISIBLE);*/
+            return;
+        }
+        if ((msisdn.length() > 0) && !(ntCode.length() > 0)) {
+          /*  txtAlert.setText(getString(R.string.force_enter_phone));
+            txtAlert.setVisibility(View.VISIBLE);*/
+            return;
+        }
+
+        if ((msisdn.trim().length() > 0) && !msisdn.startsWith("09")) {
+          /*  txtAlert.setText(getString(R.string.enter_correct_mobile_phone));
+            txtAlert.setVisibility(View.VISIBLE);*/
+            return;
+
+        }
+        if ((msisdn.length() > 0) && msisdn.length() != 11) {
+           /* txtAlert.setText(getString(R.string.valid_phone));
+            txtAlert.setVisibility(View.VISIBLE);*/
+            return;
+        }
+
+
+        if (!Helper.validationNationalCode(ntCode)) {
+        /*    txtAlert.setText(getString(R.string.enter_correct_national_code));
+            txtAlert.setVisibility(View.VISIBLE);*/
+            return;
+        }
+
         Log.d(TAG, "btnGetCreditAction: ");
         if (!ruleIsChecked) {
-            Toast.makeText(this, ruleIsChecked + "", Toast.LENGTH_SHORT).show();
 /*            txtAlert.setText(getString(R.string.accept_nt_code_mobile));
             txtAlert.setVisibility(View.VISIBLE);*/
             return;
@@ -542,7 +623,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
 
     private void choosePaymentType() {
-
+        Log.d(TAG, "choosePaymentType: checking user has sanjineh");
         if (userHasSanjineh()) {
             int sanjinehValue = (this.numberOfSanjineh.getBalance()) / (this.numberOfSanjineh.getUnitValue());
             String toastMesasge = " شما دارای " + sanjinehValue + " سنجینه در کیف پول خود هستید ";
@@ -550,6 +631,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
             DialogHelper.showDialog("نحوه پرداخت", "پرداخت از کیف پول یا کافه بازار؟", "کیف پول", "کافه بازار", this, this);
 
         } else {
+            Log.d(TAG, "choosePaymentType: USER HAS NO SANJINEH");
             startPurchase();
         }
 
@@ -621,6 +703,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         getScoreViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
         });
         sendVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, verifyCodeOthersResponse -> {
+                    //   String s = String.format("تا دقایقی دیگر کد تایید برای شماره s%ارسال خواهد شد", getUserHasSanjinehViewModel.getMobileNumber());
+                    //  txtGetCreditInfo.setText(s);
+
                     Log.d(TAG, "attachViewModel:GetScoreOthersActivity getStatusCode" + verifyCodeOthersResponse.getStatusCode());
                     stopWating();
 
@@ -632,8 +717,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
                         intent.putExtra("otherNtCode", edtNtcodeOthers.getText().toString());
                         intent.putExtra("reportStatus", verifyCodeOthersResponse.getStatusCode());
                         intent.putExtra("purchase", purchase);
-                        startActivity(intent);
-                        finish();
+
+                        creditForm.setVisibility(View.INVISIBLE);
+                        creditOtp.setVisibility(View.VISIBLE);
+
+                        /*
+                         */
+                        /*startActivity(intent);
+                        //TODO:show otp
+                        finish();*/
                     } else if (verifyCodeOthersResponse.getStatusCode() == ReportStateEnum.USER_NOT_HAVE_REPORT.getId()) {
                         getScoreAtion(verifyCodeOthersResponse.getNoReportReqToken(), this);
 
@@ -677,6 +769,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     }
 
     private boolean userHasSanjineh() {
+        Log.d(TAG, "userHasSanjineh: enterd has sanjineh");
         boolean hasSanjineh = false;
         if (numberOfSanjineh == null || this.numberOfSanjineh.getUnitValue() <= 0 || this.numberOfSanjineh.getBalance() <= 0) {
             Crashlytics.setBool("userHasSanjineh", hasSanjineh);
@@ -697,6 +790,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
             Crashlytics.setString("flagEndAsync", "mHelper.flagEndAsync();");
             mHelper.flagEndAsync();
         }
+        Log.d(TAG, "startPurchase: starting launchepurchaseflow");
         mHelper.launchPurchaseFlow(MainActivity.this, AppConstants.BAZAAR_SKU, 10001, mPurchaseFinishedListener, randomUUIDString);
     }
 
@@ -729,7 +823,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         Log.d(TAG, "onDialogSubmitEvent: ");
         showWating();
 
-        getScoreViewModel.callGetScoreViewModel(null, null, 1, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, -1, null);
+        if (isSelf) {
+            getScoreViewModel.callGetScoreViewModel(null, edtNtcodeOthers.getText().toString(), 1, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, -1, purchase);
+        } else {
+            sendVerifyCodeViewModel.callSendVerifyCodeViewModel(CafeBazaarPaymentTypeEnum.CAFE_SDK.name(), edtNtcodeOthers.getText().toString(), edtMsisdnOthers.getText().toString());
+        }
     }
 
     @Override
@@ -815,6 +913,30 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         String url = "https://www.sanjineh.ir/report/" + reqToken + "?from=android_cafebazar";
         ActivityNavigationHelper.navigateToWebView(url, activity, WebViewActivity.class);
         activity.finish();
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String item = adapterView.getItemAtPosition(i).toString();
+        if (i == 0) {
+            isSelf = true;
+            edtMsisdnOthers.setText(getUserHasSanjinehViewModel.getMobileNumber());
+
+        } else if (i == 1) {
+            isSelf = false;
+            edtMsisdnOthers.setText("");
+        } else {
+            Toast.makeText(this, "خطای ناشناخته", Toast.LENGTH_SHORT).show();
+        }
+        // Showing selected spinner item
+        Toast.makeText(adapterView.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////

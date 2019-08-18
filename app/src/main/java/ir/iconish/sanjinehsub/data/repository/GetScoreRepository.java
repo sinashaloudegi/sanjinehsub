@@ -36,11 +36,6 @@ public class GetScoreRepository {
         Log.d(TAG, "callGetScoreRepository: ____");
         String mobileNumber = sharedPreferencesManager.getMobileNumberValue();
         Crashlytics.setString("MobileNumber", mobileNumber);
-        if (persontypeid == 1) {
-            Log.d(TAG, "Before: callGetScoreRepository: " + ntCode);
-            ntCode = sharedPreferencesManager.getNationalCodeValue();
-            Log.d(TAG, "callGetScoreRepository: " + ntCode);
-        }
         Log.d(TAG, "callGetScoreRepository: PersnTypeId: " + persontypeid);
         Log.d(TAG, "callGetScoreRepository: ntcode: " + ntCode);
 

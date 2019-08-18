@@ -84,4 +84,7 @@ public class UserNumberOfSanjinehRepository {
     }
 
 
+    public String geMobileNumber() {
+        return sharedPreferencesManager.getMobileNumberValue();
+    }
 }

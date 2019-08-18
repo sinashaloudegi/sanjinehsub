@@ -26,20 +26,12 @@ public class DialogHelper {
         Button btnCancel = view.findViewById(R.id.btn_cancel_report);
         alert.setView(view);
         final AlertDialog alertDialog = alert.create();
-        btnYes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
+        btnYes.setOnClickListener(view1 -> {
+            alertDialog.dismiss();
 
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    activity.finish();
-                    //      activity.finishAffinity();
-                } else {
-                    //    ActivityCompat.finishAffinity(activity);
-                    activity.finish();
-                }
-            }
+            activity.finish();
+            //      activity.finishAffinity();
         });
 
 

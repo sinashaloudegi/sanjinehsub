@@ -157,4 +157,10 @@
     <string name="mobile_not_valid">شماره وارد شده صحیح نمی باشد</string>
     <string name="fill_in_the_form">برای دریافت رتبه اعتباری خود یا دیگران، لازم است فرم زیر را تکمیل نمایید</string>
     <string name="mobile">شماره موبایل</string>
+
+    <string-array name="spnr_self_other_choose">
+        <item>گرفتن گزارش برای خودم</item>
+        <item>گرفتن گزارش برای دیگران</item>
+
+    </string-array>
 </resources>
