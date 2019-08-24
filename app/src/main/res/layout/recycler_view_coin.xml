@@ -61,11 +61,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/coin_recycler_view"
         android:layout_width="0dp"
-        android:layout_height="102dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="#CA821C71"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5"

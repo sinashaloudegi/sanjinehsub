@@ -195,30 +195,11 @@
 
     </com.google.android.material.button.MaterialButton>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_otp_submit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:text="تایید"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_accept_rules"
-        app:layout_constraintVertical_bias="1.0">
-
-    </com.google.android.material.button.MaterialButton>
 
     <ProgressBar
         android:id="@+id/prgGetScore"
         android:layout_width="391dp"
         android:layout_height="29dp"
-        android:layout_above="@id/btnGetScore"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"

@@ -1,5 +1,5 @@
 package ir.iconish.sanjinehsub.adapter.listener;
 
 public interface RecyclerIemListener {
-    public void onTap(Object obj);
+    void onTap(Object obj);
 }

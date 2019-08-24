@@ -1,7 +1,7 @@
 package ir.iconish.sanjinehsub.data.model;
 
 public class NavigationItem {
-private int id;
+    private int id;
     private String title;
     private int drawbleId;
 

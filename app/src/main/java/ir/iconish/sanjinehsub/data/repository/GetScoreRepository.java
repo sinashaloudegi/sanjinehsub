@@ -38,6 +38,8 @@ public class GetScoreRepository {
         Crashlytics.setString("MobileNumber", mobileNumber);
         Log.d(TAG, "callGetScoreRepository: PersnTypeId: " + persontypeid);
         Log.d(TAG, "callGetScoreRepository: ntcode: " + ntCode);
+        Log.d(TAG, "callGetScoreRepository: ownerMobile: " + ownerMobile);
+        Log.d(TAG, "callGetScoreRepository: MobileNumber: " + mobileNumber);
 
         String token = sharedPreferencesManager.getTokenValue();
         Log.d(TAG, "callGetScoreRepository: Now lets call getScoreApi and ntcod=" + ntCode);

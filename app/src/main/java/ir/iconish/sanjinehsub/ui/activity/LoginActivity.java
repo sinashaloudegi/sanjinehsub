@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     @Nullable
-    @BindView(R.id.edt_txt_mobile_number_login)
+    @BindView(R.id.edt_txt_search)
     EditText mobileNumberLoginEditText;
 
     @Nullable

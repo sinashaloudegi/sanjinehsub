@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -31,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.adpdigital.push.AdpPushClient;
 import com.crashlytics.android.Crashlytics;
+import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -50,6 +52,9 @@ import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.adapter.CoinAdapter;
 import ir.iconish.sanjinehsub.adapter.NavigationAdapter;
+import ir.iconish.sanjinehsub.adapter.NewsAdapter;
+import ir.iconish.sanjinehsub.adapter.OtherServiceAdapter;
+import ir.iconish.sanjinehsub.adapter.TeachBourseAdapter;
 import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
 import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
@@ -57,10 +62,14 @@ import ir.iconish.sanjinehsub.data.model.CafeBazaarPaymentTypeEnum;
 import ir.iconish.sanjinehsub.data.model.CoinPrice;
 import ir.iconish.sanjinehsub.data.model.CreditResponseEnum;
 import ir.iconish.sanjinehsub.data.model.NavigationItem;
+import ir.iconish.sanjinehsub.data.model.NewsItem;
 import ir.iconish.sanjinehsub.data.model.NumberOfSanjineh;
+import ir.iconish.sanjinehsub.data.model.OtherServiceItem;
 import ir.iconish.sanjinehsub.data.model.ReportStateEnum;
+import ir.iconish.sanjinehsub.data.model.TeachBourseItem;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.data.vm.LogoutViewModel;
+import ir.iconish.sanjinehsub.data.vm.NewsViewModel;
 import ir.iconish.sanjinehsub.data.vm.SendVerifyCodeViewModel;
 import ir.iconish.sanjinehsub.data.vm.UserNumberOfSanjinehViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
@@ -75,6 +84,8 @@ import ir.iconish.sanjinehsub.util.IabResult;
 import ir.iconish.sanjinehsub.util.Inventory;
 import ir.iconish.sanjinehsub.util.Purchase;
 import ir.iconish.sanjinehsub.util.ToastHelper;
+
+import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
 
 public class MainActivity extends AppCompatActivity implements RecyclerIemListener, Dialoglistener, AdapterView.OnItemSelectedListener {
 
@@ -95,6 +106,28 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     RecyclerView recyclerNavigation;
 
     @Nullable
+    @BindView(R.id.other_services_recycler_view)
+    RecyclerView otherServiceRecyclerView;
+
+
+    @Nullable
+    @BindView(R.id.teach_bourse_recycler_view)
+    RecyclerView teachBourseRecyclerView;
+
+
+    @Nullable
+    @BindView(R.id.news_recycler_view)
+    RecyclerView newsRecyclerView;
+
+    @Nullable
+    @BindView(R.id.coin_recycler_view)
+    RecyclerView coinRecycleView;
+
+    @Nullable
+    @BindView(R.id.chart)
+    LineChart chart;
+
+    @Nullable
     @BindView(R.id.txt_user_name)
     TextView txtUserName;
     @Nullable
@@ -110,6 +143,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     EditText edtNtcodeOthers;
 
     @Nullable
+    @BindView(R.id.edt_txt_otp)
+    EditText edtTextOtp;
+
+    @Nullable
+    @BindView(R.id.edt_txt_search)
+    EditText edtTextSearch;
+
+    @Nullable
     @BindView(R.id.edt_txt_mobile_number_get_credit)
     EditText edtMsisdnOthers;
 
@@ -117,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     @Nullable
     @BindView(R.id.credit_form)
     View creditForm;
+
 
     @Nullable
     @BindView(R.id.credit_otp)
@@ -133,6 +175,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     @BindView(R.id.get_otp_layout)
     ExpansionLayout getOtpLayout;*/
 
+    String mobileNumber;
+    String ntcode;
 
     /////////////////////////////////////////CafeBazaar Purchase Flow///////////////////////////////////////////////
     @Nullable
@@ -225,6 +269,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
     }
 
+    @Inject
+    NewsViewModel mNewsViewModel;
+
     private void initNavigation() {
         List<NavigationItem> navigationItems = new ArrayList<>();
     /*  NavigationItem n1=new NavigationItem();
@@ -288,77 +335,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
         recyclerNavigation.setLayoutManager(layoutManager);
+        recyclerNavigation.setHasFixedSize(true);
 
         NavigationAdapter navigationAdapter = new NavigationAdapter(navigationItems, this);
         recyclerNavigation.setAdapter(navigationAdapter);
 
 
-    }
-
-    @Override
-    public void onTap(Object obj) {
-        NavigationItem navigationItem = (NavigationItem) obj;
-
-        switch (navigationItem.getId()) {
-
-            case 1:
-//downloadLastVersion();
-
-                break;
-
-
-            case 2:
-
-                //   https://www.sanjineh.ir/profile/%D8%B3%DB%8C%D8%AF%D9%85%D8%AD%D9%85%D8%AF%20%20%D8%B3%DB%8C%D8%AF%D9%85%D8%AD%D9%85%D8%AF%DB%8C
-                ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/profile/" + logoutViewModel.getToken() + "?from=android_cafebazar", this, WebViewActivity.class);
-
-                break;
-
-
-            case 3:
-
-                break;
-
-
-            case 4:
-                /*  ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/aboutus?from=android_cafebazar", MainActivity.this, WebViewActivity.class);*/
-                ActivityNavigationHelper.navigateToActivity(MainActivity.this, ArchiveActivity.class, false);
-
-                break;
-
-
-            case 5:
-                ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/contactus?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
-
-                break;
-
-
-            case 6:
-                //www.sanjineh.ir/terms
-                ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/terms?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
-
-                break;
-
-
-            case 7:
-
-                logoutViewModel.logout();
-
-                ActivityNavigationHelper.navigateToActivity(this, LoginActivity.class, true);
-
-                break;
-
-
-            case 8:
-                finish();
-                break;
-
-
-          /*  case 9:
-                Toast.makeText(this, "You Clicked on Wallet", Toast.LENGTH_SHORT).show();
-                break;
-*/
-        }
     }
 
     private void setDataOnCoinRecycler(List<CoinPrice> coinPriceList) {
@@ -388,6 +370,271 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     FrameLayout checkboxRules;
     @Inject
     UserNumberOfSanjinehViewModel getUserHasSanjinehViewModel;
+
+    @Override
+    public void onTap(Object obj) {
+
+        if (obj instanceof NavigationItem) {
+            NavigationItem navigationItem = (NavigationItem) obj;
+
+            switch (navigationItem.getId()) {
+
+                case 1:
+//downloadLastVersion();
+
+                    break;
+
+
+                case 2:
+
+                    //   https://www.sanjineh.ir/profile/%D8%B3%DB%8C%D8%AF%D9%85%D8%AD%D9%85%D8%AF%20%20%D8%B3%DB%8C%D8%AF%D9%85%D8%AD%D9%85%D8%AF%DB%8C
+                    ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/profile/" + logoutViewModel.getToken() + "?from=android_cafebazar", this, WebViewActivity.class);
+
+                    break;
+
+
+                case 3:
+
+                    break;
+
+
+                case 4:
+                    /*  ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/aboutus?from=android_cafebazar", MainActivity.this, WebViewActivity.class);*/
+                    ActivityNavigationHelper.navigateToActivity(MainActivity.this, ArchiveActivity.class, false);
+
+                    break;
+
+
+                case 5:
+                    ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/contactus?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
+
+                    break;
+
+
+                case 6:
+                    //www.sanjineh.ir/terms
+                    ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/terms?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
+
+                    break;
+
+
+                case 7:
+
+                    logoutViewModel.logout();
+
+                    ActivityNavigationHelper.navigateToActivity(this, LoginActivity.class, true);
+
+                    break;
+
+
+                case 8:
+                    finish();
+                    break;
+
+
+          /*  case 9:
+                Toast.makeText(this, "You Clicked on Wallet", Toast.LENGTH_SHORT).show();
+                break;
+*/
+            }
+        }
+
+        if (obj instanceof OtherServiceItem) {
+            OtherServiceItem otherServiceItem = (OtherServiceItem) obj;
+
+            switch (otherServiceItem.getId()) {
+
+                case 1:
+//downloadLastVersion();
+
+                    break;
+
+
+                case 2:
+
+                    //   https://www.sanjineh.ir/profile/%D8%B3%DB%8C%D8%AF%D9%85%D8%AD%D9%85%D8%AF%20%20%D8%B3%DB%8C%D8%AF%D9%85%D8%AD%D9%85%D8%AF%DB%8C
+                    ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/profile/" + logoutViewModel.getToken() + "?from=android_cafebazar", this, WebViewActivity.class);
+
+                    break;
+
+
+                case 3:
+
+                    break;
+
+
+                case 4:
+                    /*  ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/aboutus?from=android_cafebazar", MainActivity.this, WebViewActivity.class);*/
+                    ActivityNavigationHelper.navigateToActivity(MainActivity.this, ArchiveActivity.class, false);
+
+                    break;
+
+
+                case 5:
+                    ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/contactus?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
+
+                    break;
+
+
+                case 6:
+                    //www.sanjineh.ir/terms
+                    ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/terms?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
+
+                    break;
+
+
+                case 7:
+
+                    logoutViewModel.logout();
+
+                    ActivityNavigationHelper.navigateToActivity(this, LoginActivity.class, true);
+
+                    break;
+
+
+                case 8:
+                    finish();
+                    break;
+
+
+          /*  case 9:
+                Toast.makeText(this, "You Clicked on Wallet", Toast.LENGTH_SHORT).show();
+                break;
+*/
+            }
+        }
+
+        if (obj instanceof TeachBourseItem) {
+            TeachBourseItem teachBourseItem = (TeachBourseItem) obj;
+
+            switch (teachBourseItem.getId()) {
+
+                case 1:
+//downloadLastVersion();
+
+                    break;
+
+
+                case 2:
+
+                    //   https://www.sanjineh.ir/profile/%D8%B3%DB%8C%D8%AF%D9%85%D8%AD%D9%85%D8%AF%20%20%D8%B3%DB%8C%D8%AF%D9%85%D8%AD%D9%85%D8%AF%DB%8C
+                    ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/profile/" + logoutViewModel.getToken() + "?from=android_cafebazar", this, WebViewActivity.class);
+
+                    break;
+
+
+                case 3:
+
+                    break;
+
+
+                case 4:
+                    /*  ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/aboutus?from=android_cafebazar", MainActivity.this, WebViewActivity.class);*/
+                    ActivityNavigationHelper.navigateToActivity(MainActivity.this, ArchiveActivity.class, false);
+
+                    break;
+
+
+                case 5:
+                    ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/contactus?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
+
+                    break;
+
+
+                case 6:
+                    //www.sanjineh.ir/terms
+                    ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/terms?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
+
+                    break;
+
+
+                case 7:
+
+                    logoutViewModel.logout();
+
+                    ActivityNavigationHelper.navigateToActivity(this, LoginActivity.class, true);
+
+                    break;
+
+
+                case 8:
+                    finish();
+                    break;
+
+
+          /*  case 9:
+                Toast.makeText(this, "You Clicked on Wallet", Toast.LENGTH_SHORT).show();
+                break;
+*/
+            }
+        }
+        if (obj instanceof NewsItem) {
+            NewsItem newsItem = (NewsItem) obj;
+
+            switch (newsItem.getId()) {
+
+                case 1:
+//downloadLastVersion();
+
+                    break;
+
+
+                case 2:
+
+                    //   https://www.sanjineh.ir/profile/%D8%B3%DB%8C%D8%AF%D9%85%D8%AD%D9%85%D8%AF%20%20%D8%B3%DB%8C%D8%AF%D9%85%D8%AD%D9%85%D8%AF%DB%8C
+                    ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/profile/" + logoutViewModel.getToken() + "?from=android_cafebazar", this, WebViewActivity.class);
+
+                    break;
+
+
+                case 3:
+
+                    break;
+
+
+                case 4:
+                    /*  ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/aboutus?from=android_cafebazar", MainActivity.this, WebViewActivity.class);*/
+                    ActivityNavigationHelper.navigateToActivity(MainActivity.this, ArchiveActivity.class, false);
+
+                    break;
+
+
+                case 5:
+                    ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/contactus?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
+
+                    break;
+
+
+                case 6:
+                    //www.sanjineh.ir/terms
+                    ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/terms?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
+
+                    break;
+
+
+                case 7:
+
+                    logoutViewModel.logout();
+
+                    ActivityNavigationHelper.navigateToActivity(this, LoginActivity.class, true);
+
+                    break;
+
+
+                case 8:
+                    finish();
+                    break;
+
+
+          /*  case 9:
+                Toast.makeText(this, "You Clicked on Wallet", Toast.LENGTH_SHORT).show();
+                break;
+*/
+            }
+        }
+
+    }
+
     NumberOfSanjineh numberOfSanjineh;
     @NonNull
     IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
@@ -499,6 +746,39 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
 
+
+/*
+
+        CoinPrice[] dataObjects = new CoinPrice[5];
+        dataObjects[0].setDate(1);
+        dataObjects[1].setDate(2);
+        dataObjects[2].setDate(3);
+        dataObjects[3].setDate(4);
+        dataObjects[4].setDate(5);
+
+        dataObjects[0].setPrice(100);
+        dataObjects[1].setPrice(200);
+        dataObjects[2].setPrice(400);
+        dataObjects[3].setPrice(300);
+        dataObjects[4].setPrice(200);
+
+        List<Entry> entries = new ArrayList<>();
+        for (CoinPrice data : dataObjects) {
+            entries.add(new Entry(data.getDate(), data.getPrice()));
+        }
+
+        LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
+        dataSet.setColor(Color.BLUE);
+        dataSet.setValueTextColor(Color.YELLOW); // styling, ...
+
+        LineData lineData = new LineData(dataSet);
+        chart.setData(lineData);
+        chart.invalidate(); // refresh
+*/
+        setUpCoinRecycler();
+        setUpOtherServicesRecycler();
+        setUpTeachBourseRecycler();
+        setUpNewsRecycler();
         setUpSpinner();
         initNavigation();
         checkCafeBazaarLogin = new CheckCafeBazaarLogin(MainActivity.this);
@@ -516,8 +796,167 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         attachViewModel();
         Log.d(TAG, "onCreate: GetScoreActivity");
         getUserHasSanjinehViewModel.callGetUserSanjinehViewModel();
+        mNewsViewModel.callNewsViewModel();
+
+        edtTextSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                performSearch(null);
+                return true;
+            }
+            return false;
+        });
+
+    }
+
+    public void performSearch(View view) {
+        String searchTerm = edtTextSearch.getText().toString().trim();
+        String searchUrl = "";
+        Toast.makeText(this, searchTerm, Toast.LENGTH_SHORT).show();
+        // TODO: 8/21/2019 make a call to farshad with the data
+    }
 
 
+    private void setUpNewsRecycler() {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, true);
+
+        newsRecyclerView.setLayoutManager(layoutManager);
+        newsRecyclerView.setHasFixedSize(true);
+        List<NewsItem> newsItems = new ArrayList<>();
+        NewsItem ot = new NewsItem();
+        NewsItem ot1 = new NewsItem();
+        NewsItem ot2 = new NewsItem();
+        ot.setTitle("عنوان اینجا قرار می گیرد");
+        ot.setDrawbleId(R.drawable.trump);
+        ot.setDecribtion("عنوان اینجا قرار می گیرد\n" +
+                "چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.");
+
+        ot1.setTitle("عنوان اینجا قرار می گیرد");
+        ot1.setDrawbleId(R.drawable.trump);
+        ot1.setDecribtion("عنوان اینجا قرار می گیرد\n" +
+                "چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.");
+
+        ot2.setTitle("عنوان اینجا قرار می گیرد");
+        ot2.setDrawbleId(R.drawable.trump);
+        ot2.setDecribtion("عنوان اینجا قرار می گیرد\n" +
+                "چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.");
+
+
+        newsItems.add(ot);
+        newsItems.add(ot1);
+        newsItems.add(ot2);
+
+
+        NewsAdapter newsAdapter = new NewsAdapter(newsItems, this);
+        newsRecyclerView.setAdapter(newsAdapter);
+    }
+
+    private void setUpTeachBourseRecycler() {
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, HORIZONTAL, true);
+
+        teachBourseRecyclerView.setLayoutManager(layoutManager);
+        teachBourseRecyclerView.setHasFixedSize(true);
+        List<TeachBourseItem> teachBourseItems = new ArrayList<>();
+        TeachBourseItem ot = new TeachBourseItem();
+        TeachBourseItem ot1 = new TeachBourseItem();
+        TeachBourseItem ot2 = new TeachBourseItem();
+        ot.setTitle("آموزش و آشنایی مقدمات");
+        ot.setDrawbleId(R.drawable.bourse_learn);
+
+        ot1.setTitle("راهنمای مختصر ورود و فعالیت");
+        ot1.setDrawbleId(R.drawable.bourse_guide);
+
+        ot2.setTitle("درخواست و صدور  مجوز");
+        ot2.setDrawbleId(R.drawable.bourse_license);
+
+
+        teachBourseItems.add(ot);
+        teachBourseItems.add(ot1);
+        teachBourseItems.add(ot2);
+
+        teachBourseItems.add(ot);
+        teachBourseItems.add(ot1);
+        teachBourseItems.add(ot2);
+
+        teachBourseItems.add(ot);
+        teachBourseItems.add(ot1);
+        teachBourseItems.add(ot2);
+
+        TeachBourseAdapter teachBourseAdapter = new TeachBourseAdapter(teachBourseItems, this);
+        teachBourseRecyclerView.setAdapter(teachBourseAdapter);
+    }
+
+    private void setUpCoinRecycler() {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, HORIZONTAL, true);
+
+        coinRecycleView.setLayoutManager(layoutManager);
+        coinRecycleView.setHasFixedSize(true);
+        List<CoinPrice> coinPriceItems = new ArrayList<>();
+        CoinPrice ot = new CoinPrice();
+        CoinPrice ot1 = new CoinPrice();
+
+
+        ot.setName("قیمت یورو در این لحظه");
+        ot.setDate(new int[]{10, 20, 30, 40, 50, 60, 71, 80, 90, 91});
+        ot.setRate("کاهش 2100 (%1.39)");
+        ot.setPrice(new int[]{100, 200, 300, 400, 500, 600, 701, 800, 900, 910});
+/*
+        ot1.setName("یورو");
+        ot1.setDate(new int[] {10,20,30,40,50,60,71,80,90,91});
+        ot1.setRate("20%");
+        ot1.setPrice(new int[] {10,20,30,40,50,60,71,80,90,91});*/
+
+
+        coinPriceItems.add(ot);
+        coinPriceItems.add(ot);
+        coinPriceItems.add(ot);
+        //coinPriceItems.add(ot1);
+/*
+
+        coinPriceItems.add(ot);
+        //coinPriceItems.add(ot1);
+
+        coinPriceItems.add(ot);
+        //coinPriceItems.add(ot1);
+*/
+
+        CoinAdapter coinAdapter = new CoinAdapter(coinPriceItems, this);
+        coinRecycleView.setAdapter(coinAdapter);
+    }
+
+    private void setUpOtherServicesRecycler() {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, HORIZONTAL, true);
+
+        otherServiceRecyclerView.setLayoutManager(layoutManager);
+        otherServiceRecyclerView.setHasFixedSize(true);
+        List<OtherServiceItem> otherServiceItems = new ArrayList<>();
+        OtherServiceItem ot = new OtherServiceItem();
+        OtherServiceItem ot1 = new OtherServiceItem();
+        OtherServiceItem ot2 = new OtherServiceItem();
+        ot.setTitle("ساختمان و مسکن");
+        ot.setDrawbleId(R.drawable.services_housing);
+
+        ot1.setTitle("حمل و نقل");
+        ot1.setDrawbleId(R.drawable.services_transportation);
+
+        ot2.setTitle("اطلاعات جغرافیایی");
+        ot2.setDrawbleId(R.drawable.services_geography);
+
+
+        otherServiceItems.add(ot);
+        otherServiceItems.add(ot1);
+        otherServiceItems.add(ot2);
+
+        otherServiceItems.add(ot);
+        otherServiceItems.add(ot1);
+        otherServiceItems.add(ot2);
+
+        otherServiceItems.add(ot);
+        otherServiceItems.add(ot1);
+        otherServiceItems.add(ot2);
+
+        OtherServiceAdapter otherServiceAdapter = new OtherServiceAdapter(otherServiceItems, this);
+        otherServiceRecyclerView.setAdapter(otherServiceAdapter);
     }
 
     private void setUpSpinner() {
@@ -607,7 +1046,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
         }
 
-
+        this.ntcode = ntCode;
+        this.mobileNumber = msisdn;
         if (!alreadyBazaarInited) {
             checkCafeBazaarLogin.initService();
         } else {
@@ -671,6 +1111,35 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         getUserHasSanjinehViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
         });
 
+        mNewsViewModel.getApiSuccessLiveDataResponse().observe(this, numberOfSanjineh -> {
+
+                    stopWating();
+
+                }
+        );
+
+        mNewsViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+        });
+        mNewsViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+            goToFailApiPage("ApiError");
+        });
+        mNewsViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+        {
+            //goToFailApiPage("ServerError");
+        });
+        mNewsViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+                {
+                    goToFailApiPage("TimeOutError");
+                }
+        );
+        mNewsViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+            goToFailApiPage("ClientNetworkError");
+        });
+
+        mNewsViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+        });
+        getUserHasSanjinehViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
 
         getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, creditScorePreProcess -> {
                     // Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
@@ -882,6 +1351,21 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         registerReceiver(broadcastReceiver, filter);
     }
 
+
+    @OnClick(R.id.btn_otp_submit)
+    public void setBtnOtpSubmitClick() {
+        Log.d(TAG, "setBtnOtpSubmitClick: " + edtTextOtp.getText());
+        if (edtTextOtp.length() == 4) {
+            showWating();
+
+            int verifyCode = Integer.parseInt(edtTextOtp.getText().toString());
+            getScoreViewModel.callGetScoreViewModel(mobileNumber, ntcode, 2, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, verifyCode, purchase);
+            Log.d(TAG, "btnGetScoreAction: VerifyCode" + verifyCode);
+
+            //confirmVerifyCodeViewModel.callConfirmVerifyCodeViewModel(msisdn,edtVerifyCodeOthers.getText().toString());
+        }
+    }
+
     private void bazaarSetup(String bazaarKey) {
 
         String base64EncodedPublicKey = bazaarKey;
@@ -938,6 +1422,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
 
     ///////////////////////////////////////////////////////////////////////////////////////
 

@@ -31,7 +31,7 @@
         app:boxBackgroundMode="outline">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_txt_mobile_number_login"
+            android:id="@+id/edt_txt_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

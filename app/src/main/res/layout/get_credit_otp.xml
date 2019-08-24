@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_get_credit_info">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_txt_mobile_number_login2"
+            android:id="@+id/edt_txt_otp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

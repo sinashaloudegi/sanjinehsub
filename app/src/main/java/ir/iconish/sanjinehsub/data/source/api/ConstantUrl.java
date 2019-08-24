@@ -17,6 +17,7 @@ public class ConstantUrl {
     public static final String APP_CONFIG = "cafebazaar/config";
     public static final String ARCHIVE = "icredit/allarchivedreport/";
     public static final String REPORTS = "icredit/v1/getarchivedbytoken";
+    public static final String CONTENT = "content/getallarticle";
 
     //_______________________________________________________________________________________//
 
@@ -36,5 +37,10 @@ public class ConstantUrl {
     @NonNull
     public static String BASE_MARKET = "http://market.iconish.ir/";
 
+
+    //_______________________________________________________________________________________//
+
+    @NonNull
+    public static String BASE_CONTENT = "http://content.iconish.ir/";
 
 }

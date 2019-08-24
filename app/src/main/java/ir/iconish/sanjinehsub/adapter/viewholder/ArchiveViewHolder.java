@@ -14,6 +14,8 @@ import ir.iconish.sanjinehsub.R;
 
 
 public class ArchiveViewHolder extends RecyclerView.ViewHolder {
+
+
     @Nullable
     @BindView(R.id.rootLayout) public View view;
     @Nullable
