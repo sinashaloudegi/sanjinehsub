@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adpdigital.push.AdpPushClient;
+import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
 import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.material.navigation.NavigationView;
@@ -67,11 +68,13 @@ import ir.iconish.sanjinehsub.data.model.NumberOfSanjineh;
 import ir.iconish.sanjinehsub.data.model.OtherServiceItem;
 import ir.iconish.sanjinehsub.data.model.ReportStateEnum;
 import ir.iconish.sanjinehsub.data.model.TeachBourseItem;
+import ir.iconish.sanjinehsub.data.model.Voucher;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.data.vm.LogoutViewModel;
 import ir.iconish.sanjinehsub.data.vm.NewsViewModel;
 import ir.iconish.sanjinehsub.data.vm.SendVerifyCodeViewModel;
 import ir.iconish.sanjinehsub.data.vm.UserNumberOfSanjinehViewModel;
+import ir.iconish.sanjinehsub.data.vm.VoucherListViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.ui.DialogHelper;
 import ir.iconish.sanjinehsub.ui.Dialoglistener;
@@ -130,13 +133,38 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     @Nullable
     @BindView(R.id.txt_user_name)
     TextView txtUserName;
+
     @Nullable
     @BindView(R.id.txt_get_credit_info)
     TextView txtGetCreditInfo;
 
     @Nullable
+    @BindView(R.id.voucher_txt_1)
+    TextView voucherTxt1;
+
+    @Nullable
+    @BindView(R.id.voucher_txt_2)
+    TextView voucherTxt2;
+
+    @Nullable
+    @BindView(R.id.voucher_txt_3)
+    TextView voucherTxt3;
+
+    @Nullable
     @BindView(R.id.imgNavMenu)
     ImageView imgNavMenu;
+
+    @Nullable
+    @BindView(R.id.voucher_img_1)
+    ImageView voucherImg1;
+
+    @Nullable
+    @BindView(R.id.voucher_img_2)
+    ImageView voucherImg2;
+
+    @Nullable
+    @BindView(R.id.voucher_img_3)
+    ImageView voucherImg3;
 
     @Nullable
     @BindView(R.id.edt_txt_ntcode_get_credit)
@@ -193,6 +221,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     private static final String TAG = "MainActivity";
     @Inject
     LogoutViewModel logoutViewModel;
+
+    @Inject
+    VoucherListViewModel mVoucherListViewModel;
     Purchase purchase;
     @Inject
     SendVerifyCodeViewModel sendVerifyCodeViewModel;
@@ -274,11 +305,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
     private void initNavigation() {
         List<NavigationItem> navigationItems = new ArrayList<>();
-    /*  NavigationItem n1=new NavigationItem();
-      n1.setTitle(getString(R.string.nav_dpwnload_app));
-      n1.setDrawbleId(R.drawable.ic_download_nav);
-      n1.setId(1);
-      navigationItems.add(0,n1);*/
+
 
 
         NavigationItem n2 = new NavigationItem();
@@ -301,11 +328,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         n4.setId(4);
         navigationItems.add(2, n4);
 
-/*        NavigationItem n9 = new NavigationItem();
-        n9.setTitle(getString(R.string.nav_profile));
-        n9.setDrawbleId(R.drawable.ic_person_nav);
-        n9.setId(9);
-        navigationItems.add(2, n9);*/
 
         NavigationItem n5 = new NavigationItem();
         n5.setTitle("آموزش بهبود رتبه اعتباری");
@@ -778,7 +800,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         setUpCoinRecycler();
         setUpOtherServicesRecycler();
         setUpTeachBourseRecycler();
-        setUpNewsRecycler();
         setUpSpinner();
         initNavigation();
         checkCafeBazaarLogin = new CheckCafeBazaarLogin(MainActivity.this);
@@ -793,10 +814,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
             edtMsisdnOthers.setText(getUserHasSanjinehViewModel.getMobileNumber());
         }
 
+
         attachViewModel();
+        // TODO: 8/25/2019 what is dto for vouchers
+        // mVoucherListViewModel.callVoucherListViewModel();
+        mNewsViewModel.callNewsViewModel();
+
         Log.d(TAG, "onCreate: GetScoreActivity");
         getUserHasSanjinehViewModel.callGetUserSanjinehViewModel();
-        mNewsViewModel.callNewsViewModel();
 
         edtTextSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -816,37 +841,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     }
 
 
-    private void setUpNewsRecycler() {
+    private void setUpNewsRecycler(List<NewsItem> newsItems) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, true);
 
         newsRecyclerView.setLayoutManager(layoutManager);
         newsRecyclerView.setHasFixedSize(true);
-        List<NewsItem> newsItems = new ArrayList<>();
-        NewsItem ot = new NewsItem();
-        NewsItem ot1 = new NewsItem();
-        NewsItem ot2 = new NewsItem();
-        ot.setTitle("عنوان اینجا قرار می گیرد");
-        ot.setDrawbleId(R.drawable.trump);
-        ot.setDecribtion("عنوان اینجا قرار می گیرد\n" +
-                "چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.");
 
-        ot1.setTitle("عنوان اینجا قرار می گیرد");
-        ot1.setDrawbleId(R.drawable.trump);
-        ot1.setDecribtion("عنوان اینجا قرار می گیرد\n" +
-                "چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.");
-
-        ot2.setTitle("عنوان اینجا قرار می گیرد");
-        ot2.setDrawbleId(R.drawable.trump);
-        ot2.setDecribtion("عنوان اینجا قرار می گیرد\n" +
-                "چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.");
-
-
-        newsItems.add(ot);
-        newsItems.add(ot1);
-        newsItems.add(ot2);
-
-
-        NewsAdapter newsAdapter = new NewsAdapter(newsItems, this);
+        Log.d(TAG, "newsItem getImgUrl " + newsItems.get(0).getImgUrl());
+        NewsAdapter newsAdapter = new NewsAdapter(this, newsItems, this);
         newsRecyclerView.setAdapter(newsAdapter);
     }
 
@@ -1087,7 +1089,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
                     Log.d(TAG, "this.numberOfSanjineh: " + numberOfSanjineh);
                 }
         );
-
         getUserHasSanjinehViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
         });
         getUserHasSanjinehViewModel.getApiErrorLiveData().observe(this, volleyError -> {
@@ -1111,14 +1112,18 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         getUserHasSanjinehViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
         });
 
-        mNewsViewModel.getApiSuccessLiveDataResponse().observe(this, numberOfSanjineh -> {
+        getUserHasSanjinehViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
 
+
+        mNewsViewModel.getApiSuccessLiveDataResponse().observe(this, newsItems -> {
+                    setUpNewsRecycler(newsItems);
                     stopWating();
-
                 }
         );
 
         mNewsViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+
         });
         mNewsViewModel.getApiErrorLiveData().observe(this, volleyError -> {
             goToFailApiPage("ApiError");
@@ -1138,8 +1143,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
         mNewsViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
         });
-        getUserHasSanjinehViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
-        });
+
 
         getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, creditScorePreProcess -> {
                     // Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
@@ -1171,6 +1175,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         });
         getScoreViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
         });
+
+
         sendVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, verifyCodeOthersResponse -> {
                     //   String s = String.format("تا دقایقی دیگر کد تایید برای شماره s%ارسال خواهد شد", getUserHasSanjinehViewModel.getMobileNumber());
                     //  txtGetCreditInfo.setText(s);
@@ -1233,6 +1239,56 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         });
         sendVerifyCodeViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
         });
+
+
+        mVoucherListViewModel.getApiSuccessLiveDataResponse().observe(this, vouchers -> {
+                    setUpVouvhers(vouchers);
+
+                }
+        );
+
+        mVoucherListViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+        });
+
+        mVoucherListViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+            goToFailApiPage("ApiError");
+
+        });
+        mVoucherListViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+
+        {
+            goToFailApiPage("ServerError");
+
+        });
+        mVoucherListViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+                {
+                    goToFailApiPage("TimeOutError");
+                }
+
+        );
+        mVoucherListViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+            goToFailApiPage("ClientNetworkError");
+
+
+        });
+
+
+        mVoucherListViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+        });
+        mVoucherListViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
+
+    }
+
+    private void setUpVouvhers(List<Voucher> vouchers) {
+
+        voucherTxt1.setText(vouchers.get(0).getDescription());
+        voucherTxt2.setText(vouchers.get(1).getDescription());
+        voucherTxt3.setText(vouchers.get(2).getDescription());
+
+        Glide.with(this).load(vouchers.get(0).getDescription()).into(voucherImg1);
+        Glide.with(this).load(vouchers.get(1).getDescription()).into(voucherImg2);
+        Glide.with(this).load(vouchers.get(2).getDescription()).into(voucherImg3);
 
 
     }

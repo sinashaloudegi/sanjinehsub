@@ -1,38 +1,35 @@
 package ir.iconish.sanjinehsub.data.repository;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import javax.inject.Inject;
 
-import ir.iconish.sanjinehsub.data.source.api.NewsApi;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
+import ir.iconish.sanjinehsub.data.source.api.VoucherListApi;
 import ir.iconish.sanjinehsub.data.source.local.SharedPreferencesManager;
 
 /**
  * @author s.shaloudegi
- * @date 8/24/2019
+ * @date 7/31/2019
  */
-public class NewsRepository {
-    NewsApi mNewsApi;
-    private static final String TAG = "NewsRepository";
-
+public class VoucherListRepository {
+    VoucherListApi mVoucherListApi;
     SharedPreferencesManager sharedPreferencesManager;
 
-    @Inject
-    public NewsRepository(NewsApi newsApi, SharedPreferencesManager sharedPreferencesManager) {
 
-        this.mNewsApi = newsApi;
+    @Inject
+    public VoucherListRepository(SharedPreferencesManager sharedPreferencesManager) {
+
+
         this.sharedPreferencesManager = sharedPreferencesManager;
     }
 
-    public void callNewsRepository(int arttypeid, @NonNull final VolleyCallback volleyCallback) {
-        mNewsApi.callNewsApi(arttypeid, sharedPreferencesManager.getTokenValue(), new VolleyCallback() {
+    public void callVoucherListApi(@NonNull final VolleyCallback volleyCallback) {
+
+
+        mVoucherListApi.callVoucherListApi(sharedPreferencesManager.getUserIdValue(), new VolleyCallback() {
             @Override
             public void onSuccess(Object o) {
-
-                Log.d(TAG, "onSuccess: " + o.toString());
                 volleyCallback.onSuccess(o);
             }
 
@@ -79,6 +76,5 @@ public class NewsRepository {
 
 
     }
-
 
 }

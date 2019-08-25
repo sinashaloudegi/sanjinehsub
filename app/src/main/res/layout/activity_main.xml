@@ -64,6 +64,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <include layout="@layout/main_navigation_header" />
+
             <View
                 android:layout_width="240dp"
                 android:layout_height="@dimen/sizehalf"
@@ -79,7 +81,6 @@
 
             </androidx.recyclerview.widget.RecyclerView>
 
-            <include layout="@layout/main_navigation_header" />
 
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>

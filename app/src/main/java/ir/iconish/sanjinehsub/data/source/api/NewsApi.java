@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.source.api;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -8,7 +10,7 @@ import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +37,7 @@ public class NewsApi {
     AppController
             appController;
 
+    private static final String TAG = "NewsApi";
 
     @Inject
     public NewsApi(AppController appController) {
@@ -47,30 +50,39 @@ public class NewsApi {
 
         String url = ConstantUrl.BASE_CONTENT + ConstantUrl.CONTENT;
 
+        Log.d(TAG, "callNewsApi: url: " + url);
         JSONObject jsonObject = new JSONObject();
+
+
         try {
             jsonObject.put("appid", AppConstants.APP_ID);
             jsonObject.put("arttypeid", arttypeid + "");
-            jsonObject.put("pageSize", 3 + "");
-            jsonObject.put("pageNumber", 0 + "");
+            jsonObject.put("pageNumber", 0);
+            jsonObject.put("pageSize", 3);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.POST,
-                url, null,
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                url, jsonObject,
                 response -> {
-
+                    Log.d(TAG, "responseLen: " + response.length());
 
                     if (response != null) {
 
-                        List<NewsItem> newsItems = parseJson(response);
+                        List<NewsItem> newsItems = null;
+                        try {
+                            newsItems = parseJson(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         volleyCallback.onSuccess(newsItems);
 
                     }
 
 
                 }, error -> {
+            Log.d(TAG, "callNewsApi: ERROR" + error.networkResponse.statusCode + "");
             if ((error instanceof NetworkError) || (error instanceof NoConnectionError)) {
 
                 volleyCallback.onClientNetworkError();
@@ -130,19 +142,27 @@ public class NewsApi {
     }
 
     @NonNull
-    public List<NewsItem> parseJson(@NonNull JSONArray jsonArray) {
-        int jsonLength = jsonArray.length();
-        List<NewsItem> newsItems = new ArrayList<>(jsonLength);
-        for (int i = 0; i < jsonLength; i++) {
+    public List<NewsItem> parseJson(@NonNull JSONObject jsonObject) throws JSONException {
+        JSONArray jsonArray = jsonObject.getJSONArray("lstArticle");
+
+
+        Log.d(TAG, "parseJson: " + jsonArray.length());
+        //    int jsonLength = jsonArray.length();
+        List<NewsItem> newsItems = new ArrayList<>(3);
+
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String articleId = jsonObject.getString("articleid");
-                String articleTitle = jsonObject.getString("articletitle");
-                String articlecontent = jsonObject.getString("articlecontent");
-                String fileurl = jsonObject.getString("fileurl");
+                //JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String articleId = jsonArray.getJSONObject(i).getString("articleid");
+                String articleTitle = jsonArray.getJSONObject(i).getString("articletitle");
+                String articlecontent = jsonArray.getJSONObject(i).getString("articlecontent");
+                String fileUrl = jsonArray.getJSONObject(i).getJSONArray("medias").getJSONObject(0).getJSONObject("fileDocument").getString("fileurl");
+
+
+                //String fileurl = jsonObject.getString("fileurl");
                 NewsItem newsItem = new NewsItem();
                 newsItem.setTitle(articleTitle);
-                newsItem.setImgUrl(fileurl);
+                newsItem.setImgUrl(fileUrl);
                 newsItem.setDecribtion(articlecontent);
                 newsItem.setId(Integer.valueOf(articleId));
                 newsItems.add(i, newsItem);
@@ -151,7 +171,6 @@ public class NewsApi {
                 e.printStackTrace();
             }
         }
-
         return newsItems;
     }
 }

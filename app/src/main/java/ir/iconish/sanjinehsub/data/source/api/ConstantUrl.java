@@ -18,6 +18,7 @@ public class ConstantUrl {
     public static final String ARCHIVE = "icredit/allarchivedreport/";
     public static final String REPORTS = "icredit/v1/getarchivedbytoken";
     public static final String CONTENT = "content/getallarticle";
+    public static final String KHOSHHESABAN_PROFILE = "khoshhesaban/getkhoshhesabanprofile";
 
     //_______________________________________________________________________________________//
 
@@ -42,5 +43,13 @@ public class ConstantUrl {
 
     @NonNull
     public static String BASE_CONTENT = "http://content.iconish.ir/";
+
+
+    //_______________________________________________________________________________________//
+
+    @NonNull
+    public static String BASE_KHOSHHESABAN = "https://creditscore.iconish.ir/";
+
+
 
 }

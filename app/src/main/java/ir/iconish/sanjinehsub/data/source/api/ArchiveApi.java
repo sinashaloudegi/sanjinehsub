@@ -86,11 +86,12 @@ public class ArchiveApi {
 
         ) {
             @Override
+
+            @NonNull
             public String getBodyContentType() {
                 return "application/json; charset=utf-8";
             }
 
-            @NonNull
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();

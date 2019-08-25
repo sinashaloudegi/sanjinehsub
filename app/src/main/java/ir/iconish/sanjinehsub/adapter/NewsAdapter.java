@@ -1,11 +1,14 @@
 package ir.iconish.sanjinehsub.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -24,10 +27,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
 
     RecyclerIemListener recyclerIemListener;
     private List<NewsItem> newsItems;
+    Context mContext;
 
-    public NewsAdapter(List<NewsItem> newsItems, RecyclerIemListener recyclerIemListener) {
+    public NewsAdapter(Context context, List<NewsItem> newsItems, RecyclerIemListener recyclerIemListener) {
         this.newsItems = newsItems;
 
+        mContext = context;
         this.recyclerIemListener = recyclerIemListener;
 
     }
@@ -49,6 +54,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
 
 
         final NewsItem newsItem = newsItems.get(i);
+        Glide.with(mContext).load(newsItem.getImgUrl()).into(viewHolder.newsImage);
         viewHolder.newsImage.setImageResource(newsItem.getDrawbleId());
         viewHolder.newsText.setText(newsItem.getTitle());
         viewHolder.newsDescription.setText(newsItem.getDecribtion());

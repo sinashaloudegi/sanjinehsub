@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/font_style</item>
 
 
         <item name="windowNoTitle">true</item>
@@ -26,5 +27,7 @@
     <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">#0c9ce3</item>
         <item name="boxStrokeWidth">2dp</item>
+        <item name="android:fontFamily">@font/font_style</item>
+
     </style>
 </resources>
