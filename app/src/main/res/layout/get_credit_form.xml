@@ -6,6 +6,80 @@
     android:orientation="horizontal">
 
 
+    <FrameLayout
+        android:id="@+id/layout_check_rule"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/materialButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_accept_rules"
+        app:layout_constraintTop_toBottomOf="@+id/editText1">
+
+        <ImageView
+            android:id="@+id/check_box_blank"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="check_box_blank"
+            android:src="@drawable/check_box_blank" />
+
+        <ImageView
+            android:id="@+id/check_box"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="check_box"
+            android:src="@drawable/check_box"
+            android:visibility="gone" />
+    </FrameLayout>
+
+
+    <ProgressBar
+        android:id="@+id/prgGetScore"
+        android:layout_width="391dp"
+        android:layout_height="29dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="96dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <Spinner
+        android:id="@+id/spnr_choose_self_others"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:dropDownWidth="wrap_content"
+        android:layoutDirection="rtl"
+        android:spinnerMode="dialog"
+        android:textDirection="firstStrongRtl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_get_credit_info" />
+
+    <TextView
+        android:id="@+id/txt_accept_rules"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="با انتخاب دکمه تایید، تطابق کد ملی وارد شده و مالکیت شماره تلفن همراه را تایید می کنم"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/layout_check_rule"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText1" />
+
     <TextView
         android:id="@+id/txt_get_credit_info"
         android:layout_width="0dp"
@@ -14,10 +88,65 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:text="@string/fill_in_the_form"
-        android:textSize="12sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_get_credit"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="بررسی رتبه اعتباری"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_accept_rules"
+        app:layout_constraintVertical_bias="0.17">
+
+    </com.google.android.material.button.MaterialButton>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editText2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_weight="1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical"
+        android:hint="کد تایید"
+        android:inputType="text"
+        android:visibility="invisible"
+        app:boxBackgroundMode="outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_text_get_credit_mobile">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_txt_mobile_number_login2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:inputType="phone"
+            android:textAlignment="center" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -85,129 +214,4 @@
             android:textAlignment="center" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editText2"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:layout_weight="1"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:gravity="center_vertical"
-        android:hint="کد تایید"
-        android:inputType="text"
-        android:visibility="invisible"
-        app:boxBackgroundMode="outline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_text_get_credit_mobile">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_txt_mobile_number_login2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
-            android:inputType="phone"
-            android:textAlignment="center" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Spinner
-        android:id="@+id/spnr_choose_self_others"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_get_credit_info" />
-
-
-    <FrameLayout
-        android:id="@+id/layout_check_rule"
-        android:layout_width="30dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/materialButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txt_accept_rules"
-        app:layout_constraintTop_toBottomOf="@+id/editText1">
-
-        <ImageView
-            android:id="@+id/check_box_blank"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="check_box_blank"
-            android:src="@drawable/check_box_blank" />
-
-        <ImageView
-            android:id="@+id/check_box"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="check_box"
-            android:src="@drawable/check_box"
-            android:visibility="gone" />
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/txt_accept_rules"
-        android:layout_width="0dp"
-        android:layout_height="39dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
-        android:text="با انتخاب دکمه تایید، تطابق کد ملی وارد شده و مالکیت شماره تلفن همراه را تایید می کنم"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/layout_check_rule"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText1" />
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_get_credit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:text="بررسی رتبه اعتباری"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_accept_rules"
-        app:layout_constraintVertical_bias="0.17">
-
-    </com.google.android.material.button.MaterialButton>
-
-
-    <ProgressBar
-        android:id="@+id/prgGetScore"
-        android:layout_width="391dp"
-        android:layout_height="29dp"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="96dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

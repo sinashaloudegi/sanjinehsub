@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     @BindView(R.id.news_recycler_view)
     RecyclerView newsRecyclerView;
 
+
     @Nullable
     @BindView(R.id.coin_recycler_view)
     RecyclerView coinRecycleView;
@@ -305,7 +306,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
     private void initNavigation() {
         List<NavigationItem> navigationItems = new ArrayList<>();
-
 
 
         NavigationItem n2 = new NavigationItem();
@@ -666,12 +666,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
             if (mHelper == null) {
                 return;
             }
-            if (result.isSuccess()) {
-                //Log.e("Test", "Consumption successful. Provisioning.");
-            } else {
-                //Log.e("Test", "Error while consuming: " + result);
-            }
-            //Log.e("Test",  "End consumption flow.");
+            result.isSuccess();//Log.e("Test", "Consumption successful. Provisioning.");
+//Log.e("Test", "Error while consuming: " + result);
+//Log.e("Test",  "End consumption flow.");
         }
     };
     @NonNull
@@ -962,6 +959,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     }
 
     private void setUpSpinner() {
+
         spnrChooseSelfOthers.setOnItemSelectedListener(this);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.spnr_self_other_choose, android.R.layout.simple_spinner_item);
@@ -1103,9 +1101,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
                     goToFailApiPage("TimeOutError");
                 }
         );
-        getUserHasSanjinehViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ClientNetworkError");
-        });
+        getUserHasSanjinehViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> goToFailApiPage("ClientNetworkError"));
 
         getUserHasSanjinehViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
         });
@@ -1241,10 +1237,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         });
 
 
-        mVoucherListViewModel.getApiSuccessLiveDataResponse().observe(this, vouchers -> {
-                    setUpVouvhers(vouchers);
-
-                }
+        mVoucherListViewModel.getApiSuccessLiveDataResponse().observe(this, this::setUpVouvhers
         );
 
         mVoucherListViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
@@ -1261,9 +1254,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
         });
         mVoucherListViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-                {
-                    goToFailApiPage("TimeOutError");
-                }
+                goToFailApiPage("TimeOutError")
 
         );
         mVoucherListViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
@@ -1470,7 +1461,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
             Toast.makeText(this, "خطای ناشناخته", Toast.LENGTH_SHORT).show();
         }
         // Showing selected spinner item
-        Toast.makeText(adapterView.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
 
     }
 

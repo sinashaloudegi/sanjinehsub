@@ -64,7 +64,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
                     if (passwordValidationResponse.getRespobseStatusCode() == 1000) {
 
-                        ActivityNavigationHelper.navigateToActivity(this, ForgetPassworReciverActivity.class, true);
+                        ActivityNavigationHelper.navigateToActivityWithData(this, ForgetPassworReciverActivity.class, true, "mobileNumber", edtPhone.getText().toString());
                     } else {
 
                         txtAlert.setText(passwordValidationResponse.getDescryptions());

@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.iwgang.countdownview.CountdownView;
 import ir.iconish.sanjinehsub.R;
 import ir.iconish.sanjinehsub.config.AppController;
 import ir.iconish.sanjinehsub.data.vm.CheckPasswordViewModel;
@@ -39,6 +40,11 @@ public class ForgetPassworReciverActivity extends AppCompatActivity {
 
 
     @Nullable
+    @BindView(R.id.my_progressBar)
+    ProgressBar myProgressBar;
+
+
+    @Nullable
     @BindView(R.id.btnRetry)
     AppCompatButton btnRetry;
 
@@ -47,11 +53,18 @@ public class ForgetPassworReciverActivity extends AppCompatActivity {
     @BindView(R.id.txtAlert)
     TextView txtAlert;
 
+    @Nullable
+    @BindView(R.id.sent_to_number_txt)
+    TextView sentToNumberTxt;
+
 
     @Nullable
     @BindView(R.id.prg)
     ProgressBar prg;
 
+    @Nullable
+    @BindView(R.id.count_down)
+    CountdownView countDown;
 
     @Inject
     CheckPasswordViewModel checkPasswordViewModel;
@@ -71,6 +84,9 @@ public class ForgetPassworReciverActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
 
+        String mobileNumber = getIntent().getExtras().getString("mobileNumber");
+        String textBuilder = String.format("کد فعالسازی برای شماره %s  پیامک شده است", mobileNumber);
+        sentToNumberTxt.setText(textBuilder);
         attachViewModel();
 
         startTimer();
@@ -81,6 +97,7 @@ public class ForgetPassworReciverActivity extends AppCompatActivity {
     private void startTimer() {
 //long timer=Long.parseLong(getString(R.string.timer_start_value));
         int timerDuration = checkPasswordViewModel.getTimerDuration();
+        countDown.start(timerDuration); // Millisecond
 
         countDownTimer = new CountDownTimer(timerDuration, 1000) {
 
@@ -98,7 +115,7 @@ public class ForgetPassworReciverActivity extends AppCompatActivity {
                 txtTimer.setText("0");
                 btnEnter.setVisibility(View.INVISIBLE);
                 btnRetry.setVisibility(View.VISIBLE);
-
+                myProgressBar.setVisibility(View.INVISIBLE);
             }
 
         }.start();
