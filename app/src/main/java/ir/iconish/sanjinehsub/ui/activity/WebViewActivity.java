@@ -52,7 +52,7 @@ public class WebViewActivity extends AppCompatActivity {
         } else {
             Log.d(TAG, "onBackPressed: urlweb" + url);
             if (url.contains("/report/")) {
-                DialogHelper.sureBack(this);
+                DialogHelper.sureBack(WebViewActivity.this);
             } else {
                 finish();
             }

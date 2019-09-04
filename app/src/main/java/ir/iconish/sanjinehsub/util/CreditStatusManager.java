@@ -3,7 +3,6 @@ package ir.iconish.sanjinehsub.util;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,7 +35,7 @@ public class CreditStatusManager implements Dialoglistener {
             getScoreAtion(creditScorePreProcess.getReqToken(), activity);
             // goToNativeReportActivity(creditScorePreProcess.getReqToken());
         } else {
-            showErrorCase("", creditScorePreProcess.getReportDescryption(), textView);
+            showErrorCase("", creditScorePreProcess.getReportDescryption());
         }
 
        /* else {
@@ -50,7 +49,7 @@ showErrorCase(activity.getString(R.string.error)+" "+status,activity.getString(R
         String url = "https://www.sanjineh.ir/report/" + reqToken + "?from=android_cafebazar";
         Log.d(TAG, "getScoreAtion:URL: ");
         ActivityNavigationHelper.navigateToWebView(url, activity, WebViewActivity.class);
-        activity.finish();
+        // activity.finish();
     }
 
     @Override
@@ -63,11 +62,11 @@ showErrorCase(activity.getString(R.string.error)+" "+status,activity.getString(R
 
     }
 
-    private void showErrorCase(String dialogTitle, String dialogBody, TextView textView) {
+    private void showErrorCase(String dialogTitle, String dialogBody) {
 
         DialogHelper.showDialog(dialogTitle, dialogBody, activity.getString(R.string.submit), null, activity, this);
-        textView.setText(dialogBody);
-        textView.setVisibility(View.VISIBLE);
+        /*textView.setText(dialogBody);
+        textView.setVisibility(View.VISIBLE);*/
     }
 
     private void goToNativeReportActivity(String reqToken) {

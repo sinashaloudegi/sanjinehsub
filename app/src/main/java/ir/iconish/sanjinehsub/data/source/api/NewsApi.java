@@ -143,8 +143,13 @@ public class NewsApi {
 
     @NonNull
     public List<NewsItem> parseJson(@NonNull JSONObject jsonObject) throws JSONException {
-        JSONArray jsonArray = jsonObject.getJSONArray("lstArticle");
-
+        JSONArray jsonArray;
+        try {
+            jsonArray = jsonObject.getJSONArray("lstArticle");
+        } catch (Exception e) {
+            e.getStackTrace();
+            return null;
+        }
 
         Log.d(TAG, "parseJson: " + jsonArray.length());
         //    int jsonLength = jsonArray.length();

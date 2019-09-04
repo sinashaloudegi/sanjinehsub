@@ -8,7 +8,7 @@
 
 
     <View
-        android:id="@+id/divider1"
+        android:id="@+id/divider_voucher"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
@@ -18,7 +18,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline24"
         app:layout_constraintTop_toBottomOf="@+id/accordion_layout" />
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline23"
@@ -34,6 +33,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="12dp" />
 
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline25"
         android:layout_width="wrap_content"
@@ -48,14 +48,35 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_end="16dp" />
+    <!--
 
-
+        <AutoCompleteTextView
+            android:id="@+id/auto_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@android:drawable/ic_menu_search"
+            android:imeOptions="actionSearch"
+            android:textAlignment="center"
+            android:textDirection="anyRtl"
+            app:layout_constraintEnd_toStartOf="@+id/guideline23"
+            app:layout_constraintStart_toStartOf="@+id/guideline24"
+            app:layout_constraintTop_toTopOf="@+id/guideline25" />
+    -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline29"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="1144dp" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="32dp" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/search_txt"
@@ -64,9 +85,10 @@
         android:layout_height="wrap_content"
         android:hint=" جستجو کنید"
         android:inputType="phone"
-
         android:textDirection="anyRtl"
+        android:visibility="gone"
         app:boxBackgroundColor="#e9e9e9  "
+        app:layout_constraintCircleRadius="4dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline23"
         app:layout_constraintStart_toStartOf="@+id/guideline24"
         app:layout_constraintTop_toTopOf="@+id/guideline25">
@@ -84,15 +106,16 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <include
         android:id="@+id/accordion_layout"
         layout="@layout/get_credit_accordion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/divider1"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="@dimen/padding_3"
+        app:layout_constraintBottom_toTopOf="@+id/divider_voucher"
         app:layout_constraintEnd_toStartOf="@+id/guideline23"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/guideline24"
@@ -108,7 +131,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@+id/guideline23"
         app:layout_constraintStart_toEndOf="@+id/guideline24"
-        app:layout_constraintTop_toBottomOf="@+id/divider1" />
+        app:layout_constraintTop_toBottomOf="@+id/divider_voucher" />
 
     <include
         android:id="@+id/coin_price_layout"
@@ -116,10 +139,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline23"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guideline24"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vouchers_layout" />
+
 
     <include
         android:id="@+id/other_services_layout"
@@ -127,10 +152,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline23"
-        app:layout_constraintStart_toEndOf="@+id/guideline24"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coin_price_layout" />
-
 
     <include
         android:id="@+id/teach_bourse_layout"
@@ -138,6 +163,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/guideline23"
         app:layout_constraintStart_toEndOf="@+id/guideline24"
         app:layout_constraintTop_toBottomOf="@+id/other_services_layout" />
@@ -147,10 +173,9 @@
         layout="@layout/recycler_view_news"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline30"
         app:layout_constraintEnd_toStartOf="@+id/guideline23"
         app:layout_constraintStart_toEndOf="@+id/guideline24"
-        app:layout_constraintTop_toTopOf="@+id/guideline29"
-        app:layout_constraintVertical_bias="0.914" />
+        app:layout_constraintTop_toBottomOf="@+id/other_services_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

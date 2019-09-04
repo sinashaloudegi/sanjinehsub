@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.source.api;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -38,6 +40,8 @@ public class VoucherListApi {
     }
 
 
+    private static final String TAG = "VoucherListApi";
+
     public void callVoucherListApi(Long userId, @NonNull final VolleyCallback volleyCallback) {
 
 
@@ -47,6 +51,8 @@ public class VoucherListApi {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("userId", userId);
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -112,33 +118,53 @@ public class VoucherListApi {
 
     }
 
-
     @NonNull
     public List<Voucher> parseJson(@NonNull JSONObject jsonObject) {
+        Log.d(TAG, "    parseJson: " + jsonObject.toString());
         JSONArray jsonArray = null;
         try {
             jsonArray = jsonObject.getJSONArray("offer");
         } catch (JSONException e) {
+
             e.printStackTrace();
+            return null;
         }
         int jsonLength = jsonArray.length();
+        Log.d(TAG, "parseJson: len= " + jsonLength);
         List<Voucher> voucherList = new ArrayList<>(jsonLength);
         for (int i = 0; i < jsonLength; i++) {
 
-       /*     try {
+            try {
                 Voucher voucher = new Voucher();
 
-                String description = jsonArray.get(i).getString("description");
-                String serviceActionId =jsonArray.get(i).jsonObject.getString("serviceActionId");
-                Log.d("eeee", jsonObject.getString("description"));
+                long id = Long.valueOf(jsonArray.getJSONObject(i).getString("id"));
+                String name = jsonArray.getJSONObject(i).getString("name");
+                String score = jsonArray.getJSONObject(i).getString("score");
+                String prizeTypeId = jsonArray.getJSONObject(i).getString("prizeTypeId");
+                String price = jsonArray.getJSONObject(i).getString("price");
+                String unitId = jsonArray.getJSONObject(i).getString("unitId");
+                String discount = jsonArray.getJSONObject(i).getString("discount");
+                String imageUrl = jsonArray.getJSONObject(i).getString("imageUrl");
+                String description = jsonArray.getJSONObject(i).getString("description");
+
+                //Log.d("eeee", jsonObject.getString("description"));
+                voucher.setName(name);
+
+                voucher.setId(id);
                 voucher.setDescription(description);
-                voucher.setServiceActionId(serviceActionId);
+
+                voucher.setDiscount(discount);
+                voucher.setImageUrl(imageUrl);
+                voucher.setPrice(price);
+                voucher.setPrizeTypeId(prizeTypeId);
+                voucher.setUnitId(unitId);
+                voucher.setScore(score);
                 voucherList.add(i, voucher);
 
             } catch (JSONException e) {
-                //Log.e("err",e.toString());
+                Log.d("err", e.toString());
                 e.printStackTrace();
-            }*/
+            }
 
         }
 

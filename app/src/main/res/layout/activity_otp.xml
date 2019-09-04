@@ -5,7 +5,6 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -45,12 +44,15 @@
         android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:background="#a7a7a7"
         android:orientation="vertical"
         android:padding="0.5dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintStart_toStartOf="@+id/guideline11">
+        app:layout_constraintStart_toStartOf="@+id/guideline11"
+        app:layout_constraintTop_toBottomOf="@+id/txt_code_sent">
 
         <ProgressBar
             android:id="@+id/my_progressBar"
@@ -61,6 +63,31 @@
             android:background="@color/white"
             android:indeterminate="true"
             android:indeterminateBehavior="cycle" />
+
+        <cn.iwgang.countdownview.CountdownView
+            android:id="@+id/count_down"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            app:isHideTimeBackground="false"
+            app:isShowMinute="true"
+            app:isShowSecond="true"
+            app:isShowTimeBgDivisionLine="true"
+            app:isSuffixTextBold="true"
+            app:isTimeTextBold="true"
+            app:suffixGravity="center"
+            app:suffixMinuteLeftMargin="16dp"
+            app:suffixMinuteRightMargin="16dp"
+            app:suffixTextColor="#0b74bc"
+            app:suffixTextSize="24sp"
+            app:timeBgBorderColor="#0b74bc"
+            app:timeBgColor="@color/white"
+            app:timeBgDivisionLineColor="@color/white"
+            app:timeBgDivisionLineSize="16dp"
+            app:timeBgSize="16dp"
+            app:timeTextColor="#0b74bc"
+            app:timeTextSize="28sp" />
 
 
     </LinearLayout>
@@ -75,20 +102,20 @@
         app:layout_constraintStart_toStartOf="@+id/guideline11"
         app:layout_constraintTop_toTopOf="@+id/btnEnter" />
 
+
     <TextView
         android:id="@+id/txtTimer"
         android:layout_width="0dp"
         android:layout_height="43dp"
-        android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="@string/timer_start_value"
         android:textColor="@color/black"
         android:textSize="@dimen/login_steps_text_size"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
-        app:layout_constraintTop_toBottomOf="@+id/txt_code_sent" />
-
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
     <TextView
         android:id="@+id/txtAlert"
@@ -110,15 +137,15 @@
         android:id="@+id/txt_code_sent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="کد فعالسازی برای شماره 09123782108  پیامک شده است"
-        android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
-        app:layout_constraintTop_toBottomOf="@+id/imgLogoVerifyOthers" />
+        app:layout_constraintTop_toTopOf="@+id/guideline18" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -143,33 +170,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="120dp" />
 
-
-    <cn.iwgang.countdownview.CountdownView
-        android:id="@+id/count_down"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@color/white"
-        app:isHideTimeBackground="false"
-        app:isShowMinute="true"
-        app:isShowSecond="true"
-        app:isShowTimeBgDivisionLine="true"
-        app:isSuffixTextBold="true"
-        app:isTimeTextBold="true"
-        app:suffixGravity="center"
-        app:suffixMinuteLeftMargin="16dp"
-        app:suffixMinuteRightMargin="16dp"
-        app:suffixTextColor="#0b74bc"
-        app:suffixTextSize="24sp"
-        app:timeBgBorderColor="#0b74bc"
-        app:timeBgColor="@color/white"
-        app:timeBgDivisionLineColor="@color/white"
-        app:timeBgDivisionLineSize="16dp"
-        app:timeBgSize="16dp"
-        app:timeTextColor="#0b74bc"
-        app:timeTextSize="28sp"
-        tools:layout_editor_absoluteX="34dp"
-        tools:layout_editor_absoluteY="293dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEnter"
@@ -207,13 +207,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="124dp"
+        android:layout_marginTop="64dp"
         android:hint="کد فعالسازی"
-        app:layout_constraintBottom_toTopOf="@+id/btnEnter"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
-        app:layout_constraintTop_toBottomOf="@+id/txtTimer">
+        app:layout_constraintTop_toTopOf="@+id/txtTimer">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtVerifyCode"

@@ -1,6 +1,7 @@
 package ir.iconish.sanjinehsub.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
 
     }
 
+    private static final String TAG = "NewsAdapter";
+
     @Override
     public void onBindViewHolder(@NonNull final NewsViewHolder viewHolder, final int i) {
 
@@ -57,8 +60,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
         Glide.with(mContext).load(newsItem.getImgUrl()).into(viewHolder.newsImage);
         viewHolder.newsImage.setImageResource(newsItem.getDrawbleId());
         viewHolder.newsText.setText(newsItem.getTitle());
-        viewHolder.newsDescription.setText(newsItem.getDecribtion());
-
+        String tmpDescription = newsItem.getDecribtion();
+        String pattern = "(?i)(<p.*?>)(.+?)()";
+        String updated = tmpDescription.replaceAll(pattern, "$2");
+        viewHolder.newsDescription.setText(updated);
+        Log.d(TAG, "updated: " + updated);
      /*   viewHolder.navItemIcon.setImageResource(otherServiceItem.getDrawbleId());
         viewHolder.txtTitle.setText(otherServiceItem.getTitle());
 */
@@ -66,6 +72,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
         viewHolder.view.setOnClickListener(v -> recyclerIemListener.onTap(newsItem));
 
     }
+
 
     @Override
     public int getItemCount() {

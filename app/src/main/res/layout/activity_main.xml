@@ -62,6 +62,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:orientation="vertical">
 
             <include layout="@layout/main_navigation_header" />
@@ -71,12 +72,14 @@
                 android:layout_height="@dimen/sizehalf"
                 android:layout_gravity="center"
                 android:layout_marginTop="0dp"
+                android:layout_marginEnd="12dp"
                 android:background="#99000000" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recNavigation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:background="@color/white">
 
             </androidx.recyclerview.widget.RecyclerView>

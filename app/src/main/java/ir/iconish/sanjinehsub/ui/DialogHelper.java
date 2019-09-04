@@ -29,18 +29,12 @@ public class DialogHelper {
         btnYes.setOnClickListener(view1 -> {
             alertDialog.dismiss();
 
-
             activity.finish();
-            //      activity.finishAffinity();
+            //activity.finishAffinity();
         });
 
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
+        btnCancel.setOnClickListener(view12 -> alertDialog.dismiss());
 
 
         alertDialog.show();

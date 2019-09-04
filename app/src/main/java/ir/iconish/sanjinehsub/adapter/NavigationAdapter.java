@@ -3,6 +3,7 @@
  */
 package ir.iconish.sanjinehsub.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,15 +45,21 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationViewHolder
 
     }
 
+    private static final String TAG = "NavigationAdapter";
+
     @Override
     public void onBindViewHolder(@NonNull final NavigationViewHolder viewHolder, final int i) {
 
 
         final NavigationItem navigationItem = navigationItems.get(i);
-        viewHolder.navItemIcon.setImageResource(navigationItem.getDrawbleId());
+        Log.d(TAG, "onBindViewHolder: " + navigationItem.getDrawbleId());
+        if (navigationItem.getDrawbleId() != 0) {
+            viewHolder.navItemIcon.setImageResource(navigationItem.getDrawbleId());
+
+        } else {
+            viewHolder.navItemIcon.setVisibility(View.GONE);
+        }
         viewHolder.txtTitle.setText(navigationItem.getTitle());
-
-
         viewHolder.view.setOnClickListener(v -> recyclerIemListener.onTap(navigationItem));
 
     }

@@ -79,7 +79,7 @@ public class VerifyRegisterOtpActivity extends AppCompatActivity {
         ((AppController) getApplication()).getAppComponent().inject(this);
 
 
-        mobileNumber = this.getIntent().getExtras().getString("mobile");
+//        mobileNumber = this.getIntent().getExtras().getString("mobile");
 
         codeSentStringBuilder();
         attachViewModel();

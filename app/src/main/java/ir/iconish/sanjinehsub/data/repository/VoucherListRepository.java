@@ -18,9 +18,9 @@ public class VoucherListRepository {
 
 
     @Inject
-    public VoucherListRepository(SharedPreferencesManager sharedPreferencesManager) {
+    public VoucherListRepository(VoucherListApi voucherListApi, SharedPreferencesManager sharedPreferencesManager) {
 
-
+        this.mVoucherListApi = voucherListApi;
         this.sharedPreferencesManager = sharedPreferencesManager;
     }
 

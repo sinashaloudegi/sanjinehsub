@@ -1,6 +1,5 @@
 package ir.iconish.sanjinehsub.adapter;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,21 +58,28 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinViewHolder> {
         viewHolder.txtCoinPrice.setText(coinPrice.getPrice()[0] + "");
         viewHolder.txtCoinRate.setText(coinPrice.getRate());
         viewHolder.txtCoinTime.setText(coinPrice.getDate()[0] + "");
-        viewHolder.mChart.getLineData();
 
+
+        int[] x = {10, 20, 30, 40, 50, 60,};
+        int[] y = {10, 5, 65, 20, 25, 0,};
 
         List<Entry> entries = new ArrayList<>();
-        for (int j = 0; j < coinPrice.getPrice().length; j++) {
-            entries.add(new Entry(coinPrice.getDate()[j], coinPrice.getPrice()[j]));
+        for (int j = 0; j < x.length; j++) {
 
+            // turn your data into Entry objects
+            entries.add(new Entry(x[j], y[j]));
         }
-        LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
-        dataSet.setColor(Color.BLUE);
-        dataSet.setValueTextColor(Color.YELLOW); // styling, ...
-
+        LineDataSet dataSet = new LineDataSet(entries, "قیمت ارز"); // add entries to dataset
         LineData lineData = new LineData(dataSet);
+
+        viewHolder.mChart.getXAxis().setDrawGridLines(false);
+        viewHolder.mChart.getXAxis().setDrawGridLines(false);
+        viewHolder.mChart.getAxisLeft().setDrawGridLines(false);
+        viewHolder.mChart.getXAxis().setDrawGridLines(false);
+
+        viewHolder.mChart.setGridBackgroundColor(R.color.bluish);
         viewHolder.mChart.setData(lineData);
-        viewHolder.mChart.invalidate(); // refresh
+        viewHolder.mChart.invalidate();
 
      /*   viewHolder.navItemIcon.setImageResource(otherServiceItem.getDrawbleId());
         viewHolder.txtTitle.setText(otherServiceItem.getTitle());
