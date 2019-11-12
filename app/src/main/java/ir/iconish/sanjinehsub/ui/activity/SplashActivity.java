@@ -56,7 +56,6 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
         setContentView(R.layout.activity_splash);
 
 
-
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         initFirebase();
@@ -72,14 +71,44 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
     }
 
+
+    private void attachViewModel() {
+        appConfigViewModel.getApiSuccessLiveDataResponse().observe(this, appConfig -> startTimer());
+
+        appConfigViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+        });
+
+        appConfigViewModel.getApiErrorLiveData().observe(this, volleyError -> goToFailApiPage("ApiError"));
+        appConfigViewModel.getApiServerErrorLiveData().observe(this, volleyError -> goToFailApiPage("ServerError"));
+        appConfigViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError -> goToFailApiPage("TimeOutError"));
+        appConfigViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError ->
+                {
+                    Log.d(TAG, "ClientNetworkError: " + "appConfigViewModel");
+                    goToFailApiPage("ClientNetworkError");
+
+                }
+        );
+        appConfigViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+        });
+        appConfigViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
+
+    }
+
     private void startTimer() {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 if (InternetAccess.isInternetAvailable()) {
-                    messageReciver();
-                    updateCheck = new UpdateCheck(getApplicationContext());
-                    updateCheck.initService();
+                    if (AppConstants.STORE.equals("CAFEBAZAAR")) {
+                        messageReciver();
+                        updateCheck = new UpdateCheck(getApplicationContext());
+                        updateCheck.initService();
+                    } else if (AppConstants.STORE.equals("CHARKHOONE")) {
+                        //TODO: 11/12/2019 check if user has charkhoone and singed up in charkhoone
+                        navigateToApp();
+                    }
+
                 } else {
                     ActivityNavigationHelper.navigateToActivity(SplashActivity.this, NoInternetActivity.class, true);
                 }
@@ -88,7 +117,6 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
         }, 1000);
     }
-
 
     private void messageReciver() {
 
@@ -144,39 +172,26 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
 
     private void navigateToApp() {
-        if (null == appConfigViewModel.getUserPassword()) {
-            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
 
-        } else {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        // TODO: 11/12/2019 for charkhoone there are 3 possibilites, 1- goto intro 2-goto mainActivity 3-goto subscribePage
+        if (AppConstants.STORE.equals("CHARKHOONE")) {
+
+
+        } else if (AppConstants.STORE.equals("CAFEBAZAAR")) {
+
+            if (null == appConfigViewModel.getUserPassword()) {
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+
+            } else {
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+
+            }
+
 
         }
         finish();
     }
 
-
-    private void attachViewModel() {
-        appConfigViewModel.getApiSuccessLiveDataResponse().observe(this, appConfig -> startTimer());
-
-        appConfigViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
-        });
-
-        appConfigViewModel.getApiErrorLiveData().observe(this, volleyError -> goToFailApiPage("ApiError"));
-        appConfigViewModel.getApiServerErrorLiveData().observe(this, volleyError -> goToFailApiPage("ServerError"));
-        appConfigViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError -> goToFailApiPage("TimeOutError"));
-        appConfigViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError ->
-                {
-                    Log.d(TAG, "ClientNetworkError: " + "appConfigViewModel");
-                    goToFailApiPage("ClientNetworkError");
-
-                }
-        );
-        appConfigViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
-        });
-        appConfigViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
-        });
-
-    }
 
     private void goToFailApiPage(String failCause) {
         Log.d(TAG, "goToFailApiPage: failCause" + failCause);

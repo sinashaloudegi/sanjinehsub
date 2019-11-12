@@ -39,8 +39,15 @@ public class AppConfigApi {
 
     public void callConfigApi(@NonNull final VolleyCallback volleyCallback) {
 
+        String url = "";
+        if (AppConstants.STORE.equals("CAFEBAZAAR")) {
+            url = ConstantUrl.BASE_MARKET + ConstantUrl.CAFEBAZAAR_CONFIG;
 
-        String url = ConstantUrl.BASE_MARKET + ConstantUrl.CAFEBAZAAR_CONFIG;
+        } else if (AppConstants.STORE.equals("CAHRKHOONE")) {
+            url = ConstantUrl.BASE_MARKET + ConstantUrl.CHARKHOONE_CONFIG;
+
+        }
+
         Log.d("callConfigApi", "callConfigApi: " + url);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,

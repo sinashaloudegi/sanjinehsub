@@ -73,7 +73,7 @@ public class CreditScorePreProcessApi {
 
     public void callGetScoreApi(String mobilephone, String ntcode, int persontypeid, int personalitytypeId, int paymenttypeid, int channelId, @NonNull String token, int verifyCode, String ownerMobile, @Nullable Purchase purchase, @NonNull final VolleyCallback volleyCallback) {
 
-        String url = ConstantUrl.BASE_MARKET + ConstantUrl.REGISTER_PURCHASEINFO;
+        String url = ConstantUrl.BASE_MARKET + ConstantUrl.CAFEBAZAAR_REGISTERPURCHASEINFO;
         Log.d(TAG, "callGetScoreApi: CALLING" + url);
         Crashlytics.setString("url", url);
         Crashlytics.setString("ntcode", ntcode);

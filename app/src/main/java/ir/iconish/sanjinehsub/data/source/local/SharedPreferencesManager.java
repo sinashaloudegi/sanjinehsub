@@ -23,6 +23,7 @@ public class SharedPreferencesManager {
     private static final String MARKET_KEY = "MARKET_KEY";
     private static final String TIMER_DURATION = "TIMER_DURATION";
     private static final String TOKEN = "TOKEN";
+    private static final String STORE = "STORE";
 
 
     private SharedPreferences sharedPreferences;

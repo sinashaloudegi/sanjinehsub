@@ -49,7 +49,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.iconish.sanjinehsub.R;
-import ir.iconish.sanjinehsub.adapter.CoinAdapter;
 import ir.iconish.sanjinehsub.adapter.NavigationAdapter;
 import ir.iconish.sanjinehsub.adapter.NewsAdapter;
 import ir.iconish.sanjinehsub.adapter.OtherServiceAdapter;
@@ -58,13 +57,10 @@ import ir.iconish.sanjinehsub.adapter.TeachBourseAdapter;
 import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
 import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.model.CoinPrice;
-import ir.iconish.sanjinehsub.data.model.CreditResponseEnum;
 import ir.iconish.sanjinehsub.data.model.NavigationItem;
 import ir.iconish.sanjinehsub.data.model.NewsItem;
 import ir.iconish.sanjinehsub.data.model.NumberOfSanjineh;
 import ir.iconish.sanjinehsub.data.model.OtherServiceItem;
-import ir.iconish.sanjinehsub.data.model.ReportStateEnum;
 import ir.iconish.sanjinehsub.data.model.SearchResult;
 import ir.iconish.sanjinehsub.data.model.TeachBourseItem;
 import ir.iconish.sanjinehsub.data.model.Voucher;
@@ -322,7 +318,18 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
             JSONObject data = new JSONObject();
             try {
-                data.put("bazaarToken", purchase.getToken());
+
+
+                if (AppConstants.STORE.equals("CHARKHOONE")) {
+                    data.put("charkhooneToken", purchase.getToken());
+
+                } else if (AppConstants.STORE.equals("CAFEBAZAAR")) {
+
+                    data.put("bazaarToken", purchase.getToken());
+
+
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -815,53 +822,29 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         ButterKnife.bind(this);
         ((AppController) getApplication()).getAppComponent().inject(this);
 
-        //   autoSearch();
 
         FirebaseMessaging.getInstance().subscribeToTopic(AppConstants.CHANNEL_ID_NOTIFICATON).addOnSuccessListener(aVoid -> {
         });
 
-
-
-/*
-        CoinPrice[] dataObjects = new CoinPrice[5];
-        dataObjects[0].setDate(1);
-        dataObjects[1].setDate(2);
-        dataObjects[2].setDate(3);
-        dataObjects[3].setDate(4);
-        dataObjects[4].setDate(5);
-
-        dataObjects[0].setPrice(100);
-        dataObjects[1].setPrice(200);
-        dataObjects[2].setPrice(400);
-        dataObjects[3].setPrice(300);
-        dataObjects[4].setPrice(200);
-
-        List<Entry> entries = new ArrayList<>();
-        for (CoinPrice data : dataObjects) {
-            entries.add(new Entry(data.getDate(), data.getPrice()));
-        }
-
-        LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
-        dataSet.setColor(Color.BLUE);
-        dataSet.setValueTextColor(Color.YELLOW); // styling, ...
-
-        LineData lineData = new LineData(dataSet);
-        chart.setData(lineData);
-        chart.invalidate(); // refresh
-*/
-        setUpCoinRecycler();
         setUpOtherServicesRecycler();
         setUpTeachBourseRecycler();
         setUpSpinner();
         initNavigation();
-        checkCafeBazaarLogin = new CheckCafeBazaarLogin(MainActivity.this);
-        messageReciver();
+
+        if (AppConstants.STORE.equals("CAFEBAZAAR")) {
+            checkCafeBazaarLogin = new CheckCafeBazaarLogin(MainActivity.this);
+            messageReciver();
+            bazaarSetup(getScoreViewModel.getMarketKey());
+        } else if (AppConstants.STORE.equals("CHARKHOONE")) {
+
+
+        }
+
         showWating();
         txtUserName.setText(getUserHasSanjinehViewModel.getMobileNumber());
         creditForm.setVisibility(View.VISIBLE);
         creditOtp.setVisibility(View.INVISIBLE);
 
-        bazaarSetup(getScoreViewModel.getMarketKey());
         if (isSelf) {
             edtMsisdnOthers.setText(getUserHasSanjinehViewModel.getMobileNumber());
         }
@@ -963,9 +946,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         Log.d(TAG, "choosePaymentType: checking user has sanjineh");
         getUserHasSanjinehViewModel.callGetUserSanjinehViewModel();
 
-
     }
 
+/*
     private void setUpCoinRecycler() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, HORIZONTAL, true);
 
@@ -986,17 +969,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
 
 
+*/
 /*
         ot1.setName("یورو");
         ot1.setDate(new int[] {10,20,30,40,50,60,71,80,90,91});
         ot1.setRate("20%");
-        ot1.setPrice(new int[] {10,20,30,40,50,60,71,80,90,91});*/
+        ot1.setPrice(new int[] {10,20,30,40,50,60,71,80,90,91});*//*
+
 
 
         coinPriceItems.add(ot);
         coinPriceItems.add(ot);
         coinPriceItems.add(ot);
         //coinPriceItems.add(ot1);
+*/
 /*
 
         coinPriceItems.add(ot);
@@ -1004,11 +990,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
         coinPriceItems.add(ot);
         //coinPriceItems.add(ot1);
-*/
+*//*
+
 
         CoinAdapter coinAdapter = new CoinAdapter(coinPriceItems, this);
         coinRecycleView.setAdapter(coinAdapter);
     }
+*/
 
     private void setUpOtherServicesRecycler() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, HORIZONTAL, true);
@@ -1084,7 +1072,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
         this.ntcode = ntCode;
         this.mobileNumber = msisdn;
-        if (!alreadyBazaarInited) {
+
+        if (AppConstants.STORE.equals("CAFEBAZAAR") && !alreadyBazaarInited) {
             checkCafeBazaarLogin.initService();
         } else {
 
@@ -1106,10 +1095,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
         getScoreViewModelObserver();
 
-
-        //   sendVerifyCodeViewModelObserver();
-
-        // TODO: 11/5/2019 voucher has problem
         voucherListViewmodelObserver();
 
     }
@@ -1150,70 +1135,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         });
     }
 
-    private void sendVerifyCodeViewModelObserver() {
-        sendVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, verifyCodeOthersResponse -> {
-                    //   String s = String.format("تا دقایقی دیگر کد تایید برای شماره s%ارسال خواهد شد", getUserHasSanjinehViewModel.getMobileNumber());
-                    //  txtGetCreditInfo.setText(s);
-
-                    Log.d(TAG, "attachViewModel:GetScoreOthersActivity getStatusCode" + verifyCodeOthersResponse.getStatusCode());
-                    stopWating();
-
-                    //verifyCodeOthersResponse.getStatusCode() == 22
-                    if (verifyCodeOthersResponse.getStatusCode() == CreditResponseEnum.SUCCESS.getId()) {
-                        Log.i("Test", "sent otp to others");
-                        Intent intent = new Intent(this, VerifyCodeOthersActivity.class);
-                        intent.putExtra("otherMobile", edtMsisdnOthers.getText().toString());
-                        intent.putExtra("otherNtCode", edtNtcodeOthers.getText().toString());
-                        intent.putExtra("reportStatus", verifyCodeOthersResponse.getStatusCode());
-                        intent.putExtra("purchase", purchase);
-
-                        creditForm.setVisibility(View.INVISIBLE);
-                        creditOtp.setVisibility(View.VISIBLE);
-
-                        /*
-                         */
-                        /*startActivity(intent);
-                        //TODO:show otp
-                        finish();*/
-                    } else if (verifyCodeOthersResponse.getStatusCode() == ReportStateEnum.USER_NOT_HAVE_REPORT.getId()) {
-                        getScoreAtion(verifyCodeOthersResponse.getNoReportReqToken(), this);
-
-
-                    } else if (verifyCodeOthersResponse.getStatusCode() == CreditResponseEnum.NOT_MATCH_MOBILE.getId()) {
-//                        Toast.makeText(this, verifyCodeOthersResponse.getDescription(), Toast.LENGTH_SHORT).show();
-                        DialogHelper.showDialog("خطا", verifyCodeOthersResponse.getDescription(), "باشه", null, this, this);
-
-
-                    } else {
-                        /*txtAlert.setText(verifyCodeOthersResponse.getDescription());
-                        txtAlert.setVisibility(View.VISIBLE);*/
-                    }
-                }
-        );
-        sendVerifyCodeViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
-        });
-        sendVerifyCodeViewModel.getApiErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ApiError");
-        });
-        sendVerifyCodeViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
-        {
-            goToFailApiPage("ServerError");
-        });
-        sendVerifyCodeViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-                {
-                    Log.d(TAG, "attachViewModel: VolleyTimeOutError:" + volleyError);
-                    goToFailApiPage("TimeOutError");
-                }
-        );
-        sendVerifyCodeViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ClientNetworkError");
-        });
-
-        sendVerifyCodeViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
-        });
-        sendVerifyCodeViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
-        });
-    }
 
     private void getScoreViewModelObserver() {
         getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, creditScorePreProcess -> {
@@ -1361,11 +1282,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         ActivityNavigationHelper.navigateToWebView(url, MainActivity.this, WebViewActivity.class, bundle);
     }
 
-    private void loadURL(String url) {
-
-
-        ActivityNavigationHelper.navigateToWebView(url, MainActivity.this, WebViewActivity.class);
-    }
 
     private void setUpVouvhers(List<Voucher> vouchers) {
 

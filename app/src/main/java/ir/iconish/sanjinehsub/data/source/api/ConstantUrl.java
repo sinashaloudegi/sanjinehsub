@@ -9,7 +9,9 @@ public class ConstantUrl {
     public static final String FORGET_PASSWORD = "security/forgetpassword";
     public static final String CONFIRM_REGISTER = "v1/security/confirmregister";
     public static final String CHECK_REPORT = "icredit/getavailablereport/";
-    public static final String REGISTER_PURCHASEINFO = "cafebazaar/registerpurchaseinfo";
+    // TODO: 11/12/2019 cafe-charkhone
+    public static final String CAFEBAZAAR_REGISTERPURCHASEINFO = "cafebazaar/registerpurchaseinfo";
+    public static final String CHARKHOONE_REGISTERPURCHASEINFO = "charkhoone/registerpurchaseinfo";
     // public static final String SEND_VERIFYCODE = "icredit/v1/sendVerifyCode";
     public static final String SEND_VERIFYCODE = "cafebazaar/verifycode";
     public static final String Confirm_VERIFYCODE = "icredit/confirmverifycode/";
@@ -17,6 +19,7 @@ public class ConstantUrl {
     // TODO: 11/12/2019 cafe-charkhone
     public static final String CAFEBAZAAR_CONFIG = "cafebazaar/config";
     public static final String CHARKHOONE_CONFIG = "charkhoone/config";
+
     public static final String ARCHIVE = "icredit/allarchivedreport/";
     public static final String REPORTS = "icredit/v1/getarchivedbytoken";
     public static final String CONTENT = "content/getallarticle";

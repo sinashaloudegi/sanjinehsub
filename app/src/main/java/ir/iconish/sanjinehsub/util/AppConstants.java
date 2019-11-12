@@ -19,4 +19,9 @@ public class AppConstants {
     public static final String CHANNEL_DESCRIPTION = "https://iconish.ir/";
     //public static final String BAZAAR_SKU = "sanj02";
     public static final String BAZAAR_SKU = "sanj01";
+
+
+    // TODO: 11/12/2019 cafe-charkhoone CHARKHOONE/CAFEBAZAAR
+    public static final String STORE = "CAFEBAZAAR";
+    //public static final String STORE="CHARKHOONE";
 }
