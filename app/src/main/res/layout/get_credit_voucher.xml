@@ -28,26 +28,30 @@
 
             <ImageView
                 android:id="@+id/voucher_img_1"
-                android:layout_width="0dp"
-                android:layout_height="114dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="41dp"
+                app:layout_constraintBottom_toTopOf="@+id/voucher_txt_1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/jadeh" />
 
             <TextView
                 android:id="@+id/voucher_txt_1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:fontFamily="@font/iranyekanwebregular"
                 android:padding="2dp"
-                android:textStyle="bold"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/voucher_img_1" />
@@ -61,6 +65,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/iranyekanwebregular"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -74,6 +79,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/iranyekanwebregular"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/voucher_txt_1" />
@@ -104,29 +110,30 @@
                 android:id="@+id/voucher_img_3"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="2dp"
+                android:layout_marginStart="1dp"
                 android:layout_marginTop="2dp"
+                android:layout_marginEnd="1dp"
                 android:layout_marginBottom="2dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline28"
+                app:layout_constraintBottom_toTopOf="@+id/voucher_txt_3"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/cbook" />
 
             <TextView
                 android:id="@+id/voucher_txt_3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="4dp"
+                android:layout_marginBottom="2dp"
                 android:fontFamily="@font/iranyekanwebregular"
                 android:maxLines="2"
                 android:textSize="12sp"
-                android:textStyle="bold"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/voucher_img_3"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/price_voucher_3_original"
@@ -136,6 +143,7 @@
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/iranyekanwebregular"
 
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/voucher_img_3"
@@ -148,6 +156,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="2dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline28" />
@@ -184,29 +193,30 @@
                 android:id="@+id/voucher_img_2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="2dp"
+                android:layout_marginStart="1dp"
                 android:layout_marginTop="2dp"
+                android:layout_marginEnd="1dp"
                 android:layout_marginBottom="2dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline26"
+                app:layout_constraintBottom_toTopOf="@+id/voucher_txt_2"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/vashlin" />
 
             <TextView
                 android:id="@+id/voucher_txt_2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="4dp"
+                android:layout_marginBottom="2dp"
                 android:fontFamily="@font/dana_regular"
                 android:lines="2"
                 android:maxLines="2"
                 android:textSize="12sp"
-                android:textStyle="bold"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toTopOf="@+id/price_voucher_2_off"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/voucher_img_2"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/price_voucher_2_original"
@@ -216,6 +226,7 @@
                 android:layout_marginEnd="8dp"
                 android:fontFamily="@font/iranyekanwebregular"
 
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline26"
@@ -228,6 +239,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="2dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline26" />

@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/getScoreOthersToolbar"
-        layout="@layout/get_score_toolbar"></include>
+        layout="@layout/get_score_toolbar" />
 
     <ImageView
         android:id="@+id/imgGetScoreOthers"

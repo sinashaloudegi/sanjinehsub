@@ -27,6 +27,7 @@ public class WebViewConfiguration {
     WebView webView;
     Context context;
     String url;
+    String bundle;
     @Nullable
     private View mCustomView;
     private WebChromeClient.CustomViewCallback customViewCallback;
@@ -35,9 +36,10 @@ public class WebViewConfiguration {
     private FrameLayout customViewContainer;
 
 
-    public WebViewConfiguration(Context context, FrameLayout customViewContainer, WebView webView, String url) {
+    public WebViewConfiguration(Context context, FrameLayout customViewContainer, WebView webView, String url, String bundle) {
         this.webView = webView;
         this.url = url;
+        this.bundle = bundle;
         this.context = context;
         this.customViewContainer = customViewContainer;
     }

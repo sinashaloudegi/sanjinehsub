@@ -5,6 +5,9 @@
         <domain includeSubdomains="true">creditscore.iconish.ir</domain>
         <domain includeSubdomains="true">192.168.110.55</domain>
         <domain includeSubdomains="true">market.iconish.ir</domain>
+        <domain includeSubdomains="true">content.iconish.ir</domain>
+        <domain includeSubdomains="true">vod.iconish.ir</domain>
+        <domain includeSubdomains="true">topup.iconish.ir</domain>
 
     </domain-config>
 </network-security-config>

@@ -31,19 +31,19 @@ public class GetScoreRepository {
         this.sharedPreferencesManager = sharedPreferencesManager;
     }
 
-    public void callGetScoreRepository(String ownerMobile, String ntCode, int persontypeid, int personalitytypeId, int paymenttypeid, int channelId, int verifycode, Purchase purchase, @NonNull final VolleyCallback volleyCallback) {
+    public void callGetScoreRepository(String otherMobile, String ntCode, int persontypeid, int personalitytypeId, int paymenttypeid, int channelId, int verifycode, Purchase purchase, @NonNull final VolleyCallback volleyCallback) {
 
         Log.d(TAG, "callGetScoreRepository: ____");
         String mobileNumber = sharedPreferencesManager.getMobileNumberValue();
         Crashlytics.setString("MobileNumber", mobileNumber);
         Log.d(TAG, "callGetScoreRepository: PersnTypeId: " + persontypeid);
         Log.d(TAG, "callGetScoreRepository: ntcode: " + ntCode);
-        Log.d(TAG, "callGetScoreRepository: ownerMobile: " + ownerMobile);
+        Log.d(TAG, "callGetScoreRepository: otherMobile: " + otherMobile);
         Log.d(TAG, "callGetScoreRepository: MobileNumber: " + mobileNumber);
 
         String token = sharedPreferencesManager.getTokenValue();
         Log.d(TAG, "callGetScoreRepository: Now lets call getScoreApi and ntcod=" + ntCode);
-        getScoreApi.callGetScoreApi(mobileNumber, ntCode, persontypeid, personalitytypeId, paymenttypeid, channelId, token, verifycode, ownerMobile, purchase, new VolleyCallback() {
+        getScoreApi.callGetScoreApi(mobileNumber, ntCode, persontypeid, personalitytypeId, paymenttypeid, channelId, token, verifycode, otherMobile, purchase, new VolleyCallback() {
             @Override
             public void onSuccess(Object o) {
                 volleyCallback.onSuccess(o);

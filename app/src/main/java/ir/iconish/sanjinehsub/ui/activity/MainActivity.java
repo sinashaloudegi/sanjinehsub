@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +30,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adpdigital.push.AdpPushClient;
-import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
 import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.material.navigation.NavigationView;
@@ -60,7 +58,6 @@ import ir.iconish.sanjinehsub.adapter.TeachBourseAdapter;
 import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
 import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
-import ir.iconish.sanjinehsub.data.model.CafeBazaarPaymentTypeEnum;
 import ir.iconish.sanjinehsub.data.model.CoinPrice;
 import ir.iconish.sanjinehsub.data.model.CreditResponseEnum;
 import ir.iconish.sanjinehsub.data.model.NavigationItem;
@@ -82,7 +79,6 @@ import ir.iconish.sanjinehsub.ui.DialogHelper;
 import ir.iconish.sanjinehsub.ui.Dialoglistener;
 import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
-import ir.iconish.sanjinehsub.util.CreditStatusManager;
 import ir.iconish.sanjinehsub.util.Helper;
 import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
@@ -336,16 +332,30 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
             Crashlytics.setString("purchaseFinished", "finished!");
             Crashlytics.setString("purchaseToken", purchase.getToken());
+
             if (isSelf) {
                 getScoreViewModel.callGetScoreViewModel(null, edtNtcodeOthers.getText().toString(), 1, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, -1, purchase);
             } else {
-                Log.d(TAG, "onIabPurchaseFinished: sendingVerifyCode");
-                sendVerifyCodeViewModel.callSendVerifyCodeViewModel(CafeBazaarPaymentTypeEnum.CAFE_SDK.name(), edtNtcodeOthers.getText().toString(), edtMsisdnOthers.getText().toString());
+                getScoreViewModel.callGetScoreViewModel(edtMsisdnOthers.getText().toString(), edtNtcodeOthers.getText().toString(), 2, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, -1, purchase);
             }
 
 
-            mHelper.consumeAsync(purchase, mConsumeFinishedListener);
 
+          /*  else {
+                Log.d(TAG, "onIabPurchaseFinished: sendingVerifyCode");
+                sendVerifyCodeViewModel.callSendVerifyCodeViewModel(CafeBazaarPaymentTypeEnum.CAFE_SDK.name(), edtNtcodeOthers.getText().toString(), edtMsisdnOthers.getText().toString());
+            }*/
+
+
+            mHelper.consumeAsync(purchase, mConsumeFinishedListener);
+            String url;
+            if (isSelf) {
+                url = "https://creditscore.iconish.ir/report/sendotp?channel=ANDROID&mobile=" + getUserHasSanjinehViewModel.getMobileNumber() + "&nationalCode=" + ntcode;
+            } else {
+
+                url = "https://creditscore.iconish.ir/report/sendotp?channel=ANDROID&mobile=" + getUserHasSanjinehViewModel.getMobileNumber() + "&nationalCode=" + ntcode + "&otherMobile=" + mobileNumber;
+            }
+            loadURL(url, "report");
         }
     };
 
@@ -497,42 +507,42 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         navigationItems.add(1, khoshhesabanClub);
 
 
-        NavigationItem archive = new NavigationItem();
+        /*NavigationItem archive = new NavigationItem();
         archive.setTitle("آرشیو گزارش ها");
         archive.setDrawbleId(R.drawable.archive);
         archive.setId(2);
         navigationItems.add(2, archive);
-
+*/
 
         NavigationItem teach = new NavigationItem();
         teach.setTitle("آموزش بهبود رتبه اعتباری");
         teach.setDrawbleId(R.drawable.help_credit_score);
         teach.setId(3);
-        navigationItems.add(3, teach);
+        navigationItems.add(2, teach);
 
 
         NavigationItem about = new NavigationItem();
         about.setTitle("درباره ما");
         about.setId(4);
-        navigationItems.add(4, about);
+        navigationItems.add(3, about);
 
 
         NavigationItem rules = new NavigationItem();
         rules.setTitle("قوانین و مقررات");
         rules.setId(5);
-        navigationItems.add(5, rules);
+        navigationItems.add(4, rules);
 
 
         NavigationItem exitAccount = new NavigationItem();
         exitAccount.setTitle(getString(R.string.nav_exit_account));
         exitAccount.setId(6);
-        navigationItems.add(6, exitAccount);
+        navigationItems.add(5, exitAccount);
 
 
         NavigationItem exitApp = new NavigationItem();
         exitApp.setTitle(getString(R.string.exit_app));
         exitApp.setId(7);
-        navigationItems.add(7, exitApp);
+        navigationItems.add(6, exitApp);
 
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -548,21 +558,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
     @OnClick(R.id.voucher_card_1)
     public void onVoucherCard1Click() {
-        ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/product-detail/" + voucherId1 + "&from=android_cafebazar", MainActivity.this, WebViewActivity.class);
-        Log.d(TAG, "https://www.sanjineh.ir/product-detail/" + voucherId1 + "&from=android_cafebazar");
+        ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/profile/product-detail/" + voucherId3 + "?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
+        Log.d(TAG, "https://www.sanjineh.ir/product-detail/" + voucherId3 + "&from=android_cafebazar");
     }
 
     @OnClick(R.id.voucher_card_2)
     public void onVoucherCard2Click() {
-        ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/product-detail/" + voucherId2 + "&from=android_cafebazar", MainActivity.this, WebViewActivity.class);
+        ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/profile/product-detail/" + voucherId2 + "?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
 
-
-        Log.d(TAG, "https://www.sanjineh.ir/product-detail/" + voucherId1 + "&from=android_cafebazar");
+        Log.d(TAG, "https://www.sanjineh.ir/product-detail/" + voucherId2 + "&from=android_cafebazar");
     }
 
     @OnClick(R.id.voucher_card_3)
     public void onVoucherCard3Click() {
-        ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/product-detail/" + voucherId3 + "&from=android_cafebazar", MainActivity.this, WebViewActivity.class);
+        ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/profile/product-detail/" + voucherId1 + "?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
 
         Log.d(TAG, "https://www.sanjineh.ir/product-detail/" + voucherId1 + "&from=android_cafebazar");
 
@@ -598,7 +607,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
 
                 case 3:
-                    ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/news?id=48?from=android_cafebazar", MainActivity.this, WebViewActivity.class);
+                    ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/news?id=48&from=android_cafebazar", MainActivity.this, WebViewActivity.class);
                     break;
 
 
@@ -731,7 +740,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
         if (obj instanceof NewsItem) {
             NewsItem newsItem = (NewsItem) obj;
-            ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/news?id=" + newsItem.getId() + "&from=android_cafebazar", this, WebViewActivity.class);
+            ActivityNavigationHelper.navigateToWebView("https://www.sanjineh.ir/details?id=37&articleId=" + newsItem.getId() + "&from=android_cafebazar", this, WebViewActivity.class);
 
 
         }
@@ -800,6 +809,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         setContentView(R.layout.activity_main);
         FirebaseApp.initializeApp(this);
 
+        Log.d(TAG, "onCreate: created");
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         ButterKnife.bind(this);
@@ -869,7 +879,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         mNewsViewModel.callNewsViewModel();
 
         Log.d(TAG, "onCreate: GetScoreActivity");
-        getUserHasSanjinehViewModel.callGetUserSanjinehViewModel();
+        //  getUserHasSanjinehViewModel.callGetUserSanjinehViewModel();
 /*
         edtTextSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -879,7 +889,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
             return false;
         });
 */
-
 
     }
 
@@ -929,7 +938,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
     private void showWating() {
         prgGetScore.setVisibility(View.VISIBLE);
-        ButtonHelper.toggleAppCompatButtonStatus(btnGetCredit, false);
+        //  ButtonHelper.toggleAppCompatButtonStatus(btnGetCredit, false);
     }
 
     private void autoSearch() {
@@ -952,16 +961,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
     private void choosePaymentType() {
         Log.d(TAG, "choosePaymentType: checking user has sanjineh");
-        if (userHasSanjineh()) {
-            int sanjinehValue = (this.numberOfSanjineh.getBalance()) / (this.numberOfSanjineh.getUnitValue());
-            String toastMesasge = " شما دارای " + sanjinehValue + " سنجینه در کیف پول خود هستید ";
-            Toast.makeText(this, toastMesasge, Toast.LENGTH_LONG).show();
-            DialogHelper.showDialog("نحوه پرداخت", "پرداخت از کیف پول یا کافه بازار؟", "کیف پول", "کافه بازار", this, this);
+        getUserHasSanjinehViewModel.callGetUserSanjinehViewModel();
 
-        } else {
-            Log.d(TAG, "choosePaymentType: USER HAS NO SANJINEH");
-            startPurchase();
-        }
 
     }
 
@@ -1098,99 +1099,58 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
     private void attachViewModel() {
 
-        getUserHasSanjinehViewModel.getApiSuccessLiveDataResponse().observe(this, numberOfSanjineh -> {
+        userHasSanjinehViewModelObserver();
 
-                    stopWating();
-                    this.numberOfSanjineh = numberOfSanjineh;
-                    Crashlytics.setString("NumberOfSanjineh", numberOfSanjineh.toString());
-                    Log.d(TAG, "this.numberOfSanjineh: " + numberOfSanjineh);
-                }
+        newsViewModelObserver();
+
+
+        getScoreViewModelObserver();
+
+
+        //   sendVerifyCodeViewModelObserver();
+
+        // TODO: 11/5/2019 voucher has problem
+        voucherListViewmodelObserver();
+
+    }
+
+    private void voucherListViewmodelObserver() {
+        mVoucherListViewModel.getApiSuccessLiveDataResponse().observe(this, this::setUpVouvhers
+
         );
-        getUserHasSanjinehViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+
+        mVoucherListViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+            Toast.makeText(this, "۱", Toast.LENGTH_SHORT).show();
         });
-        getUserHasSanjinehViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+
+        mVoucherListViewModel.getApiErrorLiveData().observe(this, volleyError -> {
             goToFailApiPage("ApiError");
+
         });
-        getUserHasSanjinehViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+        mVoucherListViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+
         {
-            //goToFailApiPage("ServerError");
+            goToFailApiPage("ServerError");
+
         });
-        getUserHasSanjinehViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-                {
-                    goToFailApiPage("TimeOutError");
-                }
+        mVoucherListViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+                goToFailApiPage("TimeOutError")
+
         );
-        getUserHasSanjinehViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> goToFailApiPage("ClientNetworkError"));
-
-        getUserHasSanjinehViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
-        });
-        getUserHasSanjinehViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
-        });
-
-        getUserHasSanjinehViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
-        });
-
-
-        mNewsViewModel.getApiSuccessLiveDataResponse().observe(this, newsItems -> {
-                    setUpNewsRecycler(newsItems);
-                    stopWating();
-                }
-        );
-
-        mNewsViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
-
-        });
-        mNewsViewModel.getApiErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ApiError");
-        });
-        mNewsViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
-        {
-            //goToFailApiPage("ServerError");
-        });
-        mNewsViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-                {
-                    goToFailApiPage("TimeOutError");
-                }
-        );
-        mNewsViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+        mVoucherListViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
             goToFailApiPage("ClientNetworkError");
-        });
-
-        mNewsViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
-        });
 
 
-        getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, creditScorePreProcess -> {
-                    // Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
-                    stopWating();
-            new CreditStatusManager(this).handleReportStatus(creditScorePreProcess, txtGetCreditInfo);
-                }
-        );
-
-        getScoreViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
-        });
-        getScoreViewModel.getApiErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ApiError");
-        });
-        getScoreViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
-        {
-            //goToFailApiPage("ServerError");
-        });
-        getScoreViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-                {
-                    goToFailApiPage("TimeOutError");
-                }
-        );
-        getScoreViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
-            goToFailApiPage("ClientNetworkError");
-        });
-
-        getScoreViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
-        });
-        getScoreViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
         });
 
 
+        mVoucherListViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+        });
+        mVoucherListViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
+    }
+
+    private void sendVerifyCodeViewModelObserver() {
         sendVerifyCodeViewModel.getApiSuccessLiveDataResponse().observe(this, verifyCodeOthersResponse -> {
                     //   String s = String.format("تا دقایقی دیگر کد تایید برای شماره s%ارسال خواهد شد", getUserHasSanjinehViewModel.getMobileNumber());
                     //  txtGetCreditInfo.setText(s);
@@ -1253,40 +1213,158 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         });
         sendVerifyCodeViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
         });
+    }
 
+    private void getScoreViewModelObserver() {
+        getScoreViewModel.getApiSuccessLiveDataResponse().observe(this, creditScorePreProcess -> {
+                    // Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
+                    Log.d(TAG, "getScoreViewModelObserver: success");
+                    stopWating();
+                    // TODO: 11/4/2019 go to web  load url
+                    String url;
+                    if (isSelf) {
+                        url = "https://creditscore.iconish.ir/report/sendotp?channel=ANDROID&mobile=" + getUserHasSanjinehViewModel.getMobileNumber() + "&nationalCode=" + ntcode;
+                    } else {
 
-        mVoucherListViewModel.getApiSuccessLiveDataResponse().observe(this, this::setUpVouvhers
+                        url = "https://creditscore.iconish.ir/report/sendotp?channel=ANDROID&mobile=" + getUserHasSanjinehViewModel.getMobileNumber() + "&nationalCode=" + ntcode + "&otherMobile=" + mobileNumber;
+                    }
+                    loadURL(url, "report");
+                    /* new CreditStatusManager(this).handleReportStatus(creditScorePreProcess, txtGetCreditInfo);*/
+                }
         );
 
-        mVoucherListViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
-        });
+        getScoreViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+            Toast.makeText(this, "ntcode:" + ntcode + " getApiAuthFailureErrorLiveData: " + mobileNumber, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "getScoreViewModelObserver: 2");
 
-        mVoucherListViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+
+        });
+        getScoreViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+            Toast.makeText(this, "ntcode:" + ntcode + " getApiErrorLiveData: " + mobileNumber, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "getScoreViewModelObserver: 3");
+
             goToFailApiPage("ApiError");
-
         });
-        mVoucherListViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
-
+        getScoreViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
         {
-            goToFailApiPage("ServerError");
+            Log.d(TAG, "getScoreViewModelObserver: 4");
 
+            Toast.makeText(this, "ntcode:" + ntcode + " getApiServerErrorLiveData: " + mobileNumber, Toast.LENGTH_SHORT).show();
+            //goToFailApiPage("ServerError");
         });
-        mVoucherListViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
-                goToFailApiPage("TimeOutError")
+        getScoreViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+                {
+                    Toast.makeText(this, "ntcode:" + ntcode + " getApiTimeOutErrorLiveData: " + mobileNumber, Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "getScoreViewModelObserver: 5");
 
+                    goToFailApiPage("TimeOutError");
+                }
         );
-        mVoucherListViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+        getScoreViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+            Toast.makeText(this, "ntcode:" + ntcode + " getApiClientNetworkErrorLiveData: " + mobileNumber, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "getScoreViewModelObserver: 6");
+
             goToFailApiPage("ClientNetworkError");
-
-
         });
 
+        getScoreViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+            Toast.makeText(this, "ntcode:" + ntcode + " getApiForbiden403ErrorLiveData: " + mobileNumber, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "getScoreViewModelObserver: 7");
 
-        mVoucherListViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
         });
-        mVoucherListViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        getScoreViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+            Toast.makeText(this, "ntcode:" + ntcode + " getApiValidation422ErrorLiveData: " + mobileNumber, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "getScoreViewModelObserver: 8");
+
+        });
+    }
+
+    private void newsViewModelObserver() {
+        mNewsViewModel.getApiSuccessLiveDataResponse().observe(this, newsItems -> {
+                    setUpNewsRecycler(newsItems);
+                    stopWating();
+                }
+        );
+
+        mNewsViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+
+        });
+        mNewsViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+            goToFailApiPage("ApiError");
+        });
+        mNewsViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+        {
+            //goToFailApiPage("ServerError");
+        });
+        mNewsViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+                {
+                    goToFailApiPage("TimeOutError");
+                }
+        );
+        mNewsViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+            goToFailApiPage("ClientNetworkError");
         });
 
+        mNewsViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+        });
+    }
+
+    private void userHasSanjinehViewModelObserver() {
+        getUserHasSanjinehViewModel.getApiSuccessLiveDataResponse().observe(this, numberOfSanjineh -> {
+
+                    stopWating();
+                    this.numberOfSanjineh = numberOfSanjineh;
+                    if (userHasSanjineh()) {
+                        int sanjinehValue = (this.numberOfSanjineh.getBalance()) / (this.numberOfSanjineh.getUnitValue());
+                        String toastMesasge = " شما دارای " + sanjinehValue + " سنجینه در کیف پول خود هستید ";
+                        Toast.makeText(this, toastMesasge, Toast.LENGTH_LONG).show();
+                        DialogHelper.showDialog("نحوه پرداخت", "پرداخت از کیف پول یا کافه بازار؟", "کیف پول", "کافه بازار", this, this);
+
+                    } else {
+                        Log.d(TAG, "choosePaymentType: USER HAS NO SANJINEH");
+                        startPurchase();
+                    }
+                    Crashlytics.setString("NumberOfSanjineh", numberOfSanjineh.toString());
+                    Log.d(TAG, "this.numberOfSanjineh: " + numberOfSanjineh);
+                }
+        );
+        getUserHasSanjinehViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+        });
+        getUserHasSanjinehViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+            goToFailApiPage("ApiError");
+        });
+        getUserHasSanjinehViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+        {
+            //goToFailApiPage("ServerError");
+        });
+        getUserHasSanjinehViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+                {
+                    goToFailApiPage("TimeOutError");
+                }
+        );
+        getUserHasSanjinehViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> goToFailApiPage("ClientNetworkError"));
+
+        getUserHasSanjinehViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+        });
+        getUserHasSanjinehViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
+
+        getUserHasSanjinehViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
+    }
+
+
+    private void loadURL(String url, String bundle) {
+
+        Log.d(TAG, "loadURL: " + bundle);
+
+        ActivityNavigationHelper.navigateToWebView(url, MainActivity.this, WebViewActivity.class, bundle);
+    }
+
+    private void loadURL(String url) {
+
+
+        ActivityNavigationHelper.navigateToWebView(url, MainActivity.this, WebViewActivity.class);
     }
 
     private void setUpVouvhers(List<Voucher> vouchers) {
@@ -1297,13 +1375,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         }
 
 
-        voucherId1 = vouchers.get(0).getId();
+        voucherId1 = vouchers.get(2).getId();
         voucherId2 = vouchers.get(1).getId();
-        voucherId3 = vouchers.get(2).getId();
+        voucherId3 = vouchers.get(0).getId();
 
-        voucherTxt1.setText(vouchers.get(0).getName());
-        voucherTxt2.setText(vouchers.get(1).getName());
-        voucherTxt3.setText(vouchers.get(2).getName());
+        voucherTxt1.setText(vouchers.get(2).getDescription());
+        voucherTxt2.setText(vouchers.get(1).getDescription());
+        voucherTxt3.setText(vouchers.get(0).getDescription());
+
+/*
 
         long price1 = Long.valueOf(vouchers.get(0).getPrice());
         long price2 = Long.valueOf(vouchers.get(1).getPrice());
@@ -1329,10 +1409,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         priceVoucher1Original.setPaintFlags(priceVoucher1Original.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         priceVoucher2Original.setPaintFlags(priceVoucher2Original.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         priceVoucher3Original.setPaintFlags(priceVoucher3Original.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+*/
 
-        Glide.with(this).load(vouchers.get(0).getImageUrl()).into(voucherImg1);
+     /*   Glide.with(this).load(vouchers.get(0).getImageUrl()).into(voucherImg1);
         Glide.with(this).load(vouchers.get(1).getImageUrl()).into(voucherImg2);
-        Glide.with(this).load(vouchers.get(2).getImageUrl()).into(voucherImg3);
+        Glide.with(this).load(vouchers.get(2).getImageUrl()).into(voucherImg3);*/
 
 
     }
@@ -1419,14 +1500,25 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     public void onDialogSubmitEvent(Object object) {
         Log.d(TAG, "onDialogSubmitEvent: ");
         showWating();
+/*
 
+        getScoreViewModel.callGetScoreViewModel(null, edtNtcodeOthers.getText().toString(), isSelf ? 1 : 2, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, -1, purchase);
+*/
+        String url;
         if (isSelf) {
-            getScoreViewModel.callGetScoreViewModel(null, edtNtcodeOthers.getText().toString(), 1, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, -1, purchase);
+            url = "https://creditscore.iconish.ir/report/sendotp?channel=ANDROID&mobile=" + getUserHasSanjinehViewModel.getMobileNumber() + "&nationalCode=" + ntcode;
         } else {
-            sendVerifyCodeViewModel.callSendVerifyCodeViewModel(CafeBazaarPaymentTypeEnum.CAFE_SDK.name(), edtNtcodeOthers.getText().toString(), edtMsisdnOthers.getText().toString());
+
+            url = "https://creditscore.iconish.ir/report/sendotp?channel=ANDROID&mobile=" + getUserHasSanjinehViewModel.getMobileNumber() + "&nationalCode=" + ntcode + "&otherMobile=" + mobileNumber;
         }
+
+
+        loadURL(url, "report");
+
     }
 
+
+    //GoCafebazaar
     @Override
     public void onDialogCancelEvent(Object object) {
         Log.d(TAG, "onDialogCancelEvent: ");
@@ -1481,7 +1573,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
             showWating();
 
             int verifyCode = Integer.parseInt(edtTextOtp.getText().toString());
-            getScoreViewModel.callGetScoreViewModel(mobileNumber, ntcode, 2, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, verifyCode, purchase);
+//            getScoreViewModel.callGetScoreViewModel(mobileNumber, ntcode, 2, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, verifyCode, purchase);
             Log.d(TAG, "btnGetScoreAction: VerifyCode" + verifyCode);
 
             //confirmVerifyCodeViewModel.callConfirmVerifyCodeViewModel(msisdn,edtVerifyCodeOthers.getText().toString());
@@ -1529,10 +1621,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         String item = adapterView.getItemAtPosition(i).toString();
         if (i == 0) {
             isSelf = true;
+            edtMsisdnOthers.setEnabled(false);
+
             edtMsisdnOthers.setText(getUserHasSanjinehViewModel.getMobileNumber());
 
         } else if (i == 1) {
             isSelf = false;
+            edtMsisdnOthers.setEnabled(true);
             edtMsisdnOthers.setText("");
         } else {
             Toast.makeText(this, "خطای ناشناخته", Toast.LENGTH_SHORT).show();

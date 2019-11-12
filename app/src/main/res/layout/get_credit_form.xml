@@ -113,6 +113,7 @@
         android:layout_marginBottom="24dp"
         android:text="بررسی رتبه اعتباری"
         android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -186,6 +187,7 @@
             android:focusableInTouchMode="true"
             android:gravity="center_vertical"
             android:inputType="phone"
+            android:enabled="false"
             android:textAlignment="center" />
 
     </com.google.android.material.textfield.TextInputLayout>

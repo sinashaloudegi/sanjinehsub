@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +40,7 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
     private static final String TAG = "SplashActivity";
 
+
     @Inject
     AppConfigViewModel appConfigViewModel;
 
@@ -54,13 +56,10 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
         setContentView(R.layout.activity_splash);
 
 
+
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         initFirebase();
-
-    /*String reqToken = "eyJhbGciOiJIUzI1NiJ9               .eyJzdWIiOiIxOTExMDUwODA2NDEzMjI1IiwiaWNvbkNyZWRpdCI6IjE5MTEwNTA4MDY0MTMyMjUiLCJpYXQiOjE1NTc1NDU4MDF9.DEFEycDW90S9J5ZobgPGAnVZ-NR_A3FYoO7obsLziNw";
-        goToNativeReportActivity(reqToken);*/
-
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -70,7 +69,6 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
 
         attachViewModel();
         appConfigViewModel.callAppConfigViewModel();
-
 
     }
 
@@ -166,7 +164,13 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
         appConfigViewModel.getApiErrorLiveData().observe(this, volleyError -> goToFailApiPage("ApiError"));
         appConfigViewModel.getApiServerErrorLiveData().observe(this, volleyError -> goToFailApiPage("ServerError"));
         appConfigViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError -> goToFailApiPage("TimeOutError"));
-        appConfigViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> goToFailApiPage("ClientNetworkError"));
+        appConfigViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError ->
+                {
+                    Log.d(TAG, "ClientNetworkError: " + "appConfigViewModel");
+                    goToFailApiPage("ClientNetworkError");
+
+                }
+        );
         appConfigViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
         });
         appConfigViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
@@ -175,7 +179,7 @@ public class SplashActivity extends AppCompatActivity implements Dialoglistener 
     }
 
     private void goToFailApiPage(String failCause) {
-
+        Log.d(TAG, "goToFailApiPage: failCause" + failCause);
         Intent intent = new Intent(this, FailApiActivity.class);
         intent.putExtra("failCause", failCause);
         startActivity(intent);

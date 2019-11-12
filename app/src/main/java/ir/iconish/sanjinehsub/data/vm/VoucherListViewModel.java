@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.vm;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -84,6 +86,7 @@ public class VoucherListViewModel extends ViewModel {
     }
 
     public void callVoucherListViewModel() {
+        Log.d("voucher", "callVoucherListViewModel: called");
         voucherListRepository.callVoucherListApi(new VolleyCallback() {
             @Override
             public void onSuccess(Object obj) {

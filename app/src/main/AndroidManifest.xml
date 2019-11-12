@@ -3,16 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ir.iconish.sanjinehsub">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="com.farsitel.bazaar.permission.PAY_THROUGH_BAZAAR" />
-    <uses-permission
-        android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
-        tools:ignore="ProtectedPermissions" />
     <application
         android:name=".config.AppController"
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
+
         android:appComponentFactory="@string/app_name"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
@@ -23,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
+        <activity android:name=".ui.activity.ReportWeb"></activity>
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait">
@@ -35,31 +31,22 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
-
-
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".ui.activity.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize|stateVisible"
             android:isScrollContainer="true"
             android:launchMode="standard"
-            android:screenOrientation="portrait">
-
-
-        </activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
         <activity
             android:name=".ui.activity.CheckPasswordActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true"
             android:isScrollContainer="true"
             android:launchMode="standard"
-            android:windowSoftInputMode="adjustPan">
-
-
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".ui.activity.ForgetPasswordActivity"
             android:configChanges="orientation|screenSize"
@@ -98,9 +85,7 @@
             android:isScrollContainer="true"
             android:launchMode="standard"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".ui.activity.VerifyRegisterOtpActivity"
             android:configChanges="orientation|screenSize"
@@ -108,10 +93,7 @@
             android:isScrollContainer="true"
             android:launchMode="standard"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-
-
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".ui.activity.ForgetPassworReciverActivity"
             android:configChanges="orientation|screenSize"
@@ -127,9 +109,7 @@
             android:isScrollContainer="true"
             android:launchMode="standard"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".ui.activity.NoInternetActivity"
             android:configChanges="orientation|screenSize"
@@ -155,10 +135,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <uses-library
-            android:name="org.apache.http.legacy"
-            android:required="false" />
-
         <activity
             android:name=".ui.activity.VerifyCodeOthersActivity"
             android:configChanges="orientation|screenSize"
@@ -168,28 +144,14 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-
-        </receiver>
-
-        <service
-            android:name=".util.push.MyFirebaseMessagingService"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_launcher" />
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
@@ -205,6 +167,11 @@
         </provider>
 
         <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND"></receiver>
+        <receiver
             android:name="com.adpdigital.push.ChabokReferrerReceiver"
             android:exported="true"
             android:permission="android.permission.INSTALL_PACKAGES">
@@ -212,6 +179,27 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
+
+        <service
+            android:name=".util.push.MyFirebaseMessagingService"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.farsitel.bazaar.permission.PAY_THROUGH_BAZAAR" />
+    <uses-permission
+        android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

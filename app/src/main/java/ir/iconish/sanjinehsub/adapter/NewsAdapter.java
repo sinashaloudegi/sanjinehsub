@@ -67,7 +67,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
         Log.d(TAG, "updated: " + updated);
      /*   viewHolder.navItemIcon.setImageResource(otherServiceItem.getDrawbleId());
         viewHolder.txtTitle.setText(otherServiceItem.getTitle());
-*/
+     */
 
         viewHolder.view.setOnClickListener(v -> recyclerIemListener.onTap(newsItem));
 

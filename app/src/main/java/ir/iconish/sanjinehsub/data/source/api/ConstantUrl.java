@@ -14,7 +14,9 @@ public class ConstantUrl {
     public static final String SEND_VERIFYCODE = "cafebazaar/verifycode";
     public static final String Confirm_VERIFYCODE = "icredit/confirmverifycode/";
     public static final String CHANGHE_PASSWORD = "security/changepassword";
-    public static final String APP_CONFIG = "cafebazaar/config";
+    // TODO: 11/12/2019 cafe-charkhone
+    public static final String CAFEBAZAAR_CONFIG = "cafebazaar/config";
+    public static final String CHARKHOONE_CONFIG = "charkhoone/config";
     public static final String ARCHIVE = "icredit/allarchivedreport/";
     public static final String REPORTS = "icredit/v1/getarchivedbytoken";
     public static final String CONTENT = "content/getallarticle";
@@ -34,7 +36,7 @@ public class ConstantUrl {
 
     //_______________________________________________________________________________________//
 
-    //public static String BASE_MARKET = "http://192.168.110.55:6065/";
+    //     public static String BASE_MARKET = "http://192.168.110.55:6065/";
     @NonNull
     public static String BASE_MARKET = "http://market.iconish.ir/";
 
@@ -48,8 +50,7 @@ public class ConstantUrl {
     //_______________________________________________________________________________________//
 
     @NonNull
-    public static String BASE_KHOSHHESABAN = "https://creditscore.iconish.ir/";
-
+    public static String BASE_KHOSHHESABAN = "http://topup.iconish.ir/voucher/suggestion/11";
 
 
 }

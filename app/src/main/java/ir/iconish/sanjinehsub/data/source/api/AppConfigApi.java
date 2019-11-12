@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.source.api;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -38,8 +40,8 @@ public class AppConfigApi {
     public void callConfigApi(@NonNull final VolleyCallback volleyCallback) {
 
 
-        String url = ConstantUrl.BASE_MARKET + ConstantUrl.APP_CONFIG;
-
+        String url = ConstantUrl.BASE_MARKET + ConstantUrl.CAFEBAZAAR_CONFIG;
+        Log.d("callConfigApi", "callConfigApi: " + url);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 url, null,
@@ -55,6 +57,7 @@ public class AppConfigApi {
 
 
                 }, error -> {
+            Log.d("callConfigApi:", "callConfigApi: " + error.toString());
             if ((error instanceof NetworkError) || (error instanceof NoConnectionError)) {
 
                 volleyCallback.onClientNetworkError();

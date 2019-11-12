@@ -2,6 +2,7 @@ package ir.iconish.sanjinehsub.ui.activity;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -66,6 +67,7 @@ public class FailApiActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         failCause = getIntent().getStringExtra("failCause");
+        Log.d("FAILED", "onCreate: " + failCause);
         showCorrectData();
 
     }

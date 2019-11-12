@@ -92,7 +92,6 @@ public class AppController extends MultiDexApplication {
 
     private void fontSetup() {
         FontsOverride.setDefaultFont(this, "DEFAULT", "font/iranyekanwebregular.ttf");
-
         FontsOverride.setDefaultFont(this, "MONOSPACE", "font/iranyekanwebregular.ttf");
         FontsOverride.setDefaultFont(this, "SERIF", "font/iranyekanwebregular.ttf");
         FontsOverride.setDefaultFont(this, "SANS_SERIF", "font/iranyekanwebregular.ttf");

@@ -82,7 +82,7 @@ public class NewsApi {
 
 
                 }, error -> {
-            Log.d(TAG, "callNewsApi: ERROR" + error.networkResponse.statusCode + "");
+            Log.d(TAG, "callNewsApi: ERROR" + error.toString());
             if ((error instanceof NetworkError) || (error instanceof NoConnectionError)) {
 
                 volleyCallback.onClientNetworkError();

@@ -1,5 +1,7 @@
 package ir.iconish.sanjinehsub.data.repository;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import javax.inject.Inject;
@@ -25,9 +27,9 @@ public class VoucherListRepository {
     }
 
     public void callVoucherListApi(@NonNull final VolleyCallback volleyCallback) {
+        Log.d("voucher", "callVoucherListApi: ");
 
-
-        mVoucherListApi.callVoucherListApi(sharedPreferencesManager.getUserIdValue(), new VolleyCallback() {
+        mVoucherListApi.callVoucherListApi(new VolleyCallback() {
             @Override
             public void onSuccess(Object o) {
                 volleyCallback.onSuccess(o);

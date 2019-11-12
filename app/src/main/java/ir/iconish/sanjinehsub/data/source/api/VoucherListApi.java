@@ -10,11 +10,10 @@ import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,23 +41,17 @@ public class VoucherListApi {
 
     private static final String TAG = "VoucherListApi";
 
-    public void callVoucherListApi(Long userId, @NonNull final VolleyCallback volleyCallback) {
+    public void callVoucherListApi(@NonNull final VolleyCallback volleyCallback) {
+        Log.d(TAG, "callVoucherListApi: called3");
+
+        String url = ConstantUrl.BASE_KHOSHHESABAN;
 
 
-        String url = ConstantUrl.BASE_KHOSHHESABAN + ConstantUrl.KHOSHHESABAN_PROFILE;
-
-
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("userId", userId);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                url, jsonObject,
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
+                url, null,
                 response -> {
+                    Log.d("voucher", "response" + response
+                            .toString());
 
                     if (response != null) {
 
@@ -69,6 +62,7 @@ public class VoucherListApi {
 
 
                 }, error -> {
+            Log.d("voucher", "error: " + error.toString());
             if ((error instanceof NetworkError) || (error instanceof NoConnectionError)) {
 
                 volleyCallback.onClientNetworkError();
@@ -119,7 +113,39 @@ public class VoucherListApi {
     }
 
     @NonNull
-    public List<Voucher> parseJson(@NonNull JSONObject jsonObject) {
+    public List<Voucher> parseJson(@NonNull JSONArray jsonArray) {
+        Log.d(TAG, "    parseJson: " + jsonArray.toString());
+
+        int jsonLength = jsonArray.length();
+        Log.d(TAG, "parseJson: len= " + jsonLength);
+        List<Voucher> voucherList = new ArrayList<>(jsonLength);
+        for (int i = 0; i < jsonLength; i++) {
+
+            try {
+                Voucher voucher = new Voucher();
+
+                long id = Long.valueOf(jsonArray.getJSONObject(i).getString("serviceActionId"));
+                String description = jsonArray.getJSONObject(i).getString("description");
+
+
+                voucher.setId(id);
+                voucher.setDescription(description);
+
+                voucherList.add(i, voucher);
+
+            } catch (JSONException e) {
+                Log.d("err", e.toString());
+                e.printStackTrace();
+            }
+
+        }
+
+        return voucherList;
+    }
+
+/*
+  @NonNull
+    public List<Voucher> parseJson(@NonNull JSONObject jsonArray) {
         Log.d(TAG, "    parseJson: " + jsonObject.toString());
         JSONArray jsonArray = null;
         try {
@@ -171,5 +197,6 @@ public class VoucherListApi {
         return voucherList;
     }
 
+*/
 
 }
