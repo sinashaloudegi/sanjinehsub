@@ -11,7 +11,7 @@ public class ConstantUrl {
     public static final String CHECK_REPORT = "icredit/getavailablereport/";
     // TODO: 11/12/2019 cafe-charkhone
     public static final String CAFEBAZAAR_REGISTERPURCHASEINFO = "cafebazaar/registerpurchaseinfo";
-    public static final String CHARKHOONE_REGISTERPURCHASEINFO = "charkhoone/registerpurchaseinfo";
+    public static final String CHARKHOONE_REGISTERPURCHASEINFO = "irancell/subscribe";
     // public static final String SEND_VERIFYCODE = "icredit/v1/sendVerifyCode";
     public static final String SEND_VERIFYCODE = "cafebazaar/verifycode";
     public static final String Confirm_VERIFYCODE = "icredit/confirmverifycode/";

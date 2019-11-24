@@ -28,14 +28,14 @@ import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.ui.ActivityNavigationHelper;
 import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
+import ir.iconish.sanjinehsub.util.CafeIabHelper;
 import ir.iconish.sanjinehsub.util.CreditStatusManager;
-import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.Purchase;
 
 public class VerifyCodeOthersActivity extends AppCompatActivity {
 
     private static final String TAG = "_SCORE";
-    public static IabHelper mHelper;
+    public static CafeIabHelper mHelper;
     @Nullable
     @BindView(R.id.btnEnterVerifyCodeOthers)
     AppCompatButton btnEnterVerifyCodeOthers;
@@ -89,7 +89,7 @@ public class VerifyCodeOthersActivity extends AppCompatActivity {
             showWating();
 
             int verifyCode = Integer.parseInt(edtVerifyCodeOthers.getText().toString());
-            getScoreViewModel.callGetScoreViewModel(msisdn, ntcode, 2, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, verifyCode, purchase);
+            getScoreViewModel.callGetScoreCafeBazaarViewModel(msisdn, ntcode, 2, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, verifyCode, purchase);
             Log.d(TAG, "btnGetScoreAction: VerifyCode" + verifyCode);
 
             //confirmVerifyCodeViewModel.callConfirmVerifyCodeViewModel(msisdn,edtVerifyCodeOthers.getText().toString());

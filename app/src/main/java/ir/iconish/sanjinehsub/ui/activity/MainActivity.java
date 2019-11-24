@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adpdigital.push.AdpPushClient;
+import com.android.billingclient.util.IabHelper;
 import com.crashlytics.android.Crashlytics;
 import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.material.navigation.NavigationView;
@@ -57,6 +58,9 @@ import ir.iconish.sanjinehsub.adapter.TeachBourseAdapter;
 import ir.iconish.sanjinehsub.adapter.listener.RecyclerIemListener;
 import ir.iconish.sanjinehsub.bazaar.CheckCafeBazaarLogin;
 import ir.iconish.sanjinehsub.config.AppController;
+import ir.iconish.sanjinehsub.data.model.IrancellPurchaseDTO;
+import ir.iconish.sanjinehsub.data.model.IrancellReportDTO;
+import ir.iconish.sanjinehsub.data.model.IrancellSubDTO;
 import ir.iconish.sanjinehsub.data.model.NavigationItem;
 import ir.iconish.sanjinehsub.data.model.NewsItem;
 import ir.iconish.sanjinehsub.data.model.NumberOfSanjineh;
@@ -64,6 +68,7 @@ import ir.iconish.sanjinehsub.data.model.OtherServiceItem;
 import ir.iconish.sanjinehsub.data.model.SearchResult;
 import ir.iconish.sanjinehsub.data.model.TeachBourseItem;
 import ir.iconish.sanjinehsub.data.model.Voucher;
+import ir.iconish.sanjinehsub.data.vm.GetScoreCharkhooneViewModel;
 import ir.iconish.sanjinehsub.data.vm.GetScoreViewModel;
 import ir.iconish.sanjinehsub.data.vm.LogoutViewModel;
 import ir.iconish.sanjinehsub.data.vm.NewsViewModel;
@@ -75,14 +80,15 @@ import ir.iconish.sanjinehsub.ui.DialogHelper;
 import ir.iconish.sanjinehsub.ui.Dialoglistener;
 import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
+import ir.iconish.sanjinehsub.util.CafeIabHelper;
 import ir.iconish.sanjinehsub.util.Helper;
-import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
 import ir.iconish.sanjinehsub.util.Inventory;
 import ir.iconish.sanjinehsub.util.Purchase;
 import ir.iconish.sanjinehsub.util.ToastHelper;
 
 import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
+import static ir.iconish.sanjinehsub.util.AppConstants.STORE;
 
 public class MainActivity extends AppCompatActivity implements RecyclerIemListener, Dialoglistener, AdapterView.OnItemSelectedListener {
 
@@ -263,7 +269,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     int voucherSize;
     /////////////////////////////////////////CafeBazaar Purchase Flow///////////////////////////////////////////////
     @Nullable
-    IabHelper mHelper;
+    CafeIabHelper mCafeIabHelper;
+    IabHelper mCharkhooneIabHelper;
     @Nullable
     @BindView(R.id.check_box_blank)
     ImageView checkBoxBlank;
@@ -279,6 +286,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
     @Inject
     VoucherListViewModel mVoucherListViewModel;
+
+    @Inject
+    GetScoreCharkhooneViewModel getScoreCharkhooneViewModel;
     Purchase purchase;
     @Inject
     SendVerifyCodeViewModel sendVerifyCodeViewModel;
@@ -291,7 +301,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     }
 
     @NonNull
-    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+    CafeIabHelper.OnConsumeFinishedListener mConsumeCafeFinishedListener = new CafeIabHelper.OnConsumeFinishedListener() {
+        @Override
+        public void onConsumeFinished(Purchase purchase, @NonNull IabResult result) {
+            Log.i(TAG, "Consumption finished. Purchase: " + purchase + ", result: " + result);
+            if (mCafeIabHelper == null) {
+                return;
+            }
+            result.isSuccess();//Log.e("Test", "Consumption successful. Provisioning.");
+//Log.e("Test", "Error while consuming: " + result);
+//Log.e("Test",  "End consumption flow.");
+        }
+    };
+    @NonNull
+    CafeIabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new CafeIabHelper.OnIabPurchaseFinishedListener() {
 
         @Override
         public void onIabPurchaseFinished(@NonNull IabResult result, @NonNull Purchase purchase) {
@@ -300,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
             Log.i(TAG, "PurchaseFinished: " + result + ", purchase: " + purchase);
 
 
-            if (mHelper == null) {
+            if (mCafeIabHelper == null) {
                 return;
             }
 
@@ -311,10 +334,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
                 Log.i("Test", "Error purchasing. Authenticity verification failed.");
                 return;
             }
-            Log.i("Test", "Purchase successful.");
+            Log.i("Test", " Cafe Purchase successful.");
             showWating();
 
-            Log.d(TAG, "onIabPurchaseFinished: now we are going to call callGetScoreViewModel and purchase token is" + purchase.getToken());
+            Log.d(TAG, "onIabPurchaseFinished: now we are going to call callGetScoreCafeBazaarViewModel and purchase token is" + purchase.getToken());
 
             JSONObject data = new JSONObject();
             try {
@@ -341,9 +364,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
             Crashlytics.setString("purchaseToken", purchase.getToken());
 
             if (isSelf) {
-                getScoreViewModel.callGetScoreViewModel(null, edtNtcodeOthers.getText().toString(), 1, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, -1, purchase);
+                getScoreViewModel.callGetScoreCafeBazaarViewModel(null, edtNtcodeOthers.getText().toString(), 1, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, -1, purchase);
             } else {
-                getScoreViewModel.callGetScoreViewModel(edtMsisdnOthers.getText().toString(), edtNtcodeOthers.getText().toString(), 2, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, -1, purchase);
+                getScoreViewModel.callGetScoreCafeBazaarViewModel(edtMsisdnOthers.getText().toString(), edtNtcodeOthers.getText().toString(), 2, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, -1, purchase);
             }
 
 
@@ -354,7 +377,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
             }*/
 
 
-            mHelper.consumeAsync(purchase, mConsumeFinishedListener);
+            mCafeIabHelper.consumeAsync(purchase, mConsumeCafeFinishedListener);
             String url;
             if (isSelf) {
                 url = "https://creditscore.iconish.ir/report/sendotp?channel=ANDROID&mobile=" + getUserHasSanjinehViewModel.getMobileNumber() + "&nationalCode=" + ntcode;
@@ -366,6 +389,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         }
     };
 
+//
 
     @OnClick(R.id.rootMyScore)
     public void rootMyScore() {
@@ -448,24 +472,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
     NumberOfSanjineh numberOfSanjineh;
     @NonNull
-    IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
-        @Override
-        public void onConsumeFinished(Purchase purchase, @NonNull IabResult result) {
-            Log.i(TAG, "Consumption finished. Purchase: " + purchase + ", result: " + result);
-            if (mHelper == null) {
-                return;
-            }
-            result.isSuccess();//Log.e("Test", "Consumption successful. Provisioning.");
-//Log.e("Test", "Error while consuming: " + result);
-//Log.e("Test",  "End consumption flow.");
-        }
-    };
-    @NonNull
-    public IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+    public CafeIabHelper.QueryInventoryFinishedListener mGotInventoryListener = new CafeIabHelper.QueryInventoryFinishedListener() {
         @Override
         public void onQueryInventoryFinished(@NonNull IabResult result, @Nullable Inventory inventory) {
             //Log.e("Test", "Query inventory finished.");
-            if (mHelper == null) {
+            if (mCafeIabHelper == null) {
                 return;
             }
 
@@ -478,13 +489,100 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
                 Purchase gasPurchase = inventory.getPurchase(AppConstants.BAZAAR_SKU);
                 if (gasPurchase != null && verifyDeveloperPayload(gasPurchase)) {
                     //Log.e("Test", "We have sanj01. Consuming it.");
-                    mHelper.consumeAsync(inventory.getPurchase(AppConstants.BAZAAR_SKU), mConsumeFinishedListener);
+                    mCafeIabHelper.consumeAsync(inventory.getPurchase(AppConstants.BAZAAR_SKU), mConsumeCafeFinishedListener);
                     return;
                 }
             }
 
 
             Log.i("Test", "Initial inventory query finished; enabling main UI.");
+        }
+    };
+    @NonNull
+    IabHelper.OnConsumeFinishedListener mConsumeCharkhooneFinishedListener = new IabHelper.OnConsumeFinishedListener() {
+
+        @Override
+        public void onConsumeFinished(com.android.billingclient.util.Purchase purchase, com.android.billingclient.util.IabResult iabResult) {
+            Log.i(TAG, "Consumption finished. Purchase: " + purchase + ", result: " + iabResult);
+            if (mCafeIabHelper == null) {
+                return;
+            }
+            iabResult.isSuccess();//Log.e("Test", "Consumption successful. Provisioning.");
+        }
+    };
+    //
+    private IabHelper.OnIabPurchaseFinishedListener mCharkhoonePurchaseFinishListener = new IabHelper.OnIabPurchaseFinishedListener() {
+        public void onIabPurchaseFinished(com.android.billingclient.util.IabResult result, com.android.billingclient.util.Purchase purchase) {
+            Log.d("Test", " Purchase finished: " + result + ", purchase: " + purchase);
+
+            // if we were disposed of in the meantime, quit.
+            if (mCharkhooneIabHelper == null)
+                return;
+
+            if (purchase != null) {
+                if (purchase.getSku() != null && purchase.getSku().equalsIgnoreCase(AppConstants.CHARKHOONE_SKU)) {
+                    //Successful Payment
+                    Log.i("Test", " Purchase purchase.getSku() : " + purchase.getSku());
+
+                    IrancellPurchaseDTO irancellPurchaseDTO = new IrancellPurchaseDTO();
+                    irancellPurchaseDTO.setAutoRenewing(purchase.isAutoRenewing());
+                    irancellPurchaseDTO.setDeveloperPayload(purchase.getDeveloperPayload());
+                    irancellPurchaseDTO.setItemType(purchase.getItemType());
+                    irancellPurchaseDTO.setOrderId(purchase.getOrderId());
+                    irancellPurchaseDTO.setOriginalJson(purchase.getOriginalJson());
+                    irancellPurchaseDTO.setPurchaseState(purchase.getPurchaseState());
+                    irancellPurchaseDTO.setPurchaseTime(purchase.getPurchaseTime());
+                    irancellPurchaseDTO.setSignature(purchase.getSignature());
+                    irancellPurchaseDTO.setToken(purchase.getToken());
+
+                    IrancellSubDTO irancellSubDTO = new IrancellSubDTO();
+
+                    irancellSubDTO.setAppId(AppConstants.APP_ID_INT);
+                    irancellSubDTO.setChannelId(AppConstants.CHANNEL_ID);
+                  /*  irancellSubDTO.setVersionCode(AppConstants.versionCode);
+                    irancellSubDTO.setVersionName(AppConstants.);*/
+
+                    IrancellReportDTO irancellReportDTO = new IrancellReportDTO();
+                    irancellReportDTO.setOtherMobile(edtMsisdnOthers.getText().toString());
+                    irancellReportDTO.setNtCode(edtNtcodeOthers.getText().toString());
+                    irancellReportDTO.setPersonTypeId(isSelf ? 1 : 2);
+
+
+                    // TODO: 11/16/2019 cafe_charkhoone after success payment, this should be uncommented
+                    /*getScoreCharkhooneViewModel.callGetScoreCharkhooneViewModel(irancellPurchaseDTO, irancellSubDTO, irancellReportDTO);*/
+
+                    // Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
+                    Log.d(TAG, "getScoreViewModelObserver: success");
+                    stopWating();
+                    // TODO: 11/4/2019 go to web  load url
+                    String url;
+                    if (isSelf) {
+                        url = "https://creditscore.iconish.ir/report/sendotp?channel=ANDROID&mobile=" + getUserHasSanjinehViewModel.getMobileNumber() + "&nationalCode=" + ntcode;
+                    } else {
+
+                        url = "https://creditscore.iconish.ir/report/sendotp?channel=ANDROID&mobile=" + getUserHasSanjinehViewModel.getMobileNumber() + "&nationalCode=" + ntcode + "&otherMobile=" + mobileNumber;
+                    }
+                    loadURL(url, "report");
+                    /* new CreditStatusManager(this).handleReportStatus(creditScorePreProcess, txtGetCreditInfo);*/
+
+
+                }
+            }
+            try {
+                mCharkhooneIabHelper.consumeAsync(purchase, mConsumeCharkhooneFinishedListener);
+            } catch (IabHelper.IabAsyncInProgressException e) {
+                e.printStackTrace();
+            }
+
+            if (result.isFailure()) {
+                Log.i("Test", " Error purchasing. ");
+                return;
+            }
+
+
+            Log.i("Test", "Purchase successful.");
+
+
         }
     };
 
@@ -836,7 +934,18 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
             messageReciver();
             bazaarSetup(getScoreViewModel.getMarketKey());
         } else if (AppConstants.STORE.equals("CHARKHOONE")) {
+            mCharkhooneIabHelper = new IabHelper(this, AppConstants.base64EncodedPublicKey);
 
+            mCharkhooneIabHelper.startSetup(result -> {
+                Log.i("Test", "Setup finished.");
+
+                if (!result.isSuccess()) {
+                    return;
+                }
+                if (mCharkhooneIabHelper == null)
+                    return;
+
+            });
 
         }
 
@@ -1096,6 +1205,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         getScoreViewModelObserver();
 
         voucherListViewmodelObserver();
+        getScoreCharkhooneViewModelObserver();
 
     }
 
@@ -1132,6 +1242,70 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         mVoucherListViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
         });
         mVoucherListViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+        });
+    }
+
+    private void getScoreCharkhooneViewModelObserver() {
+        getScoreCharkhooneViewModel.getApiSuccessLiveDataResponse().observe(this, creditScorePreProcess -> {
+                    // Log.i("Test registerPurchaseInfoResultDto : " , registerPurchaseInfoResultDto.toString());
+                    Log.d(TAG, "getScoreViewModelObserver: success");
+                    stopWating();
+                    // TODO: 11/4/2019 go to web  load url
+                    String url;
+                    if (isSelf) {
+                        url = "https://creditscore.iconish.ir/report/sendotp?channel=ANDROID&mobile=" + getUserHasSanjinehViewModel.getMobileNumber() + "&nationalCode=" + ntcode;
+                    } else {
+
+                        url = "https://creditscore.iconish.ir/report/sendotp?channel=ANDROID&mobile=" + getUserHasSanjinehViewModel.getMobileNumber() + "&nationalCode=" + ntcode + "&otherMobile=" + mobileNumber;
+                    }
+                    loadURL(url, "report");
+                    /* new CreditStatusManager(this).handleReportStatus(creditScorePreProcess, txtGetCreditInfo);*/
+                }
+        );
+
+        getScoreCharkhooneViewModel.getApiAuthFailureErrorLiveData().observe(this, volleyError -> {
+            Toast.makeText(this, "ntcode:" + ntcode + " getApiAuthFailureErrorLiveData: " + mobileNumber, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "getScoreCharkhooneViewModelObserver: 2");
+
+
+        });
+        getScoreCharkhooneViewModel.getApiErrorLiveData().observe(this, volleyError -> {
+            Toast.makeText(this, "ntcode:" + ntcode + " getApiErrorLiveData: " + mobileNumber, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "getScoreCharkhooneViewModelObserver: 3");
+
+            goToFailApiPage("ApiError");
+        });
+        getScoreCharkhooneViewModel.getApiServerErrorLiveData().observe(this, volleyError ->
+        {
+            Log.d(TAG, "getScoreCharkhooneViewModelObserver: 4");
+
+            Toast.makeText(this, "ntcode:" + ntcode + " getApiServerErrorLiveData: " + mobileNumber, Toast.LENGTH_SHORT).show();
+            //goToFailApiPage("ServerError");
+        });
+        getScoreCharkhooneViewModel.getApiTimeOutErrorLiveData().observe(this, volleyError ->
+                {
+                    Toast.makeText(this, "ntcode:" + ntcode + " getApiTimeOutErrorLiveData: " + mobileNumber, Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "getScoreCharkhooneViewModelObserver: 5");
+
+                    goToFailApiPage("TimeOutError");
+                }
+        );
+        getScoreCharkhooneViewModel.getApiClientNetworkErrorLiveData().observe(this, volleyError -> {
+            Toast.makeText(this, "ntcode:" + ntcode + " getApiClientNetworkErrorLiveData: " + mobileNumber, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "getScoreCharkhooneViewModelObserver: 6");
+
+            goToFailApiPage("ClientNetworkError");
+        });
+
+        getScoreCharkhooneViewModel.getApiForbiden403ErrorLiveData().observe(this, volleyError -> {
+            Toast.makeText(this, "ntcode:" + ntcode + " getApiForbiden403ErrorLiveData: " + mobileNumber, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "getScoreCharkhooneViewModelObserver: 7");
+
+        });
+        getScoreCharkhooneViewModel.getApiValidation422ErrorLiveData().observe(this, volleyError -> {
+            Toast.makeText(this, "ntcode:" + ntcode + " getApiValidation422ErrorLiveData: " + mobileNumber, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "getScoreViewModelObserver: 8");
+
         });
     }
 
@@ -1239,7 +1413,22 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
                         int sanjinehValue = (this.numberOfSanjineh.getBalance()) / (this.numberOfSanjineh.getUnitValue());
                         String toastMesasge = " شما دارای " + sanjinehValue + " سنجینه در کیف پول خود هستید ";
                         Toast.makeText(this, toastMesasge, Toast.LENGTH_LONG).show();
-                        DialogHelper.showDialog("نحوه پرداخت", "پرداخت از کیف پول یا کافه بازار؟", "کیف پول", "کافه بازار", this, this);
+
+                        String purcahseStoreText = "";
+                        String purcahseStoreQuestionText = "";
+
+
+                        if ("CHARKHOONE".equals(STORE)) {
+                            purcahseStoreText = "چارخونه";
+                            purcahseStoreQuestionText = "پرداخت از کیف پول یا چارخونه؟";
+                        } else if ("CAFEBAZAAR".equals(STORE)) {
+                            purcahseStoreText = "کافه بازار";
+                            purcahseStoreQuestionText = "پرداخت از کیف پول یا کافه بازار؟";
+                        }
+
+
+                        DialogHelper.showDialog("نحوه پرداخت", purcahseStoreQuestionText, "کیف پول", purcahseStoreText, this, this);
+
 
                     } else {
                         Log.d(TAG, "choosePaymentType: USER HAS NO SANJINEH");
@@ -1291,14 +1480,19 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         }
 
 
-        voucherId1 = vouchers.get(2).getId();
+        for (int i = 0; i < vouchers.size(); i++) {
+            voucherId1 = vouchers.get(i).getId();
+            voucherTxt1.setText(vouchers.get(i).getDescription());
+
+        }
+      /*  voucherId1 = vouchers.get(2).getId();
         voucherId2 = vouchers.get(1).getId();
         voucherId3 = vouchers.get(0).getId();
 
         voucherTxt1.setText(vouchers.get(2).getDescription());
         voucherTxt2.setText(vouchers.get(1).getDescription());
         voucherTxt3.setText(vouchers.get(0).getDescription());
-
+*/
 /*
 
         long price1 = Long.valueOf(vouchers.get(0).getPrice());
@@ -1362,30 +1556,61 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     private void startPurchase() {
         UUID uuid = UUID.randomUUID();
         String randomUUIDString = uuid.toString();
-        if (mHelper != null) {
-            Crashlytics.setString("flagEndAsync", "mHelper.flagEndAsync();");
-            mHelper.flagEndAsync();
+        if (mCafeIabHelper != null) {
+            Crashlytics.setString("flagEndAsync", "mCafeIabHelper.flagEndAsync();");
+            mCafeIabHelper.flagEndAsync();
         }
         Log.d(TAG, "startPurchase: starting launchepurchaseflow");
-        //   Toast.makeText(MainActivity.this, "startPurchase" + mHelper.toString(), Toast.LENGTH_SHORT).show();
+        //   Toast.makeText(MainActivity.this, "startPurchase" + mCafeIabHelper.toString(), Toast.LENGTH_SHORT).show();
 
-        mHelper.launchPurchaseFlow(this, AppConstants.BAZAAR_SKU, 10001, mPurchaseFinishedListener, randomUUIDString);
+
+        if ("CAFEBAZAAR".equals(STORE)) {
+
+            mCafeIabHelper.launchPurchaseFlow(this, AppConstants.BAZAAR_SKU, 10001, mPurchaseFinishedListener, randomUUIDString);
+
+        } else if ("CHARKHOONE".equals(STORE)) {
+            try {
+                mCharkhooneIabHelper.launchPurchaseFlow(this, AppConstants.CHARKHOONE_SKU, 10001, mCharkhoonePurchaseFinishListener, randomUUIDString);
+            } catch (IabHelper.IabAsyncInProgressException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i("Test", "onActivityResult(" + requestCode + "," + resultCode + "," + data);
-        if (mHelper == null) {
-            return;
+        if ("CHARKHOONE".equals(STORE)) {
+            Log.i("Test", "onActivityResult(" + requestCode + "," + resultCode + "," + data);
+            if (mCharkhooneIabHelper == null) return;
+
+            // Pass on the activity result to the helper for handling
+            if (!mCharkhooneIabHelper.handleActivityResult(requestCode, resultCode, data)) {
+                // not handled, so handle it ourselves (here's where you'd
+                // perform any handling of activity results not related to in-app
+                // billing...
+                super.onActivityResult(requestCode, resultCode, data);
+            } else {
+                Log.i("Test", "onActivityResult handled by IABUtil.");
+            }
+        } else if ("CAFEBAZAAR".equals(STORE)) {
+            Log.i("Test", "onActivityResult(" + requestCode + "," + resultCode + "," + data);
+            if (mCafeIabHelper == null) {
+                return;
+            }
+
+            // Pass on the activity result to the helper for handling
+            if (!mCafeIabHelper.handleActivityResult(requestCode, resultCode, data)) {
+                super.onActivityResult(requestCode, resultCode, data);
+            } else {
+                Log.i("Test", "onActivityResult handled by IABUtil.");
+            }
+
         }
 
-        // Pass on the activity result to the helper for handling
-        if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
-            super.onActivityResult(requestCode, resultCode, data);
-        } else {
-            Log.i("Test", "onActivityResult handled by IABUtil.");
-        }
+
     }
 
     private void goToFailApiPage(String failCause) {
@@ -1418,7 +1643,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
         showWating();
 /*
 
-        getScoreViewModel.callGetScoreViewModel(null, edtNtcodeOthers.getText().toString(), isSelf ? 1 : 2, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, -1, purchase);
+        getScoreViewModel.callGetScoreCafeBazaarViewModel(null, edtNtcodeOthers.getText().toString(), isSelf ? 1 : 2, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, -1, purchase);
 */
         String url;
         if (isSelf) {
@@ -1438,8 +1663,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     @Override
     public void onDialogCancelEvent(Object object) {
         Log.d(TAG, "onDialogCancelEvent: ");
-        if (mHelper != null) {
-            mHelper.flagEndAsync();
+        if (mCafeIabHelper != null) {
+            mCafeIabHelper.flagEndAsync();
         }
         startPurchase();
     }
@@ -1489,7 +1714,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
             showWating();
 
             int verifyCode = Integer.parseInt(edtTextOtp.getText().toString());
-//            getScoreViewModel.callGetScoreViewModel(mobileNumber, ntcode, 2, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, verifyCode, purchase);
+//            getScoreViewModel.callGetScoreCafeBazaarViewModel(mobileNumber, ntcode, 2, 1, AppConstants.PAYMENT_TYPE, AppConstants.CHANNEL_ID, verifyCode, purchase);
             Log.d(TAG, "btnGetScoreAction: VerifyCode" + verifyCode);
 
             //confirmVerifyCodeViewModel.callConfirmVerifyCodeViewModel(msisdn,edtVerifyCodeOthers.getText().toString());
@@ -1500,11 +1725,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
 
         // You can find it in your Bazaar console, in the Dealers section.
         // It is recommended to add more security than just pasting it in your source code;
-        mHelper = new IabHelper(this, bazaarKey);
+        mCafeIabHelper = new CafeIabHelper(this, bazaarKey);
 
         Log.i("Test", "Starting setup.");
 
-        mHelper.startSetup(result -> {
+        mCafeIabHelper.startSetup(result -> {
             Log.d("Test", "Setup finished.");
 
             if (!result.isSuccess()) {
@@ -1521,7 +1746,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
             Log.d("Test", "Hooray, IAB is fully set up" + result);
 
             // Hooray, IAB is fully set up!
-            mHelper.queryInventoryAsync(mGotInventoryListener);
+            mCafeIabHelper.queryInventoryAsync(mGotInventoryListener);
         });
     }
 
@@ -1578,7 +1803,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerIemListen
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mHelper != null) mHelper.dispose();
-        mHelper = null;
+        if (mCafeIabHelper != null) mCafeIabHelper.dispose();
+        mCafeIabHelper = null;
     }
 }

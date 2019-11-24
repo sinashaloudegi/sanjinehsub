@@ -8,27 +8,47 @@ import androidx.lifecycle.ViewModel;
 import javax.inject.Inject;
 
 import ir.iconish.sanjinehsub.data.model.CreditScorePreProcess;
-import ir.iconish.sanjinehsub.data.repository.GetScoreRepository;
+import ir.iconish.sanjinehsub.data.model.IrancellPurchaseDTO;
+import ir.iconish.sanjinehsub.data.model.IrancellReportDTO;
+import ir.iconish.sanjinehsub.data.model.IrancellSubDTO;
+import ir.iconish.sanjinehsub.data.repository.GetScoreCharkhooneRepository;
 import ir.iconish.sanjinehsub.data.source.api.VolleyCallback;
-import ir.iconish.sanjinehsub.util.Purchase;
 
-public class GetScoreViewModel extends ViewModel {
+/**
+ * @author s.shaloudegi
+ * @date 11/13/2019
+ */
+public class GetScoreCharkhooneViewModel extends ViewModel {
 
 
+    private static final String TAG = "_SCORE";
+    GetScoreCharkhooneRepository getScoreCharkhooneRepository;
     private MutableLiveData<CreditScorePreProcess> apiSuccessLiveDataResponse;
     private MutableLiveData<String> apiErrorLiveData;
     private MutableLiveData<String> apiServerErrorLiveData;
     private MutableLiveData<String> apiClientNetworkErrorLiveData;
     private MutableLiveData<String> apiTimeOutErrorLiveData;
     private MutableLiveData<String> apiAuthFailureErrorLiveData;
-
-
-    private static final String TAG = "_SCORE";
-    GetScoreRepository getScoreRepository;
-
     private MutableLiveData<String> apiForbiden403ErrorLiveData;
     private MutableLiveData<String> apiValidation422ErrorLiveData;
     private MutableLiveData<String> api404LiveData;
+
+    @Inject
+    public GetScoreCharkhooneViewModel(GetScoreCharkhooneRepository getScoreCharkhooneRepository) {
+
+        this.getScoreCharkhooneRepository = getScoreCharkhooneRepository;
+
+
+        apiSuccessLiveDataResponse = new MutableLiveData<>();
+        apiErrorLiveData = new MutableLiveData<>();
+        apiServerErrorLiveData = new MutableLiveData<>();
+        apiClientNetworkErrorLiveData = new MutableLiveData<>();
+        apiTimeOutErrorLiveData = new MutableLiveData<>();
+        apiAuthFailureErrorLiveData = new MutableLiveData<>();
+        apiForbiden403ErrorLiveData = new MutableLiveData<>();
+        apiValidation422ErrorLiveData = new MutableLiveData<>();
+        api404LiveData = new MutableLiveData<>();
+    }
 
     public MutableLiveData<String> getApi404LiveData() {
         return api404LiveData;
@@ -45,24 +65,6 @@ public class GetScoreViewModel extends ViewModel {
     public MutableLiveData<CreditScorePreProcess> getApiSuccessLiveDataResponse() {
         return apiSuccessLiveDataResponse;
     }
-
-    @Inject
-    public GetScoreViewModel(GetScoreRepository getScoreRepository) {
-
-        this.getScoreRepository = getScoreRepository;
-
-
-        apiSuccessLiveDataResponse = new MutableLiveData<>();
-        apiErrorLiveData = new MutableLiveData<>();
-        apiServerErrorLiveData = new MutableLiveData<>();
-        apiClientNetworkErrorLiveData = new MutableLiveData<>();
-        apiTimeOutErrorLiveData = new MutableLiveData<>();
-        apiAuthFailureErrorLiveData = new MutableLiveData<>();
-        apiForbiden403ErrorLiveData = new MutableLiveData<>();
-        apiValidation422ErrorLiveData = new MutableLiveData<>();
-        api404LiveData = new MutableLiveData<>();
-    }
-
 
     public MutableLiveData<String> getApiErrorLiveData() {
         return apiErrorLiveData;
@@ -84,10 +86,11 @@ public class GetScoreViewModel extends ViewModel {
         return apiAuthFailureErrorLiveData;
     }
 
-    public void callGetScoreCafeBazaarViewModel(String mobileNumber, String ntCode, int persontypeid, int personalitytypeId, int paymenttypeid, int channelId, int verifycode, Purchase purchase) {
+
+    public void callGetScoreCharkhooneViewModel(IrancellPurchaseDTO irancellPurchaseDTO, IrancellSubDTO irancellSubDTO, IrancellReportDTO irancellReportDTO) {
         Log.d(TAG, "callGetScoreCafeBazaarViewModel: ");
 
-        getScoreRepository.callGetScoreRepository(mobileNumber, ntCode, persontypeid, personalitytypeId, paymenttypeid, channelId, verifycode, purchase, new VolleyCallback() {
+        getScoreCharkhooneRepository.callGetScoreCharkhooneRepository(irancellPurchaseDTO, irancellSubDTO, irancellReportDTO, new VolleyCallback() {
             @Override
             public void onSuccess(Object obj) {
                 apiSuccessLiveDataResponse.setValue((CreditScorePreProcess) obj);
@@ -135,11 +138,6 @@ public class GetScoreViewModel extends ViewModel {
             }
 
         });
-    }
-
-
-    public String getMarketKey() {
-        return getScoreRepository.getMarketKey();
     }
 
 

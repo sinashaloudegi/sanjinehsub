@@ -43,8 +43,9 @@ public class AppConfigApi {
         if (AppConstants.STORE.equals("CAFEBAZAAR")) {
             url = ConstantUrl.BASE_MARKET + ConstantUrl.CAFEBAZAAR_CONFIG;
 
-        } else if (AppConstants.STORE.equals("CAHRKHOONE")) {
-            url = ConstantUrl.BASE_MARKET + ConstantUrl.CHARKHOONE_CONFIG;
+            // TODO: 11/13/2019 change url to chakrhoone
+        } else if (AppConstants.STORE.equals("CHARKHOONE")) {
+            url = ConstantUrl.BASE_MARKET + ConstantUrl.CAFEBAZAAR_CONFIG;
 
         }
 
@@ -56,7 +57,7 @@ public class AppConfigApi {
 
 
                     if (response != null) {
-
+                        Log.d("callConfigApi", "callConfigApi: ");
                         AppConfig appConfig = parseJson(response);
                         volleyCallback.onSuccess(appConfig);
 

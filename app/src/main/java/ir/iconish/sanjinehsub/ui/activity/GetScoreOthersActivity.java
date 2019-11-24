@@ -46,8 +46,8 @@ import ir.iconish.sanjinehsub.ui.DialogHelper;
 import ir.iconish.sanjinehsub.ui.Dialoglistener;
 import ir.iconish.sanjinehsub.util.AppConstants;
 import ir.iconish.sanjinehsub.util.ButtonHelper;
+import ir.iconish.sanjinehsub.util.CafeIabHelper;
 import ir.iconish.sanjinehsub.util.Helper;
-import ir.iconish.sanjinehsub.util.IabHelper;
 import ir.iconish.sanjinehsub.util.IabResult;
 import ir.iconish.sanjinehsub.util.Inventory;
 import ir.iconish.sanjinehsub.util.Purchase;
@@ -57,7 +57,7 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
 
     private static final String TAG = "_SCORE";
     @Nullable
-    public static IabHelper mHelper;
+    public static CafeIabHelper mHelper;
     @Nullable
     @BindView(R.id.edtNtcodeOthers)
     EditText edtNtcodeOthers;
@@ -88,7 +88,7 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
     BroadcastReceiver broadcastReceiver;
     NumberOfSanjineh numberOfSanjineh;
     @NonNull
-    IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
+    CafeIabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new CafeIabHelper.OnConsumeFinishedListener() {
         @Override
         public void onConsumeFinished(Purchase purchase, @NonNull IabResult result) {
 
@@ -102,7 +102,7 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
         }
     };
     @NonNull
-    public IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+    public CafeIabHelper.QueryInventoryFinishedListener mGotInventoryListener = new CafeIabHelper.QueryInventoryFinishedListener() {
         @Override
         public void onQueryInventoryFinished(@NonNull IabResult result, @Nullable Inventory inventory) {
             if (mHelper == null) {
@@ -126,7 +126,7 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
         }
     };
     @NonNull
-    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+    CafeIabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new CafeIabHelper.OnIabPurchaseFinishedListener() {
         @Override
         public void onIabPurchaseFinished(@NonNull IabResult result, @NonNull Purchase purchase) {
             GetScoreOthersActivity.this.purchase = purchase;
@@ -152,8 +152,8 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
             sendVerifyCodeViewModel.callSendVerifyCodeViewModel(CafeBazaarPaymentTypeEnum.CAFE_SDK.name(), edtNtcodeOthers.getText().toString(), edtMsisdnOthers.getText().toString());
 
 /*1
-            //getScoreViewModel.callGetScoreViewModel(purchase,edtMsisdnOthers.getText().toString(),edtNtcodeOthers.getText().toString());
-            //getScoreViewModel.callGetScoreViewModel(edtMsisdnOthers.getText().toString(),edtNtcodeOthers.getText().toString(),2,1, AppConstants.PAYMENT_TYPE,AppConstants.CHANNEL_ID,purchase);
+            //getScoreViewModel.callGetScoreCafeBazaarViewModel(purchase,edtMsisdnOthers.getText().toString(),edtNtcodeOthers.getText().toString());
+            //getScoreViewModel.callGetScoreCafeBazaarViewModel(edtMsisdnOthers.getText().toString(),edtNtcodeOthers.getText().toString(),2,1, AppConstants.PAYMENT_TYPE,AppConstants.CHANNEL_ID,purchase);
 */
 
         }
@@ -179,7 +179,7 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
     private void bazaarSetup(String bazaarKey) {
 
 
-        mHelper = new IabHelper(this, bazaarKey);
+        mHelper = new CafeIabHelper(this, bazaarKey);
 
         Log.i("Test", "Starting setup.");
 
@@ -558,7 +558,7 @@ public class GetScoreOthersActivity extends AppCompatActivity implements Dialogl
         UUID uuid = UUID.randomUUID();
         String randomUUIDString = uuid.toString();
         if (mHelper != null) {
-            Crashlytics.setString("flagEndAsync", "mHelper.flagEndAsync();");
+            Crashlytics.setString("flagEndAsync", "mCafeIabHelper.flagEndAsync();");
             mHelper.flagEndAsync();
         }
         mHelper.launchPurchaseFlow(GetScoreOthersActivity.this, AppConstants.BAZAAR_SKU, 10001, mPurchaseFinishedListener, randomUUIDString);

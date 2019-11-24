@@ -119,12 +119,9 @@ public class DialogHelper {
         });
 
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialoglistener.onDialogCancelEvent(null);
-                alertDialog.dismiss();
-            }
+        btnCancel.setOnClickListener(view1 -> {
+            dialoglistener.onDialogCancelEvent(null);
+            alertDialog.dismiss();
         });
 
         alertDialog.setCancelable(true);

@@ -88,7 +88,7 @@ public class UserNumberOfSanjinehViewModel extends ViewModel {
         return mUserNumberOfSanjinehRepository.geMobileNumber();
     }
     public void callGetUserSanjinehViewModel() {
-        Log.d(TAG, "callGetScoreViewModel: ");
+        Log.d(TAG, "callGetScoreCafeBazaarViewModel: ");
 
         mUserNumberOfSanjinehRepository.callGetNumberOfSanjinehRepository(new VolleyCallback() {
             @Override

@@ -1,6 +1,8 @@
 package ir.iconish.sanjinehsub.data.vm;
 
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -83,7 +85,7 @@ public class AppConfigViewModel extends ViewModel {
 
     public void callAppConfigViewModel() {
 
-
+        Log.d("callAppConfigViewModel", "callAppConfigViewModel: called");
         appConfigRepository.callAppConfigRepository(new VolleyCallback() {
             @Override
             public void onSuccess(Object obj) {
@@ -138,5 +140,11 @@ public class AppConfigViewModel extends ViewModel {
         return appConfigRepository.getUserPassword();
     }
 
+    public boolean isFirstRun() {
+        return appConfigRepository.isFirstRun();
+    }
 
+    public void setFirstRun(boolean b) {
+        appConfigRepository.setFirstRun(b);
+    }
 }

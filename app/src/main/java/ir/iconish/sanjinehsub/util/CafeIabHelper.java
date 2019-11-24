@@ -71,10 +71,10 @@ import java.util.List;
  *
  * @author Bruno Oliveira (Google)
  */
-public class IabHelper {
+public class CafeIabHelper {
     // Is debug logging enabled?
     boolean mDebugLog = false;
-    String mDebugTag = "IabHelper";
+    String mDebugTag = "CafeIabHelper";
 
     // Is setup done?
     boolean mSetupDone = false;
@@ -166,7 +166,7 @@ public class IabHelper {
      *                        public key in your application's page on Google Play Developer Console. Note that this
      *                        is NOT your "developer public key".
      */
-    public IabHelper(Context ctx, String base64PublicKey) {
+    public CafeIabHelper(Context ctx, String base64PublicKey) {
         mContext = ctx.getApplicationContext();
         mSignatureBase64 = base64PublicKey;
         logDebug("IAB helper created.");
@@ -348,7 +348,7 @@ public class IabHelper {
 
     private void checkNotDisposed() {
         if (mDisposed) {
-            throw new IllegalStateException("IabHelper was disposed of, so it cannot be used.");
+            throw new IllegalStateException("CafeIabHelper was disposed of, so it cannot be used.");
         }
     }
 

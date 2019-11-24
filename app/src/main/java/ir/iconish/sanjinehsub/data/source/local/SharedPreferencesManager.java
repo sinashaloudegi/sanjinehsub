@@ -24,6 +24,7 @@ public class SharedPreferencesManager {
     private static final String TIMER_DURATION = "TIMER_DURATION";
     private static final String TOKEN = "TOKEN";
     private static final String STORE = "STORE";
+    private static final String IS_FIRST_RUN = "IS_FIRST_RUN";
 
 
     private SharedPreferences sharedPreferences;
@@ -158,6 +159,10 @@ public class SharedPreferencesManager {
         return sharedPreferences.getString(PASSWORD_VALUE, null);
     }
 
+    public boolean isFirstRun() {
+        return sharedPreferences.getBoolean(IS_FIRST_RUN, false);
+    }
+
     public void setPasswordValue(String newValue) {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PASSWORD_VALUE, newValue);
@@ -176,6 +181,11 @@ public class SharedPreferencesManager {
 
     }
 
+    public void setFirstRun(boolean b) {
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(IS_FIRST_RUN, b);
+        editor.apply();
+    }
 
     public void clearPassword() {
 
@@ -184,6 +194,4 @@ public class SharedPreferencesManager {
         editor.apply();
 
     }
-
-
 }
